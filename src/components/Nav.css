@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a, nav button {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+nav a:hover, nav button:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ensure the mobile menu is hidden by default on desktop */
+@media (max-width: 768px) {
+    .d-md-none {
+        display: block; /* Show the hamburger menu */
+    }
+
+    .d-md-flex {
+        display: none; /* Hide the default navbar links on mobile */
+    }
+
+    .container {
+        position: relative; /* Allow absolute positioning of the mobile menu */
+    }
+}
