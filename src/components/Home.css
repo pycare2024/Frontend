@@ -15,3 +15,15 @@
         transform: translateY(0);
     }
 }
+
+@media (max-width: 768px) {
+    .sectionStyle {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .imageStyle {
+        margin-bottom: 20px;
+    }
+}
+

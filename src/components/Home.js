@@ -1,6 +1,5 @@
-import React from "react";
-import homeImage from "./home.jpg";
-import logo from "./logo.jpeg"; // Replace with your logo file path
+import React, { useState, useEffect, useRef } from "react";
+import home from "./home.jpg";
 import image1 from "./image-1.png";
 import image2 from "./image-2.jpeg";
 import image3 from "./image-3.png";
@@ -31,57 +30,111 @@ function Home() {
         },
     ];
 
+    const [visibleSections, setVisibleSections] = useState({});
+
+    const sectionRefs = useRef([]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setVisibleSections((prev) => ({
+                            ...prev,
+                            [entry.target.id]: true,
+                        }));
+                    } else {
+                        setVisibleSections((prev) => ({
+                            ...prev,
+                            [entry.target.id]: false,
+                        }));
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
+
+        const refsCopy = sectionRefs.current;
+
+        refsCopy.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            refsCopy.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
+    }, []);
+
     const pageStyle = {
         margin: 0,
         padding: 0,
         fontFamily: "'Roboto', sans-serif",
+        backgroundColor: "#ffffff",
+        position: "relative",
+        overflow: "hidden",
     };
 
-    const mainSectionStyle = {
-        backgroundImage: `url(${homeImage})`,
+    const imageOverlayStyle = {
+        position: "absolute",
+        top: "7.5%",
+        left: "5%",
+        width: "25vw", // Responsive width
+        maxWidth: "300px",
+        height: "40vh", // Responsive height
+        maxHeight: "400px",
+        borderRadius: "50px",
+        backgroundImage: `url(${home})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+        border: "5px solid rgba(255, 255, 255, 0.8)",
+        zIndex: 1,
+    };
+
+    const mainSectionStyle = {
+        padding: "20px 50px 20px calc(35%)",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
-        color: "white",
-        textAlign: "center",
-        textShadow: "1px 1px 5px rgba(0,0,0,0.7)",
-    };
-
-    const logoStyle = {
-        width: "120px",
-        marginBottom: "20px",
-        borderRadius: "50%", // Circular logo
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Subtle shadow
+        alignItems: "flex-start",
+        color: "#333",
+        textAlign: "left",
+        position: "relative",
+        zIndex: 2,
     };
 
     const titleStyle = {
         fontSize: "3.5rem",
         fontWeight: "700",
         margin: "0 0 10px 0",
+        color: "#FF8096",
     };
 
     const subtitleStyle = {
         fontSize: "1.5rem",
         fontWeight: "300",
+        color: "#FF8096",
     };
 
-    const sectionStyle = (alignRight) => ({
+    const sectionStyle = {
         display: "flex",
-        flexDirection: alignRight ? "row-reverse" : "row",
         alignItems: "center",
+        justifyContent: "space-between",
         padding: "50px",
-        backgroundColor: alignRight ? "#f9f9f9" : "#ffffff",
+        backgroundColor: "#ffffff",
         borderBottom: "1px solid #eaeaea",
-        animation: alignRight ? "fadeInRight 1s ease" : "fadeInLeft 1s ease",
-    });
+        flexWrap: "wrap",
+        opacity: 0, // Initially hidden
+        transform: "translateX(-50px)", // Slide in from left initially
+        transition: "opacity 0.8s ease, transform 0.8s ease",
+    };
 
     const textContainerStyle = {
-        flex: 1,
+        flex: "1 1 300px",
         padding: "20px",
     };
 
@@ -92,44 +145,69 @@ function Home() {
     };
 
     const imageContainerStyle = {
-        flex: 1,
+        flex: "1 1 300px",
         textAlign: "center",
         padding: "20px",
+        overflow: "hidden", // Prevent overflow when zooming
     };
 
     const imageStyle = {
-        width: "90%",
+        width: "100%",
         maxWidth: "300px",
-        borderRadius: "10px", // Rounded corners
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", // Subtle shadow
-        transition: "transform 0.3s ease",
+        borderRadius: "10px",
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+        transition: "transform 0.3s ease-in-out", // Smooth zoom transition
     };
+
+    const visibleStyle = {
+        opacity: 1,
+        transform: "translateX(0)", // Move to its final position
+    };
+
+    // Create refs for each image
+    const imageRefs = useRef([]);
 
     return (
         <div style={pageStyle}>
+            {/* Image Overlay */}
+            <div className="imageOverlay" style={imageOverlayStyle}></div>
+
             {/* Main Section */}
-            <div style={mainSectionStyle}>
-                <img src={logo} alt="PsyCare Logo" style={logoStyle} />
+            <div className="mainSection" style={mainSectionStyle}>
                 <h1 style={titleStyle}>PsyCare</h1>
-                <p style={subtitleStyle}>Your Trusted Partner in Mental Well-Being</p>
+                <p style={subtitleStyle}>Your path to mental Wellness</p>
             </div>
 
-            {/* Scrolling Sections */}
+            {/* Scrolling Sections with Animations */}
             {sections.map((section, index) => (
                 <div
                     key={index}
-                    style={sectionStyle(index % 2 !== 0)} // Alternate alignment
+                    id={`section-${index}`}
+                    ref={(el) => (sectionRefs.current[index] = el)}
+                    style={{
+                        ...sectionStyle,
+                        ...(visibleSections[`section-${index}`] ? visibleStyle : {}),
+                    }}
                 >
                     <div style={textContainerStyle}>
                         <p style={textStyle}>{section.text}</p>
                     </div>
-                    <div style={imageContainerStyle}>
+                    <div
+                        style={imageContainerStyle}
+                        onMouseEnter={() => {
+                            // Apply zoom to the image on hover
+                            imageRefs.current[index].style.transform = "scale(1.1)";
+                        }}
+                        onMouseLeave={() => {
+                            // Reset zoom when hover ends
+                            imageRefs.current[index].style.transform = "scale(1)";
+                        }}
+                    >
                         <img
                             src={section.image}
                             alt={`Illustration ${index + 1}`}
                             style={imageStyle}
-                            onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                            ref={(el) => (imageRefs.current[index] = el)} // Assign ref to each image
                         />
                     </div>
                 </div>

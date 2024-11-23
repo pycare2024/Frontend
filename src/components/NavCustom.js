@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaAngleDown } from "react-icons/fa"; // Import the arrow icon
 import logo from "./logo.jpeg"; // Ensure this path is correct
 
 function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" }) {
@@ -11,11 +11,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         backgroundColor: "#ffffff", // Light cream background
         padding: "10px 20px",
         boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-        position: "fixed", // Make the navbar fixed
-        top: 0, // Position it at the top of the page
-        left: 0,
-        width: "100%", // Ensure it spans the full width of the viewport
-        zIndex: 1000, // High z-index to keep it above other content
+        position: "relative",
     };
 
     const brandStyle = {
@@ -40,19 +36,19 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         margin: "0 10px",
         textDecoration: "none",
         fontSize: "1rem",
-        fontWeight: "bold", // Bold text
         transition: "color 0.3s",
+        display: "flex", // Make the link and icon appear on the same line
+        alignItems: "center", // Align items vertically
     };
 
     const activeLinkStyle = {
-        color: "#FF8096", // Highlight active link with pink
-        fontWeight: "bold",
-        textDecoration:"none",
+        color: "pink", // Highlight active link with pink
+        textDecoration: "underline",
     };
 
     const menuIconStyle = {
         fontSize: "1.5rem",
-        color: "#FF8096",
+        color: "pink",
         cursor: "pointer",
     };
 
@@ -88,13 +84,13 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                         to="/Home"
                         style={location.pathname === "/Home" ? activeLinkStyle : linkStyle}
                     >
-                        Home
+                        Home <FaAngleDown style={{ marginLeft: "5px" }} />
                     </Link>
                     <Link
                         to="/About"
                         style={location.pathname === "/About" ? activeLinkStyle : linkStyle}
                     >
-                        About Us
+                        About Us <FaAngleDown style={{ marginLeft: "5px" }} />
                     </Link>
                     {isDocLoggedIn && (
                         <>
@@ -104,7 +100,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                     location.pathname === "/Patients" ? activeLinkStyle : linkStyle
                                 }
                             >
-                                Patients
+                                Patients <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <button
                                 onClick={onLogout}
@@ -127,7 +123,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                     location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
                                 }
                             >
-                                Doctors
+                                Doctors <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <Link
                                 to="/Patients"
@@ -135,7 +131,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                     location.pathname === "/Patients" ? activeLinkStyle : linkStyle
                                 }
                             >
-                                Patients
+                                Patients <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <button
                                 onClick={onLogout}
@@ -160,19 +156,19 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                         : linkStyle
                                 }
                             >
-                                I am Doctor
+                                I am Doctor <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <Link
                                 to="/Login"
                                 style={location.pathname === "/Login" ? activeLinkStyle : linkStyle}
                             >
-                                Admin
+                                Admin <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <Link
                                 to="#"
                                 style={location.pathname === "#" ? activeLinkStyle : linkStyle}
                             >
-                                Contact Us
+                                Contact Us <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                         </>
                     )}
@@ -195,14 +191,14 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                         style={location.pathname === "/Home" ? activeLinkStyle : mobileLinkStyle}
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
-                        Home
+                        Home <FaAngleDown style={{ marginLeft: "5px" }} />
                     </Link>
                     <Link
                         to="/About"
                         style={location.pathname === "/About" ? activeLinkStyle : mobileLinkStyle}
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
-                        About Us
+                        About Us <FaAngleDown style={{ marginLeft: "5px" }} />
                     </Link>
                     {!isLoggedIn && !isDocLoggedIn && (
                         <>
@@ -213,7 +209,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                 }
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                Admin
+                                Admin <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                             <Link
                                 to="/DoctorLogin"
@@ -224,7 +220,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                 }
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                I am Doctor
+                                I am Doctor <FaAngleDown style={{ marginLeft: "5px" }} />
                             </Link>
                         </>
                     )}

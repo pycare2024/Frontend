@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+/* Apply Helvetica Neue to the entire website */
+* {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
