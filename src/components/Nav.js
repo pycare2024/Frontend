@@ -160,7 +160,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                         : linkStyle
                                 }
                             >
-                                I am Doctor
+                                I am a Doctor
                             </Link>
                             <Link
                                 to="/Login"

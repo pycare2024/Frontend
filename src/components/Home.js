@@ -9,23 +9,55 @@ import image5 from "./image-5.png";
 function Home() {
     const sections = [
         {
-            text: "What do Virat Kohli, Maria Sharapova, Deepika Padukone, Chetan Bhagat, Justin Bieber, Manisha Koirala, Prince Harry, Serena Williams, and Michael Phelps have in common? They all overcame mental health challenges and regained their stardom.",
+            text: (
+                <>
+                    <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
+                    <br />
+                    What do Virat Kohli, Maria Sharapova, Deepika Padukone, Chetan Bhagat, Justin Bieber, Manisha Koirala, Prince Harry, Serena Williams, and Michael Phelps have in common? 
+                    <br />
+                    They all overcame mental health challenges and regained their stardom.
+                </>
+            ),
             image: image1,
         },
         {
-            text: "Prolonged anxiety, mood swings, and tension can be signs of underlying mental health conditions.",
+            text: (
+                <>
+                    <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
+                    <br />
+                    Prolonged anxiety, mood swings, and tension can be signs of underlying mental health conditions.
+                </>
+            ),
             image: image2,
         },
         {
-            text: "Every 4th person in the world experiences some form of mental health issue.",
+            text: (
+                <>
+                    <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
+                    <br />
+                    Every 4th person in the world experiences some form of mental health issue.
+                </>
+            ),
             image: image3,
         },
         {
-            text: "Depression often stems from chemical imbalances in the brain, though triggers may vary.",
+            text: (
+                <>
+                    <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
+                    <br />
+                    Depression often stems from chemical imbalances in the brain, though triggers may vary.
+                </>
+            ),
             image: image4,
         },
         {
-            text: "General Anxiety, Depression, and Alcohol Abuse account for 80% of mental disorders and are 100% treatable with medical intervention.",
+            text: (
+                <>
+                    <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
+                    <br />
+                    General Anxiety, Depression, and Alcohol Abuse account for 80% of mental disorders and are 100% treatable with medical intervention.
+                </>
+            ),
             image: image5,
         },
     ];
