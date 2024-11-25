@@ -30,9 +30,10 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
 
     const logoStyle = {
         width: "60px",
-        height: "40px",
-        borderRadius: "50%",
+        height: "50px",
+        borderRadius: "30%",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+        backgroundColor:"blue",
     };
 
     const linkStyle = {
@@ -78,7 +79,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         <nav style={navStyle}>
             <div className="container d-flex justify-content-between align-items-center">
                 <Link to="/" style={brandStyle}>
-                    We are here to Help!
+                    We are here to Help !
                     <img src={logo} alt="Logo" style={logoStyle} />
                 </Link>
 

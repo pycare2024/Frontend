@@ -100,26 +100,50 @@ function Home() {
         return () => clearTimeout(timeout);
     }, []);
 
+    const [boxStates, setBoxStates] = useState([false, false, false, false]); // Track visibility of each box
+
+    useEffect(() => {
+        // Trigger animations with delays
+        const timeouts = [];
+        boxStates.forEach((_, index) => {
+            timeouts.push(
+                setTimeout(() => {
+                    setBoxStates((prev) => {
+                        const newState = [...prev];
+                        newState[index] = true; // Make the box visible
+                        return newState;
+                    });
+                }, 2000 * (index + 1)) // Increment delay for each box
+            );
+        });
+
+        return () => {
+            // Clear timeouts on cleanup
+            timeouts.forEach(clearTimeout);
+        };
+    }, []);
+
+
     return (
         <div className="pageStyle">
             {/* Main Container */}
             <div className="mainContainer">
                 {/* Left Boxes */}
                 <div className="leftBoxes">
-                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
-                        <h3>Who are we?</h3>
-                        <p>We're a "Social Enterprise" working to make mental healthcare accessible to everyone.</p>
+                    <div className={`boxStyle ${boxStates[0] ? "slideIn" : ""}`}>
+                        <p><b>Who are we?</b></p>
+                        <p>We're a social enterprise working to make mental healthcare accessible to everyone, regardless of their socioeconomic status.</p>
                     </div>
-                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
-                        <h3>What is our raison d’être?</h3>
-                        <p>We aim to eliminate the stigma around mental health and make it accessible to all.</p>
+                    <div className={`boxStyle ${boxStates[1] ? "slideIn" : ""}`}>
+                        <p><b>What is our raison d’être?</b></p>
+                        <p>In line with our vision and mission statement, we intend to make mental health a right for every individual, take away the stigma associated with it, and bring the means to it within geographic and economic reach of every individual.</p>
                     </div>
                 </div>
 
                 {/* Center Content */}
                 <div className="centerContent">
                     <h1 className="titleStyle">PsyCare</h1>
-                    <p className="subtitleStyle">Your path to mental wellness</p>
+                    <p className="subtitleStyle">Your path to mental wellness !</p>
                     <div
                         className="imageOverlay"
                         style={{ backgroundImage: `url(${homeImage})` }}
@@ -127,16 +151,50 @@ function Home() {
                 </div>
 
                 {/* Right Boxes */}
+                {/* Right Boxes */}
                 <div className="rightBoxes">
-                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
-                        <h3>How do we plan to achieve?</h3>
-                        <p>Our experts provide solutions for anxiety, depression, and substance abuse.</p>
+                    <div className={`boxStyle ${boxStates[2] ? "slideIn" : ""}`}>
+                        <p><b>Is it an NGO or a Social Enterprise?</b></p>
+                        <p>We're a social enterprise working to make mental healthcare accessible to everyone, regardless of their socioeconomic status.</p>
                     </div>
-                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
-                        <h3>What mental conditions do we help with?</h3>
-                        <p>We prioritize common disorders like anxiety, depression, and substance abuse.</p>
+                    <div className={`boxStyle ${boxStates[3] ? "slideIn" : ""}`}>
+                        <p><b>What kind of mental conditions do we help with?</b></p>
+                        <p>While our experts can address a wide range of mental health conditions, we prioritize the most common disorders, which account for 80% of cases: anxiety, depression, and substance abuse.</p>
                     </div>
                 </div>
+            </div>
+
+            <div style={{
+                padding: "20px",
+                width: "100%",
+                background: "linear-gradient(90deg, #FF8096, #FF4B75)",
+                color: "white",
+                borderRadius: "10px",
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                fontFamily: "'Roboto', sans-serif",
+                lineHeight: "1.6",
+                textAlign: "center"
+            }}>
+                <p style={{ fontSize: "1rem", margin: "0" }}>
+                    A simple <strong>"Hi"</strong> on WhatsApp at
+                    <a
+                        href="https://wa.me/918107191657?text=Hi%20I%20need%20assistance"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                        <i style={{
+                            color: "green",
+                            margin: "0 5px",
+                            fontSize: "1.2rem",
+                            cursor: "pointer"
+                        }}
+                            className="fa-brands fa-whatsapp fa-beat"></i>
+                    </a>
+                    is all it takes. We'll gather your details and guide you through a quick self-assessment test.
+                    We then connect you with our expert doctors for a 15-minute consultation. Get diagnosed, prescribed,
+                    and followed up—all from the comfort of your home.
+                </p>
             </div>
 
             {/* Scrolling Sections */}

@@ -24,28 +24,6 @@ body {
     margin-bottom: 50px;
 }
 
-/* Left and Right Boxes */
-.leftBoxes, .rightBoxes {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 40%;
-    padding: 5px;
-}
-
-.boxStyle {
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border: 5px solid #FF8096;
-    border-style: dotted;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
 /* Fade-in Animation */
 .boxStyle.animate {
     opacity: 1;
@@ -135,5 +113,52 @@ body {
 
     .sectionStyle {
         flex-direction: column;
+    }
+}
+.boxStyle {
+    background:linear-gradient(135deg, #FF8096, #FF4B75);
+    color: white; /* Add this line to make the text white */
+    padding: 42px;
+    border-radius: 49%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 5px solid #FF8096;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Slide-in Animation */
+.boxStyle.slideIn {
+    transform: translateX(0); /* Slide to original position */
+    opacity: 1; /* Fade-in effect */
+}
+
+/* Layout Adjustments */
+.mainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.leftBoxes, .rightBoxes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+    width: 70%;
+    padding: 7px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .mainContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .leftBoxes, .rightBoxes {
+        width: 100%;
     }
 }
