@@ -1,29 +1,250 @@
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+}
+
+/* Image Overlay Styles */
+.imageOverlay {
+    position: absolute;
+    top: 8%;
+    left: 20%;
+    transform: translateX(-50%);
+    width: 25vw;
+    max-width: 300px;
+    height: 40vh;
+    max-height: 400px;
+    border-radius: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 5px solid rgba(255, 255, 255, 0.8);
+    z-index: 1;
+    background-image: url('./home.jpg');
+}
+
+/* Main Section */
+.mainSection {
+    padding: 20px 50px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.titleStyle {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: #FF8096;
+}
+
+.subtitleStyle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #FF8096;
+}
+
+/* Info Boxes */
+.infoBoxesStyle {
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.boxStyle {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+/* Keyframes for sliding in */
 @keyframes slideIn {
-    from {
-        transform: translateY(-50%);
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    to {
+    100% {
+        opacity: 1;
         transform: translateY(0);
     }
 }
 
-@media (max-width: 768px) {
-    .sectionStyle {
-        flex-direction: column;
-        text-align: center;
+/* Keyframes for fading up all boxes */
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
     }
-
-    .imageStyle {
-        margin-bottom: 20px;
+    100% {
+        opacity: 1;
     }
 }
 
+/* Keyframes for sliding back in after fading */
+@keyframes slideBackIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for each box */
+.contentStyle {
+    font-size: 1rem;
+    color: #000000;
+    line-height: 1.5;
+    opacity: 0; /* Make sure the content is hidden initially */
+    animation-timing-function: ease-out;
+}
+
+/* Box 1 - Appears first, then fades in */
+.box1 .contentStyle {
+    animation: slideIn 1s forwards, fadeUp 3s 3s forwards; /* Slide in + fade up */
+}
+
+/* Box 2 - Appears after Box 1 */
+.box2 .contentStyle {
+    animation: slideIn 1s 1s forwards, fadeUp 3s 4s forwards; /* Slide in + fade up */
+}
+
+/* Box 3 - Appears after Box 2 */
+.box3 .contentStyle {
+    animation: slideIn 1s 2s forwards, fadeUp 3s 5s forwards; /* Slide in + fade up */
+}
+
+/* Apply the same slide back in animation after the fade */
+@keyframes resetSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the sliding effect again for the reset */
+.contentStyle {
+    animation: slideBackIn 1s forwards, fadeUp 3s 3s forwards, slideBackIn 1s 8s forwards;
+}
+
+/* Apply the fade-up animation after all items appear */
+@keyframes fadeAll {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Sections */
+.sectionStyle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaeaea;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.visibleStyle {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.textContainerStyle {
+    flex: 1 1 300px;
+    padding: 20px;
+}
+
+.imageContainerStyle {
+    flex: 1 1 300px;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.imageStyle {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Media Queries for smaller screens */
+@media screen and (max-width: 768px) {
+    .imageOverlay {
+        position: static;
+        transform: none;
+        width: 50vw;
+        height: 30vh;
+        max-height: 250px;
+        margin: 20px auto;
+    }
+
+    .mainSection {
+        padding: 20px;
+        height: auto;
+        text-align: center;
+    }
+
+    .infoBoxesStyle {
+        position: static;
+        top: 0;
+        right: 0;
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+        gap: 15px;
+    }
+
+    .boxStyle {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .sectionStyle {
+        display: block;
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .textContainerStyle,
+    .imageContainerStyle {
+        flex: 1 1 100%;
+        margin-bottom: 20px;
+    }
+
+    .imageStyle {
+        max-width: 100%;
+    }
+}

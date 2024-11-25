@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import home from "./home.jpg";
 import image1 from "./image-1.png";
 import image2 from "./image-2.jpeg";
 import image3 from "./image-3.png";
 import image4 from "./image-4.jpeg";
 import image5 from "./image-5.png";
+import "./Home.css";
 
 function Home() {
     const sections = [
@@ -63,7 +63,6 @@ function Home() {
     ];
 
     const [visibleSections, setVisibleSections] = useState({});
-
     const sectionRefs = useRef([]);
 
     useEffect(() => {
@@ -108,138 +107,57 @@ function Home() {
         overflow: "hidden",
     };
 
-    const imageOverlayStyle = {
-        position: "absolute",
-        top: "7.5%",
-        left: "5%",
-        width: "25vw", // Responsive width
-        maxWidth: "300px",
-        height: "40vh", // Responsive height
-        maxHeight: "400px",
-        borderRadius: "50px",
-        backgroundImage: `url(${home})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-        border: "5px solid rgba(255, 255, 255, 0.8)",
-        zIndex: 1,
-    };
-
-    const mainSectionStyle = {
-        padding: "20px 50px 20px calc(35%)",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        color: "#333",
-        textAlign: "left",
-        position: "relative",
-        zIndex: 2,
-    };
-
-    const titleStyle = {
-        fontSize: "3.5rem",
-        fontWeight: "700",
-        margin: "0 0 10px 0",
-        color: "#FF8096",
-    };
-
-    const subtitleStyle = {
-        fontSize: "1.5rem",
-        fontWeight: "300",
-        color: "#FF8096",
-    };
-
-    const sectionStyle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "50px",
-        backgroundColor: "#ffffff",
-        borderBottom: "1px solid #eaeaea",
-        flexWrap: "wrap",
-        opacity: 0, // Initially hidden
-        transform: "translateX(-50px)", // Slide in from left initially
-        transition: "opacity 0.8s ease, transform 0.8s ease",
-    };
-
-    const textContainerStyle = {
-        flex: "1 1 300px",
-        padding: "20px",
-    };
-
-    const textStyle = {
-        fontSize: "1.2rem",
-        lineHeight: "1.8",
-        color: "#333",
-    };
-
-    const imageContainerStyle = {
-        flex: "1 1 300px",
-        textAlign: "center",
-        padding: "20px",
-        overflow: "hidden", // Prevent overflow when zooming
-    };
-
-    const imageStyle = {
-        width: "100%",
-        maxWidth: "300px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-        transition: "transform 0.3s ease-in-out", // Smooth zoom transition
-    };
-
-    const visibleStyle = {
-        opacity: 1,
-        transform: "translateX(0)", // Move to its final position
-    };
-
-    // Create refs for each image
-    const imageRefs = useRef([]);
-
     return (
         <div style={pageStyle}>
             {/* Image Overlay */}
-            <div className="imageOverlay" style={imageOverlayStyle}></div>
+            <div className="imageOverlay"></div>
 
             {/* Main Section */}
-            <div className="mainSection" style={mainSectionStyle}>
-                <h1 style={titleStyle}>PsyCare</h1>
-                <p style={subtitleStyle}>Your path to mental Wellness</p>
+            <div className="mainSection">
+                <h1 className="titleStyle">PsyCare</h1>
+                <p className="subtitleStyle">Your path to mental wellness</p>
+
+                {/* Vertical Information Boxes (Right-Aligned) */}
+                <div className="infoBoxesStyle">
+                    <div className="boxStyle">
+                        <h3 style={{color:"#FF8096"}}>Who are we?</h3>
+                        <p className="contentStyle">
+                            "We're a social startup working to make mental healthcare accessible to everyone, regardless of their socioeconomic status."
+                        </p>
+                    </div>
+                    <div className="boxStyle">
+                        <h3 style={{color:"#FF8096"}}>What is our raison d’être?</h3>
+                        <p className="contentStyle">
+                            In line with our vision and mission statement, we intend to make mental health a right for every individual, take away the stigma associated with it, and bring the means to it within geographic and economic reach of every individual.
+                        </p>
+                    </div>
+                    <div className="boxStyle">
+                        <h3 style={{color:"#FF8096"}}>How do we plan to achieve our objective?</h3>
+                        <p className="contentStyle">
+                            "Anxiety, depression, and substance abuse account for a significant portion of psychological disorders (80%). Our expert psychiatrists provide solutions to alleviate these conditions."
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            {/* Scrolling Sections with Animations */}
+            {/* Scrolling Sections */}
             {sections.map((section, index) => (
                 <div
                     key={index}
                     id={`section-${index}`}
                     ref={(el) => (sectionRefs.current[index] = el)}
-                    style={{
-                        ...sectionStyle,
-                        ...(visibleSections[`section-${index}`] ? visibleStyle : {}),
-                    }}
+                    className={`sectionStyle ${visibleSections[`section-${index}`] ? "visibleStyle" : ""}`}
                 >
-                    <div style={textContainerStyle}>
-                        <p style={textStyle}>{section.text}</p>
+                    <div className="textContainerStyle">
+                        <p>{section.text}</p>
                     </div>
                     <div
-                        style={imageContainerStyle}
-                        onMouseEnter={() => {
-                            // Apply zoom to the image on hover
-                            imageRefs.current[index].style.transform = "scale(1.1)";
-                        }}
-                        onMouseLeave={() => {
-                            // Reset zoom when hover ends
-                            imageRefs.current[index].style.transform = "scale(1)";
-                        }}
+                        className="imageContainerStyle"
                     >
                         <img
                             src={section.image}
                             alt={`Illustration ${index + 1}`}
-                            style={imageStyle}
-                            ref={(el) => (imageRefs.current[index] = el)} // Assign ref to each image
+                            className="imageStyle"
                         />
                     </div>
                 </div>
