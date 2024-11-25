@@ -4,6 +4,7 @@ import image2 from "./image-2.jpeg";
 import image3 from "./image-3.png";
 import image4 from "./image-4.jpeg";
 import image5 from "./image-5.png";
+import homeImage from "./home.jpg";
 import "./Home.css";
 
 function Home() {
@@ -13,9 +14,9 @@ function Home() {
                 <>
                     <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
                     <br />
-                    What do Virat Kohli, Maria Sharapova, Deepika Padukone, Chetan Bhagat, Justin Bieber, Manisha Koirala, Prince Harry, Serena Williams, and Michael Phelps have in common? 
+                    What do Virat Kohli, Maria Sharapova, Deepika Padukone, and others have in common?
                     <br />
-                    They all overcame mental health challenges and regained their stardom.
+                    They all overcame mental health challenges.
                 </>
             ),
             image: image1,
@@ -25,7 +26,7 @@ function Home() {
                 <>
                     <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
                     <br />
-                    Prolonged anxiety, mood swings, and tension can be signs of underlying mental health conditions.
+                    Prolonged anxiety and mood swings can indicate underlying mental health conditions.
                 </>
             ),
             image: image2,
@@ -35,7 +36,7 @@ function Home() {
                 <>
                     <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
                     <br />
-                    Every 4th person in the world experiences some form of mental health issue.
+                    Every 4th person in the world experiences mental health issues.
                 </>
             ),
             image: image3,
@@ -45,7 +46,7 @@ function Home() {
                 <>
                     <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
                     <br />
-                    Depression often stems from chemical imbalances in the brain, though triggers may vary.
+                    Depression often stems from chemical imbalances in the brain.
                 </>
             ),
             image: image4,
@@ -55,7 +56,7 @@ function Home() {
                 <>
                     <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Do you know?</span>
                     <br />
-                    General Anxiety, Depression, and Alcohol Abuse account for 80% of mental disorders and are 100% treatable with medical intervention.
+                    Anxiety, Depression, and Alcohol Abuse are treatable with medical care.
                 </>
             ),
             image: image5,
@@ -64,6 +65,7 @@ function Home() {
 
     const [visibleSections, setVisibleSections] = useState({});
     const sectionRefs = useRef([]);
+    const [animateBoxes, setAnimateBoxes] = useState(false);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -74,68 +76,65 @@ function Home() {
                             ...prev,
                             [entry.target.id]: true,
                         }));
-                    } else {
-                        setVisibleSections((prev) => ({
-                            ...prev,
-                            [entry.target.id]: false,
-                        }));
                     }
                 });
             },
             { threshold: 0.3 }
         );
 
-        const refsCopy = sectionRefs.current;
-
-        refsCopy.forEach((ref) => {
+        sectionRefs.current.forEach((ref) => {
             if (ref) observer.observe(ref);
         });
 
         return () => {
-            refsCopy.forEach((ref) => {
+            sectionRefs.current.forEach((ref) => {
                 if (ref) observer.unobserve(ref);
             });
         };
     }, []);
 
-    const pageStyle = {
-        margin: 0,
-        padding: 0,
-        fontFamily: "'Roboto', sans-serif",
-        backgroundColor: "#ffffff",
-        position: "relative",
-        overflow: "hidden",
-    };
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setAnimateBoxes(true);
+        }, 3000); // Start animating boxes 3 seconds after page load
+        return () => clearTimeout(timeout);
+    }, []);
 
     return (
-        <div style={pageStyle}>
-            {/* Image Overlay */}
-            <div className="imageOverlay"></div>
-
-            {/* Main Section */}
-            <div className="mainSection">
-                <h1 className="titleStyle">PsyCare</h1>
-                <p className="subtitleStyle">Your path to mental wellness</p>
-
-                {/* Vertical Information Boxes (Right-Aligned) */}
-                <div className="infoBoxesStyle">
-                    <div className="boxStyle">
-                        <h3 style={{color:"#FF8096"}}>Who are we?</h3>
-                        <p className="contentStyle">
-                            "We're a social startup working to make mental healthcare accessible to everyone, regardless of their socioeconomic status."
-                        </p>
+        <div className="pageStyle">
+            {/* Main Container */}
+            <div className="mainContainer">
+                {/* Left Boxes */}
+                <div className="leftBoxes">
+                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
+                        <h3>Who are we?</h3>
+                        <p>We're a "Social Enterprise" working to make mental healthcare accessible to everyone.</p>
                     </div>
-                    <div className="boxStyle">
-                        <h3 style={{color:"#FF8096"}}>What is our raison d’être?</h3>
-                        <p className="contentStyle">
-                            In line with our vision and mission statement, we intend to make mental health a right for every individual, take away the stigma associated with it, and bring the means to it within geographic and economic reach of every individual.
-                        </p>
+                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
+                        <h3>What is our raison d’être?</h3>
+                        <p>We aim to eliminate the stigma around mental health and make it accessible to all.</p>
                     </div>
-                    <div className="boxStyle">
-                        <h3 style={{color:"#FF8096"}}>How do we plan to achieve our objective?</h3>
-                        <p className="contentStyle">
-                            "Anxiety, depression, and substance abuse account for a significant portion of psychological disorders (80%). Our expert psychiatrists provide solutions to alleviate these conditions."
-                        </p>
+                </div>
+
+                {/* Center Content */}
+                <div className="centerContent">
+                    <h1 className="titleStyle">PsyCare</h1>
+                    <p className="subtitleStyle">Your path to mental wellness</p>
+                    <div
+                        className="imageOverlay"
+                        style={{ backgroundImage: `url(${homeImage})` }}
+                    ></div>
+                </div>
+
+                {/* Right Boxes */}
+                <div className="rightBoxes">
+                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
+                        <h3>How do we plan to achieve?</h3>
+                        <p>Our experts provide solutions for anxiety, depression, and substance abuse.</p>
+                    </div>
+                    <div className={`boxStyle ${animateBoxes ? "animate" : ""}`}>
+                        <h3>What mental conditions do we help with?</h3>
+                        <p>We prioritize common disorders like anxiety, depression, and substance abuse.</p>
                     </div>
                 </div>
             </div>
@@ -151,14 +150,8 @@ function Home() {
                     <div className="textContainerStyle">
                         <p>{section.text}</p>
                     </div>
-                    <div
-                        className="imageContainerStyle"
-                    >
-                        <img
-                            src={section.image}
-                            alt={`Illustration ${index + 1}`}
-                            className="imageStyle"
-                        />
+                    <div className="imageContainerStyle">
+                        <img src={section.image} alt={`Illustration ${index + 1}`} className="imageStyle" />
                     </div>
                 </div>
             ))}

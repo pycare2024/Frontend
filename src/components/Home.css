@@ -10,166 +10,84 @@ body {
     background-color: #ffffff;
 }
 
-/* Image Overlay Styles */
-.imageOverlay {
-    position: absolute;
-    top: 8%;
-    left: 20%;
-    transform: translateX(-50%);
-    width: 25vw;
-    max-width: 300px;
-    height: 40vh;
-    max-height: 400px;
-    border-radius: 50px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border: 5px solid rgba(255, 255, 255, 0.8);
-    z-index: 1;
-    background-image: url('./home.jpg');
+.pageStyle {
+    padding: 20px;
+    background-color: #ffffff;
+    margin-top: 70px;
 }
 
-/* Main Section */
-.mainSection {
-    padding: 20px 50px;
-    height: 100vh;
+/* Main Layout */
+.mainContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color: #333;
-    text-align: center;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 50px;
 }
 
-.titleStyle {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin: 0 0 10px;
-    color: #FF8096;
-}
-
-.subtitleStyle {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: #FF8096;
-}
-
-/* Info Boxes */
-.infoBoxesStyle {
-    position: absolute;
-    top: 15%;
-    right: 5%;
+/* Left and Right Boxes */
+.leftBoxes, .rightBoxes {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 40%;
+    padding: 5px;
 }
 
 .boxStyle {
+    background-color: white;
     padding: 15px;
-    background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 400px;
+    border: 5px solid #FF8096;
+    border-style: dotted;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
 }
 
-/* Keyframes for sliding in */
-@keyframes slideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Fade-in Animation */
+.boxStyle.animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Keyframes for fading up all boxes */
-@keyframes fadeUp {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+/* Center Content */
+.centerContent {
+    text-align: center;
+    width: 50%;
 }
 
-/* Keyframes for sliding back in after fading */
-@keyframes slideBackIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.titleStyle {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #FF8096;
+    margin-bottom: 10px;
 }
 
-/* Animation for each box */
-.contentStyle {
-    font-size: 1rem;
-    color: #000000;
-    line-height: 1.5;
-    opacity: 0; /* Make sure the content is hidden initially */
-    animation-timing-function: ease-out;
+.subtitleStyle {
+    font-size: 1.2rem;
+    color: #FF8096;
+    margin-bottom: 20px;
 }
 
-/* Box 1 - Appears first, then fades in */
-.box1 .contentStyle {
-    animation: slideIn 1s forwards, fadeUp 3s 3s forwards; /* Slide in + fade up */
+.imageOverlay {
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 30%;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Box 2 - Appears after Box 1 */
-.box2 .contentStyle {
-    animation: slideIn 1s 1s forwards, fadeUp 3s 4s forwards; /* Slide in + fade up */
-}
-
-/* Box 3 - Appears after Box 2 */
-.box3 .contentStyle {
-    animation: slideIn 1s 2s forwards, fadeUp 3s 5s forwards; /* Slide in + fade up */
-}
-
-/* Apply the same slide back in animation after the fade */
-@keyframes resetSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Apply the sliding effect again for the reset */
-.contentStyle {
-    animation: slideBackIn 1s forwards, fadeUp 3s 3s forwards, slideBackIn 1s 8s forwards;
-}
-
-/* Apply the fade-up animation after all items appear */
-@keyframes fadeAll {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Sections */
+/* Scrolling Sections */
 .sectionStyle {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 50px;
-    background-color: #ffffff;
     border-bottom: 1px solid #eaeaea;
-    flex-wrap: wrap;
     opacity: 0;
     transform: translateX(-50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
@@ -181,15 +99,13 @@ body {
 }
 
 .textContainerStyle {
-    flex: 1 1 300px;
+    flex: 1;
     padding: 20px;
 }
 
 .imageContainerStyle {
-    flex: 1 1 300px;
+    flex: 1;
     text-align: center;
-    padding: 20px;
-    overflow: hidden;
 }
 
 .imageStyle {
@@ -197,54 +113,27 @@ body {
     max-width: 300px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out;
 }
 
-/* Media Queries for smaller screens */
+/* Responsive Design */
 @media screen and (max-width: 768px) {
-    .imageOverlay {
-        position: static;
-        transform: none;
-        width: 50vw;
-        height: 30vh;
-        max-height: 250px;
-        margin: 20px auto;
+    .mainContainer {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .mainSection {
-        padding: 20px;
-        height: auto;
-        text-align: center;
-    }
-
-    .infoBoxesStyle {
-        position: static;
-        top: 0;
-        right: 0;
-        display: block;
+    .leftBoxes, .rightBoxes {
         width: 100%;
-        margin-top: 20px;
-        gap: 15px;
+        flex-direction: row;
+        justify-content: space-around;
     }
 
-    .boxStyle {
+    .centerContent {
         width: 100%;
-        padding: 15px;
-    }
-
-    .sectionStyle {
-        display: block;
-        padding: 30px 20px;
-        text-align: center;
-    }
-
-    .textContainerStyle,
-    .imageContainerStyle {
-        flex: 1 1 100%;
         margin-bottom: 20px;
     }
 
-    .imageStyle {
-        max-width: 100%;
+    .sectionStyle {
+        flex-direction: column;
     }
 }
