@@ -168,7 +168,7 @@ function Home() {
                 textAlign: "center"
             }}>
                 <p style={{ fontSize: "1rem", margin: "0" }}>
-                    A simple <strong>"Hi"</strong> on WhatsApp at
+                    Just ping us on whatsapp
                     <a
                         href="https://wa.me/918107191657?text=Hi%20I%20need%20assistance"
                         target="_blank"
@@ -183,9 +183,7 @@ function Home() {
                         }}
                             className="fa-brands fa-whatsapp fa-beat"></i>
                     </a>
-                    is all it takes. We'll gather your details and guide you through a quick self-assessment test.
-                    We then connect you with our expert doctors for a 15-minute consultation. Get diagnosed, prescribed,
-                    and followed up—all from the comfort of your home.
+                    and we will do the rest!
                 </p>
             </div>
 
