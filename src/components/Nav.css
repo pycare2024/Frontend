@@ -1,3 +1,4 @@
+/* General Container Styling */
 .container {
     display: flex;
     justify-content: space-between;
@@ -7,6 +8,7 @@
 nav a, nav button {
     padding: 5px 10px;
     border-radius: 5px;
+    text-decoration: none;
 }
 
 nav a:hover, nav button:hover {
@@ -27,4 +29,35 @@ nav a:hover, nav button:hover {
     .container {
         position: relative; /* Allow absolute positioning of the mobile menu */
     }
+}
+
+/* Mobile Menu Styling */
+.mobileMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff; /* Background color for the mobile menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent overflow during animation */
+    max-height: 0; /* Hidden by default */
+    transition: max-height 0.5s ease-in-out; /* Smooth slide-down effect */
+}
+
+.mobileMenu.open {
+    max-height: 300px; /* Adjust based on menu content size */
+}
+
+.mobileMenu a, .mobileMenu button {
+    display: block; /* Stack links vertically */
+    color: #333;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.mobileMenu a:hover, .mobileMenu button:hover {
+    background: rgba(255, 128, 150, 0.1); /* Light hover effect */
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import logo from "./logo.jpeg"; // Ensure this path is correct
+import "./Nav.css";
 
 function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" }) {
     const location = useLocation();
@@ -33,7 +34,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         height: "50px",
         borderRadius: "30%",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-        backgroundColor:"blue",
+        backgroundColor: "blue",
     };
 
     const linkStyle = {
@@ -48,31 +49,13 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
     const activeLinkStyle = {
         color: "#FF8096", // Highlight active link with pink
         fontWeight: "bold",
-        textDecoration:"none",
+        textDecoration: "none",
     };
 
     const menuIconStyle = {
         fontSize: "1.5rem",
         color: "#FF8096",
         cursor: "pointer",
-    };
-
-    const mobileMenuStyle = {
-        display: isMobileMenuOpen ? "block" : "none", // Show or hide the mobile menu
-        background: navBackground,
-        position: "absolute",
-        top: "100%",
-        left: 0,
-        width: "100%",
-        zIndex: 10,
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        padding: "10px",
-    };
-
-    const mobileLinkStyle = {
-        ...linkStyle,
-        display: "block",
-        padding: "10px 0",
     };
 
     return (
@@ -189,64 +172,103 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
             </div>
 
             {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div style={mobileMenuStyle}>
-                    <Link
-                        to="/Home"
-                        style={location.pathname === "/Home" ? activeLinkStyle : mobileLinkStyle}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        to="/About"
-                        style={location.pathname === "/About" ? activeLinkStyle : mobileLinkStyle}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        About Us
-                    </Link>
-                    {!isLoggedIn && !isDocLoggedIn && (
-                        <>
-                            <Link
-                                to="/Login"
-                                style={
-                                    location.pathname === "/Login" ? activeLinkStyle : mobileLinkStyle
-                                }
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                Admin
-                            </Link>
-                            <Link
-                                to="/DoctorLogin"
-                                style={
-                                    location.pathname === "/DoctorLogin"
-                                        ? activeLinkStyle
-                                        : mobileLinkStyle
-                                }
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                I am Doctor
-                            </Link>
-                        </>
-                    )}
-                    {(isLoggedIn || isDocLoggedIn) && (
+            <div className={`mobileMenu ${isMobileMenuOpen ? "open" : ""}`}>
+                <Link
+                    to="/Home"
+                    style={location.pathname === "/Home" ? activeLinkStyle : linkStyle}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                >
+                    Home
+                </Link>
+                <Link
+                    to="/About"
+                    style={location.pathname === "/About" ? activeLinkStyle : linkStyle}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                >
+                    About Us
+                </Link>
+                {isDocLoggedIn && (
+                    <>
+                        <Link
+                            to="/Patients"
+                            style={
+                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Patients
+                        </Link>
                         <button
-                            onClick={() => {
-                                onLogout();
-                                setIsMobileMenuOpen(false);
-                            }}
+                            onClick={onLogout}
                             style={{
-                                ...mobileLinkStyle,
+                                ...linkStyle,
                                 background: "none",
                                 border: "none",
-                                textAlign: "left",
+                                cursor: "pointer",
                             }}
                         >
                             Logout
                         </button>
-                    )}
-                </div>
-            )}
+                    </>
+                )}
+                {isLoggedIn && (
+                    <>
+                        <Link
+                            to="/Doctors"
+                            style={
+                                location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Doctors
+                        </Link>
+                        <Link
+                            to="/Patients"
+                            style={
+                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Patients
+                        </Link>
+                    </>
+                )}
+                {!isLoggedIn && !isDocLoggedIn && (
+                    <>
+                        <Link
+                            to="/Login"
+                            style={location.pathname === "/Login" ? activeLinkStyle : linkStyle}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            Admin
+                        </Link>
+                        <Link
+                            to="/DoctorLogin"
+                            style={
+                                location.pathname === "/DoctorLogin"
+                                    ? activeLinkStyle
+                                    : linkStyle
+                            }
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            I am Doctor
+                        </Link>
+                    </>
+                )}
+                {(isLoggedIn || isDocLoggedIn) && (
+                    <button
+                        onClick={() => {
+                            onLogout();
+                            setIsMobileMenuOpen(false);
+                        }}
+                        style={{
+                            ...linkStyle,
+                            background: "none",
+                            border: "none",
+                            textAlign: "left",
+                        }}
+                    >
+                        Logout
+                    </button>
+                )}
+            </div>
         </nav>
     );
 }
