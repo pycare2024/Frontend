@@ -132,11 +132,7 @@ function Home() {
                 <div className="leftBoxes">
                     <div className={`boxStyle ${boxStates[0] ? "slideIn" : ""}`}>
                         <p><b>Who are we?</b></p>
-                        <p>We're a social enterprise working to make mental healthcare accessible to everyone, regardless of their socioeconomic status.</p>
-                    </div>
-                    <div className={`boxStyle ${boxStates[1] ? "slideIn" : ""}`}>
-                        <p><b>What is our raison d’être?</b></p>
-                        <p>In line with our vision and mission statement, we intend to make mental health a right for every individual, take away the stigma associated with it, and bring the means to it within geographic and economic reach of every individual.</p>
+                        <p>We're a social enterprise committed to making affordable mental healthcare accessible to everyone from the comfort of their homes !</p>
                     </div>
                 </div>
 
@@ -154,12 +150,8 @@ function Home() {
                 {/* Right Boxes */}
                 <div className="rightBoxes">
                     <div className={`boxStyle ${boxStates[2] ? "slideIn" : ""}`}>
-                        <p><b>Is it an NGO or a Social Enterprise?</b></p>
-                        <p>We're a social enterprise working to make mental healthcare accessible to everyone, regardless of their socioeconomic status.</p>
-                    </div>
-                    <div className={`boxStyle ${boxStates[3] ? "slideIn" : ""}`}>
                         <p><b>What kind of mental conditions do we help with?</b></p>
-                        <p>While our experts can address a wide range of mental health conditions, we prioritize the most common disorders, which account for 80% of cases: anxiety, depression, and substance abuse.</p>
+                        <p>Our experts address the most common disorders such as anxiety, depression and substance abuse, which account for 80% of the mental health cases.</p>
                     </div>
                 </div>
             </div>
