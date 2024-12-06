@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import logo from "./logo.jpeg"; // Ensure this path is correct
+import logo from "./logo.png"; // Ensure this path is correct
 import "./Nav.css";
 
 function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" }) {
@@ -9,7 +9,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navStyle = {
-        backgroundColor: "#ffffff", // Light cream background
+        // backgroundColor: "#ffffff", // Light cream background
+        backgroundColor: "#ffffff",
         padding: "10px 20px",
         boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
         position: "fixed", // Make the navbar fixed
@@ -32,7 +33,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
     const logoStyle = {
         width: "60px",
         height: "50px",
-        borderRadius: "30%",
+        // borderRadius: "30%",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
         backgroundColor: "blue",
     };
