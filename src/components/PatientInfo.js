@@ -122,7 +122,7 @@ function PatientInfo() {
                 </div>
             )}
 
-            <h1 style={{ textAlign: "center", color: "#007bff", marginBottom: "20px", fontSize: "2em", fontWeight: "bold" }}>Patient Information</h1>
+            <h1 style={{ textAlign: "center", color: "#FF8096", marginBottom: "20px", fontSize: "2em", fontWeight: "bold" ,marginTop:"10%"}}>Patient Information</h1>
             {patient ? (
                 <div>
                     <table className="table table-striped table-bordered" style={{
@@ -145,7 +145,7 @@ function PatientInfo() {
                         <FaRegEye style={{ marginRight: '8px' }} /> View Screening Test Details
                     </button>
 
-                    <h2 style={{ color: "#007bff", marginBottom: "20px", marginTop: "30px", textAlign: "center", fontSize: "30px" }}>Patient Records</h2>
+                    <h2 style={{ color: "#FF8096", marginBottom: "20px", marginTop: "30px", textAlign: "center", fontSize: "30px",textDecoration:"bold" }}>Patient Records</h2>
                     <button
                         onClick={() => setShowForm(true)}
                         style={styles.buttonSuccess}
@@ -246,7 +246,7 @@ function PatientInfo() {
 const styles = {
     buttonPrimary: {
         padding: "10px 20px",
-        backgroundColor: "#007bff",
+        backgroundColor: "#FF8096",
         color: "#fff",
         border: "none",
         borderRadius: "5px",

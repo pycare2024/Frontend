@@ -1,42 +1,47 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom right, #e0f7fa, #80deea); /* Updated background */
+    background-color: #f9f9f9; /* Soft neutral background for a clean look */
     color: #444; /* Soft font color for readability */
 }
 
 .doctors-page {
+    margin-top: 5%;
     padding: 20px;
     text-align: center;
+    min-height: 100vh;
+    box-sizing: border-box; /* Ensures padding is included in height calculations */
 }
 
 .page-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: #007bff; /* Professional blue tone */
-    background: linear-gradient(to right, #007bff, #80deea); /* Gradient effect for title */
+    color: #FF8096; /* Professional and calming pink tone */
+    background: linear-gradient(to right, #FF8096, #FFD1DC); /* Subtle gradient effect */
     -webkit-background-clip: text; /* Clip background to text */
     -webkit-text-fill-color: transparent; /* Make text show gradient */
-    text-align: center;
+    margin-top: 1%;
     margin-bottom: 20px;
 }
 
 .add-btn {
-    display: block;
+    display: inline-block;
     margin: 0 auto 20px auto;
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 12px 25px;
+    background-color: #FF8096; /* Matches the page theme */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-3px); /* Slight lift on hover */
+    background-color: #FF5A75; /* Slightly darker pink */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(255, 90, 117, 0.2);
 }
 
 .form-overlay {
@@ -54,11 +59,11 @@ body {
 
 .form-modal {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    max-width: 90%;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%; /* Adjust to be mobile-friendly */
+    max-width: 400px;
     text-align: center;
 }
 
@@ -68,36 +73,36 @@ body {
     gap: 20px;
     justify-content: center;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent container */
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .doctor-card {
     background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width on smaller devices */
+    max-width: 320px; /* Limits the size on larger devices */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .doctor-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .doctor-card h3 {
     margin-bottom: 10px;
     font-size: 1.5rem;
-    color: #007bff;
+    color: #FF8096;
+    font-weight: bold;
 }
 
 .doctor-card p {
     margin: 5px 0;
     font-size: 0.9rem;
     color: #555;
+    line-height: 1.4;
 }
 
 .doctor-card .btn-danger {
@@ -105,12 +110,81 @@ body {
     background-color: #dc3545;
     color: white;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .doctor-card .btn-danger:hover {
     background-color: #c82333;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+}
+
+/* Global container and layout */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures it spans the full viewport */
+}
+
+.content-wrap {
+    flex: 1;
+    padding: 20px; /* Add spacing if needed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.footer {
+    background-color: #FF8096;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 0.9rem;
+    margin-top: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Responsive Design - Media Queries */
+
+/* Smaller screens (tablets and phones) */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .add-btn {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    .doctor-card {
+        width: 100%; /* Use full width */
+        margin: 0 auto;
+    }
+
+    .footer {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+}
+
+/* Extra small screens (phones in portrait mode) */
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .add-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    .form-modal {
+        width: 95%;
+    }
 }

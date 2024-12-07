@@ -22,12 +22,13 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
 
     const brandStyle = {
         fontWeight: "bold",
-        fontSize: "2rem",
+        fontSize: "2.2rem",
         color: "#FF8096",
         textDecoration: "none",
         display: "flex",
         alignItems: "center",
         gap: "10px",
+        marginLeft:"8%",
     };
 
     const logoStyle = {
@@ -63,8 +64,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         <nav style={navStyle}>
             <div className="container d-flex justify-content-between align-items-center">
                 <Link to="/" style={brandStyle}>
-                    We are here to Help !
-                    <img src={logo} alt="Logo" style={logoStyle} />
+                    PsyCare
+                    {/* <img src={logo} alt="Logo" style={logoStyle} /> */}
                 </Link>
 
                 {/* Desktop Links */}

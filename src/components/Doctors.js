@@ -220,7 +220,7 @@ function Doctors() {
             <div className="doctor-list">
                 {doctors.map((doctor) => (
                     <div key={doctor._id} className="doctor-card">
-                        <h3>{doctor.Name}</h3>
+                        <h3>{doctor.Name}<i class="fa-solid fa-stethoscope"></i></h3>
                         <p><strong>Age:</strong> {doctor.Age}</p>
                         <p><strong>Gender:</strong> {doctor.Gender}</p>
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>

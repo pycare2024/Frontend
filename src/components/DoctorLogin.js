@@ -36,25 +36,28 @@ function DoctorLogin({ onLogin }) {
     };
 
     const pageStyle = {
-        backgroundImage: `url(${doctorLoginImage})`, // Set the background image
-        backgroundSize: "cover", // Ensure the image covers the entire page
+        backgroundImage: `url(${doctorLoginImage})`,
+        backgroundColor: "white",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        height: "100vh", // Full viewport height
+        height: "100vh",
         display: "flex",
-        justifyContent: "center", // Center form horizontally
-        alignItems: "center", // Center form vertically
+        justifyContent: "center",
+        alignItems: "center",
         fontFamily: "'Poppins', sans-serif",
         color: "#333",
     };
 
     const formContainerStyle = {
-        backgroundColor: "rgba(255, 255, 255, 0.95)", // Semi-transparent white background
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
         borderRadius: "15px",
         boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
         padding: "30px",
-        width: "400px",
+        width: "350px",
         textAlign: "center",
+        marginLeft: "70%",
+        marginBottom: "13%",
     };
 
     const inputStyle = {
@@ -69,18 +72,18 @@ function DoctorLogin({ onLogin }) {
     const buttonStyle = {
         width: "100%",
         padding: "10px",
-        backgroundColor: "#007bff",
+        backgroundColor: "#FF8096",
         color: "#fff",
         border: "none",
         borderRadius: "5px",
         cursor: "pointer",
         fontSize: "1rem",
         marginTop: "10px",
-        transition: "background-color 0.3s ease",
+        transition: "transform 0.3s ease",
     };
 
     const buttonHoverStyle = {
-        backgroundColor: "#0056b3",
+        transform: "scale(1.05)",
     };
 
     const forgotPasswordStyle = {
@@ -126,8 +129,8 @@ function DoctorLogin({ onLogin }) {
                     <button
                         type="submit"
                         style={buttonStyle}
-                        onMouseOver={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-                        onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
+                        onMouseOver={(e) => (e.target.style.transform = buttonHoverStyle.transform)}
+                        onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
                     >
                         Login
                     </button>
