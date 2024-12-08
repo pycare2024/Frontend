@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import image1 from "./image-1.png";
 import image2 from "./image-2.jpeg";
 import image3 from "./image-3.png";
@@ -66,6 +68,15 @@ function Home() {
     const [visibleSections, setVisibleSections] = useState({});
     const sectionRefs = useRef([]);
     const [animateBoxes, setAnimateBoxes] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        query: "",
+    });
+
+    const [boxStates, setBoxStates] = useState([false, false, false, false]); // Track visibility of each box
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -100,8 +111,6 @@ function Home() {
         return () => clearTimeout(timeout);
     }, []);
 
-    const [boxStates, setBoxStates] = useState([false, false, false, false]); // Track visibility of each box
-
     useEffect(() => {
         // Trigger animations with delays
         const timeouts = [];
@@ -123,9 +132,62 @@ function Home() {
         };
     }, []);
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("https://backend-xhl4.onrender.com/QueryRoute/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    phno: formData.phone,
+                    query: formData.query,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                toast.success("Query submitted successfully! Our team will reach out to you soon.", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: { fontSize: "1rem", textAlign: "center", fontFamily: "Arial, sans-serif" },
+                });
+                setFormData({ name: "", email: "", phone: "", query: "" });
+                setIsModalOpen(false);
+            } else {
+                toast.error(`Error: ${result.message}`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                });
+            }
+        } catch (error) {
+            console.error("Error submitting query:", error);
+            toast.error("An error occurred. Please try again later.", {
+                position: "top-center",
+                autoClose: 5000,
+            });
+        }
+    };
 
     return (
         <div className="pageStyle">
+            {/* Toast Container */}
+            <ToastContainer />
+
             {/* Main Container */}
             <div className="mainContainer">
                 {/* Left Boxes */}
@@ -146,7 +208,6 @@ function Home() {
                     ></div>
                 </div>
 
-                {/* Right Boxes */}
                 {/* Right Boxes */}
                 <div className="rightBoxes">
                     <div className={`boxStyle ${boxStates[2] ? "slideIn" : ""}`}>
@@ -203,6 +264,77 @@ function Home() {
                     </div>
                 </div>
             ))}
+
+            {/* Query Button */}
+            <button
+                className="queryButton"
+                onClick={() => setIsModalOpen(true)}
+            >
+                Query?
+            </button>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="modalOverlay">
+                    <div className="modalContent">
+                        <button className="closeModalButton" onClick={() => setIsModalOpen(false)}>
+                            <i className="fa fa-times" style={{ fontSize: '1.5rem' }}></i>
+                        </button>
+                        <h2 className="modalTitle">Submit Your Query</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="formField">
+                                <label htmlFor="name">Name</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Enter your full name"
+                                />
+                            </div>
+                            <div className="formField">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Enter your email"
+                                />
+                            </div>
+                            <div className="formField">
+                                <label htmlFor="phone">Phone</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Enter your phone number"
+                                />
+                            </div>
+                            <div className="formField">
+                                <label htmlFor="query">Your Query</label>
+                                <textarea
+                                    id="query"
+                                    name="query"
+                                    value={formData.query}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Describe your query"
+                                    rows="4"
+                                />
+                            </div>
+                            <button type="submit" className="submitButton">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
