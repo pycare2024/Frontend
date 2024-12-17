@@ -1,52 +1,63 @@
 /* General styling */
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Professional Google Font */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: white; /* Subtle gradient */
 }
 
 .about-container {
-    background-color: #f8f8f8;
     padding: 20px;
 }
 
 .about-content {
     max-width: 1000px;
     margin: 0 auto;
-    padding-top: 80px; /* Adjust this for the navbar */
+    padding-top: 80px; /* Adjust for navbar */
 }
 
 .about-heading {
     text-align: center;
     font-size: 3rem;
-    color: #2c3e50;
+    color: #FF4B75;
     margin-bottom: 40px;
 }
 
 .about-section {
     margin-bottom: 40px;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+}
+
+.about-section:hover {
+    transform: translateY(-5px); /* Elevation effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .section-title {
     font-size: 2rem;
     color: #34495e;
     margin-bottom: 15px;
-    border-bottom: 2px solid #34495e;
+    border-bottom: 3px solid #FF4B75;
     padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+.section-title .icon {
+    color: #FF4B75; /* Accent color for icons */
+    font-size: 1.5rem;
 }
 
 .section-text {
     font-size: 1.2rem;
     color: #555;
-    line-height: 1.6;
+    line-height: 1.8; /* Better readability */
 }
-
-/* FAQ Section removed - FAQ Button and Modal styling removed */
 
 /* Media Queries for Responsive Design */
 @media screen and (max-width: 768px) {

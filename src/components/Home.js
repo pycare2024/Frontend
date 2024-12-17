@@ -219,17 +219,21 @@ function Home() {
 
             <div style={{
                 padding: "20px",
-                width: "100%",
+                width: "99.5vw", // Ensure it spans the full viewport width
                 background: "linear-gradient(90deg, #FF8096, #FF4B75)",
                 color: "white",
-                borderRadius: "10px",
-                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                 fontFamily: "'Roboto', sans-serif",
-                lineHeight: "1.6",
-                textAlign: "center"
+                margin: "0", // Remove any margin
+                position: "relative",
+                left: "50%",
+                transform: "translateX(-50%)", // Ensure it centers if wrapped inside another container
+                display: "flex", // Flexbox for horizontal layout
+                justifyContent: "space-between", // Spread items: left, center, right
+                alignItems: "center", // Align vertically in the center
             }}>
-                <p style={{ fontSize: "1rem", margin: "0" }}>
-                    Just ping us on whatsapp
+                {/* Left-aligned content */}
+                <p style={{ fontSize: "1.4rem", margin: "0" }}>
+                    Ping us on
                     <a
                         href="https://wa.me/918107191657?text=Hi%20I%20need%20assistance"
                         target="_blank"
@@ -244,7 +248,26 @@ function Home() {
                         }}
                             className="fa-brands fa-whatsapp fa-beat"></i>
                     </a>
-                    and we will do the rest!
+                    to get started
+                </p>
+
+                {/* Center-aligned content with query functionality */}
+                <p
+                    style={{
+                        fontSize: "1.5rem",
+                        margin: "0",
+                        textAlign: "center",
+                        cursor: "pointer", // Make it look clickable
+                         // Optional: Add emphasis
+                    }}
+                    onClick={() => setIsModalOpen(true)} // Open the query modal
+                >
+                    Message Us <i class="fa-solid fa-envelope"></i>
+                </p>
+
+                {/* Right-aligned content */}
+                <p style={{ fontSize: "1.5rem", margin: "0", textAlign: "right" }}>
+                    Take screening test
                 </p>
             </div>
 
@@ -264,14 +287,6 @@ function Home() {
                     </div>
                 </div>
             ))}
-
-            {/* Query Button */}
-            <button
-                className="queryButton"
-                onClick={() => setIsModalOpen(true)}
-            >
-                Query?
-            </button>
 
             {/* Modal */}
             {isModalOpen && (

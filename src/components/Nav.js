@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
-import logo from "./logo.png"; // Ensure this path is correct
+// import logo from "./logo.png"; // Ensure this path is correct
 import "./Nav.css";
 
 function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" }) {
@@ -31,13 +31,13 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         marginLeft:"8%",
     };
 
-    const logoStyle = {
-        width: "60px",
-        height: "50px",
-        // borderRadius: "30%",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-        backgroundColor: "blue",
-    };
+    // const logoStyle = {
+    //     width: "60px",
+    //     height: "50px",
+    //     // borderRadius: "30%",
+    //     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+    //     backgroundColor: "blue",
+    // };
 
     const linkStyle = {
         color: "#333", // Darker text for better contrast
@@ -159,6 +159,12 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                 style={location.pathname === "#" ? activeLinkStyle : linkStyle}
                             >
                                 Contact Us
+                            </Link>
+                            <Link
+                                to="/FAQ"
+                                style={location.pathname === "#" ? activeLinkStyle : linkStyle}
+                            >
+                                FAQ
                             </Link>
                         </>
                     )}

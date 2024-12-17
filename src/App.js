@@ -16,6 +16,7 @@ import ForgotPwDoctor from './components/ForgotPwDoctor';
 import ScreeningTestDetails from './components/ScreeningTestDetails';
 import Prescription from './components/Prescription';
 import Footer from './components/Footer';
+import FAQ from './components/FAQ';
 
 import { useState } from 'react';
 
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/ForgotPwDoctor" element={<ForgotPwDoctor />} />
                 <Route path="/PatientInfo/:id/screeningTests" element={<ScreeningTestDetails />} />
                 <Route path="Prescription/:id" element={<Prescription />} />
+                <Route path="/FAQ" element={<FAQ />} />
             </Routes>
             <Footer/>
         </div>
