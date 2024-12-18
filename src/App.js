@@ -17,6 +17,7 @@ import ScreeningTestDetails from './components/ScreeningTestDetails';
 import Prescription from './components/Prescription';
 import Footer from './components/Footer';
 import FAQ from './components/FAQ';
+import ScreeningTest from './components/ScreeningTest';
 
 import { useState } from 'react';
 
@@ -66,6 +67,7 @@ function App() {
                 <Route path="/PatientInfo/:id/screeningTests" element={<ScreeningTestDetails />} />
                 <Route path="Prescription/:id" element={<Prescription />} />
                 <Route path="/FAQ" element={<FAQ />} />
+                <Route path="/ScreeningTest" element={<ScreeningTest />} />
             </Routes>
             <Footer/>
         </div>

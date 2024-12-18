@@ -7,6 +7,7 @@ import image3 from "./image-3.png";
 import image4 from "./image-4.jpeg";
 import image5 from "./image-5.png";
 import homeImage from "./home.jpg";
+import stripimage from "./strip-image.png";
 import "./Home.css";
 
 function Home() {
@@ -185,6 +186,66 @@ function Home() {
 
     return (
         <div className="pageStyle">
+            <div style={{
+                width: "99.5vw", // Ensure it spans the full viewport width
+                background: "linear-gradient(135deg, #FFB6C1, #FF5F6D)", // Gradient for a more dynamic background
+                color: "black",
+                fontFamily: "'Roboto', sans-serif",
+                margin: "0", // Remove any margin
+                position: "relative",
+                left: "50%",
+                transform: "translateX(-50%)", // Ensure it centers if wrapped inside another container
+                display: "flex", // Flexbox for horizontal layout
+                justifyContent: "space-between", // Distribute items evenly
+                alignItems: "center", // Align vertically in the center
+                borderRadius: "10px", // Rounded corners for a softer, more professional look
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
+            }}>
+                {/* Left-aligned content */}
+                <img src={stripimage} alt="Mental Wellness Strip" className="stripImageStyle" style={{
+                    maxHeight: "50%", // Control the image size
+                    objectFit: "contain", // Ensure the image fits the space properly
+                }} />
+                <div style={{ textAlign: "left", maxWidth: "60%",marginRight:"10%" }}>
+                    <p style={{
+                        fontSize: "1.8rem",
+                        margin: "0",
+                        fontWeight: "600", // Bold text for emphasis
+                        textTransform: "uppercase", // Optional: Adds a modern touch
+                    }}>
+                        Take the First Step Towards Mental Wellness
+                    </p>
+                    <p style={{
+                        fontSize: "1.2rem",
+                        margin: "0",
+                        fontWeight: "400", // Normal weight for the subtext
+                        display: "flex",
+                        alignItems: "center",
+                        color: "#333", // Darker text for better contrast
+                    }}>
+                        Start Your Screening Today!
+                        <i className="fa-solid fa-arrow-right" style={{ marginLeft: "10px", fontSize: "1.4rem" }}></i>
+                    </p>
+                    {/* Center-aligned content with query functionality */}
+                    <p
+                        style={{
+                            fontSize: "1.5rem",
+                            margin: "0",
+                            cursor: "pointer", // Make it look clickable
+                            // Optional: Add emphasis
+                        }}
+                        onClick={() => setIsModalOpen(true)} // Open the query modal
+                    >
+                        For any query Message Us <i className="fa-solid fa-arrow-right" style={{fontSize: "1.4rem" }}></i> <i class="fa-solid fa-envelope"></i>
+                    </p>
+                </div>
+                
+            </div>
+
+
+
+
+
             {/* Toast Container */}
             <ToastContainer />
 
@@ -217,21 +278,24 @@ function Home() {
                 </div>
             </div>
 
-            <div style={{
-                padding: "20px",
-                width: "99.5vw", // Ensure it spans the full viewport width
-                background: "linear-gradient(90deg, #FF8096, #FF4B75)",
-                color: "white",
-                fontFamily: "'Roboto', sans-serif",
-                margin: "0", // Remove any margin
-                position: "relative",
-                left: "50%",
-                transform: "translateX(-50%)", // Ensure it centers if wrapped inside another container
-                display: "flex", // Flexbox for horizontal layout
-                justifyContent: "space-between", // Spread items: left, center, right
-                alignItems: "center", // Align vertically in the center
-            }}>
-                {/* Left-aligned content */}
+            <div
+                style={{
+                    padding: "20px",
+                    width: "99.5vw", // Ensure it spans the full viewport width
+                    background: "linear-gradient(90deg, #FF8096, #FF4B75)",
+                    color: "white",
+                    fontFamily: "'Roboto', sans-serif",
+                    margin: "0", // Remove any margin
+                    position: "relative",
+                    left: "50%",
+                    transform: "translateX(-50%)", // Center the div in case of container
+                    display: "flex", // Flexbox for layout
+                    justifyContent: "center", // Center horizontally
+                    alignItems: "center", // Center vertically
+                    textAlign: "center", // Center text
+                }}
+            >
+                {/* Center-aligned content */}
                 <p style={{ fontSize: "1.4rem", margin: "0" }}>
                     Ping us on
                     <a
@@ -240,34 +304,17 @@ function Home() {
                         rel="noopener noreferrer"
                         style={{ color: "inherit", textDecoration: "none" }}
                     >
-                        <i style={{
-                            color: "green",
-                            margin: "0 5px",
-                            fontSize: "1.2rem",
-                            cursor: "pointer"
-                        }}
-                            className="fa-brands fa-whatsapp fa-beat"></i>
+                        <i
+                            style={{
+                                color: "green",
+                                margin: "0 5px",
+                                fontSize: "1.2rem",
+                                cursor: "pointer",
+                            }}
+                            className="fa-brands fa-whatsapp fa-beat"
+                        ></i>
                     </a>
                     to get started
-                </p>
-
-                {/* Center-aligned content with query functionality */}
-                <p
-                    style={{
-                        fontSize: "1.5rem",
-                        margin: "0",
-                        textAlign: "center",
-                        cursor: "pointer", // Make it look clickable
-                         // Optional: Add emphasis
-                    }}
-                    onClick={() => setIsModalOpen(true)} // Open the query modal
-                >
-                    Message Us <i class="fa-solid fa-envelope"></i>
-                </p>
-
-                {/* Right-aligned content */}
-                <p style={{ fontSize: "1.5rem", margin: "0", textAlign: "right" }}>
-                    Take screening test
                 </p>
             </div>
 
