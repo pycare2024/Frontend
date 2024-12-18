@@ -188,8 +188,8 @@ function Home() {
         <div className="pageStyle">
             <div style={{
                 width: "99.5vw", // Ensure it spans the full viewport width
-                background: "linear-gradient(135deg, #FFB6C1, #FF5F6D)", // Gradient for a more dynamic background
-                color: "black",
+                background: "#FFFAF1", // Gradient for a more dynamic background
+                color: "#FF4B75",
                 fontFamily: "'Roboto', sans-serif",
                 margin: "0", // Remove any margin
                 position: "relative",
@@ -203,28 +203,21 @@ function Home() {
             }}>
                 {/* Left-aligned content */}
                 <img src={stripimage} alt="Mental Wellness Strip" className="stripImageStyle" style={{
-                    maxHeight: "50%", // Control the image size
-                    objectFit: "contain", // Ensure the image fits the space properly
+                    width: "100px", // Define a consistent width
+                    height: "100px", // Maintain proportional height
+                    borderRadius: "50%", // Ensure circular shape
+                    objectFit: "cover", // Maintain aspect ratio
+                    marginLeft: "14%", // Spacing from the left
+                    border: "4px solid black", // Professional border design
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", // Add subtle shadow
                 }} />
-                <div style={{ textAlign: "left", maxWidth: "60%",marginRight:"10%" }}>
+                <div style={{ textAlign: "left", maxWidth: "60%", marginRight: "9%" }}>
                     <p style={{
-                        fontSize: "1.8rem",
+                        fontSize: "1.5rem",
                         margin: "0",
                         fontWeight: "600", // Bold text for emphasis
-                        textTransform: "uppercase", // Optional: Adds a modern touch
                     }}>
-                        Take the First Step Towards Mental Wellness
-                    </p>
-                    <p style={{
-                        fontSize: "1.2rem",
-                        margin: "0",
-                        fontWeight: "400", // Normal weight for the subtext
-                        display: "flex",
-                        alignItems: "center",
-                        color: "#333", // Darker text for better contrast
-                    }}>
-                        Start Your Screening Today!
-                        <i className="fa-solid fa-arrow-right" style={{ marginLeft: "10px", fontSize: "1.4rem" }}></i>
+                        Take the First Step Towards Mental Wellness<i className="fa-solid fa-arrow-right" style={{ marginLeft: "10px", fontSize: "1.4rem" }}></i>
                     </p>
                     {/* Center-aligned content with query functionality */}
                     <p
@@ -236,10 +229,10 @@ function Home() {
                         }}
                         onClick={() => setIsModalOpen(true)} // Open the query modal
                     >
-                        For any query Message Us <i className="fa-solid fa-arrow-right" style={{fontSize: "1.4rem" }}></i> <i class="fa-solid fa-envelope"></i>
+                        For any query Message Us <i className="fa-solid fa-arrow-right" style={{ fontSize: "1.4rem" }}></i> <i class="fa-solid fa-envelope"></i>
                     </p>
                 </div>
-                
+
             </div>
 
 
