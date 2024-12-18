@@ -42,7 +42,7 @@ function ScreeningTest() {
         };
 
         try {
-            const response = await fetch("http://localhost:4000/ScreeningTestRoute/add", {
+            const response = await fetch("https://backend-xhl4.onrender.com/ScreeningTestRoute/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

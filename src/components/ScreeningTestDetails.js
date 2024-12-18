@@ -40,7 +40,7 @@ function ScreeningTestDetails() {
 
         try {
             const response = await fetch(
-                `http://localhost:4000/ScreeningTestRoute/${questionNumber}`
+                `https://backend-xhl4.onrender.com/ScreeningTestRoute/${questionNumber}`
             );
             if (!response.ok) {
                 throw new Error(`Failed to fetch Question ${questionNumber}`);
