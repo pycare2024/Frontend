@@ -1,0 +1,120 @@
+/* Container styling */
+.start-screening-test-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+    background-color: white;
+}
+
+/* Card design for forms */
+.start-screening-test-container .card {
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title styling */
+.start-screening-test-container .title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Labels and input styling */
+.start-screening-test-container .label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.start-screening-test-container .input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.start-screening-test-container .input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+/* Button styling */
+.start-screening-test-container .button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #FF8096;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.start-screening-test-container .button:hover {
+    background-color: #eb163a;
+}
+
+/* Submit button style */
+.start-screening-test-container .button.submit {
+    background-color: #28a745;
+    margin-top: 20px;
+}
+
+.start-screening-test-container .button.submit:hover {
+    background-color: #218838;
+}
+
+/* Success and error messages */
+.start-screening-test-container .message {
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.start-screening-test-container .message.success {
+    color: #28a745;
+}
+
+.start-screening-test-container .message.error {
+    color: #dc3545;
+}
+
+/* Registration form title */
+.start-screening-test-container .form-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #333;
+    text-align: center;
+}
+
+/* Form grid layout */
+.start-screening-test-container .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .start-screening-test-container .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

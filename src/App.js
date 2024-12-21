@@ -18,6 +18,7 @@ import Prescription from './components/Prescription';
 import Footer from './components/Footer';
 import FAQ from './components/FAQ';
 import ScreeningTest from './components/ScreeningTest';
+import StartScreeningTest from './components/StartScreeningTest';
 
 import { useState } from 'react';
 
@@ -68,6 +69,7 @@ function App() {
                 <Route path="Prescription/:id" element={<Prescription />} />
                 <Route path="/FAQ" element={<FAQ />} />
                 <Route path="/ScreeningTest" element={<ScreeningTest />} />
+                <Route path="/StartScreeningTest" element={<StartScreeningTest />} />
             </Routes>
             <Footer/>
         </div>

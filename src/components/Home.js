@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import image1 from "./image-1.png";
 import image2 from "./image-2.jpeg";
@@ -11,6 +12,9 @@ import stripimage from "./strip-image.png";
 import "./Home.css";
 
 function Home() {
+
+    const navigate = useNavigate();
+
     const sections = [
         {
             text: (
@@ -184,6 +188,10 @@ function Home() {
         }
     };
 
+    const handleArrowClick = () => {
+        navigate("/StartScreeningTest");
+    }
+
     return (
         <div className="pageStyle">
             <div style={{
@@ -208,7 +216,7 @@ function Home() {
                     borderRadius: "50%", // Ensure circular shape
                     objectFit: "cover", // Maintain aspect ratio
                     marginLeft: "14%", // Spacing from the left
-                    border: "4px solid black", // Professional border design
+                    border: "4px solid #FFFAF1", // Professional border design
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)", // Add subtle shadow
                 }} />
                 <div style={{ textAlign: "left", maxWidth: "60%", marginRight: "9%" }}>
@@ -217,7 +225,10 @@ function Home() {
                         margin: "0",
                         fontWeight: "600", // Bold text for emphasis
                     }}>
-                        Take the First Step Towards Mental Wellness<i className="fa-solid fa-arrow-right" style={{ marginLeft: "10px", fontSize: "1.4rem" }}></i>
+                        Take the First Step Towards Mental Wellness
+                        <i className="fa-solid fa-arrow-right"
+                            style={{ marginLeft: "10px", fontSize: "1.4rem" }}
+                            onClick={handleArrowClick}></i>
                     </p>
                     {/* Center-aligned content with query functionality */}
                     <p
