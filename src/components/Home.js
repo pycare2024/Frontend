@@ -226,9 +226,12 @@ function Home() {
                         fontWeight: "600", // Bold text for emphasis
                     }}>
                         Take the First Step Towards Mental Wellness
-                        <i className="fa-solid fa-arrow-right"
-                            style={{ marginLeft: "10px", fontSize: "1.4rem" }}
-                            onClick={handleArrowClick}></i>
+                        <i
+                            className="fa-solid fa-notes-medical fa-spin-pulse"
+                            style={{ marginLeft: "10px", fontSize: "1.4rem", cursor: "pointer" }}
+                            onClick={handleArrowClick}
+                            title="Click here to take your screening test"
+                        ></i>
                     </p>
                     {/* Center-aligned content with query functionality */}
                     <p
@@ -240,7 +243,9 @@ function Home() {
                         }}
                         onClick={() => setIsModalOpen(true)} // Open the query modal
                     >
-                        For any query Message Us <i className="fa-solid fa-arrow-right" style={{ fontSize: "1.4rem" }}></i> <i class="fa-solid fa-envelope"></i>
+                        For any query Message Us <i class="fa-solid fa-envelope"
+                            title="Click here to take send a message"
+                        ></i>
                     </p>
                 </div>
 
@@ -277,7 +282,8 @@ function Home() {
                 <div className="rightBoxes">
                     <div className={`boxStyle ${boxStates[2] ? "slideIn" : ""}`}>
                         <p><b>What kind of mental conditions do we help with?</b></p>
-                        <p>Our experts address the most common disorders such as anxiety, depression and substance abuse, which account for 80% of the mental health cases.</p>
+                        <p style={{fontSize:"14px"}}>Our experts address the most common disorders such as anxiety, depression, emotional disorders, behavioural disorders,
+                            social phobias and panic disorders, which account for 80% of the mental health cases.</p>
                     </div>
                 </div>
             </div>
