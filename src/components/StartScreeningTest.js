@@ -16,10 +16,16 @@ function StartScreeningTest() {
 
     const [showRegistrationForm, setShowRegistrationForm] = useState(false);
     const navigate = useNavigate();
-    const [patientId, setPatientId] = useState(null);  // State to store patient ID
+    const [patientId, setPatientId] = useState(null); // State to store patient ID
+    const [loading, setLoading] = useState(false); // To handle loading state
 
     // Handle phone number check
     const handlePhoneCheck = async () => {
+        if (!phoneNumber) {
+            alert("Please enter a valid phone number.");
+            return;
+        }
+        setLoading(true);
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/check/${phoneNumber}`);
             const result = await response.json();
@@ -27,14 +33,18 @@ function StartScreeningTest() {
             if (response.ok) {
                 setIsRegistered(true);
                 setShowRegistrationForm(false);
-                setPatientId(result.patientId);  // Assuming the backend returns a patientId if registered
-                navigate("/ScreenTestForm", { state: { patientId: result.patientId } });  // Pass patientId to next page
+                setPatientId(result.patientId); // Assuming the backend returns a patientId if registered
+                alert("You are already registered. Redirecting to the test...");
+                navigate("/ScreenTestForm", { state: { patientId: result.patientId } }); // Redirect with patientId
             } else {
                 setIsRegistered(false);
                 setShowRegistrationForm(true);
             }
         } catch (error) {
             console.error("Error checking phone number:", error);
+            alert("There was an error checking the phone number. Please try again later.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -49,6 +59,11 @@ function StartScreeningTest() {
 
     // Handle patient registration
     const handleRegistration = async () => {
+        if (!Object.values(patientDetails).every((field) => field)) {
+            alert("Please fill in all fields.");
+            return;
+        }
+        setLoading(true);
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/patientRoute/register", {
                 method: "POST",
@@ -60,13 +75,16 @@ function StartScreeningTest() {
 
             if (response.ok) {
                 alert("Registration successful! Do you want to take the screening test?");
-                setPatientId(result.patientId);  // Assuming the backend returns the patient ID
+                setPatientId(result.patientId); // Assuming the backend returns the patient ID
                 navigate("/ScreenTestForm", { state: { patientId: result.patientId } }); // Pass patientId to next page
             } else {
                 alert(result.error || "Failed to register patient.");
             }
         } catch (error) {
             console.error("Error registering patient:", error);
+            alert("There was an error during registration. Please try again later.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -74,6 +92,7 @@ function StartScreeningTest() {
         <div className="start-screening-test-container">
             <div className="card">
                 <h1 className="title">Patient Registration</h1>
+
                 {!showRegistrationForm ? (
                     <div className="phone-check">
                         <label className="label">
@@ -83,10 +102,11 @@ function StartScreeningTest() {
                                 className="input"
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
+                                placeholder="Enter your phone number"
                             />
                         </label>
-                        <button className="button" onClick={handlePhoneCheck}>
-                            Check
+                        <button className="button" onClick={handlePhoneCheck} disabled={loading}>
+                            {loading ? "Checking..." : "Check"}
                         </button>
                         {isRegistered && (
                             <p className="message success">You are already registered. Patient ID: {patientId}</p>
@@ -100,8 +120,11 @@ function StartScreeningTest() {
                         <p className="message success">
                             You are already registered. Patient ID: {patientId}. Do you want to take the screening test?
                         </p>
-                        <button className="button" onClick={() => navigate("/ScreenTestForm", { state: { patientId } })}>
-                            Yes
+                        <button
+                            className="button"
+                            onClick={() => navigate("/ScreenTestForm", { state: { patientId } })}
+                        >
+                            Yes, Start Test
                         </button>
                     </div>
                 ) : (
@@ -122,8 +145,8 @@ function StartScreeningTest() {
                                 </div>
                             ))}
                         </div>
-                        <button className="button submit" onClick={handleRegistration}>
-                            Register
+                        <button className="button submit" onClick={handleRegistration} disabled={loading}>
+                            {loading ? "Registering..." : "Register"}
                         </button>
                     </div>
                 )}

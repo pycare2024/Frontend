@@ -1,0 +1,190 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f7fa;
+}
+
+/* Container for the entire form */
+.screen-test-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 5%;
+    background: white;
+    color: #333;
+    padding: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Title */
+.screen-test-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #FF8096;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 0.5s;
+}
+
+/* Language Selection Styles */
+.language-selection-container {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    height: 100vh;
+}
+
+.language-selection-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.language-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.language-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #1cc88a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 120px;
+}
+
+.language-button:hover {
+    background-color: #17a673;
+}
+
+.english-button {
+    background-color: #4CAF50;
+}
+
+.hindi-button {
+    background-color: #f44336;
+}
+
+.language-button:focus {
+    outline: none;
+}
+
+/* Form Styles */
+.screen-test-form {
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+    animation-delay: 1s;
+}
+
+/* Question Item */
+.question-item {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+/* Question Text */
+.question-text {
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Options */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Option label */
+.option-label {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Custom styled radio buttons */
+.radio-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #1cc88a;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.radio-input:checked {
+    background-color: #1cc88a;
+    border-color: #1cc88a;
+}
+
+.radio-input:checked::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Submit button */
+.submit-button {
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #1cc88a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #17a673;
+}
+
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
