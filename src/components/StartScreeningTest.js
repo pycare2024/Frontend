@@ -16,6 +16,7 @@ function StartScreeningTest() {
 
     const [showRegistrationForm, setShowRegistrationForm] = useState(false);
     const navigate = useNavigate();
+    const [patientId, setPatientId] = useState(null);  // State to store patient ID
 
     // Handle phone number check
     const handlePhoneCheck = async () => {
@@ -26,6 +27,8 @@ function StartScreeningTest() {
             if (response.ok) {
                 setIsRegistered(true);
                 setShowRegistrationForm(false);
+                setPatientId(result.patientId);  // Assuming the backend returns a patientId if registered
+                navigate("/ScreenTestForm", { state: { patientId: result.patientId } });  // Pass patientId to next page
             } else {
                 setIsRegistered(false);
                 setShowRegistrationForm(true);
@@ -57,7 +60,8 @@ function StartScreeningTest() {
 
             if (response.ok) {
                 alert("Registration successful! Do you want to take the screening test?");
-                navigate("/start-screening-test");
+                setPatientId(result.patientId);  // Assuming the backend returns the patient ID
+                navigate("/ScreenTestForm", { state: { patientId: result.patientId } }); // Pass patientId to next page
             } else {
                 alert(result.error || "Failed to register patient.");
             }
@@ -85,7 +89,7 @@ function StartScreeningTest() {
                             Check
                         </button>
                         {isRegistered && (
-                            <p className="message success">You are already registered.</p>
+                            <p className="message success">You are already registered. Patient ID: {patientId}</p>
                         )}
                         {!isRegistered && phoneNumber && (
                             <p className="message error">Patient not registered. Please register.</p>
@@ -94,9 +98,9 @@ function StartScreeningTest() {
                 ) : isRegistered ? (
                     <div className="registered">
                         <p className="message success">
-                            You are already registered. Do you want to take the screening test?
+                            You are already registered. Patient ID: {patientId}. Do you want to take the screening test?
                         </p>
-                        <button className="button" onClick={() => navigate("/start-screening-test")}>
+                        <button className="button" onClick={() => navigate("/ScreenTestForm", { state: { patientId } })}>
                             Yes
                         </button>
                     </div>
