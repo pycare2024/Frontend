@@ -282,7 +282,7 @@ function Home() {
                 <div className="rightBoxes">
                     <div className={`boxStyle ${boxStates[2] ? "slideIn" : ""}`}>
                         <p><b>What kind of mental conditions do we help with?</b></p>
-                        <p style={{fontSize:"14px"}}>Our experts address the most common disorders such as anxiety, depression, emotional disorders, behavioural disorders,
+                        <p style={{ fontSize: "14px" }}>Our experts address the most common disorders such as anxiety, depression, emotional disorders, behavioural disorders,
                             social phobias and panic disorders, which account for 80% of the mental health cases.</p>
                     </div>
                 </div>
@@ -345,14 +345,19 @@ function Home() {
                 </div>
             ))}
 
-            {/* Modal */}
             {isModalOpen && (
-                <div className="modalOverlay">
+                <div
+                    className="modalOverlay"
+                    onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                            setIsModalOpen(false);
+                        }
+                    }}
+                    tabIndex="0" // Make the div focusable to detect key events
+                >
                     <div className="modalContent">
-                        <button className="closeModalButton" onClick={() => setIsModalOpen(false)}>
-                            <i className="fa fa-times" style={{ fontSize: '1.5rem' }}></i>
-                        </button>
                         <h2 className="modalTitle">Submit Your Query</h2>
+                        <p className="modalExitMessage">Press <strong>Escape</strong> to close the window.</p>
                         <form onSubmit={handleSubmit}>
                             <div className="formField">
                                 <label htmlFor="name">Name</label>
@@ -402,7 +407,9 @@ function Home() {
                                     rows="4"
                                 />
                             </div>
-                            <button type="submit" className="submitButton">Submit</button>
+                            <button type="submit" className="submitButton">
+                                <i className="fa-solid fa-paper-plane" style={{ marginLeft: "10px" }}></i>
+                            </button>
                         </form>
                     </div>
                 </div>

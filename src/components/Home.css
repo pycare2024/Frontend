@@ -257,3 +257,10 @@ a {
         flex-direction: column;
     }
 }
+
+.modalExitMessage {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-align: center;
+}
