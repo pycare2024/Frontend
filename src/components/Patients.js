@@ -35,7 +35,7 @@ function Patients() {
     };
 
     return (
-        <div style={{ padding: "20px", maxWidth: "1000px", margin: "auto",height:"100vh" }}>
+        <div style={{ padding: "20px", maxWidth: "1000px", margin: "auto",height:"100%" }}>
             <h1 style={{ textAlign: "center", color: "#007bff", marginBottom: "30px", marginTop:"10%",color:"#FF8096" }}>Patients List</h1>
             <div className="row" style={{ display: "flex", flexWrap: "wrap", gap: "20px",alignContent:"center" }}>
                 {patients.map((patient) => (

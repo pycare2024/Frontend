@@ -20,6 +20,7 @@ import FAQ from './components/FAQ';
 import ScreeningTest from './components/ScreeningTest';
 import StartScreeningTest from './components/StartScreeningTest';
 import ScreenTestForm from './components/ScreenTestForm';
+import ContactUs from './components/ContactUs';
 
 import { useState } from 'react';
 
@@ -72,6 +73,7 @@ function App() {
                 <Route path="/ScreeningTest" element={<ScreeningTest />} />
                 <Route path="/StartScreeningTest" element={<StartScreeningTest />} />
                 <Route path="/ScreenTestForm" element={<ScreenTestForm />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
             </Routes>
             <Footer/>
         </div>

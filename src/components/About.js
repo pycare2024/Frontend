@@ -3,7 +3,7 @@ import { FaHeart, FaUsers, FaBullseye, FaEye } from "react-icons/fa"; // Font Aw
 
 function About() {
   return (
-    <div className="about-container">
+    <div className="about-container" style={{height:"100%"}}>
       <div className="about-content">
         <h1 className="about-heading">About Us</h1>
 

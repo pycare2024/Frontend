@@ -163,8 +163,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                 Admin
                             </Link>
                             <Link
-                                to="#"
-                                style={location.pathname === "#" ? activeLinkStyle : linkStyle}
+                                to="/ContactUs"
+                                style={location.pathname === "/ContactUs" ? activeLinkStyle : linkStyle}
                             >
                                 Contact Us
                             </Link>

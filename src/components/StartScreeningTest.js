@@ -13,16 +13,32 @@ function StartScreeningTest() {
         Mobile: "",
         Problem: "",
     });
-
     const [showRegistrationForm, setShowRegistrationForm] = useState(false);
     const navigate = useNavigate();
-    const [patientId, setPatientId] = useState(null); // State to store patient ID
-    const [loading, setLoading] = useState(false); // To handle loading state
+    const [patientId, setPatientId] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [showPincodeInput, setShowPincodeInput] = useState(true); // To toggle pincode and location display
+    const [validationErrors, setValidationErrors] = useState({});
+
+    // Helper to validate pincode
+    const fetchLocationFromPincode = async (pincode) => {
+        try {
+            const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+            const data = await response.json();
+            if (data[0].Status === "Success") {
+                return data[0].PostOffice[0].District;
+            }
+            return null;
+        } catch (error) {
+            console.error("Error fetching location:", error);
+            return null;
+        }
+    };
 
     // Handle phone number check
     const handlePhoneCheck = async () => {
-        if (!phoneNumber) {
-            alert("Please enter a valid phone number.");
+        if (!/^\d{10}$/.test(phoneNumber)) {
+            alert("Please enter a valid 10-digit phone number.");
             return;
         }
         setLoading(true);
@@ -33,9 +49,9 @@ function StartScreeningTest() {
             if (response.ok) {
                 setIsRegistered(true);
                 setShowRegistrationForm(false);
-                setPatientId(result.patientId); // Assuming the backend returns a patientId if registered
+                setPatientId(result.patientId);
                 alert("You are already registered. Redirecting to the test...");
-                navigate("/ScreenTestForm", { state: { patientId: result.patientId } }); // Redirect with patientId
+                navigate("/ScreenTestForm", { state: { patientId: result.patientId } });
             } else {
                 setIsRegistered(false);
                 setShowRegistrationForm(true);
@@ -49,20 +65,60 @@ function StartScreeningTest() {
     };
 
     // Handle input changes for registration form
-    const handleInputChange = (e) => {
+    const handleInputChange = async (e) => {
         const { name, value } = e.target;
+
+        if (name === "Location" && value.length === 6) {
+            const location = await fetchLocationFromPincode(value);
+            if (location) {
+                setShowPincodeInput(false);
+                setPatientDetails((prevDetails) => ({
+                    ...prevDetails,
+                    Location: location,
+                }));
+            } else {
+                setValidationErrors((prevErrors) => ({
+                    ...prevErrors,
+                    Location: "Invalid pincode. Please try again.",
+                }));
+                return;
+            }
+        } else if (name === "Location") {
+            setShowPincodeInput(true); // Reset if pincode length is less than 6
+        }
+
         setPatientDetails((prevDetails) => ({
             ...prevDetails,
             [name]: value,
         }));
+
+        // Clear specific validation errors
+        setValidationErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: "",
+        }));
     };
 
-    // Handle patient registration
+    // Handle registration form validation
     const handleRegistration = async () => {
-        if (!Object.values(patientDetails).every((field) => field)) {
-            alert("Please fill in all fields.");
-            return;
+        const errors = {};
+
+        if (!patientDetails.Name) errors.Name = "Name is required.";
+        if (!patientDetails.Age || patientDetails.Age < 10 || patientDetails.Age > 120) {
+            errors.Age = "Age must be between 10 and 120.";
         }
+        if (!["Male", "Female", "Other"].includes(patientDetails.Gender)) {
+            errors.Gender = "Gender must be Male, Female, or Other.";
+        }
+        if (!patientDetails.Location) errors.Location = "Location is required.";
+        if (!/^\d{10}$/.test(patientDetails.Mobile)) errors.Mobile = "Please enter a valid 10-digit mobile number.";
+
+        setValidationErrors(errors);
+
+        if (Object.keys(errors).length > 0) {
+            return; // Do not proceed if there are validation errors
+        }
+
         setLoading(true);
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/patientRoute/register", {
@@ -75,8 +131,8 @@ function StartScreeningTest() {
 
             if (response.ok) {
                 alert("Registration successful! Do you want to take the screening test?");
-                setPatientId(result.patientId); // Assuming the backend returns the patient ID
-                navigate("/ScreenTestForm", { state: { patientId: result.patientId } }); // Pass patientId to next page
+                setPatientId(result.patientId);
+                navigate("/ScreenTestForm", { state: { patientId: result.patientId } });
             } else {
                 alert(result.error || "Failed to register patient.");
             }
@@ -108,24 +164,6 @@ function StartScreeningTest() {
                         <button className="button" onClick={handlePhoneCheck} disabled={loading}>
                             {loading ? "Checking..." : "Check"}
                         </button>
-                        {isRegistered && (
-                            <p className="message success">You are already registered. Patient ID: {patientId}</p>
-                        )}
-                        {!isRegistered && phoneNumber && (
-                            <p className="message error">Patient not registered. Please register.</p>
-                        )}
-                    </div>
-                ) : isRegistered ? (
-                    <div className="registered">
-                        <p className="message success">
-                            You are already registered. Patient ID: {patientId}. Do you want to take the screening test?
-                        </p>
-                        <button
-                            className="button"
-                            onClick={() => navigate("/ScreenTestForm", { state: { patientId } })}
-                        >
-                            Yes, Start Test
-                        </button>
                     </div>
                 ) : (
                     <div className="registration-form">
@@ -134,14 +172,60 @@ function StartScreeningTest() {
                             {Object.keys(patientDetails).map((key) => (
                                 <div className="form-group" key={key}>
                                     <label className="label">{key}:</label>
-                                    <input
-                                        type={key === "Age" || key === "Mobile" ? "number" : "text"}
-                                        className="input"
-                                        name={key}
-                                        placeholder={`Enter ${key}`}
-                                        value={patientDetails[key]}
-                                        onChange={handleInputChange}
-                                    />
+                                    {key === "Gender" ? (
+                                        <select
+                                            className="input"
+                                            name={key}
+                                            value={patientDetails[key]}
+                                            onChange={handleInputChange}
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    ) : key === "Location" ? (
+                                        showPincodeInput ? (
+                                            <input
+                                                type="text"
+                                                className="input"
+                                                name={key}
+                                                placeholder="Enter Pincode"
+                                                value={patientDetails[key]}
+                                                onChange={handleInputChange}
+                                            />
+                                        ) : (
+                                            <>
+                                                <p className="location-display">
+                                                    Location: {patientDetails[key]}
+                                                </p>
+                                                <button
+                                                    className="button change-location"
+                                                    onClick={() => {
+                                                        setShowPincodeInput(true);
+                                                        setPatientDetails((prevDetails) => ({
+                                                            ...prevDetails,
+                                                            Location: "",
+                                                        }));
+                                                    }}
+                                                >
+                                                    Change Location
+                                                </button>
+                                            </>
+                                        )
+                                    ) : (
+                                        <input
+                                            type={key === "Age" || key === "Mobile" ? "number" : "text"}
+                                            className="input"
+                                            name={key}
+                                            placeholder={`Enter ${key}`}
+                                            value={patientDetails[key]}
+                                            onChange={handleInputChange}
+                                        />
+                                    )}
+                                    {validationErrors[key] && (
+                                        <p className="error-message">{validationErrors[key]}</p>
+                                    )}
                                 </div>
                             ))}
                         </div>
