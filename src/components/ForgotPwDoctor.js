@@ -44,7 +44,7 @@ function ForgotPwDoctor() {
                     });
 
                     setTimeout(() => {
-                        navigate("/login");
+                        navigate("/DoctorLogin");
                     }, 2000);
                 } else {
                     toast.error("Failed to reset password. Please try again.", {

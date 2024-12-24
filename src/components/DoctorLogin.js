@@ -108,23 +108,35 @@ function DoctorLogin({ onLogin }) {
                         style={inputStyle}
                         required
                     />
-                    <input
-                        type={showP ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={inputStyle}
-                        required
-                    />
-                    <div style={{ textAlign: "left", marginBottom: "10px" }}>
+                    <div style={{ position: "relative", marginBottom: "20px" }}>
                         <input
-                            type="checkbox"
-                            id="showP"
-                            checked={showP}
-                            onChange={() => setShowP(!showP)}
-                            style={{ marginRight: "5px" }}
+                            type={showP ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={{
+                                width: "100%",
+                                padding: "10px 40px 10px 10px", // Adjusted padding for the icon
+                                borderRadius: "5px",
+                                border: "1px solid #ccc",
+                                fontSize: "1rem",
+                            }}
+                            required
                         />
-                        <label htmlFor="showP">Show Password</label>
+                        <i
+                            className={`fa-solid ${showP ? "fa-eye-slash" : "fa-eye"}`}
+                            onClick={() => setShowP(!showP)}
+                            style={{
+                                position: "absolute",
+                                right: "10px",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                cursor: "pointer",
+                                fontSize: "1.2rem",
+                                color: "grey",
+                            }}
+                            title={showP ? "Hide Password" : "Show Password"}
+                        ></i>
                     </div>
                     <button
                         type="submit"
@@ -138,7 +150,7 @@ function DoctorLogin({ onLogin }) {
                 <div>
                     <span
                         style={forgotPasswordStyle}
-                        onClick={() => navigate("/ForgotPassword")}
+                        onClick={() => navigate("/ForgotPwDoctor")}
                     >
                         Forgot Password?
                     </span>

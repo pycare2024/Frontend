@@ -105,25 +105,34 @@ function Login({ onLogin }) {
                         required
                         disabled={isLoading} // Disable input during loading
                     />
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={inputStyle}
-                        required
-                        disabled={isLoading} // Disable input during loading
-                    />
-                    <div style={{ textAlign: "left", marginBottom: "10px" }}>
+                    <div style={{ position: "relative", marginBottom: "20px" }}>
                         <input
-                            type="checkbox"
-                            id="showPassword"
-                            checked={showPassword}
-                            onChange={() => setShowPassword(!showPassword)}
-                            style={{ marginRight: "5px" }}
-                            disabled={isLoading} // Disable checkbox during loading
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={{
+                                ...inputStyle,
+                                paddingRight: "40px", // Adjust padding to make space for the icon
+                            }}
+                            required
+                            disabled={isLoading} // Disable input during loading
                         />
-                        <label htmlFor="showPassword">Show Password</label>
+                        <i
+                            className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{
+                                position: "absolute",
+                                right: "10px",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                cursor: isLoading ? "not-allowed" : "pointer",
+                                fontSize: "1.2rem",
+                                color: "#aaa", // Greyish color for the icon
+                                pointerEvents: isLoading ? "none" : "auto", // Disable click during loading
+                            }}
+                            title={showPassword ? "Hide Password" : "Show Password"}
+                        ></i>
                     </div>
                     <button type="submit" style={buttonStyle} disabled={isLoading}>
                         {isLoading ? "Processing..." : "Login"} {/* Change button text during loading */}
