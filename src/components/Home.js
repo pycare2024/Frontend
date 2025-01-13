@@ -309,7 +309,7 @@ function Home() {
                 <p style={{ fontSize: "1.4rem", margin: "0" }}>
                     Ping us on
                     <a
-                        href="https://wa.me/918107191657?text=Hi%20I%20need%20assistance"
+                        href="https://wa.me/919818296388?text=Hi%20I%20need%20assistance"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: "inherit", textDecoration: "none" }}
