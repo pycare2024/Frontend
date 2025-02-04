@@ -124,6 +124,14 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                                 Patients
                             </Link>
                             <Link
+                                to="/DoctorSchedule"
+                                style={
+                                    location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
+                                }
+                            >
+                                Doctor's schedule
+                            </Link>
+                            <Link
                                 to="/ScreeningTest"
                                 style={
                                     location.pathname === "/ScreeningTest" ? activeLinkStyle : linkStyle
@@ -243,6 +251,14 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                             }
                         >
                             Patients
+                        </Link>
+                        <Link
+                            to="/DoctorSchedule"
+                            style={
+                                location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Doctor's schedule
                         </Link>
                     </>
                 )}
