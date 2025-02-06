@@ -10,7 +10,9 @@ const DoctorSchedule = () => {
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState("");         
     const [isAddingSchedule, setIsAddingSchedule] = useState(false); 
+    const [isModifyingSchedule, setIsModifyingSchedule] = useState(false); 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedScheduleId, setSelectedScheduleId] = useState(""); // For modification/deletion
 
     useEffect(() => {
         fetchDoctors();
@@ -44,6 +46,10 @@ const DoctorSchedule = () => {
 
         const doctor = doctors.find((doc) => doc._id === selectedDoctorId);
         setSelectedDoctorId(doctor ? doctor._id : ""); 
+    };
+
+    const handleModifyScheduleChange = (event) => {
+        setSelectedScheduleId(event.target.value);
     };
 
     const handleSubmit = async (event) => {
@@ -86,10 +92,40 @@ const DoctorSchedule = () => {
         }
     };
 
+    const handleDeleteSchedule = async () => {
+        if (!selectedScheduleId) {
+            alert("Please select a schedule to delete");
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/deleteSchedule/${selectedScheduleId}`, {
+                method: "DELETE",
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+                setSelectedScheduleId("");
+                setIsModifyingSchedule(false);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error("Error deleting schedule:", error);
+            alert("An error occurred while deleting the schedule.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div style={{ marginTop:"5%", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
             <div style={{ textAlign: "center", width: "100%", maxWidth: "600px", padding: "20px" }}>
-                {!isAddingSchedule && (
+                {!isAddingSchedule && !isModifyingSchedule && (
                     <>
                         <button
                             onClick={() => setIsAddingSchedule(true)}
@@ -111,7 +147,7 @@ const DoctorSchedule = () => {
                             Add a Schedule
                         </button>
                         <button
-                            onClick={() => alert("Modify/Delete Schedule functionality coming soon!")}
+                            onClick={() => setIsModifyingSchedule(true)}
                             style={{
                                 padding: "12px 24px",
                                 margin: "10px",
@@ -130,6 +166,60 @@ const DoctorSchedule = () => {
                             Modify/Delete Schedule
                         </button>
                     </>
+                )}
+
+                {isModifyingSchedule && (
+                    <div style={{ backgroundColor: "white", borderRadius: "10px", padding: "30px", boxShadow: "0 6px 15px rgba(0, 0, 0, 0.1)" }}>
+                        <h2 style={{ fontSize: "24px", color: "#333", marginBottom: "20px" }}>Modify/Delete Schedule</h2>
+
+                        {loading && <p>Loading doctors...</p>}
+                        {error && <p style={{ color: "red" }}>{error}</p>}
+
+                        <label style={{ display: "block", fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}>Doctor:</label>
+                        <select
+                            value={doctorId}
+                            onChange={handleDoctorChange}
+                            required
+                            style={{ width: "100%", padding: "10px", fontSize: "16px", borderRadius: "8px", border: "1px solid #ccc", marginBottom: "15px" }}
+                        >
+                            <option value="">Select Doctor</option>
+                            {doctors.length === 0 && <option disabled>No doctors available</option>}
+                            {doctors.map((doc) => (
+                                <option key={doc._id} value={doc._id}>
+                                    {doc.Name ? doc.Name : "Unknown Doctor"}
+                                </option>
+                            ))}
+                        </select>
+
+                        {doctorId && (
+                            <div style={{ marginTop: "10px", fontSize: "16px", fontWeight: "600" }}>
+                                <strong>Selected Doctor ID:</strong> {doctorId}
+                            </div>
+                        )}
+
+                        <label style={{ display: "block", fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}>Schedule to Modify/Delete:</label>
+                        <select
+                            value={selectedScheduleId}
+                            onChange={handleModifyScheduleChange}
+                            required
+                            style={{ width: "100%", padding: "10px", fontSize: "16px", borderRadius: "8px", border: "1px solid #ccc", marginBottom: "15px" }}
+                        >
+                            <option value="">Select Schedule</option>
+                            {/* Fetch and display the schedules from the backend, for now a dummy example */}
+                            <option value="1">Schedule 1</option>
+                            <option value="2">Schedule 2</option>
+                            {/* Add the dynamic options here */}
+                        </select>
+
+                        <div style={{ marginTop: "20px" }}>
+                            <button onClick={handleDeleteSchedule} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#dc3545", color: "white", border: "none", borderRadius: "8px", marginTop: "10px" }}>
+                                Delete Schedule
+                            </button>
+                            <button onClick={() => setIsModifyingSchedule(false)} style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer", backgroundColor: "#f8f9fa", color: "#333", border: "1px solid #ccc", borderRadius: "8px", marginTop: "10px" }}>
+                                Go Back
+                            </button>
+                        </div>
+                    </div>
                 )}
 
                 {isAddingSchedule && (
@@ -156,9 +246,9 @@ const DoctorSchedule = () => {
                                 ))}
                             </select>
 
-                            {selectedDoctorId && (
-                                <div style={{ marginTop: "10px", color: "#333" }}>
-                                    <strong>Doctor ID: </strong>{selectedDoctorId}
+                            {doctorId && (
+                                <div style={{ marginTop: "10px", fontSize: "16px", fontWeight: "600" }}>
+                                    <strong>Doctor ID:</strong> {doctorId}
                                 </div>
                             )}
 
