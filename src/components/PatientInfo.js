@@ -53,7 +53,7 @@ function PatientInfo() {
                 method: "PATCH",
             });
             const result = await response.json();
-    
+
             if (response.ok) {
                 setRecords(records.map(record =>
                     record._id === recordId ? { ...record, signed: result.signed } : record
@@ -67,7 +67,7 @@ function PatientInfo() {
                     setError(result.message || "Failed to verify prescription");
                 }
             }
-    
+
             setTimeout(() => setSuccessMessage(""), 3000); // Clear success message after 3 seconds
         } catch (error) {
             setError("Failed to verify prescription");
@@ -122,7 +122,7 @@ function PatientInfo() {
                 </div>
             )}
 
-            <h1 style={{ textAlign: "center", color: "#FF8096", marginBottom: "20px", fontSize: "2em", fontWeight: "bold" ,marginTop:"10%"}}>Patient Information</h1>
+            <h1 style={{ textAlign: "center", color: "#FF8096", marginBottom: "20px", fontSize: "2em", fontWeight: "bold", marginTop: "10%" }}>Patient Information</h1>
             {patient ? (
                 <div>
                     <table className="table table-striped table-bordered" style={{
@@ -138,14 +138,21 @@ function PatientInfo() {
                         </tbody>
                     </table>
 
-                    <button
-                        onClick={() => navigate(`/PatientInfo/${id}/screeningTests`)}
-                        style={styles.buttonPrimary}
-                    >
-                        <FaRegEye style={{ marginRight: '8px' }} /> View Screening Test Details
-                    </button>
-
-                    <h2 style={{ color: "#FF8096", marginBottom: "20px", marginTop: "30px", textAlign: "center", fontSize: "30px",textDecoration:"bold" }}>Patient Records</h2>
+                    <div style={{ display: "flex", gap: "15px", justifyContent: "center", marginTop: "20px" }}>
+    <button
+        onClick={() => navigate(`/PatientInfo/${id}/screeningTests`)}
+        style={styles.buttonPrimary}
+    >
+        <FaRegEye style={{ marginRight: '8px' }} /> View Screening Test Details
+    </button>
+    <button
+        onClick={() => navigate(`/PatientInfo/${id}/AppointmentDetails`)}
+        style={styles.buttonPrimary}
+    >
+        <FaRegEye style={{ marginRight: '8px' }} /> Show Appointment Details
+    </button>
+</div>
+                    <h2 style={{ color: "#FF8096", marginBottom: "20px", marginTop: "30px", textAlign: "center", fontSize: "30px", textDecoration: "bold" }}>Patient Records</h2>
                     <button
                         onClick={() => setShowForm(true)}
                         style={styles.buttonSuccess}

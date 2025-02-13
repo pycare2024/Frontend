@@ -23,6 +23,7 @@ import ScreenTestForm from './components/ScreenTestForm';
 import ContactUs from './components/ContactUs';
 import DoctorSchedule from './components/DoctorsSchedule';
 import ModifyDoctorSchedule from './components/ModifyDoctorSchedule';
+import AppointmentDetails from './components/AppointmentDetails';
 
 import { useState } from 'react';
 
@@ -78,6 +79,7 @@ function App() {
                 <Route path="/ContactUs" element={<ContactUs />} />
                 <Route path="/DoctorSchedule" element={<DoctorSchedule />} />
                 <Route path="/ModifyDoctorSchedule" element={<ModifyDoctorSchedule />} />
+                <Route path="/PatientInfo/:id/AppointmentDetails" element={<AppointmentDetails />} />
             </Routes>
             <Footer/>
         </div>
