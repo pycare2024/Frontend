@@ -146,14 +146,23 @@ function Doctors() {
     };
 
     const handleDeleteDoctor = async (id) => {
+        if (!window.confirm("Are you sure you want to remove this doctor?")) return;
+    
         try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/${id}`, {
+            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/delete/${id}`, {
                 method: "DELETE"
             });
-            if (!response.ok) throw new Error("Failed to delete doctor");
-            fetchDoctors();
+    
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.message);
+                fetchDoctors(); // Refresh list
+            } else {
+                alert("Error: " + data.message);
+            }
         } catch (error) {
-            setError(error.message);
+            alert("Failed to delete doctor. Please try again.");
+            console.error("Delete error:", error);
         }
     };
 
@@ -300,7 +309,7 @@ function Doctors() {
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>
                         <p><strong>Mobile:</strong> {doctor.Mobile}</p>
                         <p><strong>City:</strong> {doctor.City}</p>
-                        <button onClick={() => handleDeleteDoctor(doctor._id)} className="btn btn-danger">
+                        <button onClick={() => handleDeleteDoctor(doctor.id)} className="btn btn-danger">
                             <FaTrash /> Remove
                         </button>
                     </div>
