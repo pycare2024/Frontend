@@ -11,12 +11,14 @@ function Doctors() {
         id: "",
         Name: "",
         Age: "",
-        Address: "",
+        Pincode: "",
+        City: "",
         Qualification: "",
         loginId: "",
         password: "",
         Gender: "",
-        Mobile: ""
+        Mobile: "",
+        dob: ""
     });
     const [fieldErrors, setFieldErrors] = useState({});
 
@@ -40,9 +42,30 @@ function Doctors() {
         }
     };
 
+    const fetchCityFromPincode = async (pincode) => {
+        if (pincode.length === 6) {
+            try {
+                const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+                const data = await response.json();
+                if (data[0]?.Status === "Success") {
+                    setNewDoctor((prev) => ({ ...prev, City: data[0].PostOffice[0].District }));
+                }
+            } catch (error) {
+                console.error("Error fetching city:", error);
+            }
+        }
+    };
+
+    const generateDoctorId = () => {
+        const cityPart = newDoctor.City.slice(0, 4).toUpperCase();
+        const datePart = new Date().toISOString().split("T")[0].replace(/-/g, "");
+        const mobilePart = newDoctor.Mobile.slice(-5);
+        return `${cityPart}${datePart}${mobilePart}`;
+    };
+
     const validateForm = () => {
         const errors = {};
-        const requiredFields = ["id", "Name", "Age", "Address", "Qualification", "loginId", "password", "Gender", "Mobile"];
+        const requiredFields = ["id", "Name", "Age", "Pincode", "City", "Qualification", "loginId", "password", "Gender", "Mobile"];
 
         requiredFields.forEach((field) => {
             if (!newDoctor[field]) {
@@ -55,30 +78,53 @@ function Doctors() {
     };
 
     const handleAddDoctor = async () => {
-        if (!validateForm()) return;
+        console.log("Add Doctor button clicked");
+
+        if (!validateForm()) {
+            console.log("Form validation failed", fieldErrors);
+            return;
+        }
+
+        const doctorWithId = { ...newDoctor, id: generateDoctorId() };
+        console.log("Doctor Data:", doctorWithId);
 
         try {
-            const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute", {
+            const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(newDoctor)
+                body: JSON.stringify(doctorWithId)
             });
-            if (!response.ok) throw new Error("Failed to add doctor");
+
+            console.log("Response status:", response.status);
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error response:", errorData);
+                throw new Error(errorData.message || "Failed to add doctor");
+            }
+
+            console.log("Doctor added successfully ! ✅");
+
+            // ✅ Display a success message using state or alert
+            alert("Doctor registered successfully!");
+
             setShowAddForm(false);
             setNewDoctor({
                 id: "",
                 Name: "",
                 Age: "",
-                Address: "",
+                Pincode: "",
+                City: "",
                 Qualification: "",
                 loginId: "",
                 password: "",
                 Gender: "",
-                Mobile: ""
+                Mobile: "",
+                dob: ""
             });
             setFieldErrors({});
             fetchDoctors();
         } catch (error) {
+            console.error("Fetch error:", error.message);
             setError(error.message);
         }
     };
@@ -111,6 +157,19 @@ function Doctors() {
         }
     };
 
+    const calculateAge = (dob) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--; // Adjust if birthday hasn't occurred yet this year
+        }
+
+        return age;
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -128,7 +187,7 @@ function Doctors() {
                         <form onSubmit={(e) => e.preventDefault()} className="doctor-form">
                             <input
                                 type="text"
-                                placeholder="Id"
+                                placeholder="Id Auto-Generated"
                                 value={newDoctor.id}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, id: e.target.value })}
                                 className={fieldErrors.id ? "input-error" : ""}
@@ -143,6 +202,21 @@ function Doctors() {
                                 required
                             />
                             <input
+                                type="date"
+                                placeholder="Date of Birth"
+                                value={newDoctor.dob}
+                                onChange={(e) => {
+                                    const dob = e.target.value;
+                                    setNewDoctor((prev) => ({
+                                        ...prev,
+                                        dob: dob,
+                                        Age: calculateAge(dob) // Automatically calculate and set Age
+                                    }));
+                                }}
+                                required
+                            />
+
+                            <input
                                 type="number"
                                 placeholder="Age"
                                 value={newDoctor.Age}
@@ -152,16 +226,16 @@ function Doctors() {
                             />
                             <input
                                 type="text"
-                                placeholder="Address"
-                                value={newDoctor.Address}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, Address: e.target.value })}
-                                className={fieldErrors.Address ? "input-error" : ""}
+                                placeholder="Pincode"
+                                value={newDoctor.Pincode}
+                                onChange={(e) => { setNewDoctor({ ...newDoctor, Pincode: e.target.value }); fetchCityFromPincode(e.target.value); }}
                                 required
                             />
-                            <select 
-                                 value={newDoctor.Qualification}
-                                 onChange={(e) => setNewDoctor({ ...newDoctor, Qualification: e.target.value })}
-                                 required
+                            <input type="text" placeholder="City" value={newDoctor.City} readOnly required />
+                            <select
+                                value={newDoctor.Qualification}
+                                onChange={(e) => setNewDoctor({ ...newDoctor, Qualification: e.target.value })}
+                                required
                             >
                                 <option value="">Select Qualification</option>
                                 {qualifications.map((qualification, index) => (
@@ -225,7 +299,7 @@ function Doctors() {
                         <p><strong>Gender:</strong> {doctor.Gender}</p>
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>
                         <p><strong>Mobile:</strong> {doctor.Mobile}</p>
-                        <p><strong>Address:</strong> {doctor.Address}</p>
+                        <p><strong>City:</strong> {doctor.City}</p>
                         <button onClick={() => handleDeleteDoctor(doctor._id)} className="btn btn-danger">
                             <FaTrash /> Remove
                         </button>
