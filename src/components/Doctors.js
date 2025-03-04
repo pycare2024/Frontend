@@ -102,34 +102,36 @@ function Doctors() {
 
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
-
+    
         if (!validateForm()) {
             console.log("Form validation failed", fieldErrors);
             return;
         }
-
-        const doctorWithId = { ...newDoctor, id: generateDoctorId() };
+    
+        const doctorId = generateDoctorId();
+        const doctorWithId = { ...newDoctor, id: doctorId, loginId: doctorId }; // Set loginId same as id
+    
         console.log("Doctor Data:", doctorWithId);
-
+    
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(doctorWithId)
             });
-
+    
             console.log("Response status:", response.status);
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Error response:", errorData);
                 throw new Error(errorData.message || "Failed to add doctor");
             }
-
-            console.log("Doctor added successfully ! ✅");
-
-            // ✅ Display a success message using state or alert
-            alert("Doctor registered successfully!");
-
+    
+            console.log("Doctor added successfully! ✅");
+    
+            // ✅ Display login credentials after successful registration
+            alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${newDoctor.password}`);
+    
             setShowAddForm(false);
             setNewDoctor({
                 id: "",
@@ -138,8 +140,7 @@ function Doctors() {
                 Pincode: "",
                 City: "",
                 Qualification: "",
-                loginId: "",
-                password: "",
+                password: "", // Keep password as it is
                 Gender: "",
                 Mobile: "",
                 dob: ""
@@ -244,7 +245,7 @@ function Doctors() {
                         <form onSubmit={(e) => e.preventDefault()} className="doctor-form">
                             <input
                                 type="text"
-                                placeholder="Id Auto-Generated"
+                                placeholder="Id Auto-Generated(Type 1)"
                                 value={newDoctor.id}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, id: e.target.value })}
                                 className={fieldErrors.id ? "input-error" : ""}
@@ -301,7 +302,7 @@ function Doctors() {
                             </select>
                             <input
                                 type="text"
-                                placeholder="Login ID"
+                                placeholder="Login ID Auto-generated(Type 1)"
                                 value={newDoctor.loginId}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, loginId: e.target.value })}
                                 className={fieldErrors.loginId ? "input-error" : ""}
