@@ -157,20 +157,20 @@ function Doctors() {
             alert("Please enter the OTP.");
             return;
         }
-    
+
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/verify-otp/${newDoctor.Mobile}/${otp}`);
             const data = await response.json();
-    
+
             if (!response.ok) {
                 alert(data.message || "Incorrect OTP. Please try again.");
                 return;
             }
-    
+
             alert("OTP verified successfully!");
             setShowOTPInput(false); // Hide OTP input
             handleAddDoctor(); // ✅ Register doctor after successful OTP verification
-    
+
         } catch (error) {
             console.error("OTP verification failed:", error);
             alert("Error verifying OTP.");
@@ -331,10 +331,18 @@ function Doctors() {
                                 placeholder="Mobile"
                                 maxLength="10"
                                 value={newDoctor.Mobile}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, Mobile: e.target.value })}
+                                onChange={(e) => {
+                                    const input = e.target.value;
+                                    if (/^\d{0,10}$/.test(input)) {
+                                        setNewDoctor({ ...newDoctor, Mobile: input });
+                                    }
+                                }}
                                 className={fieldErrors.Mobile ? "input-error" : ""}
                                 required
                             />
+                            {newDoctor.Mobile.length > 0 && newDoctor.Mobile.length < 10 && (
+                                <p style={{ color: "red", fontSize: "12px" }}>Enter a valid 10-digit mobile number</p>
+                            )}
                             <div className="button-group">
                                 {/* Step 1: Send OTP before registering */}
                                 <button onClick={handleSendOTP} className="btn btn-success">Send OTP</button>
