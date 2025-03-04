@@ -100,6 +100,32 @@ function Doctors() {
         }
     };
 
+    const handleSendCredentials = async (doctor) => {
+        try {
+            const response = await fetch("https://backend-xhl4.onrender.com/CredentialsRoute/send-credentials", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: doctor.Name,
+                    mobile: doctor.Mobile,
+                    loginId: doctor.id, // ID is used as loginId
+                    password: doctor.password
+                }),
+            });
+    
+            // const data = await response.json();
+    
+            if (response.ok) {
+                alert("Credentials sent to doctor via WhatsApp!");
+            } else {
+                alert("Failed to send credentials via WhatsApp.");
+            }
+        } catch (error) {
+            console.error("Error sending credentials:", error);
+            alert("Error sending WhatsApp message.");
+        }
+    };
+
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
     
@@ -131,6 +157,7 @@ function Doctors() {
     
             // ✅ Display login credentials after successful registration
             alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${newDoctor.password}`);
+            await handleSendCredentials(doctorWithId);
     
             setShowAddForm(false);
             setNewDoctor({
