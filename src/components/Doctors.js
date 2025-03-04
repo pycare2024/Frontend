@@ -7,6 +7,8 @@ function Doctors() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
+    const [showOTPInput, setShowOTPInput] = useState(false); // Controls OTP input visibility
+    const [otp, setOtp] = useState(""); // Stores the entered OTP
     const [newDoctor, setNewDoctor] = useState({
         id: "",
         Name: "",
@@ -77,6 +79,27 @@ function Doctors() {
         return Object.keys(errors).length === 0;
     };
 
+    const handleSendOTP = async () => {
+        if (!newDoctor.Mobile || newDoctor.Mobile.length !== 10) {
+            alert("Please enter a valid 10-digit mobile number.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/send-otp/${newDoctor.Mobile}`);
+            const data = await response.json();
+            if (response.ok) {
+                alert("OTP sent successfully! Please enter the OTP to proceed.");
+                setShowOTPInput(true);  // Show OTP input field
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error("Error sending OTP:", error);
+            alert("Failed to send OTP.");
+        }
+    };
+
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
 
@@ -129,6 +152,31 @@ function Doctors() {
         }
     };
 
+    const handleVerifyOTP = async () => {
+        if (!otp) {
+            alert("Please enter the OTP.");
+            return;
+        }
+    
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/verify-otp/${newDoctor.Mobile}/${otp}`);
+            const data = await response.json();
+    
+            if (!response.ok) {
+                alert(data.message || "Incorrect OTP. Please try again.");
+                return;
+            }
+    
+            alert("OTP verified successfully!");
+            setShowOTPInput(false); // Hide OTP input
+            handleAddDoctor(); // ✅ Register doctor after successful OTP verification
+    
+        } catch (error) {
+            console.error("OTP verification failed:", error);
+            alert("Error verifying OTP.");
+        }
+    };
+
     const handleCancel = () => {
         setShowAddForm(false);
         setNewDoctor({
@@ -147,12 +195,12 @@ function Doctors() {
 
     const handleDeleteDoctor = async (id) => {
         if (!window.confirm("Are you sure you want to remove this doctor?")) return;
-    
+
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/delete/${id}`, {
                 method: "DELETE"
             });
-    
+
             const data = await response.json();
             if (response.ok) {
                 alert(data.message);
@@ -288,9 +336,22 @@ function Doctors() {
                                 required
                             />
                             <div className="button-group">
-                                <button onClick={handleAddDoctor} className="btn btn-success">
-                                    Add Doctor
-                                </button>
+                                {/* Step 1: Send OTP before registering */}
+                                <button onClick={handleSendOTP} className="btn btn-success">Send OTP</button>
+
+                                {/* Step 2: Show OTP Input after OTP is sent */}
+                                {showOTPInput && (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter OTP"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value)}
+                                            required
+                                        />
+                                        <button onClick={handleVerifyOTP} className="btn btn-primary">Verify OTP</button>
+                                    </div>
+                                )}
                                 <button onClick={handleCancel} className="btn btn-secondary">
                                     Cancel
                                 </button>
