@@ -368,6 +368,7 @@ function Doctors() {
                                 className={fieldErrors.Mobile ? "input-error" : ""}
                                 required
                             />
+                            
                             {newDoctor.Mobile.length > 0 && newDoctor.Mobile.length < 10 && (
                                 <p style={{ color: "red", fontSize: "12px" }}>Enter a valid 10-digit mobile number</p>
                             )}
