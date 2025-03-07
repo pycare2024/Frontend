@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Doctors.css"; // Import CSS for styling
 import { FaUserPlus, FaTrash } from "react-icons/fa"; // Icons for better visual appeal
+import "./doctorform.css";  //Importing css for add doctor page
 
 function Doctors() {
     const [doctors, setDoctors] = useState([]);
@@ -266,11 +267,12 @@ function Doctors() {
             </button>
 
             {showAddForm && (
+                
                 <div className="form-overlay">
                     <div className="form-modal">
-                        <h2>Add Doctor</h2>
-                        <form onSubmit={(e) => e.preventDefault()} className="doctor-form">
-                            <input
+                        <h2 class="add-doctor">ADD DOCTOR</h2>
+                        <form onSubmit={(e) => e.preventDefault()} className="doctor-form" >
+                            <input id="name"
                                 type="text"
                                 placeholder="Id Auto-Generated(Type 1)"
                                 value={newDoctor.id}
@@ -278,7 +280,7 @@ function Doctors() {
                                 className={fieldErrors.id ? "input-error" : ""}
                                 required
                             />
-                            <input
+                            <input id="name"
                                 type="text"
                                 placeholder="Name"
                                 value={newDoctor.Name}
@@ -286,9 +288,9 @@ function Doctors() {
                                 className={fieldErrors.Name ? "input-error" : ""}
                                 required
                             />
-                            <input
+                            <input id="name"
                                 type="date"
-                                placeholder="Date of Birth"
+                                placeholder ="Date of Birth"
                                 value={newDoctor.dob}
                                 onChange={(e) => {
                                     const dob = e.target.value;
@@ -301,7 +303,7 @@ function Doctors() {
                                 required
                             />
 
-                            <input
+                            <input id="name" 
                                 type="number"
                                 placeholder="Age"
                                 value={newDoctor.Age}
@@ -309,15 +311,15 @@ function Doctors() {
                                 className={fieldErrors.Age ? "input-error" : ""}
                                 required
                             />
-                            <input
+                            <input id="name"
                                 type="text"
                                 placeholder="Pincode"
                                 value={newDoctor.Pincode}
                                 onChange={(e) => { setNewDoctor({ ...newDoctor, Pincode: e.target.value }); fetchCityFromPincode(e.target.value); }}
                                 required
                             />
-                            <input type="text" placeholder="City" value={newDoctor.City} readOnly required />
-                            <select
+                            <input id="name" type="text" placeholder="City" value={newDoctor.City} readOnly required />
+                            <select id="name"
                                 value={newDoctor.Qualification}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, Qualification: e.target.value })}
                                 required
@@ -327,7 +329,7 @@ function Doctors() {
                                     <option key={index} value={qualification}>{qualification}</option>
                                 ))}
                             </select>
-                            <input
+                            <input id="name"
                                 type="text"
                                 placeholder="Login ID Auto-generated(Type 1)"
                                 value={newDoctor.loginId}
@@ -335,7 +337,7 @@ function Doctors() {
                                 className={fieldErrors.loginId ? "input-error" : ""}
                                 required
                             />
-                            <input
+                            <input id="name"
                                 type="password"
                                 placeholder="Password"
                                 value={newDoctor.password}
@@ -343,7 +345,7 @@ function Doctors() {
                                 className={fieldErrors.password ? "input-error" : ""}
                                 required
                             />
-                            <select
+                            <select id="name"
                                 value={newDoctor.Gender}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, Gender: e.target.value })}
                                 className={fieldErrors.Gender ? "input-error" : ""}
@@ -354,7 +356,7 @@ function Doctors() {
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <input
+                            <input id="name"
                                 type="text"
                                 placeholder="Mobile"
                                 maxLength="10"
