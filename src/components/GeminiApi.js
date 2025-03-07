@@ -6,6 +6,7 @@ function GeminiApi() {
     const [query, setQuery] = useState("");
     const [response, setResponse] = useState("");
     const [loading, setLoading] = useState(false);
+    const [testReport, setTestReport] = useState("");
 
     const handleSearchChange = (event) => {
         setQuery(event.target.value);
@@ -37,6 +38,33 @@ function GeminiApi() {
         setLoading(false);
     };
 
+    const generateTestReport = async () => {
+        setLoading(true);
+        setTestReport("Generating test report...");
+        
+        try {
+            const res = await fetch("https://backend-xhl4.onrender.com/GeminiRoute/generateReport", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    depression: 12,
+                    anxiety: 8,
+                    ocd: 5,
+                    ptsd: 3,
+                    sleep: 10
+                })
+            });
+            
+            const data = await res.json();
+            setTestReport(data.report || "No report generated.");
+        } catch (error) {
+            console.error("Error generating report:", error);
+            setTestReport("Error generating report.");
+        }
+        
+        setLoading(false);
+    };
+
     return (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
             <h2>Test Gemini API</h2>
@@ -57,6 +85,13 @@ function GeminiApi() {
                 Ask
             </button>
             <p style={{ marginTop: "10px", fontWeight: "bold" }}>{loading ? "Loading..." : response}</p>
+            
+            <h2>Generate Test Report</h2>
+            <button onClick={generateTestReport} style={{ marginTop: "10px", padding: "10px", cursor: "pointer" }}>
+                Generate Report
+            </button>
+            <p style={{ marginTop: "10px", fontWeight: "bold" }}>{loading ? "Generating..." : testReport}</p>
+            
             <ToastContainer />
         </div>
     );
