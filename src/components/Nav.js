@@ -28,7 +28,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
         display: "flex",
         alignItems: "center",
         gap: "10px",
-        marginLeft:"8%",
+        marginLeft: "8%",
     };
 
     // const logoStyle = {
@@ -70,6 +70,12 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
 
                 {/* Desktop Links */}
                 <div className="d-none d-md-flex">
+                    <Link
+                        to="/GeminiApi" // ✅ Change this from "/Home" to "/GeminiApi"
+                        style={location.pathname === "/GeminiApi" ? activeLinkStyle : linkStyle}
+                    >
+                        Gemini
+                    </Link>
                     <Link
                         to="/Home"
                         style={location.pathname === "/Home" ? activeLinkStyle : linkStyle}
