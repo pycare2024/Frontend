@@ -68,6 +68,10 @@
   }
   
   /* Input and select field hover effect */
+
+   #name{
+    margin: 4px;
+  } 
   #name:hover{
     transform: translateY(2px);
     background:white;
@@ -76,7 +80,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     z-index: 10;
     font-size: 20px;
-    color:#FF8096
+    color:#FF8096;
+    border-color: #FF8096;
   }
   #name:hover::placeholder{
     color: #FF8096;
@@ -121,14 +126,35 @@
     opacity: 0.8;
   }
   
+  #enterotp{
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    justify-content: space-between;
+    width: 160%;
+    overflow: hidden;
+  }
+
   .btn-primary {
     background: #FF8096;
     color: white;
+    margin-top: 22px;
+    margin-right: 25px;
+  }
+  .btn-primary:hover{
+    background: rgb(32, 130, 32);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
   
   .btn-success {
     background: #FF8096;
     color: white;
+    margin-top: 150px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;
+    top: -78px;
   }
   
   .btn-success:hover{
@@ -139,9 +165,14 @@
   .btn-secondary {
     background: #6c757d;
     color: white;
+    /* padding-top: 50px; */
+    margin-top: 72px;
+    margin-bottom: 80px;
+    margin-right: 4px;
+    position: relative;
   }
   .btn-secondary:hover{
-    transform: translateY(-3px);
+    transform: translateY(-2px);
   }
   
   .btn-danger {
