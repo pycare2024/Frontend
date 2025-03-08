@@ -8,6 +8,7 @@ function Patients() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const [hoverState, setHoverState] = useState({}); // Stores hover states for each card
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,7 +20,7 @@ function Patients() {
                 }
                 const data = await response.json();
                 setPatients(data);
-                setFilteredPatients(data); // Initialize filtered list with all patients
+                setFilteredPatients(data);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -31,7 +32,7 @@ function Patients() {
     }, []);
 
     useEffect(() => {
-        const filtered = patients.filter(patient => 
+        const filtered = patients.filter((patient) =>
             patient.Name.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredPatients(filtered);
@@ -45,55 +46,80 @@ function Patients() {
     };
 
     return (
-        <div style={{ padding: "20px", maxWidth: "1000px", margin: "auto", height: "100%"}}>
+        <div style={{ padding: "20px", maxWidth: "1000px", margin: "auto", height: "100%" }}>
             <h1 style={{ textAlign: "center", color: "#FF8096", marginBottom: "20px", marginTop: "10%" }}>Patients List</h1>
-            
+
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <FaSearch style={{ position: "relative", left: "30px", color: "#888" }} />
-                <input 
-                    type="text" 
-                    placeholder="Search patients by name..." 
-                    value={searchQuery} 
+                <input
+                    type="text"
+                    placeholder="Search patients by name..."
+                    value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ 
-                        padding: "10px", 
-                        width: "80%", 
-                        borderRadius: "5px", 
-                        border: "1px solid #ccc", 
-                        outline: "none", 
-                        textIndent: "20px" 
+                    style={{
+                        padding: "10px",
+                        width: "80%",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        outline: "none",
+                        textIndent: "20px"
                     }}
                 />
             </div>
-            
-            <div className="row" style={{ display: "flex", flexWrap: "wrap", gap: "20px", alignContent: "center" }}>
-                {filteredPatients.map((patient) => (
-                    <div key={patient._id} className="col-md-4" style={{ flex: "1 1 30%", maxWidth: "30%" }}>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                {filteredPatients.map((patient) => {
+                    const isHovered = hoverState[patient._id] || false; // Default to false
+
+                    return (
                         <div
+                            key={patient._id}
                             className="card"
                             style={{
+                                width: "100%",
                                 borderRadius: "8px",
                                 overflow: "hidden",
-                                boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                                transition: "transform 0.3s ease",
-                                backgroundColor: "#f8f9fa",
+                                boxShadow: isHovered ? "0 0 10px rgba(0, 0, 0, 0.3)" : "0 4px 8px rgba(0,0,0,0.1)",
+                                transition: "all 0.3s ease",
+                                backgroundColor: isHovered ? "white" : "#f8f9fa",
+                                padding: isHovered ? "20px" : "15px",
                             }}
+                            onMouseEnter={() => setHoverState((prev) => ({ ...prev, [patient._id]: true }))}
+                            onMouseLeave={() => setHoverState((prev) => ({ ...prev, [patient._id]: false }))}
                         >
                             <div
                                 className="card-body"
                                 style={{
-                                    padding: "20px",
                                     display: "flex",
-                                    flexDirection: "column",
                                     alignItems: "center",
-                                    textAlign: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    transform: isHovered ? "translateY(2px)" : "translateY(0)",
+                                    borderRadius: isHovered ? "10px" : "8px",
+                                    zIndex: isHovered ? 10 : 1,
+                                    fontSize: isHovered ? "20px" : "16px",
+                                    color: isHovered ? "#FF8096" : "black",
+                                    cursor: "pointer",
                                 }}
                             >
-                                <FaUser style={{ fontSize: "3rem", color: "#FF8096", marginBottom: "15px" }} />
-                                <h4 style={{ marginBottom: "10px", color: "#333" }}>{patient.Name}</h4>
-                                <p style={{ color: "black", marginBottom: "15px" }}>
-                                    {patient.Gender}, {patient.Age} years
-                                </p>
+                                {/* Icon */}
+                                <FaUser
+                                    style={{
+                                        fontSize: "3rem",
+                                        color: "#FF8096",
+                                        marginRight: "20px",
+                                    }}
+                                />
+
+                                {/* Patient Info */}
+                                <div style={{ flex: 1 }}>
+                                    <h4 style={{ marginBottom: "5px", color: "#333" }}>{patient.Name}</h4>
+                                    <p style={{ color: "black", marginBottom: "10px" }}>
+                                        {patient.Gender}, {patient.Age} years
+                                    </p>
+                                </div>
+
+                                {/* Button */}
                                 <button
                                     onClick={() => handleRedirect(patient._id)}
                                     className="btn btn-info"
@@ -106,14 +132,16 @@ function Patients() {
                                         fontWeight: "bold",
                                         cursor: "pointer",
                                         transition: "background-color 0.3s ease",
+                                        display: "flex",
+                                        alignItems: "center",
                                     }}
                                 >
                                     <FaEye style={{ marginRight: "5px" }} /> View Details
                                 </button>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
