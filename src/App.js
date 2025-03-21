@@ -25,6 +25,7 @@ import DoctorSchedule from './components/DoctorsSchedule';
 import ModifyDoctorSchedule from './components/ModifyDoctorSchedule';
 import AppointmentDetails from './components/AppointmentDetails';
 import GeminiApi from './components/GeminiApi';
+import Appointments from './components/Appointments';
 
 import { useState } from 'react';
 
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/ModifyDoctorSchedule" element={<ModifyDoctorSchedule />} />
                 <Route path="/PatientInfo/:id/AppointmentDetails" element={<AppointmentDetails />} />
                 <Route path="/GeminiApi" element={<GeminiApi />} />
+                <Route path="/Appointments" element={<Appointments />} />
             </Routes>
             <Footer/>
         </div>

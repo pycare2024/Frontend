@@ -98,6 +98,14 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#fef4e8" })
                             >
                                 Patients
                             </Link>
+                            <Link
+                                to="/Appointments"
+                                style={
+                                    location.pathname === "/Appointments" ? activeLinkStyle : linkStyle
+                                }
+                            >
+                                Appointments
+                            </Link>
                             <button
                                 onClick={onLogout}
                                 style={{

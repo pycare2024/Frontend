@@ -26,6 +26,10 @@ function DoctorLogin({ onLogin }) {
             if (data.success) {
                 setMessage(data.message);
                 onLogin(data.doctor);
+                console.log(data.doctor.doctor_id)
+                console.log(data.doctor.id)
+                localStorage.setItem("doctor_id", data.doctor.doctor_id);
+                localStorage.setItem("Id", data.doctor.id);
                 navigate("/Home", { state: { doctor: data.doctor } });
             } else {
                 setMessage(data.message);
