@@ -4,7 +4,9 @@ const Appointments = () => {
     const [appointments, setAppointments] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [loading, setLoading] = useState(false);
-    const doctor_id = localStorage.getItem("doctor_id"); // Get doctor_id from localStorage
+    const [activeMeeting, setActiveMeeting] = useState(null); // Track active Jitsi meeting
+
+    const doctor_id = localStorage.getItem("doctor_id");
     const id = localStorage.getItem("Id");
 
     useEffect(() => {
@@ -14,7 +16,7 @@ const Appointments = () => {
     }, [selectedDate, doctor_id]);
 
     const fetchAppointments = async () => {
-        if (!doctor_id) return; // Don't fetch if doctor_id is missing
+        if (!doctor_id) return;
 
         setLoading(true);
         try {
@@ -31,7 +33,7 @@ const Appointments = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg" style={{marginTop:"6%",height:"100vh"}}>
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg" style={{ marginTop: "6%", height: "100vh" }}>
             <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Appointments</h1>
 
             {/* Doctor ID Info */}
@@ -68,7 +70,7 @@ const Appointments = () => {
                                 <th className="border p-3">Phone</th>
                                 <th className="border p-3">Date</th>
                                 <th className="border p-3">Payment</th>
-                                <th className="border p-3">Meeting Link</th>
+                                <th className="border p-3">Meeting</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,14 +90,12 @@ const Appointments = () => {
                                     </td>
                                     <td className="border p-3">
                                         {appointment.meeting_link ? (
-                                            <a
-                                                href={appointment.meeting_link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-blue-600 underline font-semibold hover:text-blue-800"
+                                            <button
+                                                onClick={() => setActiveMeeting(appointment.meeting_link)}
+                                                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800"
                                             >
                                                 Join Meeting
-                                            </a>
+                                            </button>
                                         ) : (
                                             <span className="text-gray-500">Not Available</span>
                                         )}
@@ -108,6 +108,26 @@ const Appointments = () => {
                     <p className="text-center text-gray-600">No Appointments Found</p>
                 )}
             </div>
+
+            {/* Jitsi Meeting Embedded */}
+            {activeMeeting && (
+                <div className="mt-6 bg-gray-100 p-4 rounded-lg shadow-md">
+                    <h3 className="text-xl font-semibold text-gray-800">Live Consultation</h3>
+                    <iframe
+                        src={activeMeeting}
+                        width="100%"
+                        height="500px"
+                        allow="camera; microphone; fullscreen"
+                        className="mt-4 border rounded-lg"
+                    ></iframe>
+                    <button
+                        onClick={() => setActiveMeeting(null)}
+                        className="mt-4 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+                    >
+                        Close Meeting
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
