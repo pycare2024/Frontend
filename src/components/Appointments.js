@@ -4,10 +4,9 @@ const Appointments = () => {
     const [appointments, setAppointments] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [loading, setLoading] = useState(false);
-    const [activeMeeting, setActiveMeeting] = useState(null); // Track active Jitsi meeting
-
+    const [activeMeeting, setActiveMeeting] = useState(null);
+    
     const doctor_id = localStorage.getItem("doctor_id");
-    const id = localStorage.getItem("Id");
 
     useEffect(() => {
         if (doctor_id) {
@@ -32,21 +31,28 @@ const Appointments = () => {
         }
     };
 
-    return (
-        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg" style={{ marginTop: "6%", height: "100vh" }}>
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Appointments</h1>
+    // Function for doctor to start session
+    const startSession = async (appointmentId) => {
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/startSession/${appointmentId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            });
 
-            {/* Doctor ID Info */}
-            {doctor_id ? (
-                <div className="mb-4 p-3 bg-blue-100 text-blue-700 rounded-md text-center">
-                    <p><span className="font-semibold">Doctor ID:</span> {id}</p>
-                    <p><span className="font-semibold">Database ID:</span> {doctor_id}</p>
-                </div>
-            ) : (
-                <p className="text-red-600 font-semibold text-center">
-                    ⚠ Error: Doctor ID not found. Please log in again.
-                </p>
-            )}
+            if (response.ok) {
+                // Refresh appointments to reflect session started
+                fetchAppointments();
+            } else {
+                console.error("Failed to start session");
+            }
+        } catch (error) {
+            console.error("Error starting session:", error);
+        }
+    };
+
+    return (
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg" style={{ marginTop: "6%", height: "100vh"}}>
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Appointments</h1>
 
             {/* Date Picker */}
             <div className="mb-4 flex justify-center">
@@ -70,7 +76,7 @@ const Appointments = () => {
                                 <th className="border p-3">Phone</th>
                                 <th className="border p-3">Date</th>
                                 <th className="border p-3">Payment</th>
-                                <th className="border p-3">Meeting</th>
+                                <th className="border p-3">Session</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +95,7 @@ const Appointments = () => {
                                         </span>
                                     </td>
                                     <td className="border p-3">
-                                        {appointment.meeting_link ? (
+                                        {appointment.session_started ? (
                                             <button
                                                 onClick={() => setActiveMeeting(appointment.meeting_link)}
                                                 className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800"
@@ -97,7 +103,15 @@ const Appointments = () => {
                                                 Join Meeting
                                             </button>
                                         ) : (
-                                            <span className="text-gray-500">Not Available</span>
+                                            <>
+                                                <p className="text-gray-500">Session Not Started</p>
+                                                <button
+                                                    onClick={() => startSession(appointment._id)}
+                                                    className="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700"
+                                                >
+                                                    Start Session
+                                                </button>
+                                            </>
                                         )}
                                     </td>
                                 </tr>
