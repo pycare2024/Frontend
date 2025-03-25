@@ -1,0 +1,230 @@
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background: url('homeimg.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  padding: 0 10%;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* margin-bottom: 10px; */
+}
+
+.text-box {
+  background-color: rgba(234, 224, 224, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  max-width: 500px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeInScale 1s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.content-slider {
+  display: flex;
+  width: 450%; /* 4 pages (3 original + 1 duplicate), each 100% wide */
+  animation: slideContent 9s infinite ease-in-out; /* 9s total: 2s hold + 1s transition per page */
+}
+
+.content-page {
+  width: 25%; /* Each page takes 1/4 of the slider width (100% of text-box) */
+  flex-shrink: 0; /* Prevent shrinking */
+  box-sizing: border-box; /* Ensure padding/margins don’t cause overlap */
+}
+
+.headline {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.subheadline {
+  font-size: 1.2rem;
+  color: #1A3A8C;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.cta-button {
+  background-color: #4285F4;
+  color: #FFFFFF;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
+  background-color: #1A3A8C;
+}
+
+.pagination-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  position: relative; /* Keep dots stationary */
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #D3D3D3;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+/* Sync dot active state with slider animation */
+.dot-1 {
+  animation: dotActive1 9s infinite;
+}
+.dot-2 {
+  animation: dotActive2 9s infinite;
+}
+.dot-3 {
+  animation: dotActive3 9s infinite;
+}
+
+/* Animations */
+@keyframes slideContent {
+  0% {
+    transform: translateX(0); /* Start with first page */
+  }
+  22.22% {
+    transform: translateX(0); /* Hold first page for 2s */
+  }
+  33.33% {
+    transform: translateX(-25%); /* Transition to second page (1s) */
+  }
+  55.55% {
+    transform: translateX(-25%); /* Hold second page for 2s */
+  }
+  66.66% {
+    transform: translateX(-50%); /* Transition to third page (1s) */
+  }
+  88.88% {
+    transform: translateX(-50%); /* Hold third page for 2s */
+  }
+  99.99% {
+    transform: translateX(-75%); /* Transition to duplicate first page (1s) */
+  }
+  100% {
+    transform: translateX(0); /* Instantly reset to first page */
+  }
+}
+
+@keyframes dotActive1 {
+  0%, 22.22% {
+    background-color: #4285F4; /* Active for first page */
+  }
+  22.23%, 100% {
+    background-color: #D3D3D3;
+  }
+}
+
+@keyframes dotActive2 {
+  33.33%, 55.55% {
+    background-color: #4285F4; /* Active for second page */
+  }
+  0%, 33.32%, 55.56%, 100% {
+    background-color: #D3D3D3;
+  }
+}
+
+@keyframes dotActive3 {
+  66.66%, 88.88% {
+    background-color: #4285F4; /* Active for third page */
+  }
+  0%, 66.65%, 88.89%, 100% {
+    background-color: #D3D3D3;
+  }
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    justify-content: center;
+    padding: 5%;
+  }
+
+  .text-box {
+    max-width: 100%;
+    padding: 30px;
+  }
+
+  .content-slider {
+    animation: slideContent 9s infinite ease-in-out;
+  }
+
+  .headline {
+    font-size: 2.5rem;
+  }
+
+  .subheadline {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 8px 25px;
+    font-size: 1rem;
+  }
+
+  .pagination-dots {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .header {
+    padding: 3%;
+  }
+
+  .text-box {
+    padding: 20px;
+  }
+
+  .content-slider {
+    animation: slideContent 9s infinite ease-in-out;
+  }
+
+  .headline {
+    font-size: 2rem;
+  }
+
+  .subheadline {
+    font-size: 0.9rem;
+    margin: 15px 0;
+  }
+
+  .cta-button {
+    padding: 7px 20px;
+    font-size: 0.9rem;
+  }
+
+  .pagination-dots {
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}

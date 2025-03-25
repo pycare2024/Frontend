@@ -1,0 +1,218 @@
+/* Slide3.css */
+
+.care {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  /* background-color: #4285F4;  */
+  background: url(page2.jpeg) no-repeat center;
+  position: relative;
+  background-size: cover;
+  padding: 50px 10%;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* justify-content: center;  */ 
+  /* margin-bottom: 50px; */
+}
+
+.header-section2 {
+  margin-top: 50px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.headline2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4285F4;
+  margin: 0;
+  animation: slideUp 1s ease-in-out;
+}
+
+.subheadline2 {
+  font-size: 1.2rem;
+  color:black;
+  margin: 10px 0 0;
+  animation: slideUp 1.2s ease-in-out;
+}
+
+.features-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 80px;
+}
+
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.95); /* White card with slight transparency */
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  flex: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInCard 1s ease-in-out;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.2s; }
+.feature-card:nth-child(2) { animation-delay: 0.4s; }
+.feature-card:nth-child(3) { animation-delay: 0.6s; }
+.feature-card:nth-child(4) { animation-delay: 0.8s; }
+
+.feature-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #4285F4;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color 0.3s ease;
+}
+
+.integrated-mental-health {
+  background: url('pag2img1.jpg') no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.grounded-in-science {
+  background: url('pag2img2.jpg') no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.personalized-support {
+  background: url('pag2img3.jpg') no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.round-the-clock {
+  background: url('pag2img4.jpg') no-repeat center;
+  background-size: contain;
+  position: relative;
+}
+
+.icon:hover {
+  filter: brightness(0.8); /* Darken the icon on hover */
+}
+
+.feature-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4285F4;
+  margin: 0 0 10px;
+}
+
+.feature-description {
+  font-size: 1rem;
+  color: #1A3A8C;
+  line-height: 1.5;
+}
+
+/* Animations */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .features-section {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .feature-card {
+    flex: 1 1 45%; /* Two cards per row */
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide3-container {
+    padding: 30px 5%;
+  }
+
+  .headline {
+    font-size: 2.5rem;
+  }
+
+  .subheadline {
+    font-size: 1rem;
+  }
+
+  .features-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature-card {
+    flex: 1 1 100%; /* Stack cards vertically */
+    max-width: 100%;
+  }
+
+  .feature-title {
+    font-size: 1.2rem;
+  }
+
+  .feature-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .slide3-container {
+    padding: 20px 3%;
+  }
+
+  .headline {
+    font-size: 2rem;
+  }
+
+  .subheadline {
+    font-size: 0.9rem;
+  }
+
+  .feature-card {
+    padding: 15px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-title {
+    font-size: 1.1rem;
+  }
+
+  .feature-description {
+    font-size: 0.85rem;
+  }
+}

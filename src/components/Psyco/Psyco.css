@@ -1,0 +1,208 @@
+/* Slide6.css */
+.psyco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: url('./unused.jpg') no-repeat center;
+  background-size: cover;
+  position: relative;
+  padding: 50px 10%;
+  box-sizing: border-box;
+}
+
+.content-section5 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  flex-direction: column;
+  gap: 40px;
+  z-index: 1;
+  
+}
+
+.image-column5 {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.consulting-image5 {
+  width: 100%;
+  max-width: 500px;
+  height: 400px;
+  background: url('./un.png') no-repeat center;
+  background-size: contain;
+  position: relative;
+  top: -45px;
+  left: 110px;
+}
+
+.abc{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.abc1{
+  background-color: rgba(234, 224, 224, 0);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0);
+  width: 100%;
+  max-width: 800px; /* Limit the width of the white boxes */
+  transition: transform 0.3s ease;
+}
+
+.def{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.def1{
+  background-color: rgba(234, 224, 224, 0);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0);
+  width: 100%;
+  max-width: 800px; /* Limit the width of the white boxes */
+  transition: transform 0.3s ease;
+}
+
+.text-column5 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Changed to push content to the bottom */
+  align-items: flex-end; /* Align content to the right within the column */
+  background-color: rgba(234, 224, 224, 0);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0);
+  width: 100%;
+  max-width: 800px;
+  margin-left: 150px; 
+  left: 100px;
+}
+
+.headline5 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4285F4;
+  margin: 0 0 10px;
+}
+
+.subheadline5 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #95b3e2;
+  margin: 0 0 20px;
+}
+
+.description5 {
+  font-size: 1.1rem;
+  color: #1b1c21;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.read-more-btn5 {
+  background-color: #4285F4;
+  color: #FFFFFF;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .content-section5 {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .image-column5, .text-column5 {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .consulting-image5 {
+    max-width: 400px;
+    height: 300px;
+    left: 0; /* Reset left positioning for smaller screens */
+    top: 0; /* Reset top positioning for smaller screens */
+  }
+
+  .text-column5 {
+    margin-left: 0; /* Remove margin-left on smaller screens to center the text */
+    max-width: 100%; /* Ensure the text column takes full width */
+    justify-content: center; /* Center content vertically on smaller screens */
+    align-items: center; /* Center content horizontally on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .psyco {
+    padding: 30px 5%;
+  }
+
+  .headline5 {
+    font-size: 2.5rem;
+  }
+
+  .subheadline5 {
+    font-size: 1.3rem;
+  }
+
+  .description5 {
+    font-size: 1rem;
+  }
+
+  .read-more-btn5 {
+    padding: 8px 25px;
+    font-size: 1rem;
+  }
+
+  .image-column5 {
+    justify-content: center; /* Ensure image is centered */
+  }
+
+  .consulting-image5 {
+    max-width: 350px; /* Slightly smaller for better fit */
+    height: 250px;
+  }
+}
+
+@media (max-width: 400px) {
+  .psyco {
+    padding: 20px 3%;
+  }
+
+  .headline5 {
+    font-size: 2rem;
+  }
+
+  .subheadline5 {
+    font-size: 1.1rem;
+  }
+
+  .description5 {
+    font-size: 0.9rem;
+  }
+
+  .consulting-image5 {
+    max-width: 300px;
+    height: 200px;
+  }
+
+  .text-column5 {
+    padding: 20px; /* Reduce padding for smaller screens */
+  }
+}
