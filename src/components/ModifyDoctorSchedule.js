@@ -8,8 +8,8 @@ const ModifyDoctorSchedule = () => {
     const [schedules, setSchedules] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [editingSchedule, setEditingSchedule] = useState(null);
-    const [slotsAvailable, setSlotsAvailable] = useState("");
+    const [editingSlot, setEditingSlot] = useState(null);
+    const [scheduleId, setScheduleId] = useState("");
 
     useEffect(() => {
         fetchDoctors();
@@ -45,100 +45,88 @@ const ModifyDoctorSchedule = () => {
             alert("Please select both doctor and date.");
             return;
         }
-
-        setSchedules([]);
+    
+        setSchedules([]); // Reset schedules before fetching
         setError("");
         setLoading(true);
-
+    
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`);
             const data = await response.json();
-            
+    
+            // console.log("Fetched schedule data:", data); // Debug log
+    
             if (!response.ok) {
-                throw new Error(data.message);
+                throw new Error(data.message || "Failed to fetch schedules");
             }
-            
-            setSchedules([data.data]);
+    
+            if (data && data.scheduleId) {
+                setScheduleId(data.scheduleId); // Store the schedule ID
+            } else {
+                setScheduleId(""); // Ensure it doesn't hold an invalid value
+            }
+    
+            setSchedules(data.slots || []); // Ensure it's always an array
         } catch (error) {
+            console.error("Error fetching schedules:", error);
             setError(error.message);
+            setSchedules([]); // Reset to empty array on error
         } finally {
             setLoading(false);
         }
     };
 
-    const handleModifyClick = (schedule) => {
-        setEditingSchedule(schedule);
-        setSlotsAvailable(schedule.SlotsAvailable);
-    };
-
-    const handleSlotsChange = (event) => {
-        let value = parseInt(event.target.value, 10);
-
-        if (isNaN(value) || value < 0) {
-            value = 0;
-        } else if (value > 12) {
-            alert("Slots cannot be more than 12.");
-            value = 12;
+    const handleEditSlot = (slot) => {
+        if (slot.isBooked) {
+            alert("Cannot edit this slot, it is already booked.");
+            return;
         }
-
-        setSlotsAvailable(value);
+        setEditingSlot({ ...slot }); // Ensure a new object is set
     };
 
-    const handleUpdateSchedule = async () => {
-        if (!editingSchedule) return;
+    console.log("Editing Slot:", editingSlot);
 
-        const confirmed = window.confirm("Do you want to update the schedule?");
+    const handleUpdateSlot = async () => {
+        if (!editingSlot || !scheduleId) {
+            alert("Schedule ID not found. Please try again.");
+            return;
+        }
+    
+        const confirmed = window.confirm("Do you want to update this slot?");
         if (!confirmed) return;
-
+    
         try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${editingSchedule._id}`, {
+            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`, { // Use correct schedule ID
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    date,
-                    slotsAvailable,
-                    weekDay: new Date(date).toLocaleDateString("en-US", { weekday: "long" }),
+                    date: date, // Ensure date is sent
+                    slots: [
+                        {
+                            _id: editingSlot._id,
+                            startTime: editingSlot.startTime,
+                            endTime: editingSlot.endTime
+                        }
+                    ]
                 }),
             });
-
+    
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message);
             }
-
-            alert("Schedule updated successfully.");
-            setEditingSchedule(null);
-            fetchSchedules();
+    
+            alert("Slot updated successfully.");
+            setEditingSlot(null);
+            fetchSchedules(); // Refresh the list
         } catch (error) {
-            alert("Error updating schedule: " + error.message);
+            alert("Error updating slot: " + error.message);
         }
     };
-
-    const handleDeleteSchedule = async (scheduleId) => {
-        const confirmed = window.confirm("Are you sure you want to delete this schedule?");
-        if (!confirmed) return;
-
-        try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/deleteSchedule/${scheduleId}`, {
-                method: "DELETE",
-            });
-
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message);
-            }
-
-            alert("Schedule deleted successfully.");
-            fetchSchedules();
-        } catch (error) {
-            alert("Error deleting schedule: " + error.message);
-        }
-    };
-
     return (
-        <div style={{ marginTop: "5%", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+        <div style={{ marginTop: "5%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
             <div style={{ textAlign: "center", width: "100%", maxWidth: "600px", padding: "20px" }}>
                 <h2>Select Doctor and Date</h2>
                 <select value={doctorId} onChange={handleDoctorChange} style={{ width: "100%", padding: "10px", marginBottom: "10px" }}>
@@ -152,30 +140,56 @@ const ModifyDoctorSchedule = () => {
                 <button onClick={fetchSchedules} style={{ padding: "10px 20px", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>Show Schedules</button>
                 {loading && <p>Loading schedules...</p>}
                 {error && <p style={{ color: "red" }}>{error}</p>}
+
                 <div style={{ marginTop: "20px" }}>
-                    {schedules.length === 0 && !loading && !error && <p>No schedules found.</p>}
-                    {schedules.map((schedule, index) => (
-                        <div key={index} style={{ padding: "15px", border: "1px solid #ccc", borderRadius: "10px", marginBottom: "10px" }}>
-                            <p><strong>Date:</strong> {new Date(schedule.Date).toLocaleDateString("en-GB")}</p>
-                            <p><strong>Slots Available:</strong> {schedule.SlotsAvailable}</p>
-                            <button onClick={() => handleModifyClick(schedule)} style={{ marginRight: "10px", padding: "5px 10px", backgroundColor: "#28a745", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>Modify</button>
-                            <button onClick={() => handleDeleteSchedule(schedule._id)} style={{ padding: "5px 10px", backgroundColor: "#dc3545", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>Delete</button>
+                    {schedules && schedules.length === 0 && !loading && !error && <p>No schedules found.</p>}
+                    {schedules?.map((slot, index) => (
+                        <div key={index} style={{
+                            padding: "15px",
+                            border: "1px solid #ccc",
+                            borderRadius: "10px",
+                            marginBottom: "10px",
+                            backgroundColor: slot.isBooked ? "#ffcccc" : "#ccffcc",
+                        }}>
+                            <p><strong>Start Time:</strong> {slot.startTime}</p>
+                            <p><strong>End Time:</strong> {slot.endTime}</p>
+                            <p><strong>Status:</strong> {slot.isBooked ? "Booked" : "Available"}</p>
+                            <button
+                                onClick={() => handleEditSlot(slot)}
+                                disabled={slot.isBooked}
+                                style={{
+                                    padding: "5px 10px",
+                                    backgroundColor: slot.isBooked ? "#ccc" : "#007bff",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "5px",
+                                    cursor: slot.isBooked ? "not-allowed" : "pointer",
+                                }}
+                            >
+                                Edit
+                            </button>
                         </div>
                     ))}
                 </div>
-                {editingSchedule && (
-                    <div style={{ marginTop: "20px", padding: "15px", border: "1px solid #ccc", borderRadius: "10px" }}>
-                        <h3>Modify Schedule</h3>
-                        <p><strong>Date:</strong> {date}</p>
+
+                {editingSlot && (
+                    <div>
+                        <h3>Edit Slot</h3>
+                        <label>Start Time:</label>
                         <input
-                            type="number"
-                            value={slotsAvailable}
-                            onChange={handleSlotsChange}
-                            placeholder="Slots Available"
-                            style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+                            type="time"
+                            value={editingSlot.startTime}
+                            onChange={(e) => setEditingSlot({ ...editingSlot, startTime: e.target.value })}
                         />
-                        <p><strong>Weekday:</strong> {new Date(date).toLocaleDateString("en-US", { weekday: "long" })}</p>
-                        <button onClick={handleUpdateSchedule} style={{ padding: "10px 20px", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>Update Schedule</button>
+
+                        <label>End Time:</label>
+                        <input
+                            type="time"
+                            value={editingSlot.endTime}
+                            onChange={(e) => setEditingSlot({ ...editingSlot, endTime: e.target.value })}
+                        />
+
+                        <button onClick={handleUpdateSlot}>Update Slot</button>
                     </div>
                 )}
             </div>
