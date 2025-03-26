@@ -387,6 +387,22 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                             >
                                 Add Screening test
                             </Link>
+                            <Link
+                                to="/AddOperator"
+                                style={
+                                    location.pathname === "/AddOperator" ? activeLinkStyle : linkStyle
+                                }
+                            >
+                                Add Operator
+                            </Link>
+                            <Link
+                                to="/OperatorDetails"
+                                style={
+                                    location.pathname === "/OperatorDetails" ? activeLinkStyle : linkStyle
+                                }
+                            >
+                                Operator Details
+                            </Link>
                             <button
                                 onClick={onLogout}
                                 style={{
