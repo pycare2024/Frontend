@@ -54,8 +54,6 @@ const ModifyDoctorSchedule = () => {
             const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`);
             const data = await response.json();
     
-            // console.log("Fetched schedule data:", data); // Debug log
-    
             if (!response.ok) {
                 throw new Error(data.message || "Failed to fetch schedules");
             }
@@ -64,6 +62,13 @@ const ModifyDoctorSchedule = () => {
                 setScheduleId(data.scheduleId); // Store the schedule ID
             } else {
                 setScheduleId(""); // Ensure it doesn't hold an invalid value
+            }
+    
+            // Handle case where schedule exists but no slots are available
+            if (data.slots.length === 0) {
+                setError("Schedule exists, but no slots available."); // Display message
+            } else {
+                setError(""); // Clear error if slots are available
             }
     
             setSchedules(data.slots || []); // Ensure it's always an array
@@ -81,28 +86,26 @@ const ModifyDoctorSchedule = () => {
             alert("Cannot edit this slot, it is already booked.");
             return;
         }
-        setEditingSlot({ ...slot }); // Ensure a new object is set
+        setEditingSlot({ ...slot });
     };
-
-    console.log("Editing Slot:", editingSlot);
 
     const handleUpdateSlot = async () => {
         if (!editingSlot || !scheduleId) {
             alert("Schedule ID not found. Please try again.");
             return;
         }
-    
+
         const confirmed = window.confirm("Do you want to update this slot?");
         if (!confirmed) return;
-    
+
         try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`, { // Use correct schedule ID
+            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    date: date, // Ensure date is sent
+                    date: date,
                     slots: [
                         {
                             _id: editingSlot._id,
@@ -112,19 +115,46 @@ const ModifyDoctorSchedule = () => {
                     ]
                 }),
             });
-    
+
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message);
             }
-    
+
             alert("Slot updated successfully.");
             setEditingSlot(null);
-            fetchSchedules(); // Refresh the list
+            fetchSchedules();
         } catch (error) {
             alert("Error updating slot: " + error.message);
         }
     };
+
+    const handleDeleteSlot = async (slotId) => {
+        if (!scheduleId) {
+            alert("Schedule ID not found. Please try again.");
+            return;
+        }
+
+        const confirmed = window.confirm("Are you sure you want to delete this slot?");
+        if (!confirmed) return;
+
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/deleteSlot/${scheduleId}/${slotId}`, {
+                method: "DELETE",
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
+
+            alert("Slot deleted successfully.");
+            fetchSchedules();
+        } catch (error) {
+            alert("Error deleting slot: " + error.message);
+        }
+    };
+
     return (
         <div style={{ marginTop: "5%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
             <div style={{ textAlign: "center", width: "100%", maxWidth: "600px", padding: "20px" }}>
@@ -164,34 +194,49 @@ const ModifyDoctorSchedule = () => {
                                     border: "none",
                                     borderRadius: "5px",
                                     cursor: slot.isBooked ? "not-allowed" : "pointer",
+                                    marginRight: "10px",
                                 }}
                             >
                                 Edit
                             </button>
+                            <button
+                                onClick={() => handleDeleteSlot(slot._id)}
+                                disabled={slot.isBooked}
+                                style={{
+                                    padding: "5px 10px",
+                                    backgroundColor: slot.isBooked ? "#ccc" : "#dc3545",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "5px",
+                                    cursor: slot.isBooked ? "not-allowed" : "pointer",
+                                }}
+                            >
+                                Delete
+                            </button>
+
+                            {editingSlot && (
+                                <div>
+                                    <h3>Edit Slot</h3>
+                                    <label>Start Time:</label>
+                                    <input
+                                        type="time"
+                                        value={editingSlot.startTime}
+                                        onChange={(e) => setEditingSlot({ ...editingSlot, startTime: e.target.value })}
+                                    />
+
+                                    <label>End Time:</label>
+                                    <input
+                                        type="time"
+                                        value={editingSlot.endTime}
+                                        onChange={(e) => setEditingSlot({ ...editingSlot, endTime: e.target.value })}
+                                    />
+
+                                    <button onClick={handleUpdateSlot}>Update Slot</button>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
-
-                {editingSlot && (
-                    <div>
-                        <h3>Edit Slot</h3>
-                        <label>Start Time:</label>
-                        <input
-                            type="time"
-                            value={editingSlot.startTime}
-                            onChange={(e) => setEditingSlot({ ...editingSlot, startTime: e.target.value })}
-                        />
-
-                        <label>End Time:</label>
-                        <input
-                            type="time"
-                            value={editingSlot.endTime}
-                            onChange={(e) => setEditingSlot({ ...editingSlot, endTime: e.target.value })}
-                        />
-
-                        <button onClick={handleUpdateSlot}>Update Slot</button>
-                    </div>
-                )}
             </div>
         </div>
     );
