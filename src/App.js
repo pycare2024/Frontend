@@ -20,12 +20,13 @@ import FAQ from './components/FAQ';
 import ScreeningTest from './components/ScreeningTest';
 import StartScreeningTest from './components/StartScreeningTest';
 import ScreenTestForm from './components/ScreenTestForm';
-import ContactUs from './components/ContactUs';
 import DoctorSchedule from './components/DoctorsSchedule';
 import ModifyDoctorSchedule from './components/ModifyDoctorSchedule';
 import AppointmentDetails from './components/AppointmentDetails';
 import GeminiApi from './components/GeminiApi';
 import Appointments from './components/Appointments';
+import Contactus from "./components/Contactus/Contactus";
+
 
 import { useState } from 'react';
 
@@ -78,12 +79,12 @@ function App() {
                 <Route path="/ScreeningTest" element={<ScreeningTest />} />
                 <Route path="/StartScreeningTest" element={<StartScreeningTest />} />
                 <Route path="/ScreenTestForm" element={<ScreenTestForm />} />
-                <Route path="/ContactUs" element={<ContactUs />} />
                 <Route path="/DoctorSchedule" element={<DoctorSchedule />} />
                 <Route path="/ModifyDoctorSchedule" element={<ModifyDoctorSchedule />} />
                 <Route path="/PatientInfo/:id/AppointmentDetails" element={<AppointmentDetails />} />
                 <Route path="/GeminiApi" element={<GeminiApi />} />
                 <Route path="/Appointments" element={<Appointments />} />
+                <Route path="/Contactus" element={<Contactus />} />
             </Routes>
             <Footer/>
         </div>

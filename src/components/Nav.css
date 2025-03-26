@@ -1,33 +1,124 @@
 /* General Container Styling */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 40px;
+   
 }
 
+/* Base styles for links and buttons */
 nav a, nav button {
-    padding: 5px 10px;
+    padding: 8px 15px;
     border-radius: 5px;
     text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
+/* Hover effects with Google blue (#4285F4) */
 nav a:hover, nav button:hover {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.2);
+    color: #4285F4;
+    background-color: rgba(66, 133, 244, 0.1);
+    transform: translateY(-2px);
 }
 
-/* Ensure the mobile menu is hidden by default on desktop */
+/* Nav Home Section */
+.navHome {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    gap: 25px;
+    margin-left: 250px;
+    flex-grow: 0; /* Prevent it from expanding too much */
+}
+
+/* Auth Buttons Styling */
+.auth-buttons {
+    margin-left: 20px; /* Space between RESOURCES and Book Appointment */
+}
+
+.auth-btn {
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin-left: 40px;
+}
+
+.signup-btn {
+    background-color: #4285F4; /* Google Blue */
+    color: #fff;
+    border: 2px solid #4285F4;
+}
+
+.signup-btn:hover {
+    background-color: #fff;
+    color: #4285F4;
+    border: 2px solid #4285F4;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+}
+
+/* Dropdown Animation */
+.navHome > div {
+    cursor: pointer;
+}
+
+.navHome > div > div {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.navHome > div:hover > div {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Desktop Navigation Styling */
+.d-none.d-md-flex {
+    display: none; /* Hidden by default */
+    width: 100%; /* Span full width */
+    justify-content: space-between; /* Push items to edges */
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .d-none.d-md-flex {
+        display: flex; /* Show on desktop */
+    }
+}
+
+/* Media Queries for Mobile */
 @media (max-width: 768px) {
     .d-md-none {
-        display: block; /* Show the hamburger menu */
+        display: block;
     }
 
-    .d-md-flex {
-        display: none; /* Hide the default navbar links on mobile */
+    .d-none.d-md-flex {
+        display: none;
     }
 
     .container {
-        position: relative; /* Allow absolute positioning of the mobile menu */
+        position: relative;
+        padding: 0 15px;
+    }
+
+    .auth-buttons {
+        display: none; /* Hide auth buttons on mobile */
     }
 }
 
@@ -37,27 +128,56 @@ nav a:hover, nav button:hover {
     top: 100%;
     left: 0;
     width: 100%;
-    background: #ffffff; /* Background color for the mobile menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Prevent overflow during animation */
-    max-height: 0; /* Hidden by default */
-    transition: max-height 0.5s ease-in-out; /* Smooth slide-down effect */
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
 }
 
 .mobileMenu.open {
-    max-height: 300px; /* Adjust based on menu content size */
+    max-height: 400px; /* Increased to accommodate more items */
 }
 
 .mobileMenu a, .mobileMenu button {
-    display: block; /* Stack links vertically */
+    display: block;
     color: #333;
-    padding: 10px;
+    padding: 12px 20px;
     text-decoration: none;
     font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(66, 133, 244, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+/* Animation for mobile menu items when opened */
+.mobileMenu.open a, .mobileMenu.open button {
+    animation: slideIn 0.3s ease forwards;
 }
 
 .mobileMenu a:hover, .mobileMenu button:hover {
-    background: rgba(255, 128, 150, 0.1); /* Light hover effect */
+    background: rgba(66, 133, 244, 0.1);
+    color: #4285F4;
+    padding-left: 25px; /* Slight indent on hover */
 }
+
+/* Keyframes for slide-in animation */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Stagger animation for mobile menu items */
+.mobileMenu.open a:nth-child(1), .mobileMenu.open button:nth-child(1) { animation-delay: 0.1s; }
+.mobileMenu.open a:nth-child(2), .mobileMenu.open button:nth-child(2) { animation-delay: 0.2s; }
+.mobileMenu.open a:nth-child(3), .mobileMenu.open button:nth-child(3) { animation-delay: 0.3s; }
+.mobileMenu.open a:nth-child(4), .mobileMenu.open button:nth-child(4) { animation-delay: 0.4s; }
+.mobileMenu.open a:nth-child(5), .mobileMenu.open button:nth-child(5) { animation-delay: 0.5s; }
