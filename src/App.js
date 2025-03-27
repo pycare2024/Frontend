@@ -3,7 +3,6 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Nav from './components/Nav';
 import Home from './components/Home';
-import About from './components/About';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import DoctorDashboard from './components/DoctorDashboard';
@@ -29,6 +28,8 @@ import Contactus from "./components/Contactus/Contactus";
 import AddOperator from './components/AddOperator';
 import OperatorDetails from './components/OperatorDetails';
 import OperatorLogin from './components/OperatorLogin';
+import About from "./components/About/About";
+
 
 
 import { useState, useEffect } from 'react';
@@ -83,7 +84,6 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Home" element={<Home />} />
-                <Route path="/About" element={<About />} />
                 <Route path="/Login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/Dashboard" element={<Dashboard admin={admin} />} />
                 <Route path="/DoctorDashboard" element={<DoctorDashboard doctor={doctor} />} />
@@ -108,6 +108,7 @@ function App() {
                 <Route path="/AddOperator" element={<AddOperator />} />
                 <Route path="/OperatorDetails" element={<OperatorDetails />} />
                 <Route path="/OperatorLogin" element={<OperatorLogin onLogin={handleOperatorLogin} />} />
+                <Route path="/About" element={<About />} />
             </Routes>
             <Footer/>
         </div>

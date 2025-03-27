@@ -89,7 +89,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         }}
                                     >
                                         <Link
-                                            to="/team"
+                                            to="/About"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
@@ -100,7 +100,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             About PsyCare
                                         </Link>
                                         <Link
-                                            to="/mission"
+                                            to="/About"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
