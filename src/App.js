@@ -28,17 +28,25 @@ import Appointments from './components/Appointments';
 import Contactus from "./components/Contactus/Contactus";
 import AddOperator from './components/AddOperator';
 import OperatorDetails from './components/OperatorDetails';
+import OperatorLogin from './components/OperatorLogin';
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isDocLoggedIn, setIsDocLoggedIn] = useState(false);
+    const [isOperatorLoggedIn, setIsOperatorLoggedIn] = useState(localStorage.getItem("operator") ? true : false);
+
     const [doctor, setDoctor] = useState(null);
     const [admin, setAdmin] = useState(null);
+    const [operator, setOperator] = useState(JSON.parse(localStorage.getItem("operator")) || null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsOperatorLoggedIn(!!operator);
+    }, [operator]);
 
     const handleLogin = (adminData) => {
         setAdmin(adminData);
@@ -50,6 +58,9 @@ function App() {
         setIsLoggedIn(false);
         setDoctor(null);
         setIsDocLoggedIn(false);
+        setOperator(null);
+        setIsOperatorLoggedIn(false);
+        localStorage.removeItem("operator");
         navigate("/"); // Navigate to the home page after logout
     };
 
@@ -59,9 +70,16 @@ function App() {
         navigate("/DoctorDashboard"); // Navigate to the dashboard for doctor
     };
 
+    const handleOperatorLogin = (operatorData) => {
+        setOperator(operatorData);
+        setIsOperatorLoggedIn(true);
+        localStorage.setItem("operator", JSON.stringify(operatorData));
+        navigate("/"); // Redirect operator to the home page
+    };
+
     return (
         <div className="container-fluid full-screen">
-            <Nav isLoggedIn={isLoggedIn} isDocLoggedIn={isDocLoggedIn} onLogout={handleLogout} />
+            <Nav isLoggedIn={isLoggedIn} isDocLoggedIn={isDocLoggedIn} isOperatorLoggedIn={isOperatorLoggedIn} onLogout={handleLogout} />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Home" element={<Home />} />
@@ -89,6 +107,7 @@ function App() {
                 <Route path="/Contactus" element={<Contactus />} />
                 <Route path="/AddOperator" element={<AddOperator />} />
                 <Route path="/OperatorDetails" element={<OperatorDetails />} />
+                <Route path="/OperatorLogin" element={<OperatorLogin onLogin={handleOperatorLogin} />} />
             </Routes>
             <Footer/>
         </div>

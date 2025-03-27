@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import "./Nav.css";
 
-function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" }) {
+function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackground = "#ffffff" }) {
 
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -66,7 +66,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                 {/* Desktop Links */}
                 <div className="d-none d-md-flex align-items-center">
                     <div className="navHome">
-                        {!isLoggedIn && !isDocLoggedIn && (
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div
                                 name="navAbout"
                                 style={{ position: "relative", display: "inline-block" }}
@@ -136,7 +136,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                                 )}
                             </div>
                         )}
-                        {!isLoggedIn && !isDocLoggedIn && (
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div
                                 name="navPartners"
                                 style={{ position: "relative", display: "inline-block" }}
@@ -181,7 +181,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                                             Admin
                                         </Link>
                                         <Link
-                                            to="/careers"
+                                            to="/OperatorLogin"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
@@ -195,7 +195,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                                 )}
                             </div>
                         )}
-                        {!isLoggedIn && !isDocLoggedIn && (
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div
                                 name="navPartners"
                                 style={{ position: "relative", display: "inline-block" }}
@@ -254,7 +254,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                                 )}
                             </div>
                         )}
-                        {!isLoggedIn && !isDocLoggedIn && (
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div
                                 name="navPartners"
                                 style={{ position: "relative", display: "inline-block" }}
@@ -313,96 +313,233 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                                 )}
                             </div>
                         )}
-                        {!isLoggedIn && !isDocLoggedIn && (
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div className="auth-buttons">
-                            <Link to="/signup" className="auth-btn signup-btn">Book Appointment</Link>
+                                <Link to="/signup" className="auth-btn signup-btn">Book Appointment</Link>
                             </div>
                         )}
-                        
+
                     </div>
 
                     {
-                    isDocLoggedIn && (
-                        <>
-                            <Link
-                                to="/Patients"
-                                style={
-                                    location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                                }
-                            >
-                                Patients
-                            </Link>
-                            <Link
-                                to="/Appointments"
-                                style={
-                                    location.pathname === "/Appointments" ? activeLinkStyle : linkStyle
-                                }
-                            >
-                                Appointments
-                            </Link>
-                            <button
-                                onClick={onLogout}
-                                style={{
-                                    ...linkStyle,
-                                    background: "none",
-                                    border: "none",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                Logout
-                            </button>
-                        </>
-                    )}
+                        isOperatorLoggedIn && (
+                            <>
+                                <Link
+                                    to="/Patients"
+                                    style={
+                                        location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                                    }
+                                >
+                                    Patients
+                                </Link>
+                                <Link
+                                    to="/Doctors"
+                                    style={
+                                        location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
+                                    }
+                                >
+                                    Doctors
+                                </Link>
+                                <Link
+                                    to="/DoctorSchedule"
+                                    style={
+                                        location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
+                                    }
+                                >
+                                    Doctor's schedule
+                                </Link>
+                                <button
+                                    onClick={onLogout}
+                                    style={{
+                                        ...linkStyle,
+                                        background: "none",
+                                        border: "none",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        )}
+
+                    {
+                        isDocLoggedIn && (
+                            <>
+                                <Link
+                                    to="/Patients"
+                                    style={
+                                        location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                                    }
+                                >
+                                    Patients
+                                </Link>
+                                <Link
+                                    to="/Appointments"
+                                    style={
+                                        location.pathname === "/Appointments" ? activeLinkStyle : linkStyle
+                                    }
+                                >
+                                    Appointments
+                                </Link>
+                                <button
+                                    onClick={onLogout}
+                                    style={{
+                                        ...linkStyle,
+                                        background: "none",
+                                        border: "none",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        )}
                     {isLoggedIn && (
                         <>
-                            <Link
-                                to="/Doctors"
-                                style={
-                                    location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
-                                }
+                            <div
+                                name="navAbout"
+                                style={{ position: "relative", display: "inline-block" }}
+                                onMouseEnter={() => setShowDropdown(true)}
+                                onMouseLeave={() => setShowDropdown(false)}
                             >
                                 Doctors
-                            </Link>
-                            <Link
-                                to="/Patients"
-                                style={
-                                    location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                                }
+                                {showDropdown && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "160px",
+                                        }}
+                                    >
+                                        <Link
+                                            to="/Doctors"
+                                            style={
+                                                location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Doctors List
+                                        </Link>
+                                        <Link
+                                            to="/DoctorSchedule"
+                                            style={
+                                                location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Doctor's schedule
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div
+                                name="navAbout"
+                                style={{ position: "relative", display: "inline-block" }}
+                                onMouseEnter={() => setShowDropdown(true)}
+                                onMouseLeave={() => setShowDropdown(false)}
                             >
                                 Patients
-                            </Link>
-                            <Link
-                                to="/DoctorSchedule"
-                                style={
-                                    location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
-                                }
+                                {showDropdown && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "160px",
+                                        }}
+                                    >
+                                        <Link
+                                            to="/Patients"
+                                            style={
+                                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Patients List
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div
+                                name="navAbout"
+                                style={{ position: "relative", display: "inline-block" }}
+                                onMouseEnter={() => setShowDropdown(true)}
+                                onMouseLeave={() => setShowDropdown(false)}
                             >
-                                Doctor's schedule
-                            </Link>
-                            <Link
-                                to="/ScreeningTest"
-                                style={
-                                    location.pathname === "/ScreeningTest" ? activeLinkStyle : linkStyle
-                                }
+                                ScreeningTest
+                                {showDropdown && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "160px",
+                                        }}
+                                    >
+                                        <Link
+                                            to="/ScreeningTest"
+                                            style={
+                                                location.pathname === "/ScreeningTest" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Add Screening test
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div
+                                name="navAbout"
+                                style={{ position: "relative", display: "inline-block" }}
+                                onMouseEnter={() => setShowDropdown(true)}
+                                onMouseLeave={() => setShowDropdown(false)}
                             >
-                                Add Screening test
-                            </Link>
-                            <Link
-                                to="/AddOperator"
-                                style={
-                                    location.pathname === "/AddOperator" ? activeLinkStyle : linkStyle
-                                }
-                            >
-                                Add Operator
-                            </Link>
-                            <Link
-                                to="/OperatorDetails"
-                                style={
-                                    location.pathname === "/OperatorDetails" ? activeLinkStyle : linkStyle
-                                }
-                            >
-                                Operator Details
-                            </Link>
+                                Operator
+                                {showDropdown && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "160px",
+                                        }}
+                                    >
+                                        <Link
+                                            to="/AddOperator"
+                                            style={
+                                                location.pathname === "/AddOperator" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Add Operator
+                                        </Link>
+                                        <Link
+                                            to="/OperatorDetails"
+                                            style={
+                                                location.pathname === "/OperatorDetails" ? activeLinkStyle : linkStyle
+                                            }
+                                        >
+                                            Operator Details
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
                             <button
                                 onClick={onLogout}
                                 style={{
@@ -417,7 +554,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                         </>
                     )}
                     {/* Moved auth-buttons inside desktop nav */}
-                    
+
                 </div>
 
                 {/* Mobile Menu Icon */}
@@ -445,6 +582,37 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                 >
                     About Us
                 </Link>
+                {isOperatorLoggedIn && (
+                    <>
+                        <Link
+                            to="/Patients"
+                            style={
+                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Patients
+                        </Link>
+                        <Link
+                            to="/DoctorSchedule"
+                            style={
+                                location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
+                            }
+                        >
+                            Doctor's schedule
+                        </Link>
+                        <button
+                            onClick={onLogout}
+                            style={{
+                                ...linkStyle,
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                            }}
+                        >
+                            Logout
+                        </button>
+                    </>
+                )}
                 {isDocLoggedIn && (
                     <>
                         <Link
@@ -496,7 +664,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                         </Link>
                     </>
                 )}
-                {!isLoggedIn && !isDocLoggedIn && (
+                {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                     <>
                         <Link
                             to="/Login"
@@ -516,9 +684,20 @@ function Nav({ isLoggedIn, isDocLoggedIn, onLogout, navBackground = "#ffffff" })
                         >
                             I am Doctor
                         </Link>
+                        <Link
+                            to="/OperatorLogin"
+                            style={
+                                location.pathname === "/OperatorLogin"
+                                    ? activeLinkStyle
+                                    : linkStyle
+                            }
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            Operator
+                        </Link>
                     </>
                 )}
-                {(isLoggedIn || isDocLoggedIn) && (
+                {(isLoggedIn || isDocLoggedIn || isOperatorLoggedIn) && (
                     <button
                         onClick={() => {
                             onLogout();
