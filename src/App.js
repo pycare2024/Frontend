@@ -14,7 +14,7 @@ import ForgotPassword from './components/ForgotPassword';
 import ForgotPwDoctor from './components/ForgotPwDoctor';
 import ScreeningTestDetails from './components/ScreeningTestDetails';
 import Prescription from './components/Prescription';
-import Footer from "./components/Footer/Footer";
+// import Footer from "./components/Footer/Footer";
 import FAQ from './components/FAQ';
 import ScreeningTest from './components/ScreeningTest';
 import StartScreeningTest from './components/StartScreeningTest';
@@ -110,7 +110,7 @@ function App() {
                 <Route path="/OperatorLogin" element={<OperatorLogin onLogin={handleOperatorLogin} />} />
                 <Route path="/About" element={<About />} />
             </Routes>
-            <Footer/>
+            {/* <Footer/> */}
         </div>
     );
 }
