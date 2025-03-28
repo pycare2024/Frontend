@@ -105,7 +105,7 @@ function FAQ() {
             <h1 className="faqTitle">FAQs</h1>
             {faqs.map((section, index) => (
                 <div key={index} className="faqSection">
-                    <h2 className="faqCategory">{section.category}</h2>
+                    <h2 className="faqCategory" style={{color:"#4285F4"}}>{section.category}</h2>
                     <div className="faqQuestions">
                         {section.questions.map((faq, i) => (
                             <details key={i} className="faqItem">

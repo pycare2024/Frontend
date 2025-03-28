@@ -323,38 +323,120 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                     {
                         isOperatorLoggedIn && (
                             <>
-                                <Link
-                                    to="/Patients"
-                                    style={
-                                        location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                                    }
+                                <div
+                                    name="navPatients"
+                                    style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                    onMouseEnter={() => setOpenDropdown("patients")}
+                                    onMouseLeave={() => setOpenDropdown(null)}
                                 >
                                     Patients
-                                </Link>
-                                <Link
-                                    to="/Doctors"
-                                    style={
-                                        location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
-                                    }
+                                    {openDropdown === "patients" && (
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "100%",
+                                                left: 0,
+                                                backgroundColor: "white",
+                                                padding: "10px",
+                                                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                                zIndex: 10,
+                                                borderRadius: "4px",
+                                                minWidth: "200px",
+                                                display: "flex",  // ✅ Stack items vertically
+                                                flexDirection: "column",  // ✅ Arrange in column
+                                                gap: "5px",  // ✅ Add spacing between items
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            <Link
+                                                to="/Patients"
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color: "black",
+                                                    fontWeight: "normal",
+                                                    padding: "8px 12px",
+                                                    borderRadius: "4px",
+                                                    transition: "background 0.2s",
+                                                }}
+                                                onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                                onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                            >
+                                                Patients List
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
+                                <div
+                                    name="navDoctors"
+                                    style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                    onMouseEnter={() => setOpenDropdown("doctors")}
+                                    onMouseLeave={() => setOpenDropdown(null)}
                                 >
                                     Doctors
-                                </Link>
-                                <Link
-                                    to="/DoctorSchedule"
-                                    style={
-                                        location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
-                                    }
-                                >
-                                    Doctor's schedule
-                                </Link>
+                                    {openDropdown === "doctors" && (
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "100%",
+                                                left: 0,
+                                                backgroundColor: "white",
+                                                padding: "10px",
+                                                boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                                zIndex: 10,
+                                                borderRadius: "4px",
+                                                minWidth: "220px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: "8px",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            <Link
+                                                to="/Doctors"
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color: "black",
+                                                    fontWeight: "normal",
+                                                    padding: "8px 12px",
+                                                    borderRadius: "4px",
+                                                    transition: "background 0.2s",
+                                                }}
+                                                onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                                onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                            >
+                                                Doctors List
+                                            </Link>
+                                            <Link
+                                                to="/DoctorSchedule"
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color: "black",
+                                                    fontWeight: "normal",
+                                                    padding: "8px 12px",
+                                                    borderRadius: "4px",
+                                                    transition: "background 0.2s",
+                                                }}
+                                                onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                                onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                            >
+                                                Doctor's Schedule
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                                 <button
                                     onClick={onLogout}
                                     style={{
-                                        ...linkStyle,
-                                        background: "none",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        fontWeight: "normal",
+                                        padding: "8px 12px",
+                                        borderRadius: "4px",
+                                        transition: "background 0.2s",
                                         border: "none",
-                                        cursor: "pointer",
                                     }}
+                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                 >
                                     Logout
                                 </button>
@@ -366,28 +448,47 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             <>
                                 <Link
                                     to="/Patients"
-                                    style={
-                                        location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                                    }
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "black",
+                                        fontWeight: "normal",
+                                        padding: "8px 12px",
+                                        borderRadius: "4px",
+                                        transition: "background 0.2s",
+                                    }}
+                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                 >
                                     Patients
                                 </Link>
                                 <Link
                                     to="/Appointments"
-                                    style={
-                                        location.pathname === "/Appointments" ? activeLinkStyle : linkStyle
-                                    }
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "black",
+                                        fontWeight: "normal",
+                                        padding: "8px 12px",
+                                        borderRadius: "4px",
+                                        transition: "background 0.2s",
+                                    }}
+                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                 >
                                     Appointments
                                 </Link>
                                 <button
                                     onClick={onLogout}
                                     style={{
-                                        ...linkStyle,
-                                        background: "none",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        fontWeight: "normal",
+                                        padding: "8px 12px",
+                                        borderRadius: "4px",
+                                        transition: "background 0.2s",
                                         border: "none",
-                                        cursor: "pointer",
                                     }}
+                                    onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                    onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                 >
                                     Logout
                                 </button>

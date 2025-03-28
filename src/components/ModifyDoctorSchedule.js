@@ -158,7 +158,7 @@ const ModifyDoctorSchedule = () => {
     return (
         <div style={{ marginTop: "5%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
             <div style={{ textAlign: "center", width: "100%", maxWidth: "600px", padding: "20px" }}>
-                <h2>Select Doctor and Date</h2>
+                <h2 style={{color:"#4285F4", fontWeight:"bold"}}>Select Doctor and Date</h2>
                 <select value={doctorId} onChange={handleDoctorChange} style={{ width: "100%", padding: "10px", marginBottom: "10px" }}>
                     <option value="">Select Doctor</option>
                     {doctors.map((doc) => (

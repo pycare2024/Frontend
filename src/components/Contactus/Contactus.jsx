@@ -6,8 +6,8 @@ const Contactus = () => {
   return (
     <div className="contact-page">
       <section className="contact-header">
-        <h1>Contact Us</h1>
-        <p>
+        <h1 style={{color:"white"}}>Contact Us</h1>
+        <p style={{color:"white"}}>
           {/* Do you have any concerns or questions you would like to address?
           Our client care team is happy to help you. */}
           Facing any queary! Let Us Know<br/>
@@ -24,8 +24,8 @@ const Contactus = () => {
           <div className="contact-box">
             <Mail size={40} className="icon" />
             <h4>EMAIL US AT</h4>
-            <p className="contact-detail">support@psycare.com</p>
-            <p className="subtext">and we’ll get back to you in 24 hours</p>
+            <p className="contact-detail">contactus@psy-care.in</p>
+            <p className="subtext">and we’ll get back to you within 24 hours</p>
           </div>
 
           <div className="contact-box">
@@ -42,8 +42,8 @@ const Contactus = () => {
           <div className="contact-box">
             <Phone size={40} className="icon" />
             <h4>CALL US AT</h4>
-            <p className="contact-detail">+91 20 711 71501</p>
-            <p className="subtext">between 10 AM to 10 PM</p>
+            <p className="contact-detail">+91 98182 96388</p>
+            <p className="subtext">between 10 AM to 7 PM</p>
           </div>
         </div>
       </section>

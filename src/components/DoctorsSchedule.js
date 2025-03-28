@@ -110,7 +110,7 @@ const DoctorSchedule = () => {
 
                 {isAddingSchedule && (
                     <div style={cardStyle}>
-                        <h2 style={{ fontSize: "24px", color: "#333", marginBottom: "20px" }}>Doctor Schedule Management</h2>
+                        <h2 style={{ fontWeight:"bold", color: "#4285F4", marginBottom: "20px" }}>Doctor Schedule Management</h2>
 
                         {loading && <p>Loading doctors...</p>}
                         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -172,7 +172,7 @@ const buttonStyle = (bg, hover) => ({
 });
 const smallButtonStyle = { backgroundColor: "red", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", padding: "5px 10px" };
 const inputStyle = { width: "100%", padding: "10px", fontSize: "16px", borderRadius: "8px", border: "1px solid #ccc" };
-const labelStyle = { display: "block", fontSize: "16px", fontWeight: "600", marginBottom: "8px" };
+const labelStyle = { display: "block", fontSize: "16px", fontWeight: "600", marginBottom: "8px"};
 const cardStyle = { backgroundColor: "white", borderRadius: "10px", padding: "30px", boxShadow: "0 6px 15px rgba(0, 0, 0, 0.1)" };
 
 export default DoctorSchedule;

@@ -48,16 +48,17 @@ const Appointments = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-8 mt-10 bg-white shadow-xl rounded-lg min-h-screen" style={{marginTop:"6%",height:"100vh"}}>
-            <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">🗓 Doctor's Appointments</h1>
+        <div className="max-w-6xl p-8 bg-white shadow-xl rounded-lg min-h-screen" style={{marginTop:"5%",height:"100vh"}}>
+            <h1 style={{color:"#4285F4" , fontWeight:"bold", textAlign:"center"}}>Doctor's Appointments</h1>
 
             {/* Date Picker */}
-            <div className="flex justify-center mb-6">
+            <div>
                 <input
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     className="border border-gray-300 px-4 py-2 rounded-lg shadow-md focus:ring-2 focus:ring-blue-400 text-gray-700 text-lg"
+                    style={{textAlign:"center"}}
                 />
             </div>
 
