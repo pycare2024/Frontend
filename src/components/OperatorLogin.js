@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import operatorBg from "./operatorLogin.jpg"; // Ensure the image is in the correct path
 
-const OperatorLogin = ({onLogin}) => {
+const OperatorLogin = ({ onLogin }) => {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
     const [otp, setOtp] = useState("");
@@ -48,8 +49,8 @@ const OperatorLogin = ({onLogin}) => {
                 setMessage("Login successful! Redirecting...");
 
                 localStorage.setItem("operator", JSON.stringify(data.operator));
-                onLogin(data.operator);  // Call the function passed from App.js
-                navigate("/"); // Redirect immediately
+                onLogin(data.operator);
+                navigate("/"); // Redirect
             } else {
                 setMessage(data.message);
             }
@@ -60,42 +61,123 @@ const OperatorLogin = ({onLogin}) => {
     };
 
     return (
-        <div className="login-container" style={{ marginTop: "10%", marginBottom: "10%" }}>
-            <h2>Operator Login</h2>
-            {message && <p>{message}</p>}
+        <div style={styles.background}>
+            <div style={styles.overlay}>
+                <div style={styles.card}>
+                    <h2 style={styles.heading}>Operator Login</h2>
 
-            {step === 1 && (
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Login ID"
-                        value={loginId}
-                        onChange={(e) => setLoginId(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button onClick={handleLogin}>Login</button>
-                </div>
-            )}
+                    {message && <p style={styles.message}>{message}</p>}
 
-            {step === 2 && (
-                <div>
-                    <p>OTP sent to your WhatsApp</p>
-                    <input
-                        type="text"
-                        placeholder="Enter OTP"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value)}
-                    />
-                    <button onClick={handleVerifyOtp}>Verify OTP</button>
+                    {step === 1 && (
+                        <div style={styles.inputContainer}>
+                            <input
+                                type="text"
+                                placeholder="Login ID"
+                                value={loginId}
+                                onChange={(e) => setLoginId(e.target.value)}
+                                style={styles.input}
+                            />
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                style={styles.input}
+                            />
+                            <button onClick={handleLogin} style={styles.button}>Login</button>
+                        </div>
+                    )}
+
+                    {step === 2 && (
+                        <div style={styles.inputContainer}>
+                            <p style={styles.infoText}>OTP sent to your WhatsApp</p>
+                            <input
+                                type="text"
+                                placeholder="Enter OTP"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                style={styles.input}
+                            />
+                            <button onClick={handleVerifyOtp} style={styles.button}>Verify OTP</button>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
+};
+
+// 🎨 Styles
+const styles = {
+    background: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundImage: `url(${operatorBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+    },
+    overlay: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    card: {
+        backgroundColor: "white",
+        padding: "30px",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+        width: "380px",
+        textAlign: "center",
+        position: "relative",
+        zIndex: 1,
+    },
+    heading: {
+        marginBottom: "15px",
+        color: "#4285F4",
+        fontWeight: "600",
+    },
+    message: {
+        fontSize: "14px",
+        color: "#d9534f",
+        marginBottom: "10px",
+    },
+    inputContainer: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "12px",
+    },
+    input: {
+        width: "100%",
+        padding: "12px",
+        borderRadius: "5px",
+        border: "1px solid #ccc",
+        fontSize: "16px",
+        outline: "none",
+    },
+    button: {
+        padding: "12px",
+        backgroundColor: "#4285F4",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        cursor: "pointer",
+        fontSize: "16px",
+        fontWeight: "bold",
+        marginTop: "10px",
+        transition: "0.3s",
+    },
+    infoText: {
+        fontSize: "14px",
+        color: "#555",
+    },
 };
 
 export default OperatorLogin;

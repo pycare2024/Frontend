@@ -261,8 +261,8 @@ function Doctors() {
 
     return (
         <div className="doctors-page">
-            <h1 className="page-title">Doctors List</h1>
-            <button onClick={() => setShowAddForm(!showAddForm)} className="btn btn-primary add-btn">
+            <h1 style={{color:"#4285F4", fontWeight:"bold"}}>Doctors List</h1>
+            <button onClick={() => setShowAddForm(!showAddForm)} className="add-btn">
                 <FaUserPlus /> {showAddForm ? "Cancel" : "Add Doctor"}
             </button>
 
@@ -270,7 +270,7 @@ function Doctors() {
                 
                 <div className="form-overlay">
                     <div className="form-modal">
-                        <h2 class="add-doctor">ADD DOCTOR</h2>
+                        <h2 class="add-doctor" style={{color:"#4285F4"}}>ADD DOCTOR</h2>
                         <form onSubmit={(e) => e.preventDefault()} className="doctor-form" >
                             <input id="name"
                                 type="text"
@@ -376,7 +376,7 @@ function Doctors() {
                             )}
                             <div className="button-group">
                                 {/* Step 1: Send OTP before registering */}
-                                <button onClick={handleSendOTP} className="btn btn-success">Send OTP</button>
+                                <button onClick={handleSendOTP} className="btn btn-success" style={{backgroundColor:"#4285F4"}}>Send OTP</button>
 
                                 {/* Step 2: Show OTP Input after OTP is sent */}
                                 {showOTPInput && (

@@ -7,12 +7,12 @@ function Login({ onLogin }) {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(false); // New state for loading indicator
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); // Set loading to true when login starts
+        setIsLoading(true);
 
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/AdminRoute/login", {
@@ -34,7 +34,7 @@ function Login({ onLogin }) {
         } catch (error) {
             setMessage("An error occurred. Please try again.");
         } finally {
-            setIsLoading(false); // Reset loading state
+            setIsLoading(false);
         }
     };
 
@@ -49,52 +49,102 @@ function Login({ onLogin }) {
         justifyContent: "center",
         fontFamily: "'Poppins', sans-serif",
         color: "#333",
+        animation: "fadeIn 1s ease-in-out",
     };
 
     const formContainerStyle = {
-        backgroundColor: "rgba(255, 255, 255, 0.9)", // Semi-transparent white background
-        borderRadius: "10px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-        padding: "30px",
-        width: "350px",
+        backgroundColor: "#fff",
+        borderRadius: "12px",
+        boxShadow: "0 8px 20px rgba(66, 133, 244, 0.2)", // Subtle blue shadow
+        padding: "40px",
+        width: "400px",
         textAlign: "center",
+        transform: "translateY(0)",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
     };
 
     const inputStyle = {
         width: "100%",
-        padding: "10px",
-        margin: "10px 0",
-        borderRadius: "5px",
-        border: "1px solid #ccc",
+        padding: "12px",
+        margin: "12px 0",
+        borderRadius: "6px",
+        border: "1px solid #d1e0ff", // Light blue border
         fontSize: "1rem",
+        outline: "none",
+        transition: "border-color 0.3s ease, box-shadow 0.3s ease",
     };
 
     const buttonStyle = {
         width: "100%",
-        padding: "10px",
-        backgroundColor: "#FF8096",
+        padding: "12px",
+        backgroundColor: "#4285F4", // Google Blue
         color: "#fff",
         border: "none",
-        borderRadius: "5px",
+        borderRadius: "6px",
         cursor: isLoading ? "not-allowed" : "pointer",
         fontSize: "1rem",
-        marginTop: "10px",
+        fontWeight: "500",
+        marginTop: "15px",
+        transition: "background-color 0.3s ease, transform 0.2s ease",
     };
 
     const forgotPasswordStyle = {
-        marginTop: "10px",
-        color: "#FF8096",
-        textDecoration: "underline",
-        cursor: "pointer",
+        marginTop: "15px",
+        color: "#4285F4",
+        textDecoration: "none",
+        cursor: isLoading ? "not-allowed" : "pointer",
         fontSize: "0.9rem",
+        transition: "color 0.3s ease",
     };
+
+    // Inline hover effects using React's style prop with event handlers
+    const hoverEffects = `
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(66, 133, 244, 0.25);
+        }
+        .input-field:focus {
+            border-color: #4285F4;
+            box-shadow: 0 0 8px rgba(66, 133, 244, 0.3);
+        }
+        .login-button:hover:not(:disabled) {
+            background-color: #3267d6;
+            transform: translateY(-2px);
+        }
+        .forgot-password:hover:not(:disabled) {
+            color: #3267d6;
+            text-decoration: underline;
+        }
+    `;
+
+    // Keyframes for animations
+    const animations = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    `;
 
     return (
         <div style={pageStyle}>
-            <div style={formContainerStyle}>
-                <h2 style={{ marginBottom: "20px" }}>Admin Login</h2>
-                {message && <p style={{ color: "red" }}>{message}</p>}
-                {isLoading && <p style={{ color: "#FF8096", marginBottom: "10px" }}>Logging in...</p>} {/* Loading message */}
+            <style>{hoverEffects + animations}</style>
+            <div
+                style={{ ...formContainerStyle, animation: "slideIn 0.5s ease-out" }}
+                className="form-container"
+            >
+                <h2 style={{ marginBottom: "25px", color: "#4285F4", fontWeight: "600" }}>
+                    Admin Login
+                </h2>
+                {message && <p style={{ color: "#d93025", fontSize: "0.9rem" }}>{message}</p>}
+                {isLoading && (
+                    <p style={{ color: "#4285F4", marginBottom: "15px", fontStyle: "italic" }}>
+                        Logging in...
+                    </p>
+                )}
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -103,7 +153,8 @@ function Login({ onLogin }) {
                         onChange={(e) => setLoginId(e.target.value)}
                         style={inputStyle}
                         required
-                        disabled={isLoading} // Disable input during loading
+                        disabled={isLoading}
+                        className="input-field"
                     />
                     <div style={{ position: "relative", marginBottom: "20px" }}>
                         <input
@@ -113,35 +164,43 @@ function Login({ onLogin }) {
                             onChange={(e) => setPassword(e.target.value)}
                             style={{
                                 ...inputStyle,
-                                paddingRight: "40px", // Adjust padding to make space for the icon
+                                paddingRight: "40px",
                             }}
                             required
-                            disabled={isLoading} // Disable input during loading
+                            disabled={isLoading}
+                            className="input-field"
                         />
                         <i
                             className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
                             onClick={() => setShowPassword(!showPassword)}
                             style={{
                                 position: "absolute",
-                                right: "10px",
+                                right: "12px",
                                 top: "50%",
                                 transform: "translateY(-50%)",
                                 cursor: isLoading ? "not-allowed" : "pointer",
                                 fontSize: "1.2rem",
-                                color: "#aaa", // Greyish color for the icon
-                                pointerEvents: isLoading ? "none" : "auto", // Disable click during loading
+                                color: "#4285F4",
+                                pointerEvents: isLoading ? "none" : "auto",
+                                transition: "color 0.3s ease",
                             }}
                             title={showPassword ? "Hide Password" : "Show Password"}
                         ></i>
                     </div>
-                    <button type="submit" style={buttonStyle} disabled={isLoading}>
-                        {isLoading ? "Processing..." : "Login"} {/* Change button text during loading */}
+                    <button
+                        type="submit"
+                        style={buttonStyle}
+                        disabled={isLoading}
+                        className="login-button"
+                    >
+                        {isLoading ? "Processing..." : "Login"}
                     </button>
                 </form>
                 <div>
                     <span
                         style={forgotPasswordStyle}
                         onClick={() => !isLoading && navigate("/ForgotPassword")}
+                        className="forgot-password"
                     >
                         Forgot Password?
                     </span>

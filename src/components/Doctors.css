@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
     background-color: #f9f9f9; /* Soft neutral background for a clean look */
     color: #444; /* Soft font color for readability */
 }
@@ -10,25 +10,15 @@ body {
     padding: 20px;
     text-align: center;
     min-height: 100vh;
-    box-sizing: border-box; /* Ensures padding is included in height calculations */
-}
-
-.page-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #FF8096; /* Professional and calming pink tone */
-    background: linear-gradient(to right, #FF8096, #FFD1DC); /* Subtle gradient effect */
-    -webkit-background-clip: text; /* Clip background to text */
-    -webkit-text-fill-color: transparent; /* Make text show gradient */
-    margin-top: 1%;
-    margin-bottom: 20px;
+    box-sizing: border-box; 
+    background-color: white;
 }
 
 .add-btn {
     display: inline-block;
     margin: 0 auto 20px auto;
     padding: 12px 25px;
-    background-color: #FF8096; /* Matches the page theme */
+    background-color: #4285F4; /* Matches the page theme */
     color: white;
     border: none;
     border-radius: 8px;
@@ -39,9 +29,9 @@ body {
 }
 
 .add-btn:hover {
-    background-color: #FF5A75; /* Slightly darker pink */
+    background-color: #156af4; /* Slightly darker pink */
     transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(255, 90, 117, 0.2);
+    box-shadow: 0 8px 15px rgba(65, 122, 220, 0.2);
 }
 
 .form-overlay {
@@ -94,7 +84,7 @@ body {
 .doctor-card h3 {
     margin-bottom: 10px;
     font-size: 1.5rem;
-    color: #FF8096;
+    color: #4285F4;
     font-weight: bold;
 }
 
@@ -107,7 +97,7 @@ body {
 
 .doctor-card .btn-danger {
     padding: 10px 20px;
-    background-color: #dc3545;
+    background-color: #1c6ff6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -117,8 +107,8 @@ body {
 }
 
 .doctor-card .btn-danger:hover {
-    background-color: #c82333;
-    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+    background-color: #12171e;
+    box-shadow: 0 5px 15px rgba(92, 160, 249, 0.2);
 }
 
 /* Global container and layout */
@@ -138,7 +128,7 @@ body {
 }
 
 .footer {
-    background-color: #FF8096;
+    background-color: #4285F4;
     color: white;
     text-align: center;
     padding: 15px 20px;

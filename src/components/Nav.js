@@ -8,6 +8,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState(null);
 
     const navStyle = {
         backgroundColor: navBackground,
@@ -37,14 +38,12 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
         color: "#333",
         margin: "0 15px",
         textDecoration: "none",
-        fontSize: "1rem",
-        fontWeight: "600",
+        fontSize: "0.5rem",
         transition: "all 0.3s ease",
     };
 
     const activeLinkStyle = {
         color: "#4285F4",
-        fontWeight: "700",
         textDecoration: "none",
     };
 
@@ -396,14 +395,15 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                         )}
                     {isLoggedIn && (
                         <>
+                            {/* Doctors Menu */}
                             <div
-                                name="navAbout"
-                                style={{ position: "relative", display: "inline-block" }}
-                                onMouseEnter={() => setShowDropdown(true)}
-                                onMouseLeave={() => setShowDropdown(false)}
+                                name="navDoctors"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                onMouseEnter={() => setOpenDropdown("doctors")}
+                                onMouseLeave={() => setOpenDropdown(null)}
                             >
                                 Doctors
-                                {showDropdown && (
+                                {openDropdown === "doctors" && (
                                     <div
                                         style={{
                                             position: "absolute",
@@ -414,36 +414,56 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                                             zIndex: 10,
                                             borderRadius: "4px",
-                                            minWidth: "160px",
+                                            minWidth: "220px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            cursor: "pointer",
                                         }}
                                     >
                                         <Link
                                             to="/Doctors"
-                                            style={
-                                                location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
                                             Doctors List
                                         </Link>
                                         <Link
                                             to="/DoctorSchedule"
-                                            style={
-                                                location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            Doctor's schedule
+                                            Doctor's Schedule
                                         </Link>
                                     </div>
                                 )}
                             </div>
+
+                            {/* Patients Menu */}
                             <div
-                                name="navAbout"
-                                style={{ position: "relative", display: "inline-block" }}
-                                onMouseEnter={() => setShowDropdown(true)}
-                                onMouseLeave={() => setShowDropdown(false)}
+                                name="navPatients"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                onMouseEnter={() => setOpenDropdown("patients")}
+                                onMouseLeave={() => setOpenDropdown(null)}
                             >
                                 Patients
-                                {showDropdown && (
+                                {openDropdown === "patients" && (
                                     <div
                                         style={{
                                             position: "absolute",
@@ -454,28 +474,41 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                                             zIndex: 10,
                                             borderRadius: "4px",
-                                            minWidth: "160px",
+                                            minWidth: "200px",
+                                            display: "flex",  // ✅ Stack items vertically
+                                            flexDirection: "column",  // ✅ Arrange in column
+                                            gap: "5px",  // ✅ Add spacing between items
+                                            cursor: "pointer"
                                         }}
                                     >
                                         <Link
                                             to="/Patients"
-                                            style={
-                                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
                                             Patients List
                                         </Link>
                                     </div>
                                 )}
                             </div>
+
+                            {/* Screening Test Menu */}
                             <div
-                                name="navAbout"
-                                style={{ position: "relative", display: "inline-block" }}
-                                onMouseEnter={() => setShowDropdown(true)}
-                                onMouseLeave={() => setShowDropdown(false)}
+                                name="navScreeningTest"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                onMouseEnter={() => setOpenDropdown("screeningTest")}
+                                onMouseLeave={() => setOpenDropdown(null)}
                             >
                                 ScreeningTest
-                                {showDropdown && (
+                                {openDropdown === "screeningTest" && (
                                     <div
                                         style={{
                                             position: "absolute",
@@ -486,28 +519,41 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                                             zIndex: 10,
                                             borderRadius: "4px",
-                                            minWidth: "160px",
+                                            minWidth: "200px",
+                                            display: "flex",  // ✅ Stack items vertically
+                                            flexDirection: "column",  // ✅ Arrange in column
+                                            gap: "5px",  // ✅ Add spacing between items
+                                            cursor: "pointer"
                                         }}
                                     >
                                         <Link
                                             to="/ScreeningTest"
-                                            style={
-                                                location.pathname === "/ScreeningTest" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            Add Screening test
+                                            Add Screening Test
                                         </Link>
                                     </div>
                                 )}
                             </div>
+
+                            {/* Operator Menu */}
                             <div
-                                name="navAbout"
-                                style={{ position: "relative", display: "inline-block" }}
-                                onMouseEnter={() => setShowDropdown(true)}
-                                onMouseLeave={() => setShowDropdown(false)}
+                                name="navOperator"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                onMouseEnter={() => setOpenDropdown("operator")}
+                                onMouseLeave={() => setOpenDropdown(null)}
                             >
                                 Operator
-                                {showDropdown && (
+                                {openDropdown === "operator" && (
                                     <div
                                         style={{
                                             position: "absolute",
@@ -518,32 +564,51 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                                             zIndex: 10,
                                             borderRadius: "4px",
-                                            minWidth: "160px",
+                                            minWidth: "200px",
+                                            display: "flex",  // ✅ Stack items vertically
+                                            flexDirection: "column",  // ✅ Arrange in column
+                                            gap: "5px",  // ✅ Add spacing between items
+                                            cursor: "pointer"
                                         }}
                                     >
                                         <Link
                                             to="/AddOperator"
-                                            style={
-                                                location.pathname === "/AddOperator" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
                                             Add Operator
                                         </Link>
                                         <Link
                                             to="/OperatorDetails"
-                                            style={
-                                                location.pathname === "/OperatorDetails" ? activeLinkStyle : linkStyle
-                                            }
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
                                             Operator Details
                                         </Link>
                                     </div>
                                 )}
                             </div>
+
+                            {/* Logout Button */}
                             <button
                                 onClick={onLogout}
                                 style={{
-                                    ...linkStyle,
                                     background: "none",
                                     border: "none",
                                     cursor: "pointer",

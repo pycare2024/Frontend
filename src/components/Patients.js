@@ -46,8 +46,8 @@ function Patients() {
     };
 
     return (
-        <div style={{ padding: "20px", maxWidth: "1000px", margin: "auto", height: "100%" }}>
-            <h1 style={{ textAlign: "center", color: "#FF8096", marginBottom: "20px", marginTop: "10%" }}>Patients List</h1>
+        <div style={{ padding: "20px", margin: "auto", height: "100%",backgroundColor:"white" }}>
+            <h1 style={{ textAlign: "center", color: "#4285F4", marginBottom: "20px", marginTop: "10%",fontWeight:"bold" }}>Patients List</h1>
 
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <FaSearch style={{ position: "relative", left: "30px", color: "#888" }} />
@@ -106,7 +106,7 @@ function Patients() {
                                 <FaUser
                                     style={{
                                         fontSize: "3rem",
-                                        color: "#FF8096",
+                                        color: "#4285F4",
                                         marginRight: "20px",
                                     }}
                                 />
@@ -124,7 +124,7 @@ function Patients() {
                                     onClick={() => handleRedirect(patient._id)}
                                     className="btn btn-info"
                                     style={{
-                                        backgroundColor: "#FF8096",
+                                        backgroundColor: "#4285F4",
                                         color: "#fff",
                                         border: "none",
                                         borderRadius: "5px",
