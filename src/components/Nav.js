@@ -314,7 +314,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                         )}
                         {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div className="auth-buttons">
-                                <Link to="/signup" className="auth-btn signup-btn">Book Appointment</Link>
+                                <Link to="/BookAppointment" className="auth-btn signup-btn">Book Appointment</Link>
                             </div>
                         )}
 

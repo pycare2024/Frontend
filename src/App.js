@@ -29,6 +29,7 @@ import AddOperator from './components/AddOperator';
 import OperatorDetails from './components/OperatorDetails';
 import OperatorLogin from './components/OperatorLogin';
 import About from "./components/About/About";
+import BookAppointment from './components/BookAppointment';
 
 
 
@@ -109,6 +110,7 @@ function App() {
                 <Route path="/OperatorDetails" element={<OperatorDetails />} />
                 <Route path="/OperatorLogin" element={<OperatorLogin onLogin={handleOperatorLogin} />} />
                 <Route path="/About" element={<About />} />
+                <Route path="/BookAppointment" element={<BookAppointment />} />
             </Routes>
             {/* <Footer/> */}
         </div>
