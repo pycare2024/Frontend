@@ -30,6 +30,9 @@ import OperatorDetails from './components/OperatorDetails';
 import OperatorLogin from './components/OperatorLogin';
 import About from "./components/About/About";
 import BookAppointment from './components/BookAppointment';
+import DoctorProfile from "./components/DoctorProfile";
+import AppointmentsTab from './components/AppointmentTab';
+import AccountsTab from './components/AccountsTab';
 
 
 
@@ -111,6 +114,9 @@ function App() {
                 <Route path="/OperatorLogin" element={<OperatorLogin onLogin={handleOperatorLogin} />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/BookAppointment" element={<BookAppointment />} />
+                <Route path="/doctor/:id" element={<DoctorProfile />} />
+                <Route path="/AppointmentsTab" element={<AppointmentsTab />} />
+                <Route path="/AccountsTab" element={<AccountsTab />} />
             </Routes>
             {/* <Footer/> */}
         </div>

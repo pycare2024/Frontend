@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Doctors.css"; // Import CSS for styling
 import { FaUserPlus, FaTrash } from "react-icons/fa"; // Icons for better visual appeal
 import "./doctorform.css";  //Importing css for add doctor page
+import { useNavigate } from "react-router-dom";
 
 function Doctors() {
     const [doctors, setDoctors] = useState([]);
@@ -30,6 +31,8 @@ function Doctors() {
     useEffect(() => {
         fetchDoctors();
     }, []);
+
+    const navigate = useNavigate();
 
     const fetchDoctors = async () => {
         setLoading(true);
@@ -113,9 +116,9 @@ function Doctors() {
                     password: doctor.password
                 }),
             });
-    
+
             // const data = await response.json();
-    
+
             if (response.ok) {
                 alert("Credentials sent to doctor via WhatsApp!");
             } else {
@@ -129,37 +132,37 @@ function Doctors() {
 
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
-    
+
         if (!validateForm()) {
             console.log("Form validation failed", fieldErrors);
             return;
         }
-    
+
         const doctorId = generateDoctorId();
         const doctorWithId = { ...newDoctor, id: doctorId, loginId: doctorId }; // Set loginId same as id
-    
+
         console.log("Doctor Data:", doctorWithId);
-    
+
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(doctorWithId)
             });
-    
+
             console.log("Response status:", response.status);
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Error response:", errorData);
                 throw new Error(errorData.message || "Failed to add doctor");
             }
-    
+
             console.log("Doctor added successfully! ✅");
-    
+
             // ✅ Display login credentials after successful registration
             alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${newDoctor.password}`);
             await handleSendCredentials(doctorWithId);
-    
+
             setShowAddForm(false);
             setNewDoctor({
                 id: "",
@@ -261,16 +264,16 @@ function Doctors() {
 
     return (
         <div className="doctors-page">
-            <h1 style={{color:"#4285F4", fontWeight:"bold"}}>Doctors List</h1>
+            <h1 style={{ color: "#4285F4", fontWeight: "bold" }}>Doctors List</h1>
             <button onClick={() => setShowAddForm(!showAddForm)} className="add-btn">
                 <FaUserPlus /> {showAddForm ? "Cancel" : "Add Doctor"}
             </button>
 
             {showAddForm && (
-                
+
                 <div className="form-overlay">
                     <div className="form-modal">
-                        <h2 class="add-doctor" style={{color:"#4285F4"}}>ADD DOCTOR</h2>
+                        <h2 class="add-doctor" style={{ color: "#4285F4" }}>ADD DOCTOR</h2>
                         <form onSubmit={(e) => e.preventDefault()} className="doctor-form" >
                             <input id="name"
                                 type="text"
@@ -290,7 +293,7 @@ function Doctors() {
                             />
                             <input id="name"
                                 type="date"
-                                placeholder ="Date of Birth"
+                                placeholder="Date of Birth"
                                 value={newDoctor.dob}
                                 onChange={(e) => {
                                     const dob = e.target.value;
@@ -303,7 +306,7 @@ function Doctors() {
                                 required
                             />
 
-                            <input id="name" 
+                            <input id="name"
                                 type="number"
                                 placeholder="Age"
                                 value={newDoctor.Age}
@@ -370,13 +373,13 @@ function Doctors() {
                                 className={fieldErrors.Mobile ? "input-error" : ""}
                                 required
                             />
-                            
+
                             {newDoctor.Mobile.length > 0 && newDoctor.Mobile.length < 10 && (
                                 <p style={{ color: "red", fontSize: "12px" }}>Enter a valid 10-digit mobile number</p>
                             )}
                             <div className="button-group">
                                 {/* Step 1: Send OTP before registering */}
-                                <button onClick={handleSendOTP} className="btn btn-success" style={{backgroundColor:"#4285F4"}}>Send OTP</button>
+                                <button onClick={handleSendOTP} className="btn btn-success" style={{ backgroundColor: "#4285F4" }}>Send OTP</button>
 
                                 {/* Step 2: Show OTP Input after OTP is sent */}
                                 {showOTPInput && (
@@ -402,16 +405,19 @@ function Doctors() {
 
             <div className="doctor-list">
                 {doctors.map((doctor) => (
-                    <div key={doctor._id} className="doctor-card">
+                    <div key={doctor._id}
+                        className="doctor-card"
+                        onClick={() => navigate(`/doctor/${doctor._id}`)}
+                        style={{ cursor: "pointer" }}>
                         <h3>{doctor.Name}<i class="fa-solid fa-stethoscope"></i></h3>
                         <p><strong>Age:</strong> {doctor.Age}</p>
                         <p><strong>Gender:</strong> {doctor.Gender}</p>
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>
                         <p><strong>Mobile:</strong> {doctor.Mobile}</p>
                         <p><strong>City:</strong> {doctor.City}</p>
-                        <button onClick={() => handleDeleteDoctor(doctor.id)} className="btn btn-danger">
+                        {/* <button onClick={() => handleDeleteDoctor(doctor.id)} className="btn btn-danger">
                             <FaTrash /> Remove
-                        </button>
+                        </button> */}
                     </div>
                 ))}
             </div>
