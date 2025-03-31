@@ -496,6 +496,50 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                         )}
                     {isLoggedIn && (
                         <>
+                            <div
+                                name="navAccounts"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
+                                onMouseEnter={() => setOpenDropdown("accounts")}
+                                onMouseLeave={() => setOpenDropdown(null)}
+                            >
+                                Accounts
+                                {openDropdown === "accounts" && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "220px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <Link
+                                            to="/CompanyAccountsTab"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Company Accounts
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            
                             {/* Doctors Menu */}
                             <div
                                 name="navDoctors"

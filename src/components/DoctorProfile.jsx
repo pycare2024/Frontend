@@ -113,7 +113,7 @@ const DoctorProfile = () => {
           boxShadow: "0 4px 16px rgba(0,0,0,0.1)"
         }}>
           {activeTab === "appointments" && <AppointmentsTab doctorId={doctor._id} />}
-          {activeTab === "accounts" && <AccountsTab doctorId={doctor._id} />}
+          {activeTab === "accounts" && <AccountsTab doctorId={doctor._id} doctorName={doctor.Name} />}
         </div>
       </div>
     </div>
