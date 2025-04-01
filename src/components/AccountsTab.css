@@ -1,0 +1,139 @@
+.accounts-tab-container {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8fafc;
+  }
+  
+  .report-header {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    border-left: 6px solid transparent;
+    background-image: linear-gradient(to right, #4285F4 6px, white 6px);
+    background-clip: padding-box;
+  }
+  
+  .report-header h1 {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 2rem;
+    color: #2c3e50;
+  }
+  
+  .report-header p.subtitle {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-top: 5px;
+  }
+  
+  .section-title {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: #1f2937;
+  }
+  
+  ul.summary-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  ul.summary-list li {
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .transaction-table thead tr {
+    background-color: #e2e8f0;
+  }
+  
+  .transaction-table th,
+  .transaction-table td {
+    padding: 10px;
+    border-bottom: 1px solid #cbd5e1;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .transaction-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+  
+  .transaction-table tbody tr:hover {
+    background-color: #e6f0ff;
+  }
+  
+  .transaction-type-credit {
+    color: #047857; /* green */
+    font-weight: bold;
+  }
+  
+  .transaction-type-debit {
+    color: #b91c1c; /* red */
+    font-weight: bold;
+  }
+  
+  .date-filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .date-filter-controls label {
+    font-weight: bold;
+  }
+  
+  .date-filter-controls input[type="date"] {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .filter-button {
+    padding: 8px 16px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .filter-button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .download-btn {
+    margin-top: 1.5rem;
+    padding: 8px 16px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    float: right;
+  }
+  
+  .download-btn:hover {
+    background-color: #059669;
+  }
+  
+  .footer-note {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
