@@ -32,11 +32,12 @@ const Contactus = () => {
             <MapPin size={40} className="icon" />
             <h4>VISIT US AT</h4>
             <p className="contact-detail">
-              PsyCare, 5th Floor, WeWork, Raheja Platinum,<br />
-              Marol CHS Rd, off Andheri - Kurla Road,<br />
-              Andheri East, Mumbai, Maharashtra 400059
+              PsyCare<br />
+              D31 Ground floor,<br />
+              Uppal southend, sohna road<br />
+              sector-29 , Gurgaon HARYANA 122018
             </p>
-            <p className="subtext">drop in between 10 AM - 8 PM on any weekday!</p>
+            <p className="subtext">Drop in between 10 AM - 8 PM on any weekday !</p>
           </div>
 
           <div className="contact-box">

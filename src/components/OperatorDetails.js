@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./OperatorDetails.css";
 
 const OperatorDetails = () => {
     const [operators, setOperators] = useState([]);
@@ -6,7 +7,7 @@ const OperatorDetails = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("https://backend-xhl4.onrender.com/OperatorRoute/get-operators") // Ensure correct backend URL
+        fetch("https://backend-xhl4.onrender.com/OperatorRoute/get-operators")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch operator details");
@@ -23,17 +24,17 @@ const OperatorDetails = () => {
             });
     }, []);
 
-    if (loading) return <p className="text-center">Loading...</p>;
-    if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+    if (loading) return <p className="loading-text">Loading...</p>;
+    if (error) return <p className="error-text">Error: {error}</p>;
 
     return (
-        <div className="container mx-auto p-4" style={{height:"100vh" ,marginTop:"20%",marginBottom:"5%"}}>
-            <h2 className="text-2xl font-bold text-center mb-4">Operator Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="operator-details-wrapper">
+            <h2 className="operator-title">Operator Details</h2>
+            <div className="operator-grid">
                 {operators.length > 0 ? (
                     operators.map((operator) => (
-                        <div key={operator._id} className="border p-4 rounded shadow-lg">
-                            <h3 className="text-lg font-semibold">{operator.Name}</h3>
+                        <div key={operator._id} className="operator-card">
+                            <h3>{operator.Name}</h3>
                             <p><strong>Login ID:</strong> {operator.loginId}</p>
                             <p><strong>Email:</strong> {operator.email}</p>
                             <p><strong>Mobile:</strong> {operator.mobileNo}</p>
@@ -41,7 +42,7 @@ const OperatorDetails = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="text-center">No operators found.</p>
+                    <p className="no-operators">No operators found.</p>
                 )}
             </div>
         </div>

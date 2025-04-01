@@ -26,8 +26,6 @@ function DoctorLogin({ onLogin }) {
             if (data.success) {
                 setMessage(data.message);
                 onLogin(data.doctor);
-                console.log(data.doctor.doctor_id)
-                console.log(data.doctor.id)
                 localStorage.setItem("doctor_id", data.doctor.doctor_id);
                 localStorage.setItem("Id", data.doctor.id);
                 navigate("/Home", { state: { doctor: data.doctor } });
@@ -40,28 +38,32 @@ function DoctorLogin({ onLogin }) {
     };
 
     const pageStyle = {
+        marginTop:"5%",
         backgroundImage: `url(${doctorLoginImage})`,
-        backgroundColor: "white",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        height: "100vh",
+        backgroundPosition: "center center",
+        minHeight: "100vh",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "'Poppins', sans-serif",
         color: "#333",
+        position: "relative",
+        overflow: "hidden",
     };
 
     const formContainerStyle = {
-        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        backgroundColor: "rgba(255, 255, 255, 0.46)",
+        backdropFilter: "blur(3px)",
         borderRadius: "15px",
         boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
-        padding: "30px",
-        width: "350px",
+        padding: "40px",
+        width: "100%",
+        maxWidth: "380px",
         textAlign: "center",
-        marginLeft: "70%",
-        marginBottom: "13%",
+        zIndex: 1,
     };
 
     const inputStyle = {
@@ -76,7 +78,7 @@ function DoctorLogin({ onLogin }) {
     const buttonStyle = {
         width: "100%",
         padding: "10px",
-        backgroundColor: "#FF8096",
+        backgroundColor: "#4285F4",
         color: "#fff",
         border: "none",
         borderRadius: "5px",
@@ -100,8 +102,17 @@ function DoctorLogin({ onLogin }) {
 
     return (
         <div style={pageStyle}>
+            <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.4)",
+                zIndex: 0
+            }}></div>
             <div style={formContainerStyle}>
-                <h2 style={{ marginBottom: "20px" }}>Doctor Login</h2>
+                <h2 style={{ marginBottom: "20px" , color:"#4285F4", fontWeight:"bold"}}>Doctor Login</h2>
                 {message && <p style={{ color: "red" }}>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <input
@@ -120,7 +131,7 @@ function DoctorLogin({ onLogin }) {
                             onChange={(e) => setPassword(e.target.value)}
                             style={{
                                 width: "100%",
-                                padding: "10px 40px 10px 10px", // Adjusted padding for the icon
+                                padding: "10px 40px 10px 10px",
                                 borderRadius: "5px",
                                 border: "1px solid #ccc",
                                 fontSize: "1rem",

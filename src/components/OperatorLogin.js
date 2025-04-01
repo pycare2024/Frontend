@@ -117,6 +117,7 @@ const styles = {
         backgroundImage: `url(${operatorBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        
     },
     overlay: {
         position: "absolute",
@@ -130,11 +131,12 @@ const styles = {
         alignItems: "center",
     },
     card: {
-        backgroundColor: "white",
+        backgroundColor:"rgba(255, 255, 255, 0.69)",
         padding: "30px",
         borderRadius: "10px",
         boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
-        width: "380px",
+        width:"100%",
+        maxWidth: "380px",
         textAlign: "center",
         position: "relative",
         zIndex: 1,
@@ -153,6 +155,7 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         gap: "12px",
+        backdropFilter: "blur(2px)",
     },
     input: {
         width: "100%",

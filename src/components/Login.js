@@ -39,28 +39,32 @@ function Login({ onLogin }) {
     };
 
     const pageStyle = {
+        marginTop:"5%",
         backgroundImage: `url(${loginImage})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backgroundPosition: "center center",
         height: "100vh",
+        width:"100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         fontFamily: "'Poppins', sans-serif",
         color: "#333",
-        animation: "fadeIn 1s ease-in-out",
+        position: "relative",
+        overflow: "hidden",
     };
 
     const formContainerStyle = {
-        backgroundColor: "#fff",
-        borderRadius: "12px",
-        boxShadow: "0 8px 20px rgba(66, 133, 244, 0.2)", // Subtle blue shadow
+        backgroundColor: "rgba(255, 255, 255, 0.76)",
+        backdropFilter: "blur(10px)",
+        borderRadius: "15px",
+        boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
         padding: "40px",
-        width: "400px",
+        width: "100%",
+        maxWidth: "380px",
         textAlign: "center",
-        transform: "translateY(0)",
-        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        zIndex: 1,
     };
 
     const inputStyle = {
