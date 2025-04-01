@@ -1,0 +1,163 @@
+/* CompanyAccountsTab.css */
+
+.company-tab-wrapper {
+    padding: 2rem;
+    background-color: white;
+    font-family: "Segoe UI", sans-serif;
+    margin-top: 5%;
+  }
+  
+  .company-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+  }
+  
+  .company-date-input label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #333;
+  }
+  
+  .company-date-input input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .company-report {
+    position: relative;
+    padding: 2rem 2rem 2rem 2.5rem; /* add space for stripe */
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .company-report::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, #4285F4, #34a853); /* Google colors style */
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  .company-report:hover {
+    box-shadow: 0 12px 30px rgba(66, 133, 244, 0.15);
+  }
+  
+  .company-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #4285F4;
+    margin-bottom: 0.2rem;
+  }
+  
+  .company-tagline {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .section-heading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .report-period {
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .summary-block {
+    margin-bottom: 2rem;
+  }
+  
+  .sub-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+  }
+  
+  .summary-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+    color: #444;
+  }
+  
+  .doctor-table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .doctor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .doctor-table th,
+  .doctor-table td {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .doctor-table th {
+    background-color: #e2e8f0;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .report-footer {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    text-align: center;
+    color: #888;
+  }
+  
+  .print-btn-wrapper {
+    text-align: right;
+    margin-top: 1.5rem;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .filter-btn {
+    background-color: #4285F4;
+    color: #fff;
+  }
+  
+  .filter-btn:hover {
+    background-color: #005ef6;
+  }
+  
+  .print-btn {
+    background-color: #16a34a;
+    color: white;
+  }
+  
+  .print-btn:hover {
+    background-color: #15803d;
+  }

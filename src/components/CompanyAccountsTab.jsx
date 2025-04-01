@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import html2pdf from "html2pdf.js";
+import "./CompanyAccountsTab.css";
 
 const CompanyAccountsTab = () => {
   const [summary, setSummary] = useState(null);
@@ -42,75 +43,74 @@ const CompanyAccountsTab = () => {
     new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(amount);
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md" style={{marginTop:"5%"}}>
-      <div className="flex flex-wrap items-end gap-4 mb-6">
-        <div>
-          <label className="font-semibold">Start Date</label>
+    <div className="company-tab-wrapper">
+      <div className="company-filter-bar">
+        <div className="company-date-input">
+          <label>Start Date</label>
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="block mt-1 border px-3 py-2 rounded"
           />
         </div>
-        <div>
-          <label className="font-semibold">End Date</label>
+        <div className="company-date-input">
+          <label>End Date</label>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="block mt-1 border px-3 py-2 rounded"
           />
         </div>
-        <button
-          onClick={handleFilter}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
+        <button onClick={handleFilter} className="btn filter-btn">
           🔍 Apply Filter
         </button>
       </div>
 
-      <div ref={reportRef} className="bg-gray-50 p-6 rounded-md">
-        <h1 className="text-3xl font-bold text-center">PsyCare</h1>
-        <p className="text-center italic text-gray-600 mb-6">Your Path to Mental Wellness</p>
+      <div ref={reportRef} className="company-report">
+        <h1 className="company-title">PsyCare</h1>
+        <p className="company-tagline">Your Path to Mental Wellness</p>
 
-        <h2 className="text-xl font-semibold mb-2">Company Accounts Report</h2>
-        <p className="mb-2 font-medium">Period: {startDate || 'Start'} to {endDate || 'End'}</p>
+        <h2 className="section-heading">Company Accounts Report</h2>
+        <p className="report-period">Period: {startDate || 'Start'} to {endDate || 'End'}</p>
 
         {summary && (
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Summary</h3>
-            <ul className="list-disc pl-6">
+          <div className="summary-block">
+            <h3 className="sub-heading">Summary</h3>
+            <ul className="summary-list">
               <li>Total Earnings: {formatCurrency(summary.totalEarnings)}</li>
               <li>Total Withdrawn: {formatCurrency(summary.totalWithdrawn)}</li>
-              <li>Total Sessions: {summary.sessionCount}</li>
+              <li>Total Appointments Booked: {summary.appointmentCount}</li>
+              <li>Total Sessions(completed + no-show by Patient): {summary.sessionCount}</li>
+              <li>Total Cancelled Appointments(cancelled by doctor + doctor doesn't show): {summary.cancelledCount}</li>
             </ul>
           </div>
         )}
 
         {summary?.doctorBreakdown?.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Doctor Breakdown</h3>
-            <table className="w-full table-auto border border-gray-300">
-              <thead className="bg-gray-200">
+          <div className="doctor-table-wrapper">
+            <h3 className="sub-heading">Doctor Breakdown</h3>
+            <table className="doctor-table">
+              <thead>
                 <tr>
-                  <th className="p-2 border">Doctor</th>
-                  <th className="p-2 border">Total appointments booked</th>
-                  <th className="p-2 border">Total Sessions</th>
-                  <th className="p-2 border">Earnings</th>
-                  <th className="p-2 border">Withdrawn</th>
-                  <th className="p-2 border">Balance</th>
+                  <th>Doctor</th>
+                  <th>Total Appointments</th>
+                  <th>Total Sessions</th>
+                  <th>Total Cancelled</th>
+                  <th>Earnings</th>
+                  <th>Withdrawn</th>
+                  <th>Balance</th>
                 </tr>
               </thead>
               <tbody>
                 {summary.doctorBreakdown.map((doc, idx) => (
-                  <tr key={idx} className="text-center">
-                    <td className="p-2 border">{doc.name}</td>
-                    <td className="p-2 border">{doc.appointmentsBooked}</td>
-                    <td className="p-2 border">{doc.sessionsCompleted}</td>
-                    <td className="p-2 border">{formatCurrency(doc.earnings)}</td>
-                    <td className="p-2 border">{formatCurrency(doc.withdrawn)}</td>
-                    <td className="p-2 border">{formatCurrency(doc.balance)}</td>
+                  <tr key={idx}>
+                    <td>{doc.name}</td>
+                    <td>{doc.appointmentsBooked}</td>
+                    <td>{doc.sessionsCompleted}</td>
+                    <td>{doc.cancelledAppointments}</td>
+                    <td>{formatCurrency(doc.earnings)}</td>
+                    <td>{formatCurrency(doc.withdrawn)}</td>
+                    <td>{formatCurrency(doc.balance)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -118,16 +118,13 @@ const CompanyAccountsTab = () => {
           </div>
         )}
 
-        <p className="text-sm text-center mt-10 text-gray-500">
+        <p className="report-footer">
           Report generated on {new Date().toLocaleString()}
         </p>
       </div>
 
-      <div className="text-right mt-6">
-        <button
-          onClick={handlePrint}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        >
+      <div className="print-btn-wrapper">
+        <button onClick={handlePrint} className="btn print-btn">
           📄 Download PDF Report
         </button>
       </div>
