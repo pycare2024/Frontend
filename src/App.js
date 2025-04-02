@@ -34,6 +34,7 @@ import DoctorProfile from "./components/DoctorProfile";
 import AppointmentsTab from './components/AppointmentTab';
 import AccountsTab from './components/AccountsTab';
 import CompanyAccountsTab from './components/CompanyAccountsTab';
+import RegisterPatient from './components/RegisterPatient';
 
 
 
@@ -119,6 +120,7 @@ function App() {
                 <Route path="/AppointmentsTab" element={<AppointmentsTab />} />
                 <Route path="/AccountsTab" element={<AccountsTab />} />
                 <Route path="/CompanyAccountsTab" element={<CompanyAccountsTab />} />
+                <Route path="/RegisterPatient" element={<RegisterPatient />} />
             </Routes>
             {/* <Footer/> */}
         </div>

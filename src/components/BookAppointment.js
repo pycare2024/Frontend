@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import bgImage from "./bookappointment.jpg";
+import { useLocation } from "react-router-dom";
 
 const BookAppointment = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -18,6 +19,18 @@ const BookAppointment = () => {
     const [doctorName, setDoctorName] = useState(null);
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    // Check if phoneNumber is passed from RegisterPatient
+    useEffect(() => {
+        if (location.state?.phoneNumber) {
+            setPhoneNumber(location.state.phoneNumber);
+
+            // Optional: skip OTP and fetch patient directly
+            checkPatientStatus(location.state.phoneNumber);
+        }
+    }, [location.state]);
 
     useEffect(() => {
         const interval = setInterval(async () => {
@@ -72,17 +85,18 @@ const BookAppointment = () => {
         }
     };
 
-    const checkPatientStatus = async () => {
+    const checkPatientStatus = async (phone = phoneNumber) => {
         setShowPopup(false);
-        const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/check/${phoneNumber}`);
+        const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/check/${phone}`);
         const data = await response.json();
 
         if (response.ok) {
             setPatientData(data);
             fetchAvailableDates();
-            setStep(3);
+            setStep(3); // ✅ go to appointment slot selection
         } else {
-            navigate("/register", { state: { phoneNumber } });
+            // 🔁 if patient not found, go to Register page and pass the phone number
+            navigate("/RegisterPatient", { state: { phoneNumber: phone } });
         }
     };
 
