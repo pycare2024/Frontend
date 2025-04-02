@@ -123,7 +123,7 @@ const AccountsTab = ({ doctorId, doctorName }) => {
                     {txn.type === "credit" ? "Credit" : "Debit"}
                   </td>
                   <td>{formatCurrency(txn.amount)}</td>
-                  <td>{txn.description}</td>
+                  <td>{txn.description || "NA"}</td>
                   <td>{txn.referenceId || "-"}</td>
                 </tr>
               ))}
