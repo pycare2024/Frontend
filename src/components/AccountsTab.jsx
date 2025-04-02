@@ -48,6 +48,11 @@ const AccountsTab = ({ doctorId, doctorName }) => {
 
   const handlePrint = () => {
     const element = reportRef.current;
+
+    // Slightly scale down for A4 width
+    element.style.transform = "scale(0.95)";
+    element.style.transformOrigin = "top left";
+
     const options = {
       margin: 10,
       filename: `PsyCare_Accounts_Report_${doctorName}_${new Date().toLocaleDateString()}.pdf`,
@@ -55,7 +60,12 @@ const AccountsTab = ({ doctorId, doctorName }) => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    html2pdf().from(element).set(options).save();
+
+    html2pdf().from(element).set(options).save().then(() => {
+      // Reset transform after print
+      element.style.transform = "none";
+      element.style.transformOrigin = "initial";
+    });
   };
 
   if (loading) return <p>Loading account info...</p>;
@@ -86,7 +96,7 @@ const AccountsTab = ({ doctorId, doctorName }) => {
 
       {/* Report Section */}
       <div className="report-header" ref={reportRef}>
-        <h1 style={{color:"#4285F4",fontWeight:"bold"}}>PsyCare</h1>
+        <h1 style={{ color: "#4285F4", fontWeight: "bold" }}>PsyCare</h1>
         <p className="subtitle">Your Path to Mental Wellness</p>
         <hr />
         <h2 style={{ textAlign: "center" }}>Accounts Report</h2>

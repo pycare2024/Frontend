@@ -29,6 +29,11 @@ const CompanyAccountsTab = () => {
 
   const handlePrint = () => {
     const element = reportRef.current;
+
+    // ✅ Shrink the content slightly to fit A4 width
+    element.style.transform = "scale(0.95)";
+    element.style.transformOrigin = "top left";
+
     const options = {
       margin: 10,
       filename: `Company_Account_Report_${new Date().toLocaleDateString()}.pdf`,
@@ -36,7 +41,12 @@ const CompanyAccountsTab = () => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-    html2pdf().from(element).set(options).save();
+
+    html2pdf().from(element).set(options).save().then(() => {
+      // ✅ Reset scaling after PDF is generated
+      element.style.transform = "none";
+      element.style.transformOrigin = "initial";
+    });
   };
 
   const formatCurrency = (amount) =>
@@ -81,21 +91,21 @@ const CompanyAccountsTab = () => {
               <li>Total Withdrawn: {formatCurrency(summary.totalWithdrawn)}</li>
               <li>Total Appointments Booked: {summary.appointmentCount}</li>
               <li>Total Sessions(completed + no-show by Patient): {summary.sessionCount}</li>
-              <li>Total Cancelled Appointments(cancelled by doctor + doctor doesn't show): {summary.cancelledCount}</li>
+              <li>Total Cancelled Appointments(cancelled by doctor + no-show by Doctor): {summary.cancelledCount}</li>
             </ul>
           </div>
         )}
 
         {summary?.doctorBreakdown?.length > 0 && (
           <div className="doctor-table-wrapper">
-            <h3 className="sub-heading">Doctor Breakdown</h3>
+            <h3 className="sub-heading">Doctor wise view</h3>
             <table className="doctor-table">
               <thead>
                 <tr>
                   <th>Doctor</th>
                   <th>Total Appointments</th>
                   <th>Total Sessions</th>
-                  <th>Total Cancelled</th>
+                  <th>Total Cancelled (by Doctor)</th>
                   <th>Earnings</th>
                   <th>Withdrawn</th>
                   <th>Balance</th>
