@@ -21,6 +21,7 @@ const RegisterPatient = () => {
     const [otpVerified, setOtpVerified] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showNextChoice, setShowNextChoice] = useState(false);
 
     const navigate = useNavigate();
 
@@ -72,16 +73,10 @@ const RegisterPatient = () => {
 
             console.log(data.patientId);
             if (res.ok) {
-                setSuccess("You are all set! Redirecting to booking page...");
-                setTimeout(() => {
-                    navigate("/BookAppointment", {
-                        state: {
-                            phoneNumber: Mobile,
-                            patientId: data.patientId,
-                            patientName: Name,
-                        },
-                    });
-                }, 2000);
+                setSuccess("You're all set! What would you like to do next?");
+                setShowNextChoice(true);
+                localStorage.setItem("patientId", data.patientId);
+                localStorage.setItem("patientName", Name);
             } else {
                 setError(data.error);
             }
@@ -93,6 +88,20 @@ const RegisterPatient = () => {
     // ✅ RETURN JSX OUTSIDE of all functions
     return (
         <div className="register-container" style={{ marginTop: "5%" }}>
+            <div className="step-indicator">
+                <div className="progress-line">
+                    <div className={`circle ${step >= 1 ? "active" : ""}`}>👤</div>
+                    <div className={`line ${step >= 2 ? "filled" : ""}`}></div>
+                    <div className={`circle ${step >= 2 ? "active" : ""}`}>🔒</div>
+                    <div className={`line ${step >= 3 ? "filled" : ""}`}></div>
+                    <div className={`circle ${step === 3 ? "active" : ""}`}>💬</div>
+                </div>
+                <div className="labels">
+                    <span>Details</span>
+                    <span>OTP</span>
+                    <span>Problem</span>
+                </div>
+            </div>
             {step === 1 && (
                 <div>
                     <h2>Welcome to PsyCare 👋</h2>
@@ -138,7 +147,57 @@ const RegisterPatient = () => {
             )}
 
             {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
+            {success && <p style={{ color: "green", textAlign: "center" }}>{success}</p>}
+
+            {showNextChoice && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1.5rem" }}>
+                    <button
+                        onClick={() =>
+                            navigate("/ScreenTestForm", {
+                                state: {
+                                    patientId: localStorage.getItem("patientId"),
+                                    patientName: localStorage.getItem("patientName"),
+                                    phoneNumber: formData.Mobile
+                                },
+                            })
+                        }
+                        style={{
+                            backgroundColor: "#4CAF50",
+                            color: "white",
+                            padding: "12px",
+                            fontSize: "1rem",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Take a Screening Test
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            navigate("/BookAppointment", {
+                                state: {
+                                    patientId: localStorage.getItem("patientId"),
+                                    patientName: localStorage.getItem("patientName"),
+                                    phoneNumber: formData.Mobile
+                                },
+                            })
+                        }
+                        style={{
+                            backgroundColor: "#4285F4",
+                            color: "white",
+                            padding: "12px",
+                            fontSize: "1rem",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Book Appointment Directly
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

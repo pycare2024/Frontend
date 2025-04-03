@@ -17,6 +17,7 @@ const BookAppointment = () => {
     const [appointmentConfirmed, setAppointmentConfirmed] = useState(null);
     const [appointmentId, setAppointmentId] = useState(null);
     const [doctorName, setDoctorName] = useState(null);
+    
 
     const navigate = useNavigate();
 

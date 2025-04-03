@@ -1,162 +1,221 @@
-import React, { useState, useEffect } from "react";
+//COMPLETE SCREENING TEST FORM , WHICH ASKS QUESTIONS FROM PATIENT AND GIVE THEM A AI GENERATED REPORT
+
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./ScreenTestForm.css"; // Import the CSS file for custom styles
+import "./ScreenTestForm.css";
 
-function ScreenTestForm() {
-    const [questions, setQuestions] = useState([]);
-    const [answers, setAnswers] = useState([]);
-    const [patientId, setPatientId] = useState(null); // State to store patient ID
-    const [isSubmitting, setIsSubmitting] = useState(false); // Track form submission state
-    const [language, setLanguage] = useState(null); // Store selected language
-    const navigate = useNavigate();
-    const location = useLocation();
+const ScreenTestForm = () => {
+  const [questions, setQuestions] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState(Array(31).fill(null));
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [report, setReport] = useState("");
+  const [testMeta, setTestMeta] = useState({ date: "", time: "" });
 
-    useEffect(() => {
-        const { patientId } = location.state || {}; // Access patientId passed from previous page
-        if (patientId) {
-            setPatientId(patientId);
-        }
-    }, [location]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const patientId = location.state?.patientId;
+  const phoneNumber = location.state?.phoneNumber;
+  const patientName = location.state?.patientName;
+  const patientGender = location.state?.gender || "-";
 
-    // Fetch all the questions on component mount
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const response = await fetch("https://backend-xhl4.onrender.com/screeningTestRoute/");
-                const data = await response.json();
-                setQuestions(data);
-                setAnswers(new Array(data.length).fill(null)); // Initialize answers array
-            } catch (error) {
-                console.error("Error fetching questions:", error);
+  useEffect(() => {
+    fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/getQuestions")
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestions(data.questions);
+        setLoading(false);
+      })
+      .catch(() => setError("Failed to load questions."));
+  }, []);
+
+  const handleOptionSelect = (value) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentIndex] = value;
+    setAnswers(updatedAnswers);
+  };
+
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (answers.includes(null)) {
+      setError("Please answer all questions before submitting.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const now = new Date();
+      const date = now.toLocaleDateString();
+      const time = now.toLocaleTimeString();
+      setTestMeta({ date, time });
+
+      const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          patient_id: patientId,
+          answers,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setSuccess("Assessment submitted successfully!");
+        setReport(data.report || "No report generated.");
+      } else {
+        setError(data.message || "Submission failed.");
+      }
+    } catch (err) {
+      setError("Error submitting assessment.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handlePrint = () => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>PsyCare - Mental Wellness Report</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', sans-serif;
+              padding: 2rem;
+              color: #333;
+              background-color: #f9fafb;
             }
-        };
-
-        fetchQuestions();
-    }, []);
-
-    // Handle answer selection (Yes or No)
-    const handleAnswerChange = (index, answer) => {
-        const updatedAnswers = [...answers];
-        updatedAnswers[index] = answer;
-        setAnswers(updatedAnswers);
-    };
-
-    // Check if the form is completely filled before submitting
-    const isFormComplete = answers.every((answer) => answer !== null);
-
-    // Handle form submission
-    const handleSubmit = async () => {
-        if (!isFormComplete) {
-            alert("Please answer all the questions before submitting.");
-            return;
-        }
-
-        if (!patientId) {
-            alert("Patient ID is missing.");
-            return;
-        }
-
-        setIsSubmitting(true); // Set submitting state to true
-        try {
-            const response = await fetch("https://backend-xhl4.onrender.com/screeningTestRoute/addScreenTestData", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ patient_id: patientId, answers })
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                console.log("Screening test saved successfully:", result);
-                navigate("/thank-you"); // Redirect after submission
-            } else {
-                alert("Error submitting answers");
+            .header {
+              text-align: center;
+              margin-bottom: 2rem;
             }
-        } catch (error) {
-            console.error("Error submitting answers:", error);
-        } finally {
-            setIsSubmitting(false); // Reset submitting state
-        }
-    };
+            .header h1 {
+              color: #4285f4;
+              margin-bottom: 0.2rem;
+            }
+            .header p {
+              font-style: italic;
+              color: #555;
+            }
+            .details {
+              margin-bottom: 2rem;
+              padding: 1rem;
+              background: #ffffff;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+            }
+            .details p {
+              margin: 0.4rem 0;
+              font-size: 1rem;
+            }
+            .report-box {
+              border: 1px solid #ccc;
+              padding: 1.5rem;
+              border-radius: 10px;
+              background: #ffffff;
+            }
+            .report-box h3 {
+              margin-bottom: 1rem;
+              color: #1d4ed8;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>PsyCare</h1>
+            <p>Your Path to Mental Wellness</p>
+          </div>
+          <div class="details">
+            <p><strong>Patient Name:</strong> ${patientName}</p>
+            <p><strong>Gender:</strong> ${patientGender}</p>
+            <p><strong>Date:</strong> ${testMeta.date}</p>
+            <p><strong>Time:</strong> ${testMeta.time}</p>
+          </div>
+          <div class="report-box">
+            <h3>AI-Generated Report Summary</h3>
+            <p>${report}</p>
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
 
-    // Function to display language selection
-    const handleLanguageSelection = (selectedLanguage) => {
-        setLanguage(selectedLanguage);
-    };
+  if (loading) return <div className="loading">Loading questions...</div>;
 
-    return (
-        <div className="screen-test-form-container">
-            <h1 className="screen-test-title">Screening Test</h1>
+  const currentQuestion = questions[currentIndex];
 
-            {/* Language selection step */}
-            {!language ? (
-                <div className="language-selection-container">
-                    <h2 className="language-selection-title">Select Your Preferred Language</h2>
-                    <div className="language-buttons">
-                        <button
-                            onClick={() => handleLanguageSelection("english")}
-                            className="language-button english-button"
-                        >
-                            English
-                        </button>
-                        <button
-                            onClick={() => handleLanguageSelection("hindi")}
-                            className="language-button hindi-button"
-                        >
-                            हिंदी
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                // Display questions after language is selected
-                <form className="screen-test-form">
-                    <div className="questions-container">
-                        {questions.map((question, index) => (
-                            <div key={question.no} className="question-item">
-                                <h3 className="question-text">
-                                    {`${question.no}. `}
-                                    {language === "english" ? question.eng : question.hin}
-                                </h3>
-                                <div className="options">
-                                    <label className="option-label">
-                                        <input
-                                            type="radio"
-                                            name={`question-${question.no}`}
-                                            value="Yes"
-                                            checked={answers[index] === "Yes"}
-                                            onChange={() => handleAnswerChange(index, "Yes")}
-                                            className="radio-input"
-                                            disabled={isSubmitting} // Disable radio buttons during submission
-                                        />
-                                        Yes
-                                    </label>
-                                    <label className="option-label">
-                                        <input
-                                            type="radio"
-                                            name={`question-${question.no}`}
-                                            value="No"
-                                            checked={answers[index] === "No"}
-                                            onChange={() => handleAnswerChange(index, "No")}
-                                            className="radio-input"
-                                            disabled={isSubmitting} // Disable radio buttons during submission
-                                        />
-                                        No
-                                    </label>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <button
-                        type="button"
-                        onClick={handleSubmit}
-                        className="submit-button"
-                        disabled={isSubmitting || !isFormComplete} // Disable button if not ready
-                    >
-                        Submit
-                    </button>
-                </form>
-            )}
+  return (
+    <div className="screening-container">
+      <h2>Screening Test</h2>
+
+      {report ? (
+        <div className="report-box">
+          <h3>Your Screening Report</h3>
+          <div className="report-text">{report}</div>
+          <div className="report-actions">
+            <button className="print-btn" onClick={handlePrint}>Print Report</button>
+            <button
+              className="proceed-btn"
+              onClick={() => navigate("/BookAppointment", {
+                state: {
+                  patientId,
+                  phoneNumber,
+                  patientName,
+                },
+              })}
+            >
+              Proceed to Book Appointment
+            </button>
+          </div>
         </div>
-    );
-}
+      ) : (
+        <>
+          <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
+          <div className="question-box">
+            <h3>{currentQuestion.question}</h3>
+            <div className="options">
+              {currentQuestion.options.map((option, index) => (
+                <button
+                  key={index}
+                  className={`option-button ${answers[currentIndex] === index + 1 ? "selected" : ""}`}
+                  onClick={() => handleOptionSelect(index + 1)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="navigation-buttons">
+            <button onClick={handleBack} disabled={currentIndex === 0}>Back</button>
+            {currentIndex < questions.length - 1 ? (
+              <button onClick={handleNext} disabled={answers[currentIndex] === null}>Next</button>
+            ) : (
+              <button onClick={handleSubmit} disabled={submitting}>Submit</button>
+            )}
+          </div>
+        </>
+      )}
+
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
+    </div>
+  );
+};
 
 export default ScreenTestForm;

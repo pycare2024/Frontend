@@ -1,0 +1,181 @@
+/* Appointment.css */
+
+/* Appointment.css */
+
+/* Ensure full white background across the entire page */
+body {
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 5%;
+  }
+
+  .appointments-wrapper {
+    width: 100%;
+    padding: 2rem;
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .appointments-wrapper .appointments-heading {
+    color: #4285F4;
+    font-weight: 700;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+  
+  .appointments-wrapper .date-picker {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .appointments-wrapper .date-picker input[type="date"] {
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: center;
+  }
+  
+  .appointments-wrapper .date-picker input[type="date"]:focus {
+    border-color: #4285F4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+  }
+  
+  .appointments-wrapper .table-container {
+    overflow-x: auto;
+    padding: 1rem 0;
+    background-color: transparent;
+    border-radius: 0;
+  }
+  
+  .appointments-wrapper .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  
+  .appointments-wrapper .table th {
+    background-color: #4285F4;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .appointments-wrapper .table td {
+    padding: 1rem;
+    color: #333333;
+    font-size: 0.95rem;
+    vertical-align: middle;
+  }
+  
+  .appointments-wrapper .table tr:nth-child(even) {
+    background-color: #f0f4f8;
+  }
+  
+  .appointments-wrapper .table tr:hover {
+    background-color: #e2e8f0;
+    transition: background-color 0.3s ease;
+  }
+  
+  .appointments-wrapper .status {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    text-align: center;
+  }
+  
+  .appointments-wrapper .status.paid {
+    background-color: #34d399;
+  }
+  
+  .appointments-wrapper .status.unpaid {
+    background-color: #ef4444;
+  }
+  
+  .appointments-wrapper .button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    color: white;
+    border: none;
+  }
+  
+  .appointments-wrapper .button.start {
+    background-color: #10b981;
+  }
+  
+  .appointments-wrapper .button.start:hover {
+    background-color: #059669;
+  }
+  
+  .appointments-wrapper .button.join {
+    background-color: #3b82f6;
+  }
+  
+  .appointments-wrapper .button.join:hover {
+    background-color: #2563eb;
+  }
+  
+  .appointments-wrapper .button.complete {
+    background-color: #16a34a;
+  }
+  
+  .appointments-wrapper .button.complete:hover {
+    background-color: #15803d;
+  }
+  
+  .appointments-wrapper .button.no-show {
+    background-color: #dc2626;
+  }
+  
+  .appointments-wrapper .button.no-show:hover {
+    background-color: #b91c1c;
+  }
+  
+  .appointments-wrapper .status-tag {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .appointments-wrapper .status-tag.completed {
+    background-color: #22c55e;
+  }
+  
+  .appointments-wrapper .status-tag.no-show {
+    background-color: #f87171;
+  }
+  
+  .appointments-wrapper .flex {
+    display: flex;
+  }
+  
+  .appointments-wrapper .flex-col {
+    flex-direction: column;
+  }
+  
+  .appointments-wrapper .items-center {
+    align-items: center;
+  }
+  
+  .appointments-wrapper .gap-2 {
+    gap: 0.5rem;
+  }

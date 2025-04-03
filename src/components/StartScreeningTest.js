@@ -1,3 +1,5 @@
+//PAGE OF NO USE WILL BE DELETED LATER
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StartScreeningTest.css";
