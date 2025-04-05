@@ -1,63 +1,29 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  const handleBookClick = () => {
+    navigate('/BookAppointment'); // Replace with your route
+  };
+
   return (
-    <div className="header-container">
-      <div className="header-slider">
-        {/* Page 1 */}
-        <div className="header header1">
-          <div className="text-box">
-            <h1 className="headline">TRUST.<br/> SHARE.<br/> HEAL.</h1>
-            <p className="subheadline">
-              Online Counselling Therapy With<br /> Top Psychologists<br />
-              Anytime, Anywhere, Anydevice.
-            </p>
-            <button className="cta-button">Get Started</button>
-          </div>
-        </div>
-
-        {/* Page 2 */}
-        <div className="header header2">
-          <div className="text-box">
-            <h1 className="headline">LISTEN.<br/> LEARN.<br/> GROW.</h1>
-            <p className="subheadline">
-              Personalized Sessions With Expert<br /> Therapists
-              Tailored To Your Needs.
-            </p>
-            <button className="cta-button">Learn More</button>
-          </div>
-        </div>
-
-        {/* Duplicate of Page 1 */}
-        <div className="header header1">
-          <div className="text-box">
-            <h1 className="headline">TRUST.<br/> SHARE.<br/> HEAL.</h1>
-            <p className="subheadline">
-              Online Counselling Therapy With<br /> Top Psychologists<br />
-              Anytime, Anywhere, Anydevice.
-            </p>
-            <button className="cta-button">Get Started</button>
-          </div>
-        </div>
-
-        {/* Duplicate of Page 2 */}
-        <div className="header header2">
-          <div className="text-box">
-            <h1 className="headline">LISTEN.<br/> LEARN.<br/> GROW.</h1>
-            <p className="subheadline">
-              Personalized Sessions With Expert<br /> Therapists
-              Tailored To Your Needs.
-            </p>
-            <button className="cta-button">Learn More</button>
-          </div>
-        </div>
-      </div>
-
-      {/* Pagination dots */}
-      <div className="pagination-dots">
-        <span className="dot dot-1"></span>
-        <span className="dot dot-2"></span>
+    <div className="hero-container">
+      <div className="hero-left">
+        {/* <div className="logo">
+          <span className="logo-bold">COOL</span>LOGO
+          <div className="slogan">YOUR SLOGAN</div>
+        </div> */}
+        <h1 className="hero-title">PsyCare</h1>
+        <h2 className="hero-subtitle">We’re here to help</h2>
+        <p className="hero-text">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+          dolore magna aliquam erat volutpat. Ut wisi
+        </p>
+        <button className="book-btn" onClick={handleBookClick}>Book Now</button>
       </div>
     </div>
   );

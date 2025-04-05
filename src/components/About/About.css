@@ -13,7 +13,7 @@
   text-align: center;
   padding: 60px 20px;
   background-color: rgba(0, 0, 0, 0.3); /* Fallback color if image fails to load */
-  background: url('./About.jpg') no-repeat center center; /* Center the image */
+  background: url('./aboutusing.jpg') no-repeat center center; /* Center the image */
   background-size: cover; 
   position: relative;
   z-index: 1; /* Ensure it’s not overlapped */
@@ -36,46 +36,93 @@
 }
 
 /* Mission Section */
+/* Reset default styles */
+
+
 .mission-section {
+  padding: 2rem 1rem;
+  background-color: #f9f9f9; /* Light gray background similar to image */
+  font-family: Arial, sans-serif;
+}
+
+.mission-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 40px;
-  gap: 30px;
-  background-color: #fff;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-.mission-content {
+.mission-item {
   flex: 1;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0);
-  width: 100%;
-  max-width: 800px; /* Limit the width of the white boxes */
-  transition: transform 0.3s ease;
-  margin-right: 50px;
+  min-width: 250px;
+  text-align: center;
+  padding: 1rem;
+  background-color: #ffffff; /* White background for each item */
+  border: 1px solid #e0e0e0; /* Light border similar to image */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.mission-content h2 {
-  font-size: 2rem;
-  color: #4285F4;
-  margin-bottom: 10px;
+.mission-icon.large {
+  font-size: 3rem; /* Large icon size */
+  color: #1e90ff; /* Blue color matching the image */
+  margin-bottom: 1rem;
 }
 
-.mission-content p {
-  font-size: 1rem;
+.mission-icon.small {
+  font-size: 1.5rem; /* Small icon size */
+  color: #1e90ff; /* Blue color */
+  margin: 1rem 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #1e3a8a; /* Dark blue title color */
+  margin-bottom: 1rem;
+}
+
+.line {
+  width: 50px;
+  height: 2px;
+  background-color: #1e90ff; /* Blue line */
+  margin: 0 auto 1rem; /* Centered with spacing */
+}
+
+p {
+  font-size: 0.9rem;
+  color: #666666; /* Gray text color */
   line-height: 1.5;
 }
 
-.mission-image img {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
-  background-size: contain; 
-  position: relative;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mission-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mission-item {
+    width: 100%;
+    max-width: 300px;
+  }
 }
 
+@media (max-width: 480px) {
+  .mission-icon.large {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.85rem;
+  }
+}
 /* Services Section */
 .services-section {
   padding: 40px;
@@ -87,7 +134,7 @@
   font-size: 2rem;
   color: #4285F4;
   margin-bottom: 25px;
-  
+  font-weight: 600;
 }
 
 .services-grid {
@@ -135,8 +182,9 @@
 
 .founder-content h2 {
   font-size: 2rem;
-  color: #4285F4;
+  color: #8e24aa;
   margin-bottom: 15px;
+  font-weight: 600;
 }
 
 .founder-content blockquote {
@@ -201,6 +249,7 @@
   font-size: 2rem;
   color: #4285F4;
   margin-bottom: 25px;
+  font-weight: 600;
 }
 
 .team-grid {
@@ -219,9 +268,9 @@
 }
 
 .team-member img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 20%;
   margin-bottom: 10px;
   border: 2px solid #4285F4;
 }
@@ -248,6 +297,7 @@
   font-size: 2rem;
   color: #4285F4;
   margin-bottom: 25px;
+  font-weight: 600;
 }
 
 .get-in-touch-grid {
@@ -318,6 +368,7 @@
 
 .get-in-touch-link:hover {
   color: #3267d6;
+  cursor: pointer;
 }
 
 /* Testimonials Section */
@@ -331,6 +382,7 @@
   font-size: 2rem;
   color: #4285F4;
   margin-bottom: 25px;
+  font-weight: 600;
 }
 
 .testimonials-grid {

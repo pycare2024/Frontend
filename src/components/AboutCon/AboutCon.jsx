@@ -1,8 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AboutCon.css';
 
 const AboutCon = () => {
   const contentRef = useRef(null);
+
+  const navigate = useNavigate();
+  
+    const handleBookClick = () => {
+      navigate('/Landing'); // Replace with your route
+    };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,57 +43,27 @@ const AboutCon = () => {
       </div>
       <div className="content-section" ref={contentRef}>
 
-        <div className="white-box one"> {/* Added white box for text */}
-          <div className="text-column">
-            <h1 className="headline">Counselling Therapy Sessions with Licensed & Verified Experts</h1>
-            <p className="description">
-              Highly qualified team of some of the best names in psychology who deliver improved well-being to you. Carefully vetted through a rigorous selection process. Trained and experienced in all psychotherapy techniques.
-            </p>
-            <div className="session-types">
-              <div className="session-type">
-                <div className="session-icon video"></div>
-                <span>Video Session</span>
-              </div>
-              <div className="session-type">
-                <div className="session-icon audio"></div>
-                <span>Audio Session</span>
-              </div>
-              <div className="session-type">
-                <div className="session-icon chat"></div>
-                <span>Chat Session</span>
-              </div>
-            </div>
-            <p className="language-support">English and All Regional Indian Languages</p>
-            <p className="privacy-info">100% Private & Secure Platform</p>
-            <p className="support-info">24/7 Support</p>
-            <button className="view-counsellors-btn">View All Counsellors</button>
-          </div>
-        </div>
+       
         <div className="white-box two"> {/* Added white box for text */}
-          <div className="text-column">
-            <h1 className="headline">Counselling Therapy Sessions with Licensed & Verified Experts</h1>
-            <p className="description">
-              Highly qualified team of some of the best names in psychology who deliver improved well-being to you. Carefully vetted through a rigorous selection process. Trained and experienced in all psychotherapy techniques.
-            </p>
-            <div className="session-types">
-              <div className="session-type">
-                <div className="session-icon video"></div>
-                <span>Video Session</span>
+          <div className="landing-container">
+            <div className="landing-content">
+              <div className="text-section">
+                <h1>Meet Our Experts.</h1>
+                <h2>Counselling Therapy Sessions</h2>
+                <p>
+                  Highly qualified team of some of the best names in psychology who
+                  deliver improved well-being to you. Carefully vetted through a
+                  rigorous selection process. Trained and experienced in all
+                  psychotherapy techniques.
+                </p>
+                <button className="see-more-btn" onClick={handleBookClick}>See Experts</button>
               </div>
-              <div className="session-type">
-                <div className="session-icon audio"></div>
-                <span>Audio Session</span>
-              </div>
-              <div className="session-type">
-                <div className="session-icon chat"></div>
-                <span>Chat Session</span>
-              </div>
+              {/* <div className="image-section">
+                <img src={newImg} alt="Therapy Session" />
+              </div> */}
             </div>
-            <p className="language-support">English and All Regional Indian Languages</p>
-            <p className="privacy-info">100% Private & Secure Platform</p>
-            <p className="support-info">24/7 Support</p>
-            <button className="view-counsellors-btn">View All Counsellors</button>
           </div>
+
         </div>
       </div>
       {/* <div className="pagination-dots">

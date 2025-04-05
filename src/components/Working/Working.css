@@ -1,22 +1,34 @@
 .how-to-use-container {
+  width: 105vw;
+  height: 100vh;
   padding: 50px 20px;
+  margin: 0; /* remove any top margin */
   background-color: #FFFFFF;
   text-align: center;
   font-family: 'Arial', sans-serif;
+
+  background: url('working.jpg') no-repeat center center;
+  background-size: cover;
+
+  position: relative;
+  overflow: hidden;
 }
 
 /* Title styling */
 .how-to-use-title {
   font-size: 2.5rem;
-  color: #1A2A44;
+  color:#4285F4;
   margin-bottom: 40px;
   animation: fadeIn 1s ease-in-out;
+  margin-top: 100px;
+  font-weight: 600;
 }
 
 /* Subtitle styling */
 .how-to-use-subtitle {
   font-size: 1.2rem;
-  color: #6B7280;
+  color: #010101;
+  margin-top: 40px;
   margin-bottom: 90px;
   animation: fadeIn 1.2s ease-in-out;
 
@@ -33,11 +45,12 @@
   max-width: 1200px;
   /* height: 200px; */
   margin: 0 auto;
+  margin-right: 240px;
 }
 
 /* Individual step card */
 .step-card {
-  background-color: #E6F0FA;
+  background-color: #5b646c;
   border-radius: 10px;
   padding: 20px;
   width: 200px;
@@ -66,7 +79,7 @@
 /* Step description */
 .step-description {
   font-size: 0.9rem;
-  color: #6B7280;
+  color: #010101;
 }
 
 
@@ -166,7 +179,7 @@
   width: 100%;
   height: 100%; /* Take up the full height of the card */
   
-  background-color: #E6F0FA; /* Dark blue semi-transparent background */
+  background-color: #ffffff; /* Dark blue semi-transparent background */
   color: #FFFFFF;
   font-size: 1rem; /* Slightly larger font for better readability */
   display: flex; /* Center the text */
@@ -205,7 +218,8 @@
 
 .step2{
   position: relative;
-  background-image: url('assesment.jpg');
+  background-color: #FFFFFF;
+  background-image: url('assesment1.png');
   background-size: cover;
   background-position: center;
   transition: opacity 0.3s ease;
@@ -217,4 +231,24 @@
   background-size: cover;
   background-position: center;
   transition: opacity 0.3s ease;
+}
+
+/* Wrapper for each step (includes number + card) */
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Professional styled step number */
+.step-number {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #4285F4;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

@@ -1,0 +1,47 @@
+/* Outer container that takes full screen */
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+.slider-container {
+  position: relative;
+  width: 105vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Inner wrapper that moves left/right to show one slide */
+.slider-wrapper {
+  display: flex;
+  width: 198vw; /* 2 slides side by side */
+  height: 100vh;
+  transition: transform 1s ease-in-out;
+}
+
+/* Each individual full-screen slide */
+.slide {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+.dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background-color: #bbb;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #333;
+}

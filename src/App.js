@@ -35,6 +35,7 @@ import AppointmentsTab from './components/AppointmentTab';
 import AccountsTab from './components/AccountsTab';
 import CompanyAccountsTab from './components/CompanyAccountsTab';
 import RegisterPatient from './components/RegisterPatient';
+import Landing from "./components/Landing/Landing";
 
 
 
@@ -121,6 +122,7 @@ function App() {
                 <Route path="/AccountsTab" element={<AccountsTab />} />
                 <Route path="/CompanyAccountsTab" element={<CompanyAccountsTab />} />
                 <Route path="/RegisterPatient" element={<RegisterPatient />} />
+                <Route path="/Landing" element={<Landing />} />
             </Routes>
             {/* <Footer/> */}
         </div>

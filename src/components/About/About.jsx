@@ -1,6 +1,10 @@
 // About.js
 import React, { useEffect } from 'react';
 import './About.css';
+import miss from "./missionAbout.png"
+import Dhruv from "./Dhruv.jpg"
+import ujj from "./ujj.jpg"
+import sir from "./sir1.png"
 
 const About = () => {
   useEffect(() => {
@@ -24,21 +28,42 @@ const About = () => {
     <div className="about-page">
       {/* Hero Section */}
       <section className="hero-section slide-in">
-        <h1>About PsyCare</h1>
-        <p>Providing compassionate mental health support to empower balanced, fulfilling lives.</p>
+        {/* <h1>About PsyCare</h1>
+        <p>Providing compassionate mental health support to empower balanced, fulfilling lives.</p> */}
       </section>
 
       {/* Mission Section */}
-      <section className="mission-section slide-in">
-        <div className="mission-content">
-          <h2>Our Mission</h2>
+      <section className="mission-section">
+      <div className="mission-container">
+        <div className="mission-item">
+          <div className="mission-icon large">🎯</div> {/* Large target icon */}
+          <h2>OUR MISSION</h2>
+          <div className="line"></div>
+          {/* <div className="mission-icon small">🎯</div> Small target icon */}
           <p>
-          PsyCare aims to provide accessible, compassionate, and professional mental health support through a user-friendly online platform. Its mission is to empower individuals by offering expert counseling, self-help resources, and interactive tools that promote emotional well-being, resilience, and personal growth.</p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+          </p>
         </div>
-        <div className="mission-image">
-          <img src="/missionAbout.png" alt="Our Mission" />
+        <div className="mission-item">
+          <div className="mission-icon large">💡</div> {/* Large lightbulb icon */}
+          <h2>OUR VISION</h2>
+          <div className="line"></div>
+          {/* <div className="mission-icon small">💡</div> Small lightbulb icon */}
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+          </p>
         </div>
-      </section>
+        <div className="mission-item">
+          <div className="mission-icon large">⭐</div> {/* Large star icon */}
+          <h2>OUR VALUES</h2>
+          <div className="line"></div>
+          {/* <div className="mission-icon small">⭐</div> Small star icon */}
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+          </p>
+        </div>
+      </div>
+    </section>
 
       {/* Services Section */}
       <section className="services-section slide-in">
@@ -71,7 +96,7 @@ const About = () => {
         </div>
         <div className="founder-image">
           <div className="blue-circle">
-            <img src="https://via.placeholder.com/300x300.png?text=Founder" alt="Vivek Sir" />
+            <img src={sir} alt="Vivek Sir" />
           </div>
         </div>
       </section>
@@ -81,19 +106,24 @@ const About = () => {
         <h2>Meet Our Team</h2>
         <div className="team-grid">
           <div className="team-member">
-            <img src="https://via.placeholder.com/150x150.png?text=Team+Member" alt="Team Member" />
+            <img src={Dhruv} alt="Team Member" />
             <h3>Mr.Dhruv Agarwal</h3>
             <p>Operations</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae vitae fugit incidunt, ex repellendus dolorum, maiores illum labore sint fugiat, ipsum ducimus minima minus eos. Officiis reiciendis velit labore in.</p>
           </div>
-          <div className="team-member">
+          
+          {/* <div className="team-member">
             <img src="https://via.placeholder.com/150x150.png?text=Team+Member" alt="Team Member" />
+            <h3>Ms. Vivek Bhugra</h3>
+            <p>Founder</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, ut architecto natus nam culpa quidem, ex iste dicta labore minima deserunt quos unde vero vel facere aspernatur commodi, deleniti odio!</p>
+          </div> */}
+          <div className="team-member">
+            <img src=
+            {ujj} alt="Team Member" />
             <h3>Mr. Ujjwal Tomar</h3>
             <p>Frontend</p>
-          </div>
-          <div className="team-member">
-            <img src="https://via.placeholder.com/150x150.png?text=Team+Member" alt="Team Member" />
-            <h3>Ms. ABC</h3>
-            <p>Reserch</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur maiores repellendus, voluptates veritatis dignissimos praesentium iure, debitis commodi quasi porro tenetur ducimus deserunt ex. Quis hic dolorum voluptas iste atque!</p>
           </div>
         </div>
       </section>

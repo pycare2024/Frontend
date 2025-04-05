@@ -1,24 +1,22 @@
 import React from 'react';
 import './Home.css'
-import Header from "../components/Header/Header";
-import WhyPsyCare from "../components/WhyPsycare/WhyPsyCare";
 import Aboutcon from "../components/AboutCon/AboutCon";
 import Psyco from "../components/Psyco/Psyco";
 import Blog from "../components/Blog/Blog";
-import Working from "../components/Working/Working";
 import Review from "../components/Review/Review";
+import LandingPage from "../components/LandingPage/LandingPage";
+import Foot from "../components/Foot/Foot";
 
 
 const Home = () => {
   return (
     <div>
-      <Header/>
-      <WhyPsyCare/>
+      <LandingPage/>
       <Aboutcon/>
       <Psyco/>
       <Blog/>
-      <Working/>
       <Review/>
+      <Foot/>
     </div>
   );
 }
