@@ -85,6 +85,42 @@ function App() {
         navigate("/"); // Redirect operator to the home page
     };
 
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://wati-integration-prod-service.clare.ai/v2/watiWidget.js?36544";
+        script.async = true;
+        script.onload = () => {
+          if (window.CreateWhatsappChatWidget) {
+            window.CreateWhatsappChatWidget({
+              enabled: true,
+              chatButtonSetting: {
+                backgroundColor: "#00e785",
+                ctaText: "Chat with us",
+                borderRadius: "25",
+                marginLeft: "0",
+                marginRight: "20",
+                marginBottom: "20",
+                ctaIconWATI: false,
+                position: "right",
+              },
+              brandSetting: {
+                brandName: "PsyCare",
+                brandSubTitle: "undefined",
+                brandImg: "https://www.wati.io/wp-content/uploads/2023/04/Wati-logo.svg",
+                welcomeText: "",
+                messageText: "Hi",
+                backgroundColor: "#00e785",
+                ctaText: "Chat with us",
+                borderRadius: "25",
+                autoShow: false,
+                phoneNumber: "919818296388"
+              },
+            });
+          }
+        };
+        document.body.appendChild(script);
+      }, []);
+      
     return (
         <div className="container-fluid full-screen">
             <Nav isLoggedIn={isLoggedIn} isDocLoggedIn={isDocLoggedIn} isOperatorLoggedIn={isOperatorLoggedIn} onLogout={handleLogout} />

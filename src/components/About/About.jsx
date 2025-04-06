@@ -6,7 +6,15 @@ import Dhruv from "./Dhruv.jpg"
 import ujj from "./ujj.jpg"
 import sir from "./sir1.png"
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 const About = () => {
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   useEffect(() => {
     const elements = document.querySelectorAll('.slide-in');
     const observer = new IntersectionObserver(
@@ -25,6 +33,7 @@ const About = () => {
   }, []);
 
   return (
+
     <div className="about-page">
       {/* Hero Section */}
       <section className="hero-section slide-in">
@@ -34,36 +43,36 @@ const About = () => {
 
       {/* Mission Section */}
       <section className="mission-section">
-      <div className="mission-container">
-        <div className="mission-item">
-          <div className="mission-icon large">🎯</div> {/* Large target icon */}
-          <h2>OUR MISSION</h2>
-          <div className="line"></div>
-          {/* <div className="mission-icon small">🎯</div> Small target icon */}
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-          </p>
+        <div className="mission-container">
+          <div className="mission-item">
+            <div className="mission-icon large">🎯</div> {/* Large target icon */}
+            <h2>OUR MISSION</h2>
+            <div className="line"></div>
+            {/* <div className="mission-icon small">🎯</div> Small target icon */}
+            <p>
+            At PsyCare, our mission is to make mental health support accessible, affordable, and stigma-free for everyone. We aim to empower individuals through compassionate care, innovative technology, and a community-driven approach to well-being.
+            </p>
+          </div>
+          <div className="mission-item">
+            <div className="mission-icon large">💡</div> {/* Large lightbulb icon */}
+            <h2>OUR VISION</h2>
+            <div className="line"></div>
+            {/* <div className="mission-icon small">💡</div> Small lightbulb icon */}
+            <p>
+            To become a global leader in mental wellness by harnessing the power of technology and empathy creating a world where seeking support is as natural as offering it, and every individual thrives with access to holistic mental health care.
+            </p>
+          </div>
+          <div className="mission-item">
+            <div className="mission-icon large">⭐</div> {/* Large star icon */}
+            <h2>OUR VALUES</h2>
+            <div className="line"></div>
+            {/* <div className="mission-icon small">⭐</div> Small star icon */}
+            <p>
+            Our values are the foundation of everything we do. We prioritize compassion, ensuring that every person who reaches out is met with empathy and understanding. We are committed to innovation, using technology to create accessible mental health solutions.
+            </p>
+          </div>
         </div>
-        <div className="mission-item">
-          <div className="mission-icon large">💡</div> {/* Large lightbulb icon */}
-          <h2>OUR VISION</h2>
-          <div className="line"></div>
-          {/* <div className="mission-icon small">💡</div> Small lightbulb icon */}
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-          </p>
-        </div>
-        <div className="mission-item">
-          <div className="mission-icon large">⭐</div> {/* Large star icon */}
-          <h2>OUR VALUES</h2>
-          <div className="line"></div>
-          {/* <div className="mission-icon small">⭐</div> Small star icon */}
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
 
       {/* Services Section */}
       <section className="services-section slide-in">
@@ -92,7 +101,7 @@ const About = () => {
             "Early access to quality mental health services is critical for lasting recovery in India."
           </blockquote>
           <p>At PsyCare, we provide trusted care across India and online, 365 days a year, ensuring accessibility and real outcomes.</p>
-          <p className="founder-signature">Dr. Vivek Sir<br /><span>Founder & CEO</span></p>
+          <p className="founder-signature">Dr. Vivek Bhugra<br /><span>Founder & CEO, PsyCare</span></p>
         </div>
         <div className="founder-image">
           <div className="blue-circle">
@@ -105,25 +114,41 @@ const About = () => {
       <section className="team-section slide-in">
         <h2>Meet Our Team</h2>
         <div className="team-grid">
-          <div className="team-member">
-            <img src={Dhruv} alt="Team Member" />
-            <h3>Mr.Dhruv Agarwal</h3>
-            <p>Operations</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae vitae fugit incidunt, ex repellendus dolorum, maiores illum labore sint fugiat, ipsum ducimus minima minus eos. Officiis reiciendis velit labore in.</p>
+          <div className="team-card">
+            <div className="team-card-inner">
+              <div className="team-card-front">
+                <img src={Dhruv} alt="Dhruv Agarwal" />
+                <h3>Mr. Dhruv Agarwal</h3>
+                <p>Head of IT, PsyCare</p>
+              </div>
+              <div className="team-card-back">
+                <p>
+                  At PsyCare, we believe technology is not just a tool—it’s a bridge to better mental health.
+                  Our mission in IT is to create seamless, secure, and smart digital experiences that empower
+                  individuals to access care effortlessly. By combining innovation with compassion, we’re
+                  building systems that connect people to support when they need it most. It’s an honor to
+                  lead this technological journey that touches lives every day.
+                </p>
+              </div>
+            </div>
           </div>
-          
-          {/* <div className="team-member">
-            <img src="https://via.placeholder.com/150x150.png?text=Team+Member" alt="Team Member" />
-            <h3>Ms. Vivek Bhugra</h3>
-            <p>Founder</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, ut architecto natus nam culpa quidem, ex iste dicta labore minima deserunt quos unde vero vel facere aspernatur commodi, deleniti odio!</p>
-          </div> */}
-          <div className="team-member">
-            <img src=
-            {ujj} alt="Team Member" />
-            <h3>Mr. Ujjwal Tomar</h3>
-            <p>Frontend</p>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur maiores repellendus, voluptates veritatis dignissimos praesentium iure, debitis commodi quasi porro tenetur ducimus deserunt ex. Quis hic dolorum voluptas iste atque!</p>
+
+          <div className="team-card">
+            <div className="team-card-inner">
+              <div className="team-card-front">
+                <img src={ujj} alt="Ujjwal Tomar" />
+                <h3>Mr. Ujjwal Tomar</h3>
+                <p>IT Department, PsyCare</p>
+              </div>
+              <div className="team-card-back">
+                <p>
+                  Being part of the PsyCare IT team means more than just writing code. It’s about contributing
+                  to a vision that truly makes a difference in people’s lives. Every feature we build is
+                  designed to make mental health care more accessible, inclusive, and reliable. I’m proud to
+                  support this mission alongside a passionate team.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
