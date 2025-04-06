@@ -1,6 +1,40 @@
 import React from 'react';
 import './Working.css';
 
+import Img1 from './1.png';
+import Img2 from './2.png';
+import Img3 from './3.png';
+import Img4 from './4.png';
+import Img5 from './5.png';
+import Img6 from './6.png';
+
+const steps = [
+  {
+    id: 1,
+    image: Img1,
+  },
+  {
+    id: 2,
+    image: Img2,
+  },
+  {
+    id: 3,
+    image: Img3,
+  },
+  {
+    id: 4,
+    image: Img4,
+  },
+  {
+    id: 5,
+    image: Img5,
+  },
+  {
+    id: 6,
+    image: Img6,
+  },
+];
+
 const Working = () => {
   return (
     <div className="how-to-use-container">
@@ -9,57 +43,14 @@ const Working = () => {
         A step-by-step guide to get started with Psycare and improve your mental well-being
       </p>
       <div className="steps-container">
-        {/* Step 1 */}
-        <div className="step-wrapper">
-          <div className="step-number">Step 1</div>
-          <div className="step-card step-card-with-bg step1">
-            <div className="hover-text">
-              <h3 className="step-title">Sign Up</h3>
-              <p className="step-description">
-                Create your Psycare account by providing your details securely.
-              </p>
+        {steps.map((step, index) => (
+          <div key={step.id} className="step-wrapper">
+            <div className="step-number">Step {index + 1}</div>
+            <div className="step-card no-padding">
+              <img src={step.image} alt={step.title} className="step-img-full" />
             </div>
           </div>
-        </div>
-
-        {/* Step 2 */}
-        <div className="step-wrapper">
-          <div className="step-number">Step 2</div>
-          <div className="step-card step-card-with-bg step2">
-            <div className="hover-text">
-              <h3 className="step-title">Take Assessment</h3>
-              <p className="step-description">
-                Complete a quick mental health assessment to understand your needs.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 3 */}
-        <div className="step-wrapper">
-          <div className="step-number">Step 3</div>
-          <div className="step-card step-card-with-bg step3">
-            <div className="hover-text">
-              <h3 className="step-title">Book Appointment</h3>
-              <p className="step-description">
-                Schedule a session with a licensed therapist at your convenience.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 4 */}
-        <div className="step-wrapper">
-          <div className="step-number">Step 4</div>
-          <div className="step-card step-card-with-bg step4">
-            <div className="hover-text">
-              <h3 className="step-title">Start Therapy</h3>
-              <p className="step-description">
-                Begin your journey to better mental health with professional support.
-              </p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

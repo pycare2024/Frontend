@@ -1,89 +1,88 @@
 .how-to-use-container {
-  width: 105vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   padding: 50px 20px;
-  margin: 0; /* remove any top margin */
-  background-color: #FFFFFF;
+  margin: 0;
+  background-color: #ffffff;
   text-align: center;
   font-family: 'Arial', sans-serif;
-
   background: url('working.jpg') no-repeat center center;
   background-size: cover;
-
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
-/* Title styling */
 .how-to-use-title {
   font-size: 2.5rem;
-  color:#4285F4;
+  color: #4285F4;
+  margin-top: 100px;
   margin-bottom: 40px;
   animation: fadeIn 1s ease-in-out;
-  margin-top: 100px;
   font-weight: 600;
 }
 
-/* Subtitle styling */
 .how-to-use-subtitle {
   font-size: 1.2rem;
   color: #010101;
   margin-top: 40px;
   margin-bottom: 90px;
   animation: fadeIn 1.2s ease-in-out;
-
 }
 
-
-/* Steps container */
+/* Horizontally centered scrolling step row */
 .steps-container {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-  position: relative;
-  max-width: 1200px;
-  /* height: 200px; */
-  margin: 0 auto;
-  margin-right: 240px;
+  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 30px;
+  padding: 0 40px 60px;
+  scroll-behavior: smooth;
+  max-width: 100%;
 }
 
-/* Individual step card */
+.step-wrapper {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-number {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #4285F4;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Slightly larger square step card */
 .step-card {
-  background-color: #5b646c;
-  border-radius: 10px;
-  padding: 20px;
   width: 200px;
   height: 200px;
-  text-align: center;
+  background-color: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 0;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   animation: slideUp 1s ease-in-out;
-  animation-fill-mode: backwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Step image */
-.step-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin-bottom: 15px;
-  border-radius: 10px;
+.step-img-full {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 18px;
 }
 
-/* Step title */
-.step-title {
-  font-size: 1.3rem;
-  color: #4285F4;
-  margin-bottom: 40px;
-}
-
-/* Step description */
-.step-description {
-  font-size: 0.9rem;
-  color: #010101;
-}
-
-
-/* Animation for fade-in */
+/* Animations */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -95,7 +94,6 @@
   }
 }
 
-/* Animation for slide-up effect on cards */
 @keyframes slideUp {
   0% {
     opacity: 0;
@@ -107,39 +105,17 @@
   }
 }
 
-/* Staggered animation delays for each step */
-.step-card:nth-child(1) {
-  animation-delay: 0.2s;
+/* Hide scrollbar but allow scroll */
+.steps-container::-webkit-scrollbar {
+  display: none;
 }
-.step-card:nth-child(2) {
-  animation-delay: 0.4s;
-}
-.step-card:nth-child(3) {
-  animation-delay: 0.6s;
-}
-.step-card:nth-child(4) {
-  animation-delay: 0.8s;
-}
-.step-card:nth-child(5) {
-  animation-delay: 1s;
+.steps-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Responsive design */
+/* Mobile Tweaks */
 @media (max-width: 768px) {
-  .steps-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .step-card {
-    width: 80%;
-    margin-bottom: 20px;
-  }
-
-  .step-card:not(:last-child)::after {
-    display: none;
-  }
-
   .how-to-use-title {
     font-size: 2rem;
   }
@@ -147,108 +123,14 @@
   .how-to-use-subtitle {
     font-size: 1rem;
   }
-}
 
-/* Styles for Step 5 with background image and hover effect */
-.step-card-with-bg {
-  position: relative;
-  background-image: url('./therapy.jpg');
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.3s ease;
-}
+  .step-card {
+    width: 170px;
+    height: 170px;
+  }
 
-/* Ensure the content inside Step 5 is readable */
-.step-card-with-bg .step-image,
-.step-card-with-bg .step-title,
-.step-card-with-bg .step-description {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hover effect: Fade the background image */
-.step-card-with-bg:hover {
-  opacity: 0.9;
-}
-
-/* Hover text styling */
-.step-card-with-bg .hover-text {
-  position:absolute;
-  top: 0; /* Cover the entire card from the top */
-  left: 0;
-  width: 100%;
-  height: 100%; /* Take up the full height of the card */
-  
-  background-color: #ffffff; /* Dark blue semi-transparent background */
-  color: #FFFFFF;
-  font-size: 1rem; /* Slightly larger font for better readability */
-  display: flex; /* Center the text */
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px; /* Add padding for better spacing */
-  transform: translateY(100%); /* Initially hidden below the card */
-  opacity: 0; /* Completely invisible initially */
-  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for both properties */
-  z-index: 2;
-  border-radius: 10px; /* Match the card's border radius */
-}
-
-/* Slide the text up and make it visible on hover */
-.step-card-with-bg:hover .hover-text {
-  transform: translateY(0); /* Slide up to cover the card */
-  opacity: 0.95; /* Make the text fully visible */
-}
-
-.hover-text{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-
-.step1{
-  position: relative;
-  background-image: url('signup6.jpg');
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.3s ease;
-}
-
-.step2{
-  position: relative;
-  background-color: #FFFFFF;
-  background-image: url('assesment1.png');
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.3s ease;
-}
-
-.step3{
-  position: relative;
-  background-image: url('appointment6.jpg');
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.3s ease;
-}
-
-/* Wrapper for each step (includes number + card) */
-.step-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-/* Professional styled step number */
-.step-number {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #4285F4;
-  padding: 6px 16px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  .steps-container {
+    padding: 0 20px 50px;
+    gap: 24px;
+  }
 }
