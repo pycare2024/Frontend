@@ -14,30 +14,30 @@ const WhyPsyCare = () => {
       <div className="features-section">
         <div className="feature-card">
           <div className="icon integrated-mental-health"></div>
-          <h3 className="feature-title">Integrated Mental Healthcare</h3>
+          <h3 className="feature-title">End-to-End Service</h3>
           <p className="feature-description">
-            Access self-care tools, community support, and in-person or online therapy and psychiatry services.
+          Once you reach out to us, our experts guide you through every step of your mental health journey. Whether you need medical intervention, therapeutic sessions, or a combination of both, we help you determine the best course of action and duration tailored to your needs.
           </p>
         </div>
         <div className="feature-card">
           <div className="icon grounded-in-science"></div>
-          <h3 className="feature-title">Grounded in Science</h3>
+          <h3 className="feature-title">Technology-Driven Convenience</h3>
           <p className="feature-description">
-            Our mental healthcare options are based on scientifically proven treatments and clinically validated approaches.
+          PsyCare uses advanced technology to make mental health support accessible. From virtual consultations to personalized care plans, we ensure help is just a click away, eliminating the need for in-person visits.
           </p>
         </div>
         <div className="feature-card">
           <div className="icon personalized-support"></div>
-          <h3 className="feature-title">Personalized Support</h3>
+          <h3 className="feature-title">Compassionate and Professional Support</h3>
           <p className="feature-description">
-            Our treatment plans are tailored to your unique needs, so you can get the right care at the right time.
+          Our certified mental health professionals provide personalized care with empathy and confidentiality. We ensure you feel safe and supported throughout your journey to wellness.
           </p>
         </div>
         <div className="feature-card">
           <div className="icon round-the-clock"></div>
-          <h3 className="feature-title">Round the Clock Support</h3>
+          <h3 className="feature-title">Socially Responsible Mission</h3>
           <p className="feature-description">
-            Our mental healthcare offerings and services can be accessed from wherever you might be, all 7 days a week.
+          While a for-profit organization, PsyCare’s primary goal is to create a positive social impact. We strive to improve mental well-being and help individuals reintegrate into society.
           </p>
         </div>
       </div>

@@ -3,6 +3,11 @@ body {
   margin: 0;
   overflow-x: hidden;
 }
+
+.slide {
+  position: relative;
+}
+
 .slider-container {
   position: relative;
   width: 105vw;
@@ -14,7 +19,8 @@ body {
 /* Inner wrapper that moves left/right to show one slide */
 .slider-wrapper {
   display: flex;
-  width: 198vw; /* 2 slides side by side */
+  width: 198vw;
+  /* 2 slides side by side */
   height: 100vh;
   transition: transform 1s ease-in-out;
 }
@@ -25,6 +31,7 @@ body {
   height: 100vh;
   flex-shrink: 0;
 }
+
 .dots {
   position: absolute;
   bottom: 20px;
@@ -44,4 +51,176 @@ body {
 
 .dot.active {
   background-color: #333;
+}
+
+/* Genie tooltip animation and style */
+.genie-tooltip {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: floatIn 2s ease-in-out infinite, fadeOut 6s forwards;
+  z-index: 10;
+}
+
+.genie-icon {
+  width: 40px;
+  height: 30px;
+  animation: floatIn 2s ease-in-out infinite;
+}
+
+@keyframes floatIn {
+  0% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, -10px);
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.genie-wrapper {
+  position: absolute;
+  top: 5%;
+  right: 2.5%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  animation: sparklePop 0.6s ease-out, floatGlide 2.5s ease-in-out infinite, sparkleVanish 2s 1.5s forwards;
+  z-index: 99;
+  pointer-events: none;
+}
+
+.genie-img {
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
+  /* filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)); */
+}
+
+.speech-bubble {
+  position: relative;
+  background: white;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #4285f4;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  animation: popIn 0.4s ease-out, pulseGlow 1.5s ease-in-out infinite;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-left-color: #ffffff;
+}
+
+/* Entry */
+@keyframes sparklePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+    filter: brightness(1.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+}
+
+/* Float */
+@keyframes floatGlide {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Disappear */
+@keyframes sparkleVanish {
+  to {
+    opacity: 0;
+    transform: scale(0.6) rotate(15deg);
+    filter: brightness(2);
+  }
+}
+
+/* Bubble in */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 8px #4285f4;
+  }
+  50% {
+    box-shadow: 0 0 20px #4285f4, 0 0 30px #90c2ff;
+  }
+  100% {
+    box-shadow: 0 0 8px #4285f4;
+  }
+}
+
+.dot {
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.dot:hover {
+  transform: scale(1.2);
+  background-color: #555;
 }

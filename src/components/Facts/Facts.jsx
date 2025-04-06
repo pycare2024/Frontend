@@ -9,7 +9,7 @@ import Fact5 from './image-5.png';
 
 const facts = [
   {
-    text: "What do Virat Kohli, Deepika Padukone, Chetan Bhagat, Prince Harry and Michael Phelps have in common? While being global celebrities in their respective fields, they all suffered mental disorders and successfully overcame them to regain their stardom !!"
+    text: "What do Virat Kohli, Maria Sharapova, Justin Bieber, Serena Williams and Michael Phelps have in common? All successful Global celebrities suffered mental disorders and successfully overcame with timely intervention!"
     ,
     image: Fact1
   },
