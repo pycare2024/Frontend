@@ -16,7 +16,7 @@
 
 /* Base styles for links and buttons */
 nav a, nav button {
-    padding: 8px 15px;
+    padding: 4px 10px;
     border-radius: 5px;
     text-decoration: none;
     position: relative;
@@ -34,15 +34,14 @@ nav a:hover, nav button:hover {
 .navHome {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: flex-end;
     gap: 25px;
-    margin-left: 250px;
-    flex-grow: 0; /* Prevent it from expanding too much */
-}
+    flex-wrap: wrap;
+  }
 
 /* Auth Buttons Styling */
 .auth-buttons {
-    margin-left: 20px; /* Space between RESOURCES and Book Appointment */
+    margin-left: 0; /* Space between RESOURCES and Book Appointment */
 }
 
 .auth-btn {
@@ -181,3 +180,36 @@ nav a:hover, nav button:hover {
 .mobileMenu.open a:nth-child(3), .mobileMenu.open button:nth-child(3) { animation-delay: 0.3s; }
 .mobileMenu.open a:nth-child(4), .mobileMenu.open button:nth-child(4) { animation-delay: 0.4s; }
 .mobileMenu.open a:nth-child(5), .mobileMenu.open button:nth-child(5) { animation-delay: 0.5s; }
+
+.nav-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .nav-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-right {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .navHome {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .auth-buttons {
+    margin-left: 0; /* important to avoid overlapping */
+  }

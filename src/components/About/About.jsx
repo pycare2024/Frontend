@@ -101,7 +101,7 @@ const About = () => {
             "Early access to quality mental health services is critical for lasting recovery in India."
           </blockquote>
           <p>At PsyCare, we provide trusted care across India and online, 365 days a year, ensuring accessibility and real outcomes.</p>
-          <p className="founder-signature">Dr. Vivek Bhugra<br /><span>Founder & CEO, PsyCare</span></p>
+          <p className="founder-signature">Mr. Vivek Bhugra<br /><span>Founder & CEO, PsyCare</span></p>
         </div>
         <div className="founder-image">
           <div className="blue-circle">

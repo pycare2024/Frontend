@@ -1,4 +1,10 @@
+/** Landing.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body, .expert-container {
+  font-family: 'Poppins', sans-serif;
+}
 
 .expert-container {
   background-color: white;
@@ -6,16 +12,16 @@
   text-align: center;
 }
 
-.body{
+.body {
   background-color: white;
 }
+
 .heading {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 50px;
   animation: slideUp 1s ease-in-out;
-  
 }
 
 .underline {
@@ -26,10 +32,10 @@
 }
 
 .expert-heading {
-  font-size: 2rem;
-  color: #0e0e0e;
+  font-size: 3rem;
+  color: #4285F4;
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .expert-buttons {
@@ -42,33 +48,31 @@
 }
 
 .expert-btn {
-  background-color: white;
-  border: 2px solid #4285F4;
+  border: none;
+  background-color: #f0f4ff;
   color: #4285F4;
-  padding: 0rem 2rem;
-  border-radius: 2rem;
-  font-size: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
   font-weight: 500;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .expert-btn.selected {
   background-color: #4285F4;
   color: white;
+  box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
 }
 
 .expert-btn:hover {
   background-color: #e3f0ff;
-  color: #4285F4;
 }
 
 .icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   display: flex;
   align-items: center;
 }
@@ -94,50 +98,31 @@
   max-width: 700px;
   min-height: 260px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: calc(0.1s * var(--i));
 }
 
 .expert-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(66, 133, 244,0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(66, 133, 244, 0.2);
 }
 
 .expert-card-header {
   width: 40%;
-  background-color: #5f91e2;
-  position: relative;
+  background: #f5f8ff; /* cleaner than gradient for consistency */
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 1rem 0.5rem;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .expert-image {
-  width: 140px;
-  height: 200px;
-  position: relative;
+  width: 220px;
+  height: 320px;
+  border-radius: 10%;
   object-fit: cover;
-  background-size: contain;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  margin-bottom: 0.5rem;
-}
-
-.profile-btn {
-  background-color: #F28C38;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 1.2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-top: 0.5rem;
-  cursor: pointer;
-}
-
-.profile-btn:hover{
-  color:#F28C38;
-  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .expert-card-body {
@@ -159,10 +144,6 @@
   margin: 0.3rem 0;
 }
 
-.expert-card-body strong {
-  color: #000;
-}
-
 .expert-tags {
   display: flex;
   gap: 0.5rem;
@@ -171,12 +152,15 @@
 }
 
 .tag {
-  background-color: #f3f3f3;
-  color: #444;
-  padding: 0.3rem 0.7rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  white-space: nowrap;
+  background-color: #eaf2fe;
+  color: #1a4c96;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .expert-speaks span {
@@ -184,7 +168,6 @@
   color: #333;
 }
 
-/* Footer section styled like card bottom area */
 .expert-card-footer {
   display: flex;
   justify-content: space-between;
@@ -195,33 +178,12 @@
   flex-wrap: wrap;
 }
 
-.online-btn {
-  background-color: white;
-  color: #F28C38;
-  border: 1px solid #F28C38;
-  border-radius: 8px;
-  padding: 0.3rem 1rem;
-  font-weight: 500;
-  font-size: 0.85rem;
-}
-
-.avail-details,
-.slot-details {
-  font-size: 0.85rem;
-  color: #444;
-}
-
-.mediums,
 .slot-time {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-weight: 500;
-  margin-top: 0.2rem;
-}
-
-.slot-time {
   color: #F28C38;
+  font-weight: 600;
 }
 
 .book-btn {
@@ -247,6 +209,17 @@
     opacity: 0;
   }
   to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
     transform: translateY(0);
     opacity: 1;
   }

@@ -3,6 +3,7 @@ import "./Landing.css";
 import { CalendarDays, Video } from "lucide-react";
 import surabhi from "./Surabhi.jpg";
 import shatakshi from "./Shatakshi.jpg";
+import saachi from "./saachi.png";
 
 const experts = [
   { label: "Therapist", icon: "💬" },
@@ -26,7 +27,7 @@ const expertDetails = [
     price: "₹1700",
     duration: "50 mins",
     expertise: ["Anxiety disorders", "Depressive disorders"],
-    speaks: ["English", "Hindi", "Maithili"],
+    speaks: ["English", "Hindi"],
     slot: "Today, 12:30 PM",
     image: shatakshi,
   },
@@ -38,7 +39,7 @@ const expertDetails = [
     expertise: ["Relationship issues", "Work stress"],
     speaks: ["English"],
     slot: "Today, 03:45 PM",
-    image: "https://via.placeholder.com/150x150?text=Ritika",
+    image: saachi,
   },
 ];
 
@@ -85,10 +86,6 @@ const Landing = () => {
                 </p>
               </div>
               <div className="expert-card-footer">
-                <div className="avail-details">
-                  <p>Available via:</p>
-                  <p className="mediums"><Video size={18} /> Video, Voice</p>
-                </div>
                 {/* <button className="book-btn">Book Now</button> */}
               </div>
             </div>

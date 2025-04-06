@@ -12,7 +12,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
 
     const navStyle = {
         backgroundColor: navBackground,
-        padding: "15px 20px",
+        padding: "6px 20px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
         position: "fixed",
         top: 0,
@@ -54,18 +54,33 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
         transition: "transform 0.3s ease",
     };
 
+
+
     return (
         <nav style={navStyle}>
-            <div className="container d-flex justify-content-between align-items-center">
-                <Link to="/Home" style={brandStyle}>
-                    PsyCare
-                    {/* <img src={logo} alt="Logo" style={logoStyle} /> */}
-                </Link>
+            <div className="nav-bar-wrapper">
+                <div className="nav-left">
+                    <Link to="/Home" style={brandStyle}>PsyCare</Link>
+                </div>
 
                 {/* Desktop Links */}
-                <div className="d-none d-md-flex align-items-center">
+                <div className="nav-right">
                     <div className="navHome">
                         {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
+                            <Link
+                                to="/"
+                                style={{
+                                    display: "inline-block",
+                                    color: "#333",
+                                    textDecoration: "none",
+                                    marginRight: "-7px"
+                                }}
+                            >
+                                HOME
+                            </Link>
+                        )}
+                        {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
+
                             <div
                                 name="navAbout"
                                 style={{ position: "relative", display: "inline-block" }}
@@ -539,7 +554,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     </div>
                                 )}
                             </div>
-                            
+
                             {/* Doctors Menu */}
                             <div
                                 name="navDoctors"

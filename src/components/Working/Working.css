@@ -6,7 +6,7 @@
   background-color: #ffffff;
   text-align: center;
   font-family: 'Arial', sans-serif;
-  background: url('working.jpg') no-repeat center center;
+  background: url('working2.jpg') no-repeat center center;
   background-size: cover;
   position: relative;
   overflow-x: auto;
@@ -16,7 +16,7 @@
   font-size: 3rem;
   color: #4285F4;
   margin-top: 1.5%;
-  margin-bottom: 40px;
+  margin-bottom: 0px;
   animation: fadeIn 1s ease-in-out;
   font-weight: bold;
 }
@@ -25,18 +25,17 @@
   font-size: 1.2rem;
   color: #010101;
   margin-top: 40px;
-  margin-bottom: 90px;
+  margin-bottom: 40px; /* changed from 90px */
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* Horizontally centered scrolling step row */
 .steps-container {
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 30px;
-  padding: 0 40px 60px;
+  padding: 0 40px 30px;
   scroll-behavior: smooth;
   max-width: 100%;
 }

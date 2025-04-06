@@ -38,7 +38,7 @@ const steps = [
 const Working = () => {
   return (
     <div className="how-to-use-container">
-      <h1 className="how-to-use-title">How to Use PsyCare?</h1>
+      <h1 className="how-to-use-title">How to use PsyCare?</h1>
       <p className="how-to-use-subtitle">
         A step-by-step guide to get started with Psycare and improve your mental well-being
       </p>
