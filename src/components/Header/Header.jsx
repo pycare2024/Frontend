@@ -20,8 +20,7 @@ const Header = () => {
         <h1 className="hero-title">PsyCare</h1>
         <h2 className="hero-subtitle">We’re here to help</h2>
         <p className="hero-text">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-          dolore magna aliquam erat volutpat. Ut wisi
+        Your mind matters. PsyCare helps you understand, heal, and grow through smart screening, expert care, and support that’s just a message away.
         </p>
         <button className="book-btn" onClick={handleBookClick}>Book Now</button>
       </div>

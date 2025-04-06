@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../Header/Header';
 import Working from '../Working/Working';
 import WhyPsycare from '../WhyPsycare/WhyPsyCare'; // Add this import
+import Facts from '../Facts/Facts';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const wrapperRef = useRef();
 
-  const slides = [<Header />, <Working />, <WhyPsycare />];
+  const slides = [<Header />, <Facts/>, <Working />, <WhyPsycare />];
 
   useEffect(() => {
     const interval = setInterval(() => {

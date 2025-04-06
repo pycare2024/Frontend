@@ -7,7 +7,7 @@
   height: 100vh;
   box-sizing: border-box;
   font-family: 'Arial', sans-serif;
-  background: url('./header1.png') no-repeat center center;
+  background: url('./header5.jpg') no-repeat center center;
   position: relative;
   background-size: cover;
 }
@@ -36,7 +36,8 @@
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 3rem;
+  font-weight: bold;
   color: #4285f4;
   margin: 0;
 }
@@ -44,7 +45,7 @@
 .hero-subtitle {
   font-size: 2rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #4285f4;
   margin: 10px 0 20px;
 }
 
