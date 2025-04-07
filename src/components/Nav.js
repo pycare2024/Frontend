@@ -232,7 +232,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         }}
                                     >
                                         <Link
-                                            to="/team"
+                                            to="/IndividualTherapy"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
@@ -240,10 +240,10 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 textDecoration: "none",
                                             }}
                                         >
-                                            Doctor
+                                            Individual Therapy
                                         </Link>
                                         <Link
-                                            to="/mission"
+                                            to="/CorporateWellness"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
@@ -251,18 +251,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 textDecoration: "none",
                                             }}
                                         >
-                                            Admin
-                                        </Link>
-                                        <Link
-                                            to="/careers"
-                                            style={{
-                                                display: "block",
-                                                padding: "5px 10px",
-                                                color: "#333",
-                                                textDecoration: "none",
-                                            }}
-                                        >
-                                            Operator
+                                            Corporate Wellness
                                         </Link>
                                     </div>
                                 )}

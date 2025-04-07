@@ -1,0 +1,176 @@
+/* General Page Styling */
+.corporate-wellness-page {
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    background-color: #ffffff;
+    padding: 2rem;
+    line-height: 1.7;
+  }
+  
+  /* Hero Section */
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #eaf6ff, #f7fbff);
+    border-radius: 16px;
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    color: #4285F4;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero button {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .hero button:hover {
+    transform: scale(1.05);
+    background-color: #3367d6;
+  }
+  
+  /* Section Cards */
+  section {
+    max-width: 1000px;
+    margin: 0 auto 4rem auto;
+    padding: 3rem;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+  
+  section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+  
+  section h2 {
+    font-size: 2.2rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    border-left: 6px solid #4285F4;
+    padding-left: 16px;
+  }
+  
+  section p,
+  section li {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 0.7rem;
+  }
+  
+  .wellness-services ul,
+  .why-psycare ul {
+    padding-left: 1.2rem;
+    list-style: none;
+  }
+  
+  .wellness-services ul li::before,
+  .why-psycare ul li::before {
+    content: "✔";
+    color: #34a853;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .benefits ol {
+    padding-left: 1.5rem;
+    list-style-type: decimal;
+    font-size: 1.05rem;
+    color: #444;
+    line-height: 1.8;
+  }
+  
+  /* CTA Section */
+  .cta {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(66, 133, 244, 0.1);
+    border: 2px dashed #dceeff;
+  }
+  
+  .cta h2 {
+    font-size: 2.4rem;
+    color: #2c3e50;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+  }
+  
+  .cta p {
+    color: #555;
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
+  .cta button {
+    background-color: #34a853;
+    color: white;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    font-weight: 600;
+  }
+  
+  .cta button:hover {
+    background-color: #2b8a43;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+  
+    .hero p,
+    section p,
+    section li,
+    .cta p {
+      font-size: 1rem;
+    }
+  
+    section {
+      padding: 2rem;
+    }
+  
+    .cta h2 {
+      font-size: 1.8rem;
+    }
+  
+    .cta button,
+    .hero button {
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+    }
+  }
