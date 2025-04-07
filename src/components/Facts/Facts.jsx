@@ -18,15 +18,15 @@ const facts = [
     image: Fact2
   },
   {
-    text: 'That every 4th person in the world suffers from one or the other form of a mental illness !!',
+    text: 'That every 4th person in the world suffers from one or the other form of a mental illness and globally $1trillion is lost in productivity every year due to these disorders !!',
     image: Fact3
   },
   {
-    text: 'While triggers can be different, depression is largely due to chemical imbalances in the brain.',
+    text: 'While triggers can be different, depression is largely due to chemical imbalances and flawed thought process !',
     image: Fact4
   },
   {
-    text: 'That General anxiety, Depression and Alcohol abuse account for 80% of the mental disorders AND that they can be cured 100% with medical intervention!!',
+    text: 'That General anxiety, Depression and Alcohol abuse account for 80% of the mental disorders AND that they can be cured 100% with Therapeutic and Medical intervention !',
     image: Fact5
   }
 ];
