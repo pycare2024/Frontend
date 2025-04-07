@@ -46,31 +46,36 @@
 }
 
 .mission-container {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
 }
 
 .mission-item {
-  flex: 1;
-  min-width: 250px;
-  text-align: center;
-  padding: 1rem;
-  background-color: #ffffff; /* White background for each item */
-  border: 1px solid #e0e0e0; /* Light border similar to image */
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  min-height: 400px; /* or use align-items: stretch in parent if heights vary */
+  max-width: 350px;
+}
+
+.mission-item p {
+  margin: 0 1.5rem;
+  text-align: justify;
 }
 
 .mission-icon.large {
-  font-size: 3rem; /* Large icon size */
-  color: #1e90ff; /* Blue color matching the image */
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
+
+
 
 .mission-icon.small {
   font-size: 1.5rem; /* Small icon size */
@@ -86,9 +91,9 @@ h2 {
 
 .line {
   width: 50px;
-  height: 2px;
-  background-color: #1e90ff; /* Blue line */
-  margin: 0 auto 1rem; /* Centered with spacing */
+  height: 3px;
+  background-color: #4285f4;
+  margin: 0.5rem auto 1.5rem;
 }
 
 p {

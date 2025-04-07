@@ -46,29 +46,28 @@ const About = () => {
         <div className="mission-container">
           <div className="mission-item">
             <div className="mission-icon large">🎯</div> {/* Large target icon */}
-            <h2>OUR MISSION</h2>
+            <h2 style={{ color: "#4285f4", fontSize:"2rem" }}>OUR MISSION</h2>
             <div className="line"></div>
             {/* <div className="mission-icon small">🎯</div> Small target icon */}
-            <p>
-            At PsyCare, our mission is to make mental health support accessible, affordable, and stigma-free for everyone. We aim to empower individuals through compassionate care, innovative technology, and a community-driven approach to well-being.
+            <p style={{ margin: "0 1.5rem", textAlign: "justify" }}>
+              At PsyCare, our mission is to make mental health support accessible, affordable, and stigma-free for everyone. We aim to empower individuals through compassionate care, innovative technology, and a community-driven approach to well-being.
             </p>
           </div>
           <div className="mission-item">
             <div className="mission-icon large">💡</div> {/* Large lightbulb icon */}
-            <h2>OUR VISION</h2>
+            <h2 style={{ color: "#4285f4", fontSize:"2rem" }}>OUR VISION</h2>
             <div className="line"></div>
             {/* <div className="mission-icon small">💡</div> Small lightbulb icon */}
-            <p>
-            To become a global leader in mental wellness by harnessing the power of technology and empathy creating a world where seeking support is as natural as offering it, and every individual thrives with access to holistic mental health care.
+            <p style={{ margin: "0 1.5rem", textAlign: "justify"}}>
+              To become a global leader in mental wellness by harnessing the power of technology and empathy creating a world where seeking support is as natural as offering it, and every individual thrives with access to holistic mental health care.
             </p>
           </div>
           <div className="mission-item">
-            <div className="mission-icon large">⭐</div> {/* Large star icon */}
-            <h2>OUR VALUES</h2>
+            <div className="mission-icon large">⭐</div>
+            <h2 style={{ color: "#4285f4", fontSize:"2rem" }}>OUR VALUES</h2>
             <div className="line"></div>
-            {/* <div className="mission-icon small">⭐</div> Small star icon */}
-            <p>
-            Our values are the foundation of everything we do. We prioritize compassion, ensuring that every person who reaches out is met with empathy and understanding. We are committed to innovation, using technology to create accessible mental health solutions.
+            <p style={{ margin: "0 1.5rem", textAlign: "justify" }}>
+              Our values are the foundation of everything we do. We prioritize compassion, ensuring that every person who reaches out is met with empathy. We are committed to innovation, using technology to create accessible mental health solutions.
             </p>
           </div>
         </div>
@@ -76,16 +75,16 @@ const About = () => {
 
       {/* Services Section */}
       <section className="services-section slide-in">
-        <h2>Our Services</h2>
+        <h2 style={{color:"#4285F4", fontSize:"2rem"}}>Our Services</h2>
         <div className="services-grid">
           <div className="service-card">
             <h3>Individual Therapy</h3>
             <p>Personalized sessions for your unique challenges.</p>
           </div>
-          <div className="service-card">
+          {/* <div className="service-card">
             <h3>Group Therapy</h3>
             <p>Supportive sessions for connection and healing.</p>
-          </div>
+          </div> */}
           <div className="service-card">
             <h3>Corporate Wellness</h3>
             <p>Enhancing workplace mental health.</p>
