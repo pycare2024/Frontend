@@ -1,4 +1,6 @@
 /* Reset default styles */
+
+
 * {
   margin: 0;
   padding: 0;
@@ -6,14 +8,12 @@
 }
 
 .footer {
-  background-color: #1a2330; /* Dark blue background from image */
-  color: #d1d5db; /* Light gray text */
-  font-family: 'Arial', sans-serif;
-  padding-top: 2rem;
+  background: linear-gradient(to right, #1c1f2b, #2b2f3e); /* subtle dual tone */
+  color: #f0f4f8; 
 }
 
 .cta-section {
-  background: linear-gradient(90deg, #6b48ff, #1e90ff); /* Gradient from image */
+  background: linear-gradient(90deg, #4285F4, #1e90ff); /* PsyCare blue gradient */
   padding: 1.5rem 2rem;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
@@ -107,7 +107,7 @@
 h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #fff;
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
@@ -120,6 +120,9 @@ ul li {
 }
 
 ul li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between icon and text */
   color: #d1d5db;
   text-decoration: none;
   font-size: 0.9rem;
@@ -127,8 +130,7 @@ ul li a {
 }
 
 ul li a:hover {
-  color: #283039;
-  text-decoration: underline;
+  color: #4285F4;
 }
 
 /* Responsive Design */
@@ -157,7 +159,7 @@ ul li a:hover {
   }
 
   h3 {
-    font-size: 1rem;
+    color: #ffffff;
   }
 
   ul li a {
@@ -186,4 +188,9 @@ ul li a:hover {
   ul li {
     margin-bottom: 0.6rem;
   }
+}
+
+.footer-section:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-right: 1rem;
 }

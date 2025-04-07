@@ -17,7 +17,7 @@ const BookAppointment = () => {
     const [appointmentConfirmed, setAppointmentConfirmed] = useState(null);
     const [appointmentId, setAppointmentId] = useState(null);
     const [doctorName, setDoctorName] = useState(null);
-    
+
 
     const navigate = useNavigate();
 
@@ -173,18 +173,35 @@ const BookAppointment = () => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    backgroundColor: "rgba(255, 255, 255, 0.66)",
+                    // backgroundColor: "rgba(255, 255, 255, 0.66)",
                     zIndex: 0,
                 }}
             />
 
             <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "600px" }}>
-                <h1 style={{ color: "#4285F9", fontWeight: "bold", textAlign: "center", marginBottom: "2rem" }}>
-                    PsyCare - Appointment Booking
+                <h1 style={{
+                    color: "#4285F4",
+                    fontWeight: "bold",
+                    fontSize: "3rem",
+                    textAlign: "center",
+                    marginBottom: "5rem",
+                    letterSpacing: "0.5px"
+                }}>
+                    Book Your Appointment
                 </h1>
 
                 {step === 1 && (
-                    <div style={{ maxWidth: "400px", margin: "0 auto", padding: "20px", border: "2px solid #4285F9", borderRadius: "10px", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
+                    <div style={{
+                        maxWidth: "420px",
+                        margin: "0 auto",
+                        padding: "25px 30px",
+                        borderRadius: "16px",
+                        backdropFilter: "blur(12px)",
+                        background: "rgba(255, 255, 255, 0.3)",
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                        border: "1px solid rgba(255, 255, 255, 0.18)",
+                        textAlign: "center"
+                    }}>
                         <label htmlFor="phoneNumber" style={{ fontSize: "1.25rem", fontWeight: "600", display: "block", marginBottom: "10px", color: "#333", textAlign: "center" }}>
                             Mobile Number
                         </label>
@@ -207,16 +224,18 @@ const BookAppointment = () => {
                         <button
                             onClick={sendOTP}
                             style={{
-                                width: "100%",
                                 backgroundColor: "#4285F4",
-                                color: "#fff",
-                                padding: "12px",
+                                color: "white",
+                                padding: "12px 24px",
                                 fontSize: "1rem",
-                                border: "none",
-                                borderRadius: "6px",
-                                cursor: "pointer",
                                 fontWeight: "600",
+                                borderRadius: "8px",
+                                border: "none",
+                                transition: "all 0.3s ease",
+                                boxShadow: "0 4px 12px rgba(66, 133, 244, 0.3)"
                             }}
+                            onMouseEnter={(e) => e.target.style.transform = "scale(1.03)"}
+                            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
                         >
                             Send OTP
                         </button>
@@ -225,145 +244,133 @@ const BookAppointment = () => {
 
                 {step === 2 && (
                     <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        border: "2px solid #4285F9",
-                        borderRadius: "12px",
-                        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                        maxWidth: "420px",
+                        margin: "0 auto",
+                        padding: "30px",
+                        borderRadius: "16px",
+                        backdropFilter: "blur(12px)",
+                        background: "rgba(255, 255, 255, 0.3)",
+                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                        border: "1px solid rgba(255, 255, 255, 0.18)",
+                        textAlign: "center"
                     }}>
-                        <div style={{
-                            // backgroundColor: "#ffffff",
-                            padding: "40px",
-                            borderRadius: "12px",
-                            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                            width: "100%",
-                            textAlign: "center"
-                        }}>
-                            <h2 style={{ marginBottom: "20px", color: "#333", fontWeight: "600" }}>OTP Verification</h2>
+                        <h2 style={{ marginBottom: "1rem", color: "#333", fontWeight: "700", fontSize: "1.6rem" }}>
+                            OTP Verification
+                        </h2>
+                        <p style={{ marginBottom: "1.5rem", color: "#555" }}>
+                            Enter the OTP sent to your phone
+                        </p>
 
-                            <p style={{ marginBottom: "20px", color: "#666" }}>
-                                Please enter the One-Time Password sent to your registered mobile number.
-                            </p>
+                        <input
+                            type="text"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                            style={{
+                                padding: "12px",
+                                width: "100%",
+                                fontSize: "1rem",
+                                borderRadius: "6px",
+                                border: "1px solid #ccc",
+                                marginBottom: "20px",
+                                outline: "none",
+                            }}
+                        />
 
-                            <input
-                                type="text"
-                                placeholder="Enter OTP"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                style={{
-                                    padding: "12px",
-                                    width: "100%",
-                                    fontSize: "1rem",
-                                    borderRadius: "6px",
-                                    border: "1px solid #ccc",
-                                    marginBottom: "20px",
-                                    outline: "none",
-                                    transition: "border-color 0.3s"
-                                }}
-                                onFocus={(e) => e.target.style.borderColor = "#4285F4"}
-                                onBlur={(e) => e.target.style.borderColor = "#ccc"}
-                            />
-
-                            <button
-                                onClick={verifyOTP}
-                                style={{
-                                    width: "100%",
-                                    backgroundColor: "#4285F4",
-                                    color: "#fff",
-                                    padding: "12px",
-                                    fontSize: "1rem",
-                                    border: "none",
-                                    borderRadius: "6px",
-                                    cursor: "pointer",
-                                    transition: "background-color 0.3s"
-                                }}
-                                onMouseOver={(e) => e.target.style.backgroundColor = "#3367D6"}
-                                onMouseOut={(e) => e.target.style.backgroundColor = "#4285F4"}
-                            >
-                                Verify OTP
-                            </button>
-                        </div>
+                        <button
+                            onClick={verifyOTP}
+                            style={{
+                                backgroundColor: "#4285F4",
+                                color: "#fff",
+                                padding: "12px 24px",
+                                fontSize: "1rem",
+                                fontWeight: "600",
+                                borderRadius: "8px",
+                                border: "none",
+                                cursor: "pointer",
+                                transition: "transform 0.3s ease"
+                            }}
+                            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+                            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
+                        >
+                            Verify OTP
+                        </button>
                     </div>
                 )}
 
                 {step === 3 && (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            gap: "2rem",
-                            padding: "2rem",
-                            border: "2px solid #4285F9",
-                            borderRadius: "12px",
-                            alignItems: "flex-start",
-                            marginTop: "2rem",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <div style={{ minWidth: "200px" }}>
-                            <h2 style={{ marginBottom: "1rem", color: "#2c3e50" }}>
-                                Welcome, {patientData?.patientName}
-                            </h2>
-                            <label style={{ display: "block", marginBottom: "0.5rem" }}>
-                                Select Appointment Date
-                            </label>
-                            <select
-                                onChange={(e) => setSelectedDate(e.target.value)}
-                                value={selectedDate}
-                                style={{
-                                    width: "100%",
-                                    padding: "0.6rem",
-                                    borderRadius: "8px",
-                                    border: "1px solid #ccc",
-                                    fontSize: "1rem",
-                                }}
-                            >
-                                <option value="">-- Select Date --</option>
-                                {availableDates.map((date, idx) => (
-                                    <option key={idx} value={date}>
-                                        {date}
-                                    </option>
-                                ))}
-                            </select>
+                    <div style={{
+                        maxWidth: "600px",
+                        margin: "0 auto",
+                        padding: "30px",
+                        borderRadius: "16px",
+                        background: "rgba(255, 255, 255, 0.3)",
+                        backdropFilter: "blur(10px)",
+                        boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+                        border: "1px solid rgba(255, 255, 255, 0.18)"
+                    }}>
+                        <h2 style={{ color: "#2c3e50", marginBottom: "1.5rem" }}>
+                            Welcome, {patientData?.patientName}
+                        </h2>
+
+                        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+                            <div style={{ flex: "1" }}>
+                                <label style={{ fontWeight: "600" }}>Select Appointment Date</label>
+                                <select
+                                    value={selectedDate}
+                                    onChange={(e) => setSelectedDate(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "0.6rem",
+                                        borderRadius: "8px",
+                                        border: "1px solid #ccc",
+                                        marginTop: "0.5rem"
+                                    }}
+                                >
+                                    <option value="">-- Select Date --</option>
+                                    {availableDates.map((date, idx) => (
+                                        <option key={idx} value={date}>{date}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div style={{ flex: "1" }}>
+                                <label style={{ fontWeight: "600" }}>Preferred Time Slot</label>
+                                <select
+                                    value={preferredSlot}
+                                    onChange={(e) => setPreferredSlot(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "0.6rem",
+                                        borderRadius: "8px",
+                                        border: "1px solid #ccc",
+                                        marginTop: "0.5rem"
+                                    }}
+                                >
+                                    <option value="">-- Select Time Slot --</option>
+                                    <option value="morning">Morning</option>
+                                    <option value="afternoon">Afternoon</option>
+                                    <option value="evening">Evening</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div style={{ minWidth: "200px" }}>
-                            <label style={{ display: "block", marginBottom: "0.5rem", marginTop: "2.5rem" }}>
-                                Preferred Time Slot
-                            </label>
-                            <select
-                                onChange={(e) => setPreferredSlot(e.target.value)}
-                                value={preferredSlot}
-                                style={{
-                                    width: "100%",
-                                    padding: "0.6rem",
-                                    borderRadius: "8px",
-                                    border: "1px solid #ccc",
-                                    fontSize: "1rem",
-                                }}
-                            >
-                                <option value="">-- Select Time Slot --</option>
-                                <option value="morning">Morning</option>
-                                <option value="afternoon">Afternoon</option>
-                                <option value="evening">Evening</option>
-                            </select>
-                        </div>
-
-                        <div style={{ alignSelf: "flex-end", marginTop: "2.5rem" }}>
+                        <div style={{ textAlign: "center" }}>
                             <button
                                 onClick={bookAppointment}
                                 style={{
                                     backgroundColor: "#4CAF50",
                                     color: "white",
-                                    padding: "0.7rem 1.5rem",
+                                    padding: "0.75rem 2rem",
                                     borderRadius: "8px",
                                     fontSize: "1rem",
                                     border: "none",
                                     cursor: "pointer",
-                                    marginLeft: "1rem",
+                                    fontWeight: "600",
+                                    transition: "transform 0.3s ease"
                                 }}
+                                onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+                                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
                             >
                                 Book Appointment
                             </button>
@@ -376,15 +383,17 @@ const BookAppointment = () => {
                         style={{
                             maxWidth: "500px",
                             margin: "2rem auto",
-                            padding: "2rem",
-                            background: "#f0f8ff",
+                            padding: "2rem 2.5rem",
                             borderRadius: "16px",
-                            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                            background: "rgba(255, 255, 255, 0.25)",
+                            backdropFilter: "blur(12px)",
+                            boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
                             textAlign: "center",
                             fontFamily: "'Segoe UI', sans-serif",
+                            border: "1px solid rgba(255, 255, 255, 0.18)"
                         }}
                     >
-                        <h2 style={{ color: "#2c3e50", fontSize: "1.8rem", marginBottom: "1rem" }}>
+                        <h2 style={{ color: "#2c3e50", fontSize: "1.8rem", marginBottom: "1rem", fontWeight: "700" }}>
                             Almost Done, {patientData?.patientName}! 🎉
                         </h2>
                         <p style={{ fontSize: "1rem", color: "#444", marginBottom: "2rem" }}>
@@ -395,15 +404,16 @@ const BookAppointment = () => {
                                 style={{
                                     backgroundColor: "#28a745",
                                     color: "#fff",
-                                    padding: "0.75rem 1.5rem",
+                                    padding: "0.75rem 2rem",
                                     fontSize: "1rem",
+                                    fontWeight: "600",
                                     borderRadius: "8px",
                                     border: "none",
                                     cursor: "pointer",
-                                    transition: "background-color 0.3s",
+                                    transition: "transform 0.3s ease",
                                 }}
-                                onMouseOver={(e) => (e.target.style.backgroundColor = '#218838')}
-                                onMouseOut={(e) => (e.target.style.backgroundColor = '#28a745')}
+                                onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+                                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
                             >
                                 Pay Now
                             </button>
@@ -416,39 +426,33 @@ const BookAppointment = () => {
                         style={{
                             maxWidth: "600px",
                             margin: "2rem auto",
-                            padding: "2rem",
-                            backgroundColor: "#e8f5e9",
+                            padding: "2.5rem",
+                            background: "rgba(255, 255, 255, 0.25)",
+                            backdropFilter: "blur(14px)",
                             borderRadius: "16px",
-                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
                             fontFamily: "'Segoe UI', sans-serif",
                             color: "#2e3a59",
                             lineHeight: "1.6",
+                            border: "1px solid rgba(255, 255, 255, 0.18)"
                         }}
                     >
-                        <h2 style={{ fontSize: "1.8rem", color: "#2c7a7b", marginBottom: "1rem" }}>
+                        <h2 style={{ fontSize: "1.8rem", color: "#2c7a7b", marginBottom: "1rem", fontWeight: "700" }}>
                             🌟 Hi {appointmentConfirmed.patientName}
                         </h2>
-                        <p style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>
+
+                        <p style={{ fontSize: "1.1rem", marginBottom: "1.2rem" }}>
                             🎉 Your appointment has been <strong>successfully confirmed!</strong>
                         </p>
 
-                        <p>
-                            📅 <strong>Date:</strong>{" "}
-                            {new Date(appointmentConfirmed.DateOfAppointment).toLocaleDateString()}
-                        </p>
-                        <p>
-                            ⏰ <strong>Time:</strong> {appointmentConfirmed.AppStartTime}
-                        </p>
-                        <p>
-                            👨‍⚕️ <strong>Doctor:</strong> Dr. {doctorName}
-                        </p>
-                        <p>
-                            🏥 <strong>Location:</strong> PsyCare / Online Consultation
-                        </p>
-                        <p>
-                            💳 <strong>Payment Status:</strong> ✅ Paid (Transaction ID:{" "}
-                            {appointmentConfirmed.payment_id})
-                        </p>
+                        <div style={{ lineHeight: "2" }}>
+                            <p>📅 <strong>Date:</strong> {new Date(appointmentConfirmed.DateOfAppointment).toLocaleDateString()}</p>
+                            <p>⏰ <strong>Time:</strong> {appointmentConfirmed.AppStartTime}</p>
+                            <p>👨‍⚕️ <strong>Doctor:</strong> Dr. {doctorName}</p>
+                            <p>🏥 <strong>Location:</strong> PsyCare / Online Consultation</p>
+                            <p>💳 <strong>Payment Status:</strong> ✅ Paid</p>
+                            <p>🧾 <strong>Transaction ID:</strong> {appointmentConfirmed.payment_id}</p>
+                        </div>
 
                         <p style={{ marginTop: "1rem", fontStyle: "italic", color: "#555" }}>
                             🔗 Your consultation link will be sent shortly before the session begins.
@@ -456,7 +460,7 @@ const BookAppointment = () => {
 
                         <hr style={{ margin: "2rem 0", border: "0.5px solid #ccc" }} />
 
-                        <p style={{ textAlign: "center", fontWeight: "500" }}>
+                        <p style={{ textAlign: "center", fontWeight: "600", color: "#333" }}>
                             💙 Thank you for choosing <strong>PsyCare</strong>. We're here for you!
                         </p>
                     </div>

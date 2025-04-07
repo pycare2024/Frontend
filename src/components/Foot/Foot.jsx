@@ -1,8 +1,8 @@
 import React from 'react';
 import './Foot.css';
 import { useNavigate } from 'react-router-dom';
-
-
+import { FaTwitter, FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Foot = () => {
 
@@ -19,7 +19,7 @@ const Foot = () => {
         <div className="cta-content">
           <p className="cta-text">Try PsyCare today.</p>
           <p className="cta-subtext">
-             Connect and heal
+            Connect and heal
           </p>
           <div className="cta-buttons">
             {/* <button className="cta-btn sign-up-btn">Book Appointment</button> */}
@@ -47,25 +47,25 @@ const Foot = () => {
               <li><a href="#using">Articles</a></li>
               <li><a href="#docs">Videos</a></li>
               <li><a href="#support">Blogs</a></li>
-              
+
             </ul>
           </div>
           <div className="footer-section">
             <h3>Company</h3>
             <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#blog">Our Team</a></li>
-              <li><a href="#partnerships">Contact Us</a></li>
-              <li><a href="#careers">FAQs</a></li>
+              <li><Link to="/About">About Us</Link></li>
+              <li><Link to="/About">Our Team</Link></li>
+              <li><Link to="/Contactus">Contact Us</Link></li>
+              <li><Link to="/FAQ">FAQs</Link></li>
             </ul>
           </div>
           <div className="footer-section">
             <h3>Social</h3>
             <ul>
-              <li><a href="#twitter">Twitter</a></li>
-              <li><a href="#facebook">Facebook</a></li>
-              <li><a href="#linkedin">LinkedIn</a></li>
-              <li><a href="#github">GitHub</a></li>
+              <li><a href="#twitter"><FaTwitter />Twitter</a></li>
+              <li><a href="#facebook"><FaFacebook />Facebook</a></li>
+              <li><a href="#linkedin"><FaLinkedin />LinkedIn</a></li>
+              {/* <li><a href="#github"><FaGithub/> GitHub</a></li> */}
             </ul>
           </div>
         </div>
