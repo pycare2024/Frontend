@@ -37,7 +37,6 @@ import CompanyAccountsTab from './components/CompanyAccountsTab';
 import RegisterPatient from './components/RegisterPatient';
 import Landing from "./components/Landing/Landing";
 import IndividualTherapy from './components/IndividualTherapy';
-import GroupTherapy from './components/GroupTherapy';
 import CorporateWellness from './components/CorporateWellness';
 
 
@@ -163,7 +162,6 @@ function App() {
                 <Route path="/RegisterPatient" element={<RegisterPatient />} />
                 <Route path="/Landing" element={<Landing />} />
                 <Route path="/IndividualTherapy" element={<IndividualTherapy />} />
-                <Route path="/GroupTherapy" element={<GroupTherapy />} />
                 <Route path="/CorporateWellness" element={<CorporateWellness />} />
             </Routes>
             {/* <Footer/> */}
