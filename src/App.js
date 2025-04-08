@@ -165,7 +165,6 @@ function App() {
                 <Route path="/IndividualTherapy" element={<IndividualTherapy />} />
                 <Route path="/CorporateWellness" element={<CorporateWellness />} />
                 <Route path="/Articles" element={<Articles />} />
-
             </Routes>
             {/* <Footer/> */}
         </div>
