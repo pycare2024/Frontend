@@ -118,11 +118,11 @@ body, .expert-container {
 }
 
 .expert-image {
-  width: 220px;
-  height: 320px;
-  border-radius: 10%;
+  width: 100%;
+  height: 300px;
   object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  object-position: top;
+  border-radius: 12px;
 }
 
 .expert-card-body {

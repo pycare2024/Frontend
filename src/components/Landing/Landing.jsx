@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Landing.css";
 import { CalendarDays, Video } from "lucide-react";
-import surabhi from "./drghosh.png";
+import surabhi from "./drghosh.jpeg";
 import shatakshi from "./Shatakshi.jpg";
 import saachi from "./saachi.png";
 

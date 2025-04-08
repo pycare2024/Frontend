@@ -77,7 +77,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     display: "inline-block",
                                     color: "#333",
                                     textDecoration: "none",
-                                    marginRight: "-7px"
+                                    marginRight: "-7px",
                                 }}
                             >
                                 HOME
@@ -87,7 +87,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
 
                             <div
                                 name="navAbout"
-                                style={{ position: "relative", display: "inline-block" }}
+                                style={{ position: "relative", display: "inline-block"}}
                                 onMouseEnter={() => setShowDropdown(true)}
                                 onMouseLeave={() => setShowDropdown(false)}
                             >
