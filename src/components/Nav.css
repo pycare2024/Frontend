@@ -16,7 +16,7 @@
 
 /* Base styles for links and buttons */
 nav a, nav button {
-    padding: 4px 10px;
+    padding: 4px 15px;
     border-radius: 5px;
     text-decoration: none;
     position: relative;

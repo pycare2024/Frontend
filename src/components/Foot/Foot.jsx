@@ -48,8 +48,7 @@ const Foot = () => {
           <div className="footer-section">
             <h3>Resources</h3>
             <ul>
-              <li><a href="#using">Articles</a></li>
-              <li><a href="#docs">Videos</a></li>
+            <li><Link to="/Articles">Articles</Link></li>
               <li><a href="#support">Blogs</a></li>
 
             </ul>
