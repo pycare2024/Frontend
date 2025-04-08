@@ -38,6 +38,7 @@ import RegisterPatient from './components/RegisterPatient';
 import Landing from "./components/Landing/Landing";
 import IndividualTherapy from './components/IndividualTherapy';
 import CorporateWellness from './components/CorporateWellness';
+import Articles from './components/Articles';
 
 
 
@@ -163,6 +164,8 @@ function App() {
                 <Route path="/Landing" element={<Landing />} />
                 <Route path="/IndividualTherapy" element={<IndividualTherapy />} />
                 <Route path="/CorporateWellness" element={<CorporateWellness />} />
+                <Route path="/Articles" element={<Articles />} />
+
             </Routes>
             {/* <Footer/> */}
         </div>

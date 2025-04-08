@@ -99,6 +99,27 @@
   gap: 0.5rem;
 }
 
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.footer-logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 0.5px;
+}
+
 .footer-logo::before {
   content: "💙"; /* Placeholder for logo icon, replace with SVG if needed */
   font-size: 1.2rem;

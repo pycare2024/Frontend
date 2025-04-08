@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import "./Nav.css";
+import logo from "./PsyCare.png";
 
 function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackground = "#ffffff" }) {
 
@@ -60,7 +61,10 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
         <nav style={navStyle}>
             <div className="nav-bar-wrapper">
                 <div className="nav-left">
-                    <Link to="/Home" style={brandStyle}>PsyCare</Link>
+                    <Link to="/Home" style={brandStyle}>
+                        <img src={logo} alt="PsyCare Logo" style={{ height: "50px", marginRight: "10px",border:"1px solid #4285F4", borderRadius:"10px" }} />
+                        PsyCare
+                    </Link>
                 </div>
 
                 {/* Desktop Links */}
@@ -280,7 +284,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         }}
                                     >
                                         <Link
-                                            to="/team"
+                                            to="/Articles"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",
@@ -288,9 +292,9 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 textDecoration: "none",
                                             }}
                                         >
-                                            Article
+                                            Articles
                                         </Link>
-                                        <Link
+                                        {/* <Link
                                             to="/mission"
                                             style={{
                                                 display: "block",
@@ -300,7 +304,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             }}
                                         >
                                             Videos
-                                        </Link>
+                                        </Link> */}
                                         <Link
                                             to="/Blog/Blog"
                                             style={{

@@ -3,6 +3,7 @@ import './Foot.css';
 import { useNavigate } from 'react-router-dom';
 import { FaTwitter, FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import logo from "../PsyCare.png";
 
 const Foot = () => {
 
@@ -32,7 +33,10 @@ const Foot = () => {
       <div className="footer-main">
         <div className="footer-container">
           <div className="footer-section">
-            <h3 className="footer-logo">PsyCare</h3>
+            <div className="footer-logo">
+              <img src={logo} alt="PsyCare Logo" className="footer-logo-img" />
+              <span className="footer-logo-text">PsyCare</span>
+            </div>
             <ul>
               <li><a href="#connectivity">Get Connected</a></li>
               {/* <li><a href="#dashboard">Dashboard</a></li>
