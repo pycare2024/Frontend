@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Landing.css";
 import { CalendarDays, Video } from "lucide-react";
-import surabhi from "./Surabhi.jpg";
+import surabhi from "./drghosh.png";
 import shatakshi from "./Shatakshi.jpg";
 import saachi from "./saachi.png";
 
@@ -71,7 +71,7 @@ const Landing = () => {
           {expertDetails.map((exp, index) => (
             <div className="expert-card" key={index}>
               <div className="expert-card-header">
-                <img src={exp.image} alt={exp.name} className="expert-image" />
+                <img src={exp.image} alt={exp.name} className="expert-image"/>
               </div>
               <div className="expert-card-body">
                 <h3 className="expert-name">{exp.name}</h3>
