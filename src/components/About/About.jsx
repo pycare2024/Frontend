@@ -111,7 +111,7 @@ const About = () => {
             "Early access to quality mental health services is critical for lasting recovery in India."
           </blockquote>
           <p>At PsyCare, we provide trusted care across India and online, 365 days a year, ensuring accessibility and real outcomes.</p>
-          <p className="founder-signature">Mr. Vivek Bhugra<br /><span>Founder & CEO, PsyCare</span></p>
+          <p className="founder-signature">Vivek Bhugra<br /><span>Founder & CEO, PsyCare</span></p>
         </div>
         <div className="founder-image">
           <div className="blue-circle">
@@ -128,7 +128,7 @@ const About = () => {
             <div className="team-card-inner">
               <div className="team-card-front">
                 <img src={Dhruv} alt="Dhruv Agarwal" />
-                <h3>Mr. Dhruv Agarwal</h3>
+                <h3>Dhruv Agarwal</h3>
                 <p>Head of IT, PsyCare</p>
               </div>
               <div className="team-card-back">
@@ -147,7 +147,7 @@ const About = () => {
             <div className="team-card-inner">
               <div className="team-card-front">
                 <img src={ujj} alt="Ujjwal Tomar" />
-                <h3>Mr. Ujjwal Tomar</h3>
+                <h3>Ujjwal Tomar</h3>
                 <p>IT Department, PsyCare</p>
               </div>
               <div className="team-card-back">
