@@ -62,7 +62,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
             <div className="nav-bar-wrapper">
                 <div className="nav-left">
                     <Link to="/Home" style={brandStyle}>
-                        <img src={logo} alt="PsyCare Logo" style={{ height: "50px", marginRight: "10px",border:"1px solid #4285F4", borderRadius:"10px" }} />
+                        <img src={logo} alt="PsyCare Logo" style={{ height: "50px", marginRight: "10px", border: "1px solid #4285F4", borderRadius: "10px" }} />
                         PsyCare
                     </Link>
                 </div>
@@ -87,7 +87,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
 
                             <div
                                 name="navAbout"
-                                style={{ position: "relative", display: "inline-block"}}
+                                style={{ position: "relative", display: "inline-block" }}
                                 onMouseEnter={() => setShowDropdown(true)}
                                 onMouseLeave={() => setShowDropdown(false)}
                             >
@@ -118,7 +118,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             About PsyCare
                                         </Link>
                                         <Link
-                                            to="/About"
+                                            to="/About#team"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",

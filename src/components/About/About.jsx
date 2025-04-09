@@ -1,7 +1,7 @@
 // About.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react'; // ⬅️ Add useRef
+import { useLocation } from 'react-router-dom';
 import './About.css';
-import miss from "./missionAbout.png"
 import Dhruv from "./Dhruv.jpg"
 import ujj from "./ujj.jpg"
 import sir from "./sir1.png"
@@ -10,6 +10,17 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const About = () => {
+
+  const location = useLocation();
+  const teamRef = useRef(null); // ⬅️ Reference for Team Section
+
+  useEffect(() => {
+    if (location.hash === '#team' && teamRef.current) {
+      setTimeout(() => {
+        teamRef.current.scrollIntoView({ behavior: 'smooth' });
+      }, 100); // Delay helps ensure the component has mounted
+    }
+  }, [location]);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -93,7 +104,7 @@ const About = () => {
       </section>
 
       {/* Founder's Note Section */}
-      <section className="founder-section slide-in">
+      <section ref={teamRef} className="founder-section slide-in">
         <div className="founder-content">
           <h2>Founder's Note</h2>
           <blockquote>
@@ -198,7 +209,7 @@ const About = () => {
           </div>
           <div className="footer-section">
             <h3>Contact Us</h3>
-            <p>+91 98765 43210<br />support@psycare.com</p>
+            <p>+91 98765 43210<br />support@psyCare.com</p>
           </div>
         </div>
         <div className="footer-bottom">
