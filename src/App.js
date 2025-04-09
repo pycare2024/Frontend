@@ -39,6 +39,7 @@ import Landing from "./components/Landing/Landing";
 import IndividualTherapy from './components/IndividualTherapy';
 import CorporateWellness from './components/CorporateWellness';
 import Articles from './components/Articles';
+import ABC from "./components/ABC/ABC";
 
 
 
@@ -165,6 +166,7 @@ function App() {
                 <Route path="/IndividualTherapy" element={<IndividualTherapy />} />
                 <Route path="/CorporateWellness" element={<CorporateWellness />} />
                 <Route path="/Articles" element={<Articles />} />
+                <Route path="/ABC" element={<ABC />} />
             </Routes>
             {/* <Footer/> */}
         </div>

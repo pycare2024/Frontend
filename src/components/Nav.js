@@ -306,7 +306,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             Videos
                                         </Link> */}
                                         <Link
-                                            to="/ChildTherapy"
+                                            to="/ABC"
                                             style={{
                                                 display: "block",
                                                 padding: "5px 10px",

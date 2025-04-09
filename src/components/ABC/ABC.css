@@ -1,0 +1,134 @@
+/* PsyCareBlog.css */
+
+.blog-container {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  /* background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://source.unsplash.com/1600x600/?mental,health,calm'); */
+  height: 25rem;
+  background: url('./ABCD.jpg') no-repeat center;
+  background-size: cover;
+  position: relative;
+  border-radius: 12px;
+  /* margin-bottom: 3rem; */
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero h1 {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-left: 500px;
+  margin-top: 4rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-left: 500px;
+}
+
+.reviews-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(66, 133, 244, 0.25);
+}
+
+.review-card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transform: translate(5px, 5px);
+}
+
+.review-card.card-3 img {
+  height: 260px; /* larger image for Yash */
+}
+
+.review-card h3 {
+  color: #4285F4;
+  margin: 0.5rem 0 0.2rem;
+}
+
+.review-card .blog-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.review-card p {
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.tips-section {
+  margin-top: 4rem;
+  background: #f0f4ff;
+  padding: 2rem 1rem;
+  border-radius: 12px;
+}
+
+.tips-section h2 {
+  text-align: center;
+  color: #4285F4;
+  margin-bottom: 2rem;
+}
+
+.tips-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.tip-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(66, 133, 244, 0.25);
+}
+
+.tip-card h4 {
+  color: #4285F4;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tip-card p {
+  font-size: 0.95rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
