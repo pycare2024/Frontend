@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./FAQ_Stylish_Final.css";
 
 function FAQ() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scrolls to top of page on mount
+    }, []);
+
+
     const faqs = [
         {
             category: "General FAQs",
@@ -24,12 +30,16 @@ function FAQ() {
             category: "Service-Related FAQs",
             questions: [
                 {
+                    question: "What kind of mental conditions do we help with?",
+                    answer: "While our experts can address a wide range of mental health conditions, we prioritize- the most common disorders, which account for 80% of cases: anxiety, depression, and substance abuse.",
+                },
+                {
                     question: "What services does PsyCare provide?",
                     answer: "We offer holistic care which may involve psychotherapeutic care and /or psychiatric treatment as the majority of mental disorders involve either some kind of flawed thinking process or chemical imbalance which can only be restored through medical intervention.",
                 },
                 {
                     question: "How do I book an appointment?",
-                    answer: "You can book an appointment through 'Book appointment' button on our website or by sending a hello on  our WhatsApp helpline number 9818296388.",
+                    answer: `You can book an appointment through the <a href="/#/bookAppointment" style="color:#4285F4; text-decoration:underline;">Book Appointment</a> page on our website or by sending a "Hi" to us on <a href="https://wa.me/919818296388?text=Hi" target="_blank" style="color:#25D366; text-decoration:underline;">WhatsApp</a>.`,
                 },
                 {
                     question: "Do you offer services for organizations?",
@@ -46,7 +56,7 @@ function FAQ() {
                 },
                 {
                     question: "Are your services available in rural areas?",
-                    answer: "Yes, we aim to reach underserved areas through telehealth services and collaborations with local organizations.",
+                    answer: "Yes. Infact inline with our mission and vision statement, we exist to make mental health care accessible into every nook and corner of the country through technology, which essentially needs an stable internet connection and a mobile device. If a person has both, we are good to serve them to the best of our capabilities",
                 },
             ],
         },
@@ -55,11 +65,11 @@ function FAQ() {
             questions: [
                 {
                     question: "Are my consultations confidential?",
-                    answer: "Absolutely. We follow strict privacy policies to ensure all your information remains secure and confidential.",
+                    answer: "Absolutely. We follow strict privacy policies to ensure all your information remains secure and confidential. For more details, please refer to our privacy policy here.",
                 },
                 {
                     question: "Do you share my data with anyone?",
-                    answer: "No, your data is never shared with third parties without your explicit consent, except in situations where it is legally required.",
+                    answer: "No, your data is never shared with third parties without your explicit consent, except in situations where it is legally required. For more details, please refer to our privacy policy here.",
                 },
             ],
         },
@@ -77,7 +87,7 @@ function FAQ() {
             questions: [
                 {
                     question: "I’m having trouble accessing the website. What should I do?",
-                    answer: "Please clear your browser cache or try accessing the site from another device. If the problem persists, contact our support team at support@psy-care.in.",
+                    answer: "Please clear your browser cache or try accessing the site from another device. If the problem persists, contact our support team at contactus@psy-care.in.",
                 },
                 {
                     question: "Can I use PsyCare on my mobile phone?",
@@ -90,11 +100,14 @@ function FAQ() {
             questions: [
                 {
                     question: "How can I provide feedback about PsyCare?",
-                    answer: "We value your feedback! Please use the form on the \"Send us a message\" page to share your thoughts or suggestions.",
+                    answer: `We would love to hear from you. Please use 
+                      <a href="/#/Contactus" style="color: #4285F4; text-decoration: underline;">
+                        Contact us
+                      </a> page to share your thoughts or suggestions.`,
                 },
                 {
                     question: "How can I support PsyCare's mission?",
-                    answer: "You can donate, volunteer, or partner with us to help make mental health support accessible to everyone. Check our \"Join Us\" section for details.",
+                    answer: "You can donate, volunteer, or partner with us to help make mental health support accessible to everyone. Check our 'Join Us' section for details and/or write to us at contactus@psy-care.in",
                 },
             ],
         },
@@ -111,7 +124,10 @@ function FAQ() {
                             {section.questions.map((faq, i) => (
                                 <details key={i} className="faq-item">
                                     <summary className="faq-question">{faq.question}</summary>
-                                    <p className="faq-answer">{faq.answer}</p>
+                                    <p
+                                        className="faq-answer"
+                                        dangerouslySetInnerHTML={{ __html: faq.answer }}
+                                    />
                                 </details>
                             ))}
                         </div>

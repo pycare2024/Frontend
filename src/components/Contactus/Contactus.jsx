@@ -1,8 +1,13 @@
 import React from "react";
+import { useEffect } from 'react';
 import { Mail, MapPin, Phone } from "lucide-react";
 import "./Contact.css";
 
 const Contactus = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top of page on mount
+  }, []);
+  
   return (
     <div className="contact-page">
       <section className="contact-header">

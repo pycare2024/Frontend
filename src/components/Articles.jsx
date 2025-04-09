@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Articles.css';
 
 const Articles = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scrolls to top of page on mount
+    }, []);
+
     const [selectedArticle, setSelectedArticle] = useState(null);
 
     const handleReadMore = (article) => {
@@ -18,7 +23,7 @@ const Articles = () => {
             <div className="articles-grid">
                 {articlesData.map((article) => (
                     <div className="article-card" key={article.id}>
-                        <h2 style={{color:"#4285F4", textAlign:"center", fontWeight:"bold"}}>{article.title}</h2>
+                        <h2 style={{ color: "#4285F4", textAlign: "center", fontWeight: "bold" }}>{article.title}</h2>
                         <p>{article.excerpt}</p>
                         <button
                             className="read-more-btn"

@@ -7,6 +7,12 @@ import './LandingPage.css';
 import Genie from "./genie.png";
 
 const LandingPage = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top of page on mount
+  }, []);
+
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const wrapperRef = useRef();

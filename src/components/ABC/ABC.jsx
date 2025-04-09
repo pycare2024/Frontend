@@ -1,5 +1,5 @@
 // PsyCareBlog.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ABC.css';
 import Aarav from './AaravS.jpg'
 import Nikita from "./NikitaP.jpg";
@@ -16,7 +16,7 @@ const reviews = [
   { name: "Rahul M.", image: Rahul, title: "Mental Health Made Accessible", text: "I've always advocated for accessible mental health support, and PsyCare’s WhatsApp chatbot blew me away. On my tech-health blog, I wrote about how this simple interface could bridge the gap for thousands of people uncomfortable with traditional platforms." },
   { name: "Sneha K.", image: Sneha, title: "Why I Recommend PsyCare to Every Working Mom", text: "As a mother juggling work and home, I rarely found time for myself. In my parenting blog, I wrote about how PsyCare’s screening test and quick appointments helped me prioritize mental wellness without disrupting my routine." },
   { name: "Imran A.", image: Imran, title: "Creating Safe Mental Health Spaces Online", text: "Through my blog on men’s mental health, I talk about breaking stigmas and accessing support. PsyCare’s respectful and confidential process inspired me to share my story publicly and encourage more men to open up." },
-  { name: "Drishti G.", image: Dir,title: "From Doubt to Trust: My Journey with Online Therapy", text: "I was skeptical of online therapy. But after trying PsyCare, I was compelled to write about the transformation on my blog. It was the first time I felt listened to, supported, and guided—all virtually." },
+  { name: "Drishti G.", image: Dir, title: "From Doubt to Trust: My Journey with Online Therapy", text: "I was skeptical of online therapy. But after trying PsyCare, I was compelled to write about the transformation on my blog. It was the first time I felt listened to, supported, and guided—all virtually." },
   { name: "Yash R.", image: Yash, title: "Affordable Therapy for Students Like Me", text: "In my student wellness blog, I detailed my struggle balancing studies and mental health. PsyCare offered a solution that was both affordable and impactful. Their platform proved that quality mental health support doesn’t need to come with a huge price tag." },
 ];
 
@@ -36,6 +36,11 @@ const tips = [
 ];
 
 const ABC = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top of page on mount
+  }, []);
+
   return (
     <div className="blog-container">
       <section className="hero">

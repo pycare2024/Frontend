@@ -11,6 +11,10 @@ import 'aos/dist/aos.css';
 
 const About = () => {
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top of page on mount
+  }, []);
+
   const location = useLocation();
   const teamRef = useRef(null); // ⬅️ Reference for Team Section
 
