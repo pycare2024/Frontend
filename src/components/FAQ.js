@@ -101,21 +101,23 @@ function FAQ() {
     ];
 
     return (
-        <div className="faq-container">
-            <h1 className="faq-title">FAQs</h1>
-            {faqs.map((section, index) => (
-                <div key={index} className="faq-section">
-                    <h2 className="faq-category" style={{color:"#4285F4"}}>{section.category}</h2>
-                    <div className="faqQuestions">
-                        {section.questions.map((faq, i) => (
-                            <details key={i} className="faq-item">
-                                <summary className="faq-question">{faq.question}</summary>
-                                <p className="faq-answer">{faq.answer}</p>
-                            </details>
-                        ))}
+        <div className="faq-page">
+            <div className="faq-container">
+                <h1 className="faq-title">FAQs</h1>
+                {faqs.map((section, index) => (
+                    <div key={index} className="faq-section">
+                        <h2 className="faq-category" style={{ color: "#4285F4" }}>{section.category}</h2>
+                        <div className="faqQuestions">
+                            {section.questions.map((faq, i) => (
+                                <details key={i} className="faq-item">
+                                    <summary className="faq-question">{faq.question}</summary>
+                                    <p className="faq-answer">{faq.answer}</p>
+                                </details>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 }
