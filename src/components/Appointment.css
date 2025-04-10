@@ -179,3 +179,19 @@ body {
   .appointments-wrapper .gap-2 {
     gap: 0.5rem;
   }
+
+  .button.cancel {
+    background-color: #ffdddd;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+}
+.button.cancel:hover {
+    background-color: #ffe6e6;
+}
+.status-tag.cancelled {
+    background-color: #f9d6d5;
+    color: #b71c1c;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 6px;
+}

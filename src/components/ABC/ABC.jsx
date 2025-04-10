@@ -53,8 +53,8 @@ const ABC = () => {
           <div key={i} className={`review-card card-${(i % 4) + 1}`}>
             <img src={r.image} alt={r.name} />
             <h3>{r.name}</h3>
-            <h4 className="blog-title">{r.title}</h4>
-            <p>{r.text}</p>
+            <h4 className="blog-title" style={{textAlign:"justify"}}>{r.title}</h4>
+            <p style={{textAlign:"justify"}}>{r.text}</p>
           </div>
         ))}
       </section>
@@ -64,8 +64,8 @@ const ABC = () => {
         <div className="tips-wrapper">
           {tips.map((tip, index) => (
             <div className="tip-card" key={index}>
-              <h4>{tip.title}</h4>
-              <p>{tip.text}</p>
+              <h4 style={{textAlign:"justify"}}>{tip.title}</h4>
+              <p style={{textAlign:"justify"}}>{tip.text}</p>
             </div>
           ))}
         </div>

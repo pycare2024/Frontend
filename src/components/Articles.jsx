@@ -24,7 +24,7 @@ const Articles = () => {
                 {articlesData.map((article) => (
                     <div className="article-card" key={article.id}>
                         <h2 style={{ color: "#4285F4", textAlign: "center", fontWeight: "bold" }}>{article.title}</h2>
-                        <p>{article.excerpt}</p>
+                        <p style={{textAlign:"justify"}}>{article.excerpt}</p>
                         <button
                             className="read-more-btn"
                             onClick={() => handleReadMore(article)}

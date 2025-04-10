@@ -113,7 +113,7 @@ const PrivacyPolicy = () => {
                 <h2 id="rights">6. User Rights</h2>
                 <ul>
                     <li>You may request access or correction to your personal data</li>
-                    <li>You may request deletion by emailing us at <a href="mailto:contactus@psy-care.in">support@psy-care.in</a></li>
+                    <li>You may request deletion by emailing us at <a href="mailto:contactus@psy-care.in">contactus@psy-care.in</a></li>
                 </ul>
                 <div className="privacy-divider"></div>
 
@@ -146,11 +146,7 @@ const PrivacyPolicy = () => {
 
                 <h2 id="contact">11. Contact Us</h2>
                 <p>
-                    For questions, requests, or complaints<br />
-                    <div className="note-box">
-                        You can contact our <a href="/Contactus">Grievance Officer</a> at
-                    </div>
-                    <a href="mailto:support@psy-care.in">contactus@psy-care.in</a><br />
+                    For questions, requests, or complaints , mail us at <a href="mailto:contactus@psy-care.in">contactus@psy-care.in</a><br />
                     PsyCare Health Technologies Pvt. Ltd.
                 </p>
                 <div className="privacy-divider"></div>

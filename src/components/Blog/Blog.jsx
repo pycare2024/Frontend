@@ -181,6 +181,7 @@ const Card = styled.div`
       line-height: 1.5;
       max-height: 120px;
       overflow-y: auto;
+      text-align: justify;
     }
 
     .meta {

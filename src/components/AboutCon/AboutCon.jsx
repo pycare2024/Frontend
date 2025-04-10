@@ -50,7 +50,7 @@ const AboutCon = () => {
               <div className="text-section">
                 <h1>Meet Our Experts.</h1>
                 <h2>Counselling Therapy Sessions</h2>
-                <p>
+                <p style={{textAlign:"justify"}}>
                   Highly qualified team of some of the best names in psychology who
                   deliver improved well-being to you. Carefully vetted through a
                   rigorous selection process. Trained and experienced in all

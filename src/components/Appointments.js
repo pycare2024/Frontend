@@ -89,6 +89,26 @@ const Appointments = () => {
         }
     };
 
+    const cancelAppointment = async (appointmentId) => {
+        try {
+            const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/cancelAndRefund/${appointmentId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert("Appointment cancelled and refund initiated.");
+                fetchAppointments(); // refresh the list
+            } else {
+                alert(data.message || "Cancellation failed.");
+            }
+        } catch (error) {
+            console.error("Error cancelling appointment:", error);
+            alert("Something went wrong.");
+        }
+    };
+
     return (
         <div className="appointments-wrapper">
             <h1 className="appointments-heading">Doctor's Appointments</h1>
@@ -129,7 +149,9 @@ const Appointments = () => {
                                         </span>
                                     </td>
                                     <td className="text-center">
-                                        {appointment.appointment_status === "completed" ? (
+                                        {appointment.appointment_status === "cancelled" ? (
+                                            <span className="status-tag cancelled">❌ Cancelled</span>
+                                        ) : appointment.appointment_status === "completed" ? (
                                             <span className="status-tag completed">✅ Completed</span>
                                         ) : appointment.appointment_status === "no_show" ? (
                                             <span className="status-tag no-show">❌ No-Show</span>
@@ -157,12 +179,20 @@ const Appointments = () => {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <button
-                                                onClick={() => startSession(appointment._id)}
-                                                className="button start"
-                                            >
-                                                Start Session
-                                            </button>
+                                            <div className="flex flex-col gap-2 items-center">
+                                                <button
+                                                    onClick={() => startSession(appointment._id)}
+                                                    className="button start"
+                                                >
+                                                    Start Session
+                                                </button>
+                                                <button
+                                                    onClick={() => cancelAppointment(appointment._id)}
+                                                    className="button cancel"
+                                                >
+                                                    Cancel Appointment
+                                                </button>
+                                            </div>
                                         )}
                                     </td>
                                 </tr>
