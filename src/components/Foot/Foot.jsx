@@ -39,6 +39,7 @@ const Foot = () => {
             </div>
             <ul>
               <li><a href="#connectivity">Get Connected</a></li>
+              <li><Link to="/PrivacyPolicy">Privacy Policy</Link></li>
               {/* <li><a href="#dashboard">Dashboard</a></li>
               <li><a href="#iot">IoT SIM Card</a></li>
               <li><a href="#hologram-hyper">Hologram Hyper</a></li>
@@ -48,7 +49,7 @@ const Foot = () => {
           <div className="footer-section">
             <h3>Resources</h3>
             <ul>
-            <li><Link to="/Articles">Articles</Link></li>
+              <li><Link to="/Articles">Articles</Link></li>
               <li><a href="#support">Blogs</a></li>
 
             </ul>
