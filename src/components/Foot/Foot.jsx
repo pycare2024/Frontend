@@ -50,7 +50,7 @@ const Foot = () => {
             <h3>Resources</h3>
             <ul>
               <li><Link to="/Articles">Articles</Link></li>
-              <li><a href="#support">Blogs</a></li>
+              <li><a href="/#/ABC">Blogs</a></li>
 
             </ul>
           </div>
@@ -58,7 +58,7 @@ const Foot = () => {
             <h3>Company</h3>
             <ul>
               <li><Link to="/About">About Us</Link></li>
-              <li><Link to="/About">Our Team</Link></li>
+              <li><Link to="/About#team">Our Team</Link></li>
               <li><Link to="/Contactus">Contact Us</Link></li>
               <li><Link to="/FAQ">FAQs</Link></li>
             </ul>
@@ -66,7 +66,8 @@ const Foot = () => {
           <div className="footer-section">
             <h3>Social</h3>
             <ul>
-              <li><a href="#twitter"><FaTwitter />Twitter</a></li>
+              <li><Link to="https://x.com/Psycare2024"><FaTwitter />Twitter</Link></li>
+              {/* <li><a href="#twitter"><FaTwitter />Twitter</a></li> */}
               <li><a href="#facebook"><FaFacebook />Facebook</a></li>
               <li><a href="#linkedin"><FaLinkedin />LinkedIn</a></li>
               {/* <li><a href="#github"><FaGithub/> GitHub</a></li> */}
