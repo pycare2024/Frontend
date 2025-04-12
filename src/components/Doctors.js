@@ -9,24 +9,20 @@ function Doctors() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
-    const [showOTPInput, setShowOTPInput] = useState(false); // Controls OTP input visibility
-    const [otp, setOtp] = useState(""); // Stores the entered OTP
     const [newDoctor, setNewDoctor] = useState({
         id: "",
         Name: "",
-        Age: "",
-        Pincode: "",
         City: "",
         Qualification: "",
         loginId: "",
         password: "",
         Gender: "",
         Mobile: "",
-        dob: ""
     });
+
     const [fieldErrors, setFieldErrors] = useState({});
 
-    const qualifications = ["MBBS", "MD", "DO", "PhD", "DDS", "DMD", "MCh", "BAMS", "BHMS", "BPT"];
+    const qualifications = ["M.phil Clinical Psycology"];
 
     useEffect(() => {
         fetchDoctors();
@@ -48,30 +44,24 @@ function Doctors() {
         }
     };
 
-    const fetchCityFromPincode = async (pincode) => {
-        if (pincode.length === 6) {
-            try {
-                const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-                const data = await response.json();
-                if (data[0]?.Status === "Success") {
-                    setNewDoctor((prev) => ({ ...prev, City: data[0].PostOffice[0].District }));
-                }
-            } catch (error) {
-                console.error("Error fetching city:", error);
-            }
-        }
+    const generateDoctorId = () => {
+        const initials = newDoctor.Name?.split(" ").map(w => w[0].toUpperCase()).join("").slice(0, 2) || "DR";
+        const randomDigits = Math.floor(100 + Math.random() * 900);
+        return `${initials}${randomDigits}`; // e.g., AG517
     };
 
-    const generateDoctorId = () => {
-        const cityPart = newDoctor.City.slice(0, 4).toUpperCase();
-        const datePart = new Date().toISOString().split("T")[0].replace(/-/g, "");
-        const mobilePart = newDoctor.Mobile.slice(-5);
-        return `${cityPart}${datePart}${mobilePart}`;
+    const generateRandomPassword = (length = 8) => {
+        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+            password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return password;
     };
 
     const validateForm = () => {
         const errors = {};
-        const requiredFields = ["id", "Name", "Age", "Pincode", "City", "Qualification", "loginId", "password", "Gender", "Mobile"];
+        const requiredFields = ["Name", "City", "Qualification", "Gender", "Mobile"];
 
         requiredFields.forEach((field) => {
             if (!newDoctor[field]) {
@@ -81,27 +71,6 @@ function Doctors() {
 
         setFieldErrors(errors);
         return Object.keys(errors).length === 0;
-    };
-
-    const handleSendOTP = async () => {
-        if (!newDoctor.Mobile || newDoctor.Mobile.length !== 10) {
-            alert("Please enter a valid 10-digit mobile number.");
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/send-otp/${newDoctor.Mobile}`);
-            const data = await response.json();
-            if (response.ok) {
-                alert("OTP sent successfully! Please enter the OTP to proceed.");
-                setShowOTPInput(true);  // Show OTP input field
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error("Error sending OTP:", error);
-            alert("Failed to send OTP.");
-        }
     };
 
     const handleSendCredentials = async (doctor) => {
@@ -133,13 +102,16 @@ function Doctors() {
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
 
+        const doctorId = generateDoctorId();
+        const autoPassword = generateRandomPassword(8);
+        setNewDoctor(prev => ({ ...prev, password: autoPassword }));
+
         if (!validateForm()) {
             console.log("Form validation failed", fieldErrors);
             return;
         }
 
-        const doctorId = generateDoctorId();
-        const doctorWithId = { ...newDoctor, id: doctorId, loginId: doctorId }; // Set loginId same as id
+        const doctorWithId = { ...newDoctor, id: doctorId, loginId: doctorId, password: autoPassword }; // Set loginId same as id
 
         console.log("Doctor Data:", doctorWithId);
 
@@ -160,21 +132,18 @@ function Doctors() {
             console.log("Doctor added successfully! ✅");
 
             // ✅ Display login credentials after successful registration
-            alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${newDoctor.password}`);
+            alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${autoPassword}`);
             await handleSendCredentials(doctorWithId);
 
             setShowAddForm(false);
             setNewDoctor({
                 id: "",
                 Name: "",
-                Age: "",
-                Pincode: "",
                 City: "",
                 Qualification: "",
                 password: "", // Keep password as it is
                 Gender: "",
                 Mobile: "",
-                dob: ""
             });
             setFieldErrors({});
             fetchDoctors();
@@ -184,38 +153,12 @@ function Doctors() {
         }
     };
 
-    const handleVerifyOTP = async () => {
-        if (!otp) {
-            alert("Please enter the OTP.");
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/verify-otp/${newDoctor.Mobile}/${otp}`);
-            const data = await response.json();
-
-            if (!response.ok) {
-                alert(data.message || "Incorrect OTP. Please try again.");
-                return;
-            }
-
-            alert("OTP verified successfully!");
-            setShowOTPInput(false); // Hide OTP input
-            handleAddDoctor(); // ✅ Register doctor after successful OTP verification
-
-        } catch (error) {
-            console.error("OTP verification failed:", error);
-            alert("Error verifying OTP.");
-        }
-    };
-
     const handleCancel = () => {
         setShowAddForm(false);
         setNewDoctor({
             id: "",
             Name: "",
-            Age: "",
-            Address: "",
+            City: "",
             Qualification: "",
             loginId: "",
             password: "",
@@ -246,19 +189,6 @@ function Doctors() {
         }
     };
 
-    const calculateAge = (dob) => {
-        const birthDate = new Date(dob);
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--; // Adjust if birthday hasn't occurred yet this year
-        }
-
-        return age;
-    };
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -279,9 +209,7 @@ function Doctors() {
                                 type="text"
                                 placeholder="Id Auto-Generated(Type 1)"
                                 value={newDoctor.id}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, id: e.target.value })}
-                                className={fieldErrors.id ? "input-error" : ""}
-                                required
+                                readOnly
                             />
                             <input id="name"
                                 type="text"
@@ -291,38 +219,8 @@ function Doctors() {
                                 className={fieldErrors.Name ? "input-error" : ""}
                                 required
                             />
-                            <input id="name"
-                                type="date"
-                                placeholder="Date of Birth"
-                                value={newDoctor.dob}
-                                onChange={(e) => {
-                                    const dob = e.target.value;
-                                    setNewDoctor((prev) => ({
-                                        ...prev,
-                                        dob: dob,
-                                        Age: calculateAge(dob) // Automatically calculate and set Age
-                                    }));
-                                }}
-                                required
-                            />
-
-                            <input id="name"
-                                type="number"
-                                placeholder="Age"
-                                value={newDoctor.Age}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, Age: e.target.value })}
-                                className={fieldErrors.Age ? "input-error" : ""}
-                                required
-                            />
-                            <input id="name"
-                                type="text"
-                                placeholder="Pincode"
-                                value={newDoctor.Pincode}
-                                onChange={(e) => { setNewDoctor({ ...newDoctor, Pincode: e.target.value }); fetchCityFromPincode(e.target.value); }}
-                                required
-                            />
-                            <input id="name" type="text" placeholder="City" value={newDoctor.City} readOnly required />
-                            <select id="name"
+                            <input type="text" placeholder="City" value={newDoctor.City} onChange={(e) => setNewDoctor({ ...newDoctor, City: e.target.value })} required />
+                            <select
                                 value={newDoctor.Qualification}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, Qualification: e.target.value })}
                                 required
@@ -332,23 +230,14 @@ function Doctors() {
                                     <option key={index} value={qualification}>{qualification}</option>
                                 ))}
                             </select>
-                            <input id="name"
+                            <input type="text" placeholder="Login ID (Auto-generated)" value={newDoctor.loginId} readOnly />
+                            <input
                                 type="text"
-                                placeholder="Login ID Auto-generated(Type 1)"
-                                value={newDoctor.loginId}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, loginId: e.target.value })}
-                                className={fieldErrors.loginId ? "input-error" : ""}
-                                required
-                            />
-                            <input id="name"
-                                type="password"
-                                placeholder="Password"
+                                placeholder="Password (Auto-generated)"
                                 value={newDoctor.password}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, password: e.target.value })}
-                                className={fieldErrors.password ? "input-error" : ""}
-                                required
+                                readOnly
                             />
-                            <select id="name"
+                            <select
                                 value={newDoctor.Gender}
                                 onChange={(e) => setNewDoctor({ ...newDoctor, Gender: e.target.value })}
                                 className={fieldErrors.Gender ? "input-error" : ""}
@@ -359,7 +248,7 @@ function Doctors() {
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <input id="name"
+                            <input
                                 type="text"
                                 placeholder="Mobile"
                                 maxLength="10"
@@ -377,27 +266,16 @@ function Doctors() {
                             {newDoctor.Mobile.length > 0 && newDoctor.Mobile.length < 10 && (
                                 <p style={{ color: "red", fontSize: "12px" }}>Enter a valid 10-digit mobile number</p>
                             )}
-                            <div className="button-group">
-                                {/* Step 1: Send OTP before registering */}
-                                <button onClick={handleSendOTP} className="btn btn-success" style={{ backgroundColor: "#4285F4" }}>Send OTP</button>
 
-                                {/* Step 2: Show OTP Input after OTP is sent */}
-                                {showOTPInput && (
-                                    <div>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter OTP"
-                                            value={otp}
-                                            onChange={(e) => setOtp(e.target.value)}
-                                            required
-                                        />
-                                        <button onClick={handleVerifyOTP} className="btn btn-primary">Verify OTP</button>
-                                    </div>
-                                )}
+                            <div className="button-group">
+                                <button onClick={handleAddDoctor} className="btn btn-success" style={{ backgroundColor: "#4285F4" }}>
+                                    Register Doctor
+                                </button>
                                 <button onClick={handleCancel} className="btn btn-secondary">
                                     Cancel
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -410,11 +288,11 @@ function Doctors() {
                         onClick={() => navigate(`/doctor/${doctor._id}`)}
                         style={{ cursor: "pointer" }}>
                         <h3>{doctor.Name}<i class="fa-solid fa-stethoscope"></i></h3>
-                        <p><strong>Age:</strong> {doctor.Age}</p>
+                        <p><strong>City:</strong> {doctor.City}</p>
                         <p><strong>Gender:</strong> {doctor.Gender}</p>
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>
                         <p><strong>Mobile:</strong> {doctor.Mobile}</p>
-                        <p><strong>City:</strong> {doctor.City}</p>
+
                         {/* <button onClick={() => handleDeleteDoctor(doctor.id)} className="btn btn-danger">
                             <FaTrash /> Remove
                         </button> */}

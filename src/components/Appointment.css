@@ -12,10 +12,12 @@ body {
   }
 
   .appointments-wrapper {
+    margin-top: 5%;
     width: 100%;
     padding: 2rem;
     background-color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
   }
   
   .appointments-wrapper .appointments-heading {
