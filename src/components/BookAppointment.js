@@ -4,10 +4,13 @@ import bgImage from "./bookappointment.jpg";
 import { useLocation } from "react-router-dom";
 
 const BookAppointment = () => {
+    const [step, setStep] = useState(1);
+    const [userType, setUserType] = useState("");
+    const [companyCode, setCompanyCode] = useState("");
+    const [empId, setEmpId] = useState("");
+    const [companyError, setCompanyError] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [otp, setOtp] = useState("");
-    const [step, setStep] = useState(1);
-    const [error, setError] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const [availableDates, setAvailableDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
@@ -17,35 +20,27 @@ const BookAppointment = () => {
     const [appointmentConfirmed, setAppointmentConfirmed] = useState(null);
     const [appointmentId, setAppointmentId] = useState(null);
     const [doctorName, setDoctorName] = useState(null);
-    const [userType, setUserType] = useState(""); // "corporate", "student", or "retail"
-    const [empId, setEmpId] = useState(""); // for corporate users
-    const [companyCode, setCompanyCode] = useState(""); // company code for validation
-
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
-
     const location = useLocation();
 
-    // Check if phoneNumber is passed from RegisterPatient
     useEffect(() => {
         if (location.state?.phoneNumber) {
             setPhoneNumber(location.state.phoneNumber);
-
-            // Optional: skip OTP and fetch patient directly
             checkPatientStatus(location.state.phoneNumber);
         }
     }, [location.state]);
 
     useEffect(() => {
         const interval = setInterval(async () => {
-            if (step === 4 && appointmentConfirmed === null && paymentLink && appointmentId) {
+            if (step === 4.5 && appointmentConfirmed === null && paymentLink && appointmentId) {
                 try {
                     const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/appointment/${appointmentId}`);
                     const data = await response.json();
                     if (response.ok && data?.appointment?.payment_status === "confirmed") {
                         setAppointmentConfirmed(data.appointment);
-                        setStep(5);
-                        clearInterval(interval);
+                        setStep(5); // ✅ move to confirmation screen
                     }
                 } catch (error) {
                     console.error("Error checking appointment status:", error);
@@ -56,6 +51,39 @@ const BookAppointment = () => {
         return () => clearInterval(interval);
     }, [step, paymentLink, appointmentConfirmed, appointmentId]);
 
+    const verifyCorporatePatient = async () => {
+        if (!companyCode || !empId) {
+          setCompanyError("Company Code and Employee ID are required");
+          return;
+        }
+      
+        try {
+          const response = await fetch("https://backend-xhl4.onrender.com/CorporateRoute/verifyCorporatePatient", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ companyCode, empId }),
+          });
+      
+          const data = await response.json(); // ✅ always parse
+      
+          if (response.ok && data.exists) {
+            setStep(2);
+            setCompanyError("");
+          } else if (data.message === "Employee not found. Proceed to registration.") {
+            navigate("/RegisterCorporateEmployee", {
+              state: { empId, companyCode }
+            });
+          } else if (data.message === "Company not registered with us.") {
+            setCompanyError("Company not found. Please proceed with 'None of the Above'.");
+          } else {
+            setCompanyError(data.message || "Verification failed.");
+          }
+      
+        } catch (err) {
+          setCompanyError("Network error. Please try again.");
+        }
+      };
+
     const sendOTP = async () => {
         if (phoneNumber.length !== 10) {
             setError("Please enter a valid 10-digit phone number.");
@@ -64,12 +92,8 @@ const BookAppointment = () => {
         setError("");
         const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/send-otp/${phoneNumber}`);
         const data = await response.json();
-
-        if (response.ok) {
-            setStep(2);
-        } else {
-            setError(data.message);
-        }
+        if (response.ok) setStep(3);
+        else setError(data.message);
     };
 
     const verifyOTP = async () => {
@@ -77,29 +101,23 @@ const BookAppointment = () => {
             setError("Please enter a valid 6-digit OTP.");
             return;
         }
-        setError("");
         const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/verify-otp/${phoneNumber}/${otp}`);
         const data = await response.json();
-
         if (response.ok) {
             setShowPopup(true);
-            setTimeout(checkPatientStatus, 3000);
-        } else {
-            setError(data.message);
-        }
+            setTimeout(() => checkPatientStatus(phoneNumber), 3000);
+        } else setError(data.message);
     };
 
-    const checkPatientStatus = async (phone = phoneNumber) => {
+    const checkPatientStatus = async (phone) => {
         setShowPopup(false);
         const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/check/${phone}`);
         const data = await response.json();
-
         if (response.ok) {
             setPatientData(data);
             fetchAvailableDates();
-            setStep(3); // ✅ go to appointment slot selection
+            setStep(4);
         } else {
-            // 🔁 if patient not found, go to Register page and pass the phone number
             navigate("/RegisterPatient", { state: { phoneNumber: phone } });
         }
     };
@@ -108,29 +126,18 @@ const BookAppointment = () => {
         try {
             const response = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/availableDates");
             const data = await response.json();
-
             if (response.ok) {
-                const extractedDates = Object.entries(data)
+                const dates = Object.entries(data)
                     .filter(([key]) => key.startsWith("Date"))
                     .map(([, value]) => value);
-                setAvailableDates(extractedDates);
-            } else {
-                setAvailableDates([]);
-                setError("No available dates found.");
+                setAvailableDates(dates);
             }
         } catch (err) {
-            console.error("Fetch error:", err);
-            setAvailableDates([]);
-            setError("Failed to fetch available dates.");
+            console.error("Failed to fetch available dates.");
         }
     };
 
     const bookAppointment = async () => {
-        if (!selectedDate || !preferredSlot) {
-            setError("Please select both a date and a time slot.");
-            return;
-        }
-
         const response = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/bookAppointment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -140,402 +147,115 @@ const BookAppointment = () => {
                 patient_id: patientData.patientId,
                 userType,
                 empId,
-                companyCode
-            })
+                companyCode,
+            }),
         });
-
         const data = await response.json();
-
         if (response.ok) {
             setPaymentLink(data.paymentLink);
             setAppointmentId(data.appointmentDetails._id);
             setDoctorName(data.doctorName);
-            setStep(4);
+            setStep(4.5); // ✅ Show payment button first
         } else {
             setError(data.message);
         }
     };
 
     return (
-        <div
-            style={{
-                minHeight: "100vh",
-                backgroundImage: `url(${bgImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "2rem",
-                position: "relative",
-                marginTop: "5%"
-            }}
-        >
-            <div
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    // backgroundColor: "rgba(255, 255, 255, 0.66)",
-                    zIndex: 0,
-                }}
-            />
+        <div style={{ backgroundImage: `url(${bgImage})`, minHeight: "100vh", backgroundSize: "cover", padding: "2rem" }}>
+            <div style={{ maxWidth: "600px", margin: "0 auto", backgroundColor: "rgba(255,255,255,0.9)", borderRadius: "16px", padding: "2rem" }}>
+                <h1 style={{ textAlign: "center", color: "#4285F4" }}>Book Your Appointment</h1>
 
-            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "600px" }}>
-                <h1 style={{
-                    color: "#4285F4",
-                    fontWeight: "bold",
-                    fontSize: "3rem",
-                    textAlign: "center",
-                    marginBottom: "5rem",
-                    letterSpacing: "0.5px"
-                }}>
-                    Book Your Appointment
-                </h1>
-
-                <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-                    <h3>Are you booking as a:</h3>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
-                        <button onClick={() => setUserType("corporate")} className={userType === "corporate" ? "selected-btn" : ""}>Corporate</button>
-                        <button onClick={() => setUserType("retail")} className={userType === "retail" ? "selected-btn" : ""}>None of the Above</button>
-                    </div>
-                </div>
-
+                {/* Step 1: Choose Type */}
                 {step === 1 && (
-                    <div style={{
-                        maxWidth: "420px",
-                        margin: "0 auto",
-                        padding: "25px 30px",
-                        borderRadius: "16px",
-                        backdropFilter: "blur(12px)",
-                        background: "rgba(255, 255, 255, 0.3)",
-                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-                        border: "1px solid rgba(255, 255, 255, 0.18)",
-                        textAlign: "center"
-                    }}>
-                        <label style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "15px", color: "#333" }}>
-                            Are you a...
-                        </label>
-                        <div style={{ marginBottom: "20px" }}>
-                            <button onClick={() => setUserType("corporate")} style={{ marginRight: "10px", padding: "10px", borderRadius: "8px", backgroundColor: userType === "corporate" ? "#4285F4" : "#ddd", color: userType === "corporate" ? "#fff" : "#000" }}>
-                                Corporate
-                            </button>
-                            <button onClick={() => setUserType("retail")} style={{ padding: "10px", borderRadius: "8px", backgroundColor: userType === "retail" ? "#4285F4" : "#ddd", color: userType === "retail" ? "#fff" : "#000" }}>
-                                None of the Above
-                            </button>
-                        </div>
-
-                        {/* ✅ Corporate Fields */}
+                    <div>
+                        <h3>Are you booking as a:</h3>
+                        <button onClick={() => setUserType("corporate")}>Corporate</button>
+                        <button onClick={() => { setUserType("retail"); setStep(2); }}>None of the Above</button>
                         {userType === "corporate" && (
-                            <>
-                                <input
-                                    type="text"
-                                    placeholder="Employee ID"
-                                    value={empId}
-                                    onChange={(e) => setEmpId(e.target.value)}
-                                    style={{
-                                        width: "100%",
-                                        padding: "12px",
-                                        fontSize: "1rem",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        marginBottom: "15px",
-                                        outline: "none",
-                                    }}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Company Code"
-                                    value={companyCode}
-                                    onChange={(e) => setCompanyCode(e.target.value)}
-                                    style={{
-                                        width: "100%",
-                                        padding: "12px",
-                                        fontSize: "1rem",
-                                        borderRadius: "6px",
-                                        border: "1px solid #ccc",
-                                        marginBottom: "15px",
-                                        outline: "none",
-                                    }}
-                                />
-                            </>
+                            <div>
+                                <input placeholder="Company Code" value={companyCode} onChange={(e) => setCompanyCode(e.target.value)} />
+                                <input placeholder="Employee ID" value={empId} onChange={(e) => setEmpId(e.target.value)} />
+                                <button onClick={verifyCorporatePatient}>Proceed</button>
+                                {companyError && <p style={{ color: "red" }}>{companyError}</p>}
+                            </div>
                         )}
-
-                        {/* ✅ Common Phone Number Field */}
-                        <label htmlFor="phoneNumber" style={{ fontSize: "1.25rem", fontWeight: "600", display: "block", marginBottom: "10px", color: "#333", textAlign: "center" }}>
-                            Mobile Number
-                        </label>
-                        <input
-                            id="phoneNumber"
-                            type="text"
-                            placeholder="Enter 10-digit phone number"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            style={{
-                                width: "100%",
-                                padding: "12px",
-                                fontSize: "1rem",
-                                borderRadius: "6px",
-                                border: "1px solid #ccc",
-                                marginBottom: "15px",
-                                outline: "none",
-                            }}
-                        />
-                        <button
-                            onClick={sendOTP}
-                            style={{
-                                backgroundColor: "#4285F4",
-                                color: "white",
-                                padding: "12px 24px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                borderRadius: "8px",
-                                border: "none",
-                                transition: "all 0.3s ease",
-                                boxShadow: "0 4px 12px rgba(66, 133, 244, 0.3)"
-                            }}
-                            onMouseEnter={(e) => e.target.style.transform = "scale(1.03)"}
-                            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
-                        >
-                            Send OTP
-                        </button>
                     </div>
                 )}
 
+                {/* Step 2: Enter Mobile */}
                 {step === 2 && (
-                    <div style={{
-                        maxWidth: "420px",
-                        margin: "0 auto",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        backdropFilter: "blur(12px)",
-                        background: "rgba(255, 255, 255, 0.3)",
-                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-                        border: "1px solid rgba(255, 255, 255, 0.18)",
-                        textAlign: "center"
-                    }}>
-                        <h2 style={{ marginBottom: "1rem", color: "#333", fontWeight: "700", fontSize: "1.6rem" }}>
-                            OTP Verification
-                        </h2>
-                        <p style={{ marginBottom: "1.5rem", color: "#555" }}>
-                            Enter the OTP sent to your phone
-                        </p>
-
-                        <input
-                            type="text"
-                            placeholder="Enter OTP"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            style={{
-                                padding: "12px",
-                                width: "100%",
-                                fontSize: "1rem",
-                                borderRadius: "6px",
-                                border: "1px solid #ccc",
-                                marginBottom: "20px",
-                                outline: "none",
-                            }}
-                        />
-
-                        <button
-                            onClick={verifyOTP}
-                            style={{
-                                backgroundColor: "#4285F4",
-                                color: "#fff",
-                                padding: "12px 24px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                borderRadius: "8px",
-                                border: "none",
-                                cursor: "pointer",
-                                transition: "transform 0.3s ease"
-                            }}
-                            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-                            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
-                        >
-                            Verify OTP
-                        </button>
+                    <div>
+                        <input placeholder="Mobile Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                        <button onClick={sendOTP}>Send OTP</button>
+                        {error && <p style={{ color: "red" }}>{error}</p>}
                     </div>
                 )}
 
+                {/* Step 3: OTP */}
                 {step === 3 && (
-                    <div style={{
-                        maxWidth: "600px",
-                        margin: "0 auto",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        background: "rgba(255, 255, 255, 0.3)",
-                        backdropFilter: "blur(10px)",
-                        boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-                        border: "1px solid rgba(255, 255, 255, 0.18)"
-                    }}>
-                        <h2 style={{ color: "#2c3e50", marginBottom: "1.5rem" }}>
-                            Welcome, {patientData?.patientName}
-                        </h2>
-
-                        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-                            <div style={{ flex: "1" }}>
-                                <label style={{ fontWeight: "600" }}>Select Appointment Date</label>
-                                <select
-                                    value={selectedDate}
-                                    onChange={(e) => setSelectedDate(e.target.value)}
-                                    style={{
-                                        width: "100%",
-                                        padding: "0.6rem",
-                                        borderRadius: "8px",
-                                        border: "1px solid #ccc",
-                                        marginTop: "0.5rem"
-                                    }}
-                                >
-                                    <option value="">-- Select Date --</option>
-                                    {availableDates.map((date, idx) => (
-                                        <option key={idx} value={date}>{date}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div style={{ flex: "1" }}>
-                                <label style={{ fontWeight: "600" }}>Preferred Time Slot</label>
-                                <select
-                                    value={preferredSlot}
-                                    onChange={(e) => setPreferredSlot(e.target.value)}
-                                    style={{
-                                        width: "100%",
-                                        padding: "0.6rem",
-                                        borderRadius: "8px",
-                                        border: "1px solid #ccc",
-                                        marginTop: "0.5rem"
-                                    }}
-                                >
-                                    <option value="">-- Select Time Slot --</option>
-                                    <option value="morning">Morning</option>
-                                    <option value="afternoon">Afternoon</option>
-                                    <option value="evening">Evening</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div style={{ textAlign: "center" }}>
-                            <button
-                                onClick={bookAppointment}
-                                style={{
-                                    backgroundColor: "#4CAF50",
-                                    color: "white",
-                                    padding: "0.75rem 2rem",
-                                    borderRadius: "8px",
-                                    fontSize: "1rem",
-                                    border: "none",
-                                    cursor: "pointer",
-                                    fontWeight: "600",
-                                    transition: "transform 0.3s ease"
-                                }}
-                                onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-                                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
-                            >
-                                Book Appointment
-                            </button>
-                        </div>
+                    <div>
+                        <input placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
+                        <button onClick={verifyOTP}>Verify OTP</button>
                     </div>
                 )}
 
-                {step === 4 && paymentLink && (
-                    <div
-                        style={{
-                            maxWidth: "500px",
-                            margin: "2rem auto",
-                            padding: "2rem 2.5rem",
-                            borderRadius: "16px",
-                            background: "rgba(255, 255, 255, 0.25)",
-                            backdropFilter: "blur(12px)",
-                            boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-                            textAlign: "center",
-                            fontFamily: "'Segoe UI', sans-serif",
-                            border: "1px solid rgba(255, 255, 255, 0.18)"
-                        }}
-                    >
-                        <h2 style={{ color: "#2c3e50", fontSize: "1.8rem", marginBottom: "1rem", fontWeight: "700" }}>
-                            Almost Done, {patientData?.patientName}! 🎉
-                        </h2>
-                        <p style={{ fontSize: "1rem", color: "#444", marginBottom: "2rem" }}>
-                            Please proceed with the payment to confirm your appointment.
-                        </p>
+                {/* Step 4: Select Slot */}
+                {step === 4 && (
+                    <div>
+                        <h3>Welcome {patientData?.patientName}</h3>
+                        <select value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)}>
+                            <option>Select Date</option>
+                            {availableDates.map((date, idx) => <option key={idx}>{date}</option>)}
+                        </select>
+                        <select value={preferredSlot} onChange={(e) => setPreferredSlot(e.target.value)}>
+                            <option>Select Slot</option>
+                            <option value="morning">Morning</option>
+                            <option value="afternoon">Afternoon</option>
+                            <option value="evening">Evening</option>
+                        </select>
+                        <button onClick={bookAppointment}>Book Appointment</button>
+                    </div>
+                )}
+
+                {step === 4.5 && paymentLink && (
+                    <div>
+                        <h3>Almost Done!</h3>
+                        <p>Please proceed with payment to confirm your appointment.</p>
                         <a href={paymentLink} target="_blank" rel="noopener noreferrer">
                             <button
                                 style={{
-                                    backgroundColor: "#28a745",
+                                    padding: "12px 24px",
+                                    backgroundColor: "#4285F4",
                                     color: "#fff",
-                                    padding: "0.75rem 2rem",
-                                    fontSize: "1rem",
-                                    fontWeight: "600",
-                                    borderRadius: "8px",
                                     border: "none",
-                                    cursor: "pointer",
-                                    transition: "transform 0.3s ease",
+                                    borderRadius: "8px",
+                                    fontWeight: "600",
+                                    cursor: "pointer"
                                 }}
-                                onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
-                                onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
                             >
                                 Pay Now
                             </button>
                         </a>
+                        <p style={{ fontSize: "0.9rem", marginTop: "1rem", color: "#555" }}>
+                            Once payment is complete, your appointment will be confirmed automatically.
+                        </p>
                     </div>
                 )}
 
+                {/* Step 5: Confirmation */}
                 {step === 5 && appointmentConfirmed && (
-                    <div
-                        style={{
-                            maxWidth: "600px",
-                            margin: "2rem auto",
-                            padding: "2.5rem",
-                            background: "rgba(255, 255, 255, 0.25)",
-                            backdropFilter: "blur(14px)",
-                            borderRadius: "16px",
-                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-                            fontFamily: "'Segoe UI', sans-serif",
-                            color: "#2e3a59",
-                            lineHeight: "1.6",
-                            border: "1px solid rgba(255, 255, 255, 0.18)"
-                        }}
-                    >
-                        <h2 style={{ fontSize: "1.8rem", color: "#2c7a7b", marginBottom: "1rem", fontWeight: "700" }}>
-                            🌟 Hi {appointmentConfirmed.patientName}
-                        </h2>
-
-                        <p style={{ fontSize: "1.1rem", marginBottom: "1.2rem" }}>
-                            🎉 Your appointment has been <strong>successfully confirmed!</strong>
-                        </p>
-
-                        <div style={{ lineHeight: "2" }}>
-                            <p>📅 <strong>Date:</strong> {new Date(appointmentConfirmed.DateOfAppointment).toLocaleDateString()}</p>
-                            <p>⏰ <strong>Time:</strong> {appointmentConfirmed.AppStartTime}</p>
-                            <p>👨‍⚕️ <strong>Doctor:</strong> Dr. {doctorName}</p>
-                            <p>🏥 <strong>Location:</strong> PsyCare / Online Consultation</p>
-                            <p>💳 <strong>Payment Status:</strong> ✅ Paid</p>
-                            <p>🧾 <strong>Transaction ID:</strong> {appointmentConfirmed.payment_id}</p>
-                        </div>
-
-                        <p style={{ marginTop: "1rem", fontStyle: "italic", color: "#555" }}>
-                            🔗 Your consultation link will be sent shortly before the session begins.
-                        </p>
-
-                        <hr style={{ margin: "2rem 0", border: "0.5px solid #ccc" }} />
-
-                        <p style={{ textAlign: "center", fontWeight: "600", color: "#333" }}>
-                            💙 Thank you for choosing <strong>PsyCare</strong>. We're here for you!
-                        </p>
-                    </div>
-                )}
-
-                {error && <p>{error}</p>}
-
-                {showPopup && (
                     <div>
-                        Your number has been verified. Checking our system for your details...
+                        <h3>Appointment Confirmed!</h3>
+                        <p>Date: {new Date(appointmentConfirmed.DateOfAppointment).toLocaleDateString()}</p>
+                        <p>Time: {appointmentConfirmed.AppStartTime}</p>
+                        <p>Doctor: {doctorName}</p>
+                        <p>Status: ✅ Paid</p>
+                        <a href={paymentLink}><button>View Payment Link</button></a>
                     </div>
                 )}
+
+                {showPopup && <p>Checking your details...</p>}
             </div>
         </div>
     );

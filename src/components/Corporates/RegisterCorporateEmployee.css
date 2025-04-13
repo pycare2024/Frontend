@@ -1,0 +1,70 @@
+/* RegisterCorporateEmployee.css */
+
+.register-employee-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+  }
+  
+  .register-employee-container h2 {
+    text-align: center;
+    color: #4285F4;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .employee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .employee-form input,
+  .employee-form select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .employee-form input:focus,
+  .employee-form select:focus {
+    border-color: #4285F4;
+  }
+  
+  .employee-form button {
+    padding: 12px;
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .employee-form button:hover {
+    background-color: #3367d6;
+  }
+  
+  .success,
+  .error {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+  
+  .success {
+    color: green;
+  }
+  
+  .error {
+    color: red;
+  }

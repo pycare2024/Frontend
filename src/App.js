@@ -42,6 +42,7 @@ import Articles from './components/Articles';
 import ABC from "./components/ABC/ABC";
 import PrivacyPolicy from './components/PrivacyPolicy';
 import RegisterCorporate from './components/Corporates/RegisterCorporate';
+import RegisterCorporateEmployee from './components/Corporates/RegisterCorporateEmployee';
 
 
 
@@ -171,6 +172,7 @@ function App() {
                 <Route path="/ABC" element={<ABC />} />
                 <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
                 <Route path="/RegisterCorporate" element={<RegisterCorporate />} />
+                <Route path="/RegisterCorporateEmployee" element={<RegisterCorporateEmployee />} />
             </Routes>
             {/* <Footer/> */}
         </div>
