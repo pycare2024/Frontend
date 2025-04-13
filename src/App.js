@@ -41,6 +41,7 @@ import CorporateWellness from './components/CorporateWellness';
 import Articles from './components/Articles';
 import ABC from "./components/ABC/ABC";
 import PrivacyPolicy from './components/PrivacyPolicy';
+import RegisterCorporate from './components/Corporates/RegisterCorporate';
 
 
 
@@ -169,6 +170,7 @@ function App() {
                 <Route path="/Articles" element={<Articles />} />
                 <Route path="/ABC" element={<ABC />} />
                 <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+                <Route path="/RegisterCorporate" element={<RegisterCorporate />} />
             </Routes>
             {/* <Footer/> */}
         </div>

@@ -1,0 +1,52 @@
+.register-corporate-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .register-corporate-container h2 {
+    text-align: center;
+    color: #4285F4;
+    margin-bottom: 1.5rem;
+  }
+  
+  .corporate-form input {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .corporate-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .corporate-form button:hover {
+    background-color: #3367d6;
+  }
+  
+  .success {
+    color: green;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 1rem;
+    text-align: center;
+  }

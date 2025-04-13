@@ -333,7 +333,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             <>
                                 <div
                                     name="navPatients"
-                                    style={{ position: "relative", display: "inline-block", cursor: "pointer",marginLeft:"15px" }}
+                                    style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                     onMouseEnter={() => setOpenDropdown("patients")}
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
@@ -354,7 +354,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 flexDirection: "column",  // ✅ Arrange in column
                                                 gap: "5px",  // ✅ Add spacing between items
                                                 cursor: "pointer",
-                                                fontWeight:"normal"
+                                                fontWeight: "normal"
                                             }}
                                         >
                                             <Link
@@ -377,7 +377,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 </div>
                                 <div
                                     name="navDoctors"
-                                    style={{ position: "relative", display: "inline-block", cursor: "pointer",marginLeft:"15px" }}
+                                    style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                     onMouseEnter={() => setOpenDropdown("doctors")}
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
@@ -398,7 +398,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 flexDirection: "column",
                                                 gap: "8px",
                                                 cursor: "pointer",
-                                                fontWeight:"normal"
+                                                fontWeight: "normal"
                                             }}
                                         >
                                             <Link
@@ -444,8 +444,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         borderRadius: "4px",
                                         transition: "background 0.2s",
                                         border: "none",
-                                        marginRight:"45px",
-                                        fontWeight:"normal"
+                                        marginRight: "45px",
+                                        fontWeight: "normal"
                                     }}
                                     onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                     onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
@@ -498,7 +498,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         borderRadius: "4px",
                                         transition: "background 0.2s",
                                         border: "none",
-                                        marginRight:"45px"
+                                        marginRight: "45px"
                                     }}
                                     onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                     onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
@@ -510,8 +510,52 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                     {isLoggedIn && (
                         <>
                             <div
+                                name="navCorporates"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
+                                onMouseEnter={() => setOpenDropdown("corporates")}
+                                onMouseLeave={() => setOpenDropdown(null)}
+                            >
+                                Corporates
+                                {openDropdown === "corporates" && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "220px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            cursor: "pointer",
+                                            fontWeight: "normal"
+                                        }}
+                                    >
+                                        <Link
+                                            to="/RegisterCorporate"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Register Corporate
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div
                                 name="navAccounts"
-                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft:"15px" }}
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                 onMouseEnter={() => setOpenDropdown("accounts")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
@@ -532,7 +576,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             flexDirection: "column",
                                             gap: "8px",
                                             cursor: "pointer",
-                                            fontWeight:"normal"
+                                            fontWeight: "normal"
                                         }}
                                     >
                                         <Link
@@ -557,7 +601,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             {/* Doctors Menu */}
                             <div
                                 name="navDoctors"
-                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft:"15px"  }}
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                 onMouseEnter={() => setOpenDropdown("doctors")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
@@ -578,7 +622,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             flexDirection: "column",
                                             gap: "8px",
                                             cursor: "pointer",
-                                            fontWeight:"normal"
+                                            fontWeight: "normal"
                                         }}
                                     >
                                         <Link
@@ -618,7 +662,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             {/* Patients Menu */}
                             <div
                                 name="navPatients"
-                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft:"15px"  }}
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                 onMouseEnter={() => setOpenDropdown("patients")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
@@ -639,7 +683,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             flexDirection: "column",  // ✅ Arrange in column
                                             gap: "5px",  // ✅ Add spacing between items
                                             cursor: "pointer",
-                                            fontWeight:"normal"
+                                            fontWeight: "normal"
                                         }}
                                     >
                                         <Link
@@ -664,7 +708,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             {/* Screening Test Menu */}
                             <div
                                 name="navScreeningTest"
-                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft:"15px"  }}
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                 onMouseEnter={() => setOpenDropdown("screeningTest")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
@@ -685,7 +729,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             flexDirection: "column",  // ✅ Arrange in column
                                             gap: "5px",  // ✅ Add spacing between items
                                             cursor: "pointer",
-                                            fontWeight:"normal"
+                                            fontWeight: "normal"
                                         }}
                                     >
                                         <Link
@@ -710,7 +754,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             {/* Operator Menu */}
                             <div
                                 name="navOperator"
-                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft:"15px"  }}
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
                                 onMouseEnter={() => setOpenDropdown("operator")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
@@ -731,7 +775,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             flexDirection: "column",  // ✅ Arrange in column
                                             gap: "5px",  // ✅ Add spacing between items
                                             cursor: "pointer",
-                                            fontWeight:"normal"
+                                            fontWeight: "normal"
                                         }}
                                     >
                                         <Link
@@ -775,8 +819,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     background: "none",
                                     border: "none",
                                     cursor: "pointer",
-                                    marginRight:"45px",
-                                    fontWeight:"normal"
+                                    marginRight: "45px",
+                                    fontWeight: "normal"
                                 }}
                             >
                                 Logout

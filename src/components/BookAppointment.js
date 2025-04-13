@@ -17,6 +17,9 @@ const BookAppointment = () => {
     const [appointmentConfirmed, setAppointmentConfirmed] = useState(null);
     const [appointmentId, setAppointmentId] = useState(null);
     const [doctorName, setDoctorName] = useState(null);
+    const [userType, setUserType] = useState(""); // "corporate", "student", or "retail"
+    const [empId, setEmpId] = useState(""); // for corporate users
+    const [companyCode, setCompanyCode] = useState(""); // company code for validation
 
 
     const navigate = useNavigate();
@@ -134,7 +137,10 @@ const BookAppointment = () => {
             body: JSON.stringify({
                 selectedDate,
                 preferredTime: preferredSlot,
-                patient_id: patientData.patientId
+                patient_id: patientData.patientId,
+                userType,
+                empId,
+                companyCode
             })
         });
 
@@ -190,6 +196,14 @@ const BookAppointment = () => {
                     Book Your Appointment
                 </h1>
 
+                <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+                    <h3>Are you booking as a:</h3>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
+                        <button onClick={() => setUserType("corporate")} className={userType === "corporate" ? "selected-btn" : ""}>Corporate</button>
+                        <button onClick={() => setUserType("retail")} className={userType === "retail" ? "selected-btn" : ""}>None of the Above</button>
+                    </div>
+                </div>
+
                 {step === 1 && (
                     <div style={{
                         maxWidth: "420px",
@@ -202,6 +216,55 @@ const BookAppointment = () => {
                         border: "1px solid rgba(255, 255, 255, 0.18)",
                         textAlign: "center"
                     }}>
+                        <label style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "15px", color: "#333" }}>
+                            Are you a...
+                        </label>
+                        <div style={{ marginBottom: "20px" }}>
+                            <button onClick={() => setUserType("corporate")} style={{ marginRight: "10px", padding: "10px", borderRadius: "8px", backgroundColor: userType === "corporate" ? "#4285F4" : "#ddd", color: userType === "corporate" ? "#fff" : "#000" }}>
+                                Corporate
+                            </button>
+                            <button onClick={() => setUserType("retail")} style={{ padding: "10px", borderRadius: "8px", backgroundColor: userType === "retail" ? "#4285F4" : "#ddd", color: userType === "retail" ? "#fff" : "#000" }}>
+                                None of the Above
+                            </button>
+                        </div>
+
+                        {/* ✅ Corporate Fields */}
+                        {userType === "corporate" && (
+                            <>
+                                <input
+                                    type="text"
+                                    placeholder="Employee ID"
+                                    value={empId}
+                                    onChange={(e) => setEmpId(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "12px",
+                                        fontSize: "1rem",
+                                        borderRadius: "6px",
+                                        border: "1px solid #ccc",
+                                        marginBottom: "15px",
+                                        outline: "none",
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Company Code"
+                                    value={companyCode}
+                                    onChange={(e) => setCompanyCode(e.target.value)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "12px",
+                                        fontSize: "1rem",
+                                        borderRadius: "6px",
+                                        border: "1px solid #ccc",
+                                        marginBottom: "15px",
+                                        outline: "none",
+                                    }}
+                                />
+                            </>
+                        )}
+
+                        {/* ✅ Common Phone Number Field */}
                         <label htmlFor="phoneNumber" style={{ fontSize: "1.25rem", fontWeight: "600", display: "block", marginBottom: "10px", color: "#333", textAlign: "center" }}>
                             Mobile Number
                         </label>
