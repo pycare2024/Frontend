@@ -1,0 +1,53 @@
+/* RegisterFamilyMember.css */
+
+.register-family-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .register-family-container h2 {
+    color: #4285F4;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .family-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .family-form input,
+  .family-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .family-form button {
+    padding: 12px;
+    background-color: #4285F4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .family-form button:hover {
+    background-color: #3367d6;
+  }
+  
+  .message {
+    margin-top: 1rem;
+    text-align: center;
+    color: green;
+    font-weight: 600;
+  }

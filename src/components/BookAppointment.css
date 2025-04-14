@@ -1,0 +1,79 @@
+.book-appointment-container {
+  background-image: url('./bookappointment.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appointment-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+}
+
+.appointment-card h2 {
+  color: #4285F4;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.step-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input,
+select {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #4285F4;
+  outline: none;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4285F4;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.error-text {
+  color: red;
+  font-size: 0.95rem;
+  margin-top: -0.5rem;
+}
+
+.confirmation-box {
+  text-align: center;
+  margin-top: 2rem;
+  background-color: #e8f0fe;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #c7dafb;
+}
