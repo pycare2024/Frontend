@@ -550,6 +550,21 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         >
                                             Register Corporate
                                         </Link>
+                                        <Link
+                                            to="/RechargeCredits"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Recharge credits
+                                        </Link>
                                     </div>
                                 )}
                             </div>

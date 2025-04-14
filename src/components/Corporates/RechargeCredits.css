@@ -1,0 +1,72 @@
+.recharge-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .recharge-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .recharge-form input {
+    padding: 10px 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .recharge-form button {
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #4285F4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .recharge-form button:hover {
+    background-color: #3367d6;
+  }
+  
+  .payment-section {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .pay-btn {
+    background-color: #28a745;
+    padding: 12px 24px;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .status-checking {
+    margin-top: 1rem;
+    color: #555;
+    font-style: italic;
+  }
+  
+  .success {
+    margin-top: 1rem;
+    color: #2c7a7b;
+    font-weight: bold;
+  }
+  
+  .message {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #555;
+  }

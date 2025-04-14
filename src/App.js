@@ -44,6 +44,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import RegisterCorporate from './components/Corporates/RegisterCorporate';
 import RegisterCorporateEmployee from './components/Corporates/RegisterCorporateEmployee';
 import RegisterFamilyMember from './components/Corporates/RegisterFamilyMember';
+import RechargeCredits from './components/Corporates/RechargeCredits';
 
 
 
@@ -175,6 +176,7 @@ function App() {
                 <Route path="/RegisterCorporate" element={<RegisterCorporate />} />
                 <Route path="/RegisterCorporateEmployee" element={<RegisterCorporateEmployee />} />
                 <Route path="/RegisterFamilyMember" element={<RegisterFamilyMember />} />
+                <Route path="/RechargeCredits" element={<RechargeCredits />} />
             </Routes>
             {/* <Footer/> */}
         </div>
