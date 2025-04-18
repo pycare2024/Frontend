@@ -7,7 +7,7 @@ import "./ScreenTestForm.css";
 const ScreenTestForm = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState(Array(31).fill(null));
+  const [answers, setAnswers] = useState(Array(53).fill(null));
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");

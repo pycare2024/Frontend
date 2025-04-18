@@ -47,11 +47,11 @@ function GeminiApi() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    depression: 12,
-                    anxiety: 8,
-                    ocd: 5,
-                    ptsd: 3,
-                    sleep: 10
+                    depression: 0,
+                    anxiety: 0,
+                    ocd: 40,
+                    ptsd: 0,
+                    sleep: 28
                 })
             });
             
