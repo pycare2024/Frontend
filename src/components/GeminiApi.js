@@ -49,9 +49,9 @@ function GeminiApi() {
                 body: JSON.stringify({
                     depression: 0,
                     anxiety: 0,
-                    ocd: 40,
+                    ocd: 0,
                     ptsd: 0,
-                    sleep: 28
+                    sleep: 0
                 })
             });
             

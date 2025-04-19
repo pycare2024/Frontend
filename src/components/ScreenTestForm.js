@@ -17,20 +17,43 @@ const ScreenTestForm = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const patientId = location.state?.patientId;
-  const phoneNumber = location.state?.phoneNumber;
-  const patientName = location.state?.patientName;
-  const patientGender = location.state?.gender || "-";
+  const { patientId, phoneNumber, patientName, patientGender, problems } = location.state || {};
 
   useEffect(() => {
-    fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/getQuestions")
-      .then((res) => res.json())
-      .then((data) => {
-        setQuestions(data.questions);
+    const fetchQuestions = async () => {
+      try {
+        const res = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/getQuestions");
+        const data = await res.json();
+        if (!res.ok || !data.questions) throw new Error();
+
+        // Group questions by section
+        const sectionMap = {};
+        for (const q of data.questions) {
+          if (!sectionMap[q.section]) sectionMap[q.section] = [];
+          sectionMap[q.section].push(q);
+        }
+
+        // Sort each section by `order`
+        for (const sec in sectionMap) {
+          sectionMap[sec].sort((a, b) => a.order - b.order);
+        }
+
+        // Build filteredQuestions respecting `problems` order
+        const filteredQuestions = problems.flatMap(p => sectionMap[p] || []);
+
+        console.log("🧪 Ordered sections in final questions:", filteredQuestions.map(q => q.section));
+
+        setQuestions(filteredQuestions);
+        setAnswers(Array(filteredQuestions.length).fill(null));
         setLoading(false);
-      })
-      .catch(() => setError("Failed to load questions."));
-  }, []);
+      } catch (err) {
+        console.error("❌ Error loading questions:", err);
+        setError("Failed to load questions.");
+      }
+    };
+
+    fetchQuestions();
+  }, [problems]);
 
   const handleOptionSelect = (value) => {
     const updatedAnswers = [...answers];
@@ -70,8 +93,14 @@ const ScreenTestForm = () => {
         body: JSON.stringify({
           patient_id: patientId,
           answers,
+          problems,
+          sectionCounts: problems.reduce((acc, p) => {
+            acc[p] = questions.filter(q => q.section === p).length;
+            return acc;
+          }, {})
         }),
       });
+
       const data = await response.json();
       if (response.ok) {
         setSuccess("Assessment submitted successfully!");
@@ -93,67 +122,115 @@ const ScreenTestForm = () => {
         <head>
           <title>PsyCare - Mental Wellness Report</title>
           <style>
+            @media print {
+              body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+            }
+  
             body {
               font-family: 'Segoe UI', sans-serif;
-              padding: 2rem;
+              padding: 40px;
+              background-color: #f4f6f8;
               color: #333;
-              background-color: #f9fafb;
             }
+  
+            .report-container {
+              max-width: 800px;
+              margin: auto;
+              background-color: #fff;
+              padding: 40px;
+              border-radius: 12px;
+              box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+  
             .header {
               text-align: center;
-              margin-bottom: 2rem;
+              margin-bottom: 30px;
             }
+  
+            .header img {
+              width: 100px;
+              margin-bottom: 10px;
+              border: 2px solid #4285F4;
+              border-radius: 10px;
+            }
+  
             .header h1 {
-              color: #4285f4;
-              margin-bottom: 0.2rem;
+              color: #4285F4;
+              font-size: 2.2rem;
+              margin: 0;
             }
+  
             .header p {
               font-style: italic;
               color: #555;
+              margin-top: 4px;
             }
-            .details {
-              margin-bottom: 2rem;
-              padding: 1rem;
-              background: #ffffff;
-              border: 1px solid #ccc;
-              border-radius: 8px;
+  
+            .section {
+              margin-bottom: 30px;
             }
-            .details p {
-              margin: 0.4rem 0;
+  
+            .section-title {
+              font-size: 1.3rem;
+              color: #4285F4;
+              border-bottom: 2px solid #e0e0e0;
+              padding-bottom: 6px;
+              margin-bottom: 15px;
+              font-weight: 600;
+            }
+  
+            .section p {
+              margin: 8px 0;
               font-size: 1rem;
             }
-            .report-box {
-              border: 1px solid #ccc;
-              padding: 1.5rem;
+  
+            .summary {
+              background-color: #f1f8ff;
+              border-left: 4px solid #4285F4;
+              padding: 20px;
               border-radius: 10px;
-              background: #ffffff;
-            }
-            .report-box h3 {
-              margin-bottom: 1rem;
-              color: #1d4ed8;
+              font-size: 1rem;
+              line-height: 1.6;
+              color: #333;
             }
           </style>
         </head>
         <body>
-          <div class="header">
-            <h1>PsyCare</h1>
-            <p>Your Path to Mental Wellness</p>
-          </div>
-          <div class="details">
-            <p><strong>Patient Name:</strong> ${patientName}</p>
-            <p><strong>Gender:</strong> ${patientGender}</p>
-            <p><strong>Date:</strong> ${testMeta.date}</p>
-            <p><strong>Time:</strong> ${testMeta.time}</p>
-          </div>
-          <div class="report-box">
-            <h3>AI-Generated Report Summary</h3>
-            <p>${report}</p>
+          <div class="report-container">
+            <div class="header">
+              <img src="${window.location.origin}/PsyCareMain.png" alt="PsyCare Logo" />
+              <h1>PsyCare</h1>
+              <p>Your Path to Mental Wellness</p>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">Patient Details</div>
+              <p><strong>Name:</strong> ${patientName}</p>
+              <p><strong>Mobile:</strong> ${phoneNumber}</p>
+              <p><strong>Gender:</strong> ${patientGender}</p>
+              <p><strong>Date:</strong> ${testMeta.date}</p>
+              <p><strong>Time:</strong> ${testMeta.time}</p>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">AI-Generated Report Summary</div>
+              <div class="summary">
+                ${report}
+              </div>
+            </div>
           </div>
         </body>
       </html>
     `);
     printWindow.document.close();
-    printWindow.print();
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }, 300); // ⏱ give styles/images time to render
   };
 
   if (loading) return <div className="loading">Loading questions...</div>;
@@ -186,21 +263,27 @@ const ScreenTestForm = () => {
         </div>
       ) : (
         <>
-          <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
-          <div className="question-box">
-            <h3>{currentQuestion.question}</h3>
-            <div className="options">
-              {currentQuestion.options.map((option, index) => (
-                <button
-                  key={index}
-                  className={`option-button ${answers[currentIndex] === index + 1 ? "selected" : ""}`}
-                  onClick={() => handleOptionSelect(index + 1)}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
+          {currentQuestion ? (
+            <>
+              <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
+              <div className="question-box">
+                <h3>{currentQuestion.question}</h3>
+                <div className="options">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={index}
+                      className={`option-button ${answers[currentIndex] === index + 1 ? "selected" : ""}`}
+                      onClick={() => handleOptionSelect(index + 1)}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <p style={{ textAlign: "center", marginTop: "2rem" }}>No questions available. Please try again later.</p>
+          )}
           <div className="navigation-buttons">
             <button onClick={handleBack} disabled={currentIndex === 0}>Back</button>
             {currentIndex < questions.length - 1 ? (

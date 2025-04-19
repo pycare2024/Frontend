@@ -51,8 +51,8 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-input,
-select {
+.book-step-section input,
+.book-step-section select {
   padding: 0.9rem 1.2rem;
   border-radius: 12px;
   border: 1px solid #d0d7e2;
@@ -63,14 +63,14 @@ select {
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
-input:focus,
-select:focus {
+.book-step-section input:focus,
+.book-step-section select:focus {
   border-color: #4285F4;
   outline: none;
   box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
 }
 
-button {
+.book-step-section button {
   padding: 0.9rem 1.6rem;
   background: linear-gradient(135deg, #4285F4, #6aa0f8);
   color: white;
@@ -83,12 +83,12 @@ button {
   box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
 }
 
-button:hover {
+.book-step-section button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(66, 133, 244, 0.3);
 }
 
-button:active {
+.book-step-section button:active {
   transform: scale(0.97);
 }
 
@@ -121,18 +121,18 @@ button:active {
   box-shadow: 0 4px 16px rgba(66, 133, 244, 0.1);
 }
 
-a button {
+.book-step-section a button {
   width: 100%;
   margin-top: 1rem;
   background-color: #34a853;
   background-image: none;
 }
 
-a button:hover {
+.book-step-section a button:hover {
   box-shadow: 0 4px 12px rgba(52, 168, 83, 0.4);
 }
 
-h4 {
+.book-step-section h4 {
   color: #1a237e;
   font-weight: 600;
   font-size: 1.1rem;
@@ -148,9 +148,9 @@ h4 {
     font-size: 1.7rem;
   }
 
-  button,
-  input,
-  select {
+  .book-step-section button,
+  .book-step-section input,
+  .book-step-section select {
     font-size: 0.95rem;
   }
 

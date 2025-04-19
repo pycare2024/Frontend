@@ -22,8 +22,17 @@ const RegisterPatient = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [showNextChoice, setShowNextChoice] = useState(false);
+    const [selectedProblems, setSelectedProblems] = useState([]);
 
     const navigate = useNavigate();
+
+    const handleProblemChange = (problemKey) => {
+        setSelectedProblems((prev) =>
+            prev.includes(problemKey)
+                ? prev.filter((p) => p !== problemKey)
+                : [...prev, problemKey]
+        );
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,18 +69,24 @@ const RegisterPatient = () => {
     };
 
     const handleSubmit = async () => {
-        const { Name, Age, Gender, Location, Mobile, Problem } = formData;
+        const { Name, Age, Gender, Location, Mobile } = formData;
         try {
             const res = await fetch("https://backend-xhl4.onrender.com/patientRoute/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ Name, Age, Gender, Location, Mobile, Problem }),
+                body: JSON.stringify({
+                    Name,
+                    Age,
+                    Gender,
+                    Location,
+                    Mobile,
+                    Problem: selectedProblems, // ✅ pass array here
+                }),
             });
-            const data = await res.json();
 
-            console.log(data.patientId);
+            const data = await res.json();
             if (res.ok) {
                 setSuccess("You're all set! What would you like to do next?");
                 setShowNextChoice(true);
@@ -129,19 +144,29 @@ const RegisterPatient = () => {
                 </div>
             )}
 
-            {step === 3 && otpVerified && (
-                <div>
+            {step === 3 && (
+                <div className="step-section">
                     <h3>Tell us what you're experiencing</h3>
-                    <select name="Problem" value={formData.Problem} onChange={handleChange}>
-                        <option value="">Select a problem</option>
-                        <option value="Anxiety">Anxiety</option>
-                        <option value="Depression">Depression</option>
-                        <option value="Stress">Stress</option>
-                        <option value="Sleep Issues">Sleep Issues</option>
-                        <option value="Relationship Issues">Relationship Issues</option>
-                        <option value="Self-Esteem">Self-Esteem</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <div className="problem-checkbox-group">
+                        {[
+                            { key: "anxiety", label: "Anxiety", symptoms: "Worry, nervousness, racing thoughts" },
+                            { key: "depression", label: "Depression", symptoms: "Sadness, lack of interest, low energy" },
+                            { key: "ocd", label: "OCD", symptoms: "Repetitive thoughts or behaviors" },
+                            { key: "ptsd", label: "PTSD", symptoms: "Flashbacks, nightmares, hypervigilance" },
+                            { key: "sleep", label: "Sleep Issues", symptoms: "Trouble falling/staying asleep" },
+                            { key: "other", label: "Other", symptoms: "Different or unclear symptoms" }
+                        ].map((problem) => (
+                            <label key={problem.key} className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={problem.key}
+                                    checked={selectedProblems.includes(problem.key)}
+                                    onChange={() => handleProblemChange(problem.key)}
+                                />
+                                <span><strong>{problem.label}</strong><br /><small>{problem.symptoms}</small></span>
+                            </label>
+                        ))}
+                    </div>
                     <button onClick={handleSubmit}>Register</button>
                 </div>
             )}
@@ -157,8 +182,10 @@ const RegisterPatient = () => {
                                 state: {
                                     patientId: localStorage.getItem("patientId"),
                                     patientName: localStorage.getItem("patientName"),
-                                    phoneNumber: formData.Mobile
-                                },
+                                    phoneNumber: formData.Mobile,
+                                    patientGender: formData.Gender,
+                                    problems: selectedProblems // ✅ pass selected problems
+                                }
                             })
                         }
                         style={{
