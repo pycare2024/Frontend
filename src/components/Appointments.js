@@ -5,23 +5,20 @@ const Appointments = () => {
     const [appointments, setAppointments] = useState([]);
     const [selectedDate, setSelectedDate] = useState("");
     const [loading, setLoading] = useState(false);
+    const [sessionNotes, setSessionNotes] = useState({});
+    const [sessionRecommendations, setSessionRecommendations] = useState({});
 
     const doctor_id = localStorage.getItem("doctor_id");
 
     useEffect(() => {
-        if (doctor_id) {
-            fetchAppointments();
-        }
+        if (doctor_id) fetchAppointments();
     }, [selectedDate, doctor_id]);
 
     const fetchAppointments = async () => {
         if (!doctor_id) return;
-
         setLoading(true);
         try {
-            const response = await fetch(
-                `https://backend-xhl4.onrender.com/AppointmentRoute/doctor-appointments?doctor_id=${doctor_id}${selectedDate ? `&date=${selectedDate}` : ""}`
-            );
+            const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/doctor-appointments?doctor_id=${doctor_id}${selectedDate ? `&date=${selectedDate}` : ""}`);
             const data = await response.json();
             setAppointments(data.appointments || []);
         } catch (error) {
@@ -37,36 +34,34 @@ const Appointments = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                fetchAppointments();
-            } else {
-                alert(data.message || "Failed to start session.");
-            }
+            if (response.ok) fetchAppointments();
+            else alert("Failed to start session.");
         } catch (error) {
-            console.error("Error starting session:", error);
-            alert("Something went wrong. Please try again.");
+            console.error("Start session error:", error);
         }
     };
 
     const markCompleted = async (appointmentId) => {
+        if (!sessionNotes[appointmentId]?.trim()) {
+            alert("Please enter Notes before marking session as completed.");
+            return;
+        }
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/markCompleted/${appointmentId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    notes: sessionNotes[appointmentId],
+                    recommendations: sessionRecommendations[appointmentId] || ""
+                })
             });
             const data = await response.json();
             if (response.ok) {
                 alert("Marked as completed");
                 fetchAppointments();
-            } else {
-                alert(data.message || "Failed to mark as completed");
-            }
+            } else alert(data.message || "Failed to mark as completed");
         } catch (error) {
             console.error("Error:", error);
-            alert("Something went wrong");
         }
     };
 
@@ -80,12 +75,9 @@ const Appointments = () => {
             if (response.ok) {
                 alert("Marked as no-show");
                 fetchAppointments();
-            } else {
-                alert(data.message || "Failed to mark as no-show");
-            }
+            } else alert(data.message || "Failed to mark as no-show");
         } catch (error) {
             console.error("Error:", error);
-            alert("Something went wrong");
         }
     };
 
@@ -93,36 +85,38 @@ const Appointments = () => {
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/cancelAndRefund/${appointmentId}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
             });
-
             const data = await response.json();
             if (response.ok) {
                 alert("Appointment cancelled and refund initiated.");
-                fetchAppointments(); // refresh the list
-            } else {
-                alert(data.message || "Cancellation failed.");
-            }
+                fetchAppointments();
+            } else alert(data.message || "Cancellation failed.");
         } catch (error) {
             console.error("Error cancelling appointment:", error);
-            alert("Something went wrong.");
         }
+    };
+
+    const handleVoiceInput = (field, id) => {
+        const recognition = new window.webkitSpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            if (field === "notes") {
+                setSessionNotes(prev => ({ ...prev, [id]: (prev[id] || "") + " " + transcript }));
+            } else {
+                setSessionRecommendations(prev => ({ ...prev, [id]: (prev[id] || "") + " " + transcript }));
+            }
+        };
+        recognition.start();
     };
 
     return (
         <div className="appointments-wrapper">
             <h1 className="appointments-heading">Doctor's Appointments</h1>
-
-            {/* Date Picker */}
             <div className="date-picker">
-                <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                />
+                <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
             </div>
-
-            {/* Appointments Table */}
             <div className="table-container">
                 {loading ? (
                     <p className="text-center text-gray-600 p-4 animate-pulse">Loading appointments...</p>
@@ -157,39 +151,46 @@ const Appointments = () => {
                                             <span className="status-tag no-show">❌ No-Show</span>
                                         ) : appointment.session_started ? (
                                             <div className="flex flex-col gap-2 items-center">
-                                                <button
-                                                    onClick={() => window.open(appointment.meeting_link, "_blank")}
-                                                    className="button join"
-                                                >
+                                                <button onClick={() => window.open(appointment.meeting_link, "_blank")} className="button join">
                                                     Join Meeting
                                                 </button>
+                                                <div className="session-fields">
+                                                    <div className="field">
+                                                        <label>Notes <span className="required">*</span></label>
+                                                        <div className="voice-input">
+                                                            <textarea
+                                                                value={sessionNotes[appointment._id] || ""}
+                                                                onChange={(e) => setSessionNotes({ ...sessionNotes, [appointment._id]: e.target.value })}
+                                                            />
+                                                            <button className="mic-button" onClick={() => handleVoiceInput("notes", appointment._id)}>🎙️</button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="field">
+                                                        <label>Recommendations</label>
+                                                        <div className="voice-input">
+                                                            <textarea
+                                                                value={sessionRecommendations[appointment._id] || ""}
+                                                                onChange={(e) => setSessionRecommendations({ ...sessionRecommendations, [appointment._id]: e.target.value })}
+                                                            />
+                                                            <button className="mic-button" onClick={() => handleVoiceInput("recommendations", appointment._id)}>🎙️</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div className="flex gap-2">
-                                                    <button
-                                                        onClick={() => markCompleted(appointment._id)}
-                                                        className="button complete"
-                                                    >
+                                                    <button onClick={() => markCompleted(appointment._id)} className="button complete">
                                                         Mark Completed
                                                     </button>
-                                                    <button
-                                                        onClick={() => markNoShow(appointment._id)}
-                                                        className="button no-show"
-                                                    >
+                                                    <button onClick={() => markNoShow(appointment._id)} className="button no-show">
                                                         Mark No-Show
                                                     </button>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div className="flex flex-col gap-2 items-center">
-                                                <button
-                                                    onClick={() => startSession(appointment._id)}
-                                                    className="button start"
-                                                >
+                                                <button onClick={() => startSession(appointment._id)} className="button start">
                                                     Start Session
                                                 </button>
-                                                <button
-                                                    onClick={() => cancelAppointment(appointment._id)}
-                                                    className="button cancel"
-                                                >
+                                                <button onClick={() => cancelAppointment(appointment._id)} className="button cancel">
                                                     Cancel Appointment
                                                 </button>
                                             </div>
