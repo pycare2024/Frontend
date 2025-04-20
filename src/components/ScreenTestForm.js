@@ -92,6 +92,7 @@ const ScreenTestForm = () => {
         },
         body: JSON.stringify({
           patient_id: patientId,
+          patientName,
           answers,
           problems,
           sectionCounts: problems.reduce((acc, p) => {
@@ -116,6 +117,18 @@ const ScreenTestForm = () => {
   };
 
   const handlePrint = () => {
+    // Split report into paragraphs with bold sections
+    const formattedReportHTML = `
+      <p><strong>Report for ${patientName}</strong></p>
+      ${report
+        .split(/(?=\*\*Summary:|\*\*Findings:|\*\*Recommendations:)/)
+        .map(paragraph =>
+          `<p>${paragraph.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</p>`
+        )
+        .join("")
+      }
+    `;
+
     const printWindow = window.open('', '_blank');
     printWindow.document.write(`
       <html>
@@ -169,10 +182,6 @@ const ScreenTestForm = () => {
               margin-top: 4px;
             }
   
-            .section {
-              margin-bottom: 30px;
-            }
-  
             .section-title {
               font-size: 1.3rem;
               color: #4285F4;
@@ -182,19 +191,11 @@ const ScreenTestForm = () => {
               font-weight: 600;
             }
   
-            .section p {
+            .summary p {
               margin: 8px 0;
               font-size: 1rem;
-            }
-  
-            .summary {
-              background-color: #f1f8ff;
-              border-left: 4px solid #4285F4;
-              padding: 20px;
-              border-radius: 10px;
-              font-size: 1rem;
               line-height: 1.6;
-              color: #333;
+              white-space: pre-wrap;
             }
           </style>
         </head>
@@ -218,7 +219,7 @@ const ScreenTestForm = () => {
             <div class="section">
               <div class="section-title">AI-Generated Report Summary</div>
               <div class="summary">
-                ${report}
+                ${formattedReportHTML}
               </div>
             </div>
           </div>
@@ -230,7 +231,7 @@ const ScreenTestForm = () => {
       printWindow.focus();
       printWindow.print();
       printWindow.close();
-    }, 300); // ⏱ give styles/images time to render
+    }, 300);
   };
 
   if (loading) return <div className="loading">Loading questions...</div>;
@@ -244,7 +245,16 @@ const ScreenTestForm = () => {
       {report ? (
         <div className="report-box">
           <h3>Your Screening Report</h3>
-          <div className="report-text">{report}</div>
+          <div className="report-text">
+            <h4><strong>Report for {patientName}</strong></h4>
+            {report
+              .split(/(?=\*\*Summary:|\*\*Findings:|\*\*Recommendations:)/)
+              .map((section, index) => (
+                <div key={index} style={{ marginBottom: "1.2rem", lineHeight: "1.6" }}>
+                  <p dangerouslySetInnerHTML={{ __html: section.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }}></p>
+                </div>
+              ))}
+          </div>
           <div className="report-actions">
             <button className="print-btn" onClick={handlePrint}>Print Report</button>
             <button

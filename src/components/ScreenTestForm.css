@@ -115,6 +115,18 @@
     line-height: 1.6;
     white-space: pre-line;
   }
+
+  .report-text h4 {
+    color: #4285F4;
+    margin-bottom: 1rem;
+  }
+
+  .report-text p {
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
   
   .report-actions {
     display: flex;
