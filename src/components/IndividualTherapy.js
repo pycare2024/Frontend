@@ -2,8 +2,63 @@ import React from 'react';
 import './IndividualTherapy.css';
 import { useNavigate } from 'react-router-dom';
 
+// Import all images
+import Anxiety from './iAn.png';
+import Indi from './iInd.jpg'
+import Couple from './iCouple.jpg'
+import Family from './iFamily.jpg'
+import Child from './iChild.jpg'
+import Career from './iCareer.jpg'
+import Add from './iAdd.png'
+import Phy from './iAnx.png'
+
+
+
 const IndividualTherapy = () => {
   const navigate = useNavigate();
+
+  const services = [
+    {
+      title: 'Depression / Anxiety Counselling',
+      image: Anxiety,
+      description: 'Personalized strategies to cope with anxiety and depression through supportive talk therapy.',
+    },
+    {
+      title: 'Individual Therapy',
+      image: Indi,
+      description: 'Work one-on-one with experienced therapists to navigate personal challenges and heal.',
+    },
+    {
+      title: 'Couple Therapy',
+      image: Couple,
+      description: 'Strengthen relationships and improve communication with expert couple counselling.',
+    },
+    {
+      title: 'Family Therapy',
+      image:Family,
+      description: 'Resolve family issues and build healthy dynamics with guidance from trained professionals.',
+    },
+    {
+      title: 'Child and Adolescent Therapy',
+      image: Child,
+      description: 'Gentle, age-appropriate therapy for children and teens dealing with emotional difficulties.',
+    },
+    {
+      title: 'Career Counselling',
+      image: Career,
+      description: 'Discover your career path and overcome professional hurdles with expert advice.',
+    },
+    {
+      title: 'De-addiction Counselling',
+      image: Add,
+      description: 'Supportive programs to overcome substance use and regain control of your life.',
+    },
+    {
+      title: 'Psychiatric Consultation',
+      image:Phy,
+      description: 'Consult with certified psychiatrists for mental health evaluations and treatment plans.',
+    },
+  ];
 
   return (
     <div className="therapy-page">
@@ -28,6 +83,20 @@ const IndividualTherapy = () => {
           We are here for you – step by step. If you are fighting with anxiety, grief, or self-doubts,
           the psychologist of PsyCare will assist you in finding your stability in Gurgaon.
         </p>
+      </section>
+
+      {/* Therapy Services Grid */}
+      <section className="therapy-services">
+        <h2>Explore Our Counselling Services</h2>
+        <div className="services-grid">
+          {services.map((service, index) => (
+            <div key={index} className="service-card">
+              <img src={service.image} alt={service.title} />
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Therapy Approach */}
