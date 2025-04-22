@@ -612,6 +612,50 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     </div>
                                 )}
                             </div>
+                            <div
+                                name="navUtility"
+                                style={{ position: "relative", display: "inline-block", cursor: "pointer", marginLeft: "15px" }}
+                                onMouseEnter={() => setOpenDropdown("utility")}
+                                onMouseLeave={() => setOpenDropdown(null)}
+                            >
+                                Utility
+                                {openDropdown === "utility" && (
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "100%",
+                                            left: 0,
+                                            backgroundColor: "white",
+                                            padding: "10px",
+                                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                                            zIndex: 10,
+                                            borderRadius: "4px",
+                                            minWidth: "220px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "8px",
+                                            cursor: "pointer",
+                                            fontWeight: "normal"
+                                        }}
+                                    >
+                                        <Link
+                                            to="/EmailPanel"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Send Bulk Email
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
 
                             {/* Doctors Menu */}
                             <div

@@ -1,0 +1,65 @@
+
+.email-panel-container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 30px 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  .email-panel-container h2 {
+    text-align: center;
+    color: #4285f4;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  .email-panel-container label {
+    display: block;
+    font-weight: 600;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .email-panel-container input[type="text"],
+  .email-panel-container textarea,
+  .email-panel-container input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  .email-panel-container input[type="text"]:focus,
+  .email-panel-container textarea:focus {
+    border-color: #4285f4;
+    outline: none;
+  }
+  
+  .email-panel-container textarea {
+    resize: vertical;
+  }
+  
+  .email-panel-container button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 12px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .email-panel-container button:hover {
+    background-color: #3367d6;
+  }
