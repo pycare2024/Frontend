@@ -68,7 +68,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                 </div>
 
                 {/* Desktop Links */}
-                <div className="nav-right">
+                <div className="nav-right d-none d-md-flex">
                     <div className="navHome">
                         {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <Link
@@ -891,11 +891,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                 </div>
 
                 {/* Mobile Menu Icon */}
-                <div className="d-md-none">
-                    <FaBars
-                        style={menuIconStyle}
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    />
+                <div className="mobile-toggle">
+                    <FaBars onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
                 </div>
             </div>
 

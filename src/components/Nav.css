@@ -95,11 +95,15 @@ nav a:hover, nav button:hover {
     align-items: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1440px) {
     .d-none.d-md-flex {
-        display: flex; /* Show on desktop */
+      display: flex;
     }
-}
+  
+    .mobile-toggle {
+      display: none;
+    }
+  }
 
 /* Media Queries for Mobile */
 @media (max-width: 768px) {
@@ -197,10 +201,11 @@ nav a:hover, nav button:hover {
   }
   
   .nav-right {
-    flex: 2;
+    flex: 1.17;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding-right: 10px; /* Adjust this value if needed */
   }
   
   .navHome {
@@ -214,4 +219,56 @@ nav a:hover, nav button:hover {
     margin-left: 0; /* important to avoid overlapping */
   }
 
+  /* HAMBURGER TOGGLE BUTTON */
+.mobile-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: #4285F4;
+    cursor: pointer;
+  }
   
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: block;
+    }
+  }
+  
+  /* FULLSCREEN OVERLAY MENU FOR MOBILE */
+  .mobile-nav-wrapper {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-nav-wrapper {
+      display: block;
+      position: fixed;
+      top: 65px;
+      left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 999;
+      transition: transform 0.3s ease-in-out;
+    }
+  
+    .mobileMenu {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0;
+    }
+  
+    .mobileMenu a, .mobileMenu button {
+      font-size: 1.1rem;
+      padding: 12px 16px;
+      border: none;
+      background: none;
+      color: #333;
+      text-align: left;
+      width: 100%;
+    }
+  
+    .mobileMenu a:hover, .mobileMenu button:hover {
+      background-color: rgba(66, 133, 244, 0.1);
+      color: #4285F4;
+    }
+  }
