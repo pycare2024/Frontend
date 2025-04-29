@@ -59,8 +59,20 @@ function App() {
     const [doctor, setDoctor] = useState(null);
     const [admin, setAdmin] = useState(null);
     const [operator, setOperator] = useState(JSON.parse(localStorage.getItem("operator")) || null);
+    const [paddingTop, setPaddingTop] = useState("70px");
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const updatePadding = () => {
+          setPaddingTop(window.innerWidth < 1440 ? "70px" : "0px");
+        };
+      
+        updatePadding(); // initial call
+        window.addEventListener("resize", updatePadding);
+      
+        return () => window.removeEventListener("resize", updatePadding);
+      }, []);
 
     useEffect(() => {
         setIsOperatorLoggedIn(!!operator);
@@ -132,7 +144,14 @@ function App() {
       }, []);
       
     return (
-        <div className="container-fluid full-screen">
+        <>
+         <Nav
+            isLoggedIn={isLoggedIn}
+            isDocLoggedIn={isDocLoggedIn}
+            isOperatorLoggedIn={isOperatorLoggedIn}
+            onLogout={handleLogout}
+        />
+        <div className="container-fluid full-screen" style={{ paddingTop }}>
             <Nav isLoggedIn={isLoggedIn} isDocLoggedIn={isDocLoggedIn} isOperatorLoggedIn={isOperatorLoggedIn} onLogout={handleLogout} />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -182,6 +201,7 @@ function App() {
             </Routes>
             {/* <Footer/> */}
         </div>
+        </>
     );
 }
 
