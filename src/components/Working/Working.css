@@ -3,20 +3,20 @@
   min-height: 100vh;
   padding: 50px 20px;
   margin: 0;
-  background-color: #ffffff;
   text-align: center;
   font-family: 'Arial', sans-serif;
   background: url('working2.jpg') no-repeat center center;
   background-size: cover;
+  background-attachment: scroll;
   position: relative;
-  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .how-to-use-title {
   font-size: 3rem;
   color: #4285F4;
   margin-top: 1.5%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   animation: fadeIn 1s ease-in-out;
   font-weight: bold;
 }
@@ -25,19 +25,28 @@
   font-size: 1.2rem;
   color: #010101;
   margin-top: 40px;
-  margin-bottom: 40px; /* changed from 90px */
+  margin-bottom: 40px;
   animation: fadeIn 1.2s ease-in-out;
 }
 
 .steps-container {
   display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   gap: 30px;
   padding: 0 40px 30px;
-  scroll-behavior: smooth;
   max-width: 100%;
+}
+
+.steps-container::-webkit-scrollbar {
+  display: none;
+}
+.steps-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .step-wrapper {
@@ -45,6 +54,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  scroll-snap-align: center;
 }
 
 .step-number {
@@ -58,7 +68,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Slightly larger square step card */
+/* Step Card */
 .step-card {
   width: 200px;
   height: 300px;
@@ -72,6 +82,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .step-img-full {
@@ -104,32 +115,54 @@
   }
 }
 
-/* Hide scrollbar but allow scroll */
-.steps-container::-webkit-scrollbar {
-  display: none;
-}
-.steps-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 /* Mobile Tweaks */
 @media (max-width: 768px) {
+  .how-to-use-title {
+    font-size: 2.2rem;
+  }
+
+  .how-to-use-subtitle {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .step-card {
+    width: 180px;
+    height: 180px;
+  }
+
+  .steps-container {
+    padding: 0 20px 40px;
+    gap: 24px;
+  }
+
+  .step-number {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 480px) {
   .how-to-use-title {
     font-size: 2rem;
   }
 
   .how-to-use-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .step-card {
-    width: 170px;
-    height: 170px;
+    width: 160px;
+    height: 160px;
+  }
+
+  .step-number {
+    font-size: 0.8rem;
+    padding: 4px 8px;
   }
 
   .steps-container {
-    padding: 0 20px 50px;
-    gap: 24px;
+    gap: 20px;
   }
 }

@@ -1,24 +1,17 @@
-/* Slide3.css */
-
 .care {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  /* background-color: #4285F4;  */
-  background: url(page2.jpeg) no-repeat center;
-  position: relative;
+  background: url('page2.jpeg') no-repeat center;
   background-size: cover;
   padding: 50px 10%;
   box-sizing: border-box;
-  overflow: hidden;
-  /* justify-content: center;  */ 
-  /* margin-bottom: 50px; */
 }
 
 .header-section2 {
-  margin-top: 50px;
+  margin-top: 30px;
   text-align: center;
   margin-bottom: 40px;
 }
@@ -33,26 +26,31 @@
 
 .subheadline2 {
   font-size: 1.2rem;
-  color:black;
+  color: black;
   margin: 10px 0 0;
   animation: slideUp 1.2s ease-in-out;
 }
 
+/* === Feature Cards Section === */
 .features-section {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
   width: 100%;
   max-width: 1200px;
-  margin-top: 17px;
+  margin-top: 20px;
+  overflow-x: hidden;
 }
 
 .feature-card {
-  background-color: rgba(255, 255, 255, 0.95); /* White card with slight transparency */
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  flex: 1;
+  flex: 1 1 22%;
+  min-width: 260px;
+  max-width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInCard 1s ease-in-out;
 }
@@ -67,6 +65,7 @@
   box-shadow: 0 0 15px #4285F4;
 }
 
+/* === Icon styles === */
 .icon {
   width: 50px;
   height: 50px;
@@ -74,37 +73,34 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: background-color 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 .integrated-mental-health {
   background: url('pag2img1.jpg') no-repeat center;
   background-size: contain;
-  position: relative;
 }
 
 .grounded-in-science {
   background: url('pag2img2.jpg') no-repeat center;
   background-size: contain;
-  position: relative;
 }
 
 .personalized-support {
   background: url('pag2img3.jpg') no-repeat center;
   background-size: contain;
-  position: relative;
 }
 
 .round-the-clock {
   background: url('pag2img4.jpg') no-repeat center;
   background-size: contain;
-  position: relative;
 }
 
 .icon:hover {
-  filter: brightness(0.8); /* Darken the icon on hover */
+  filter: brightness(0.8);
 }
 
+/* === Text content === */
 .feature-title {
   font-size: 1.3rem;
   font-weight: bold;
@@ -119,7 +115,7 @@
   text-align: justify;
 }
 
-/* Animations */
+/* === Animations === */
 @keyframes slideUp {
   0% {
     opacity: 0;
@@ -142,40 +138,42 @@
   }
 }
 
-/* Responsive Design */
+/* === Responsive: Tablets === */
 @media (max-width: 1024px) {
-  .features-section {
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
   .feature-card {
-    flex: 1 1 45%; /* Two cards per row */
-    max-width: 45%;
-  }
-}
-
-@media (max-width: 768px) {
-  .slide3-container {
-    padding: 30px 5%;
+    flex: 1 1 45%;
+    max-width: 48%;
   }
 
-  .headline {
+  .headline2 {
     font-size: 2.5rem;
   }
 
-  .subheadline {
+  .subheadline2 {
     font-size: 1rem;
   }
+}
 
+/* === Responsive: Mobile Horizontal Scroll === */
+@media (max-width: 768px) {
   .features-section {
-    flex-direction: column;
-    gap: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 10px;
+  }
+
+  .features-section::-webkit-scrollbar {
+    display: none;
   }
 
   .feature-card {
-    flex: 1 1 100%; /* Stack cards vertically */
-    max-width: 100%;
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+    margin: 0 10px;
+    min-width: 280px;
+    max-width: 80%;
   }
 
   .feature-title {
@@ -183,30 +181,32 @@
   }
 
   .feature-description {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .slide3-container {
-    padding: 20px 3%;
-  }
-
-  .headline {
-    font-size: 2rem;
-  }
-
-  .subheadline {
-    font-size: 0.9rem;
-  }
-
-  .feature-card {
-    padding: 15px;
+    font-size: 0.95rem;
   }
 
   .icon {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* === Responsive: Extra Small Screens === */
+@media (max-width: 480px) {
+  .care {
+    padding: 30px 4%;
+  }
+
+  .headline2 {
+    font-size: 2rem;
+  }
+
+  .subheadline2 {
+    font-size: 0.85rem;
+  }
+
+  .feature-card {
+    min-width: 260px;
+    max-width: 90%;
   }
 
   .feature-title {
@@ -214,6 +214,11 @@
   }
 
   .feature-description {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
   }
 }

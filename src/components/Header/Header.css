@@ -1,5 +1,6 @@
 .hero-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: #e6f0fc;
@@ -8,8 +9,8 @@
   box-sizing: border-box;
   font-family: 'Arial', sans-serif;
   background: url('./header5.jpg') no-repeat center center;
-  position: relative;
   background-size: cover;
+  position: relative;
 }
 
 .hero-left {
@@ -25,7 +26,6 @@
 }
 
 .logo-bold {
-  /* color: #4285f4; */
   color: red;
   font-weight: 700;
 }
@@ -55,6 +55,7 @@
   color: #3a3a3a;
   margin-bottom: 30px;
   max-width: 500px;
+  text-align: justify;
 }
 
 .book-btn {
@@ -74,11 +75,45 @@
   color: #4285f4;
 }
 
-.hero-right {
-  width: 45%;
+/* Responsive Media Queries */
+@media screen and (max-width: 1024px) {
+  .hero-container {
+    flex-direction: column;
+    padding: 30px 20px;
+    min-height: 100vh;      /* allow the section to grow naturally */
+    height: auto !important; /* override fixed height */
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 0;       /* remove extra spacing */
+  }
+
+  .hero-left {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .hero-text {
+    font-size: 1rem;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .book-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
 }
 
-.hero-right img {
-  width: 100%;
-  height: auto;
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }

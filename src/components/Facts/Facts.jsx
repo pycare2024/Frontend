@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Facts.css';
 
 import Fact1 from './image-1.png';
@@ -9,8 +9,7 @@ import Fact5 from './image-5.png';
 
 const facts = [
   {
-    text: "What do Virat Kohli, Maria Sharapova, Justin Bieber, Serena Williams and Michael Phelps have in common? All successful Global celebrities suffered mental disorders and successfully overcame with timely intervention!"
-    ,
+    text: "What do Virat Kohli, Maria Sharapova, Justin Bieber, Serena Williams and Michael Phelps have in common? All successful Global celebrities suffered mental disorders and successfully overcame with timely intervention!",
     image: Fact1
   },
   {
@@ -32,10 +31,27 @@ const facts = [
 ];
 
 const Facts = () => {
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    const container = scrollRef.current;
+    const scrollAmount = 300;
+
+    if (direction === 'left') {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="facts-container">
       <h2 className="facts-title">Do You Know?</h2>
-      <div className="facts-grid">
+
+      <button className="scroll-arrow scroll-left" onClick={() => scroll('left')}>&lt;</button>
+      <button className="scroll-arrow scroll-right" onClick={() => scroll('right')}>&gt;</button>
+
+      <div className="facts-grid" ref={scrollRef}>
         {facts.map((fact, index) => (
           <div className="fact-card" key={index}>
             <img src={fact.image} alt={`fact-${index}`} className="fact-image" />
