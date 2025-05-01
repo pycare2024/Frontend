@@ -898,20 +898,50 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
 
             {/* Mobile Menu */}
             <div className={`mobileMenu ${isMobileMenuOpen ? "open" : ""}`}>
-                <Link
-                    to="/Home"
-                    style={location.pathname === "/Home" ? activeLinkStyle : linkStyle}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                >
-                    Home
-                </Link>
-                <Link
-                    to="/About"
-                    style={location.pathname === "/About" ? activeLinkStyle : linkStyle}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                >
-                    About Us
-                </Link>
+                {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
+                    <>
+                        <div className="dropdown">
+                            <span className="dropdown-label">HOME ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/">Home</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">ABOUT US ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/About">About PsyCare</Link>
+                                <Link to="/About#team">Our Team</Link>
+                                <Link to="/Contactus">Contact Us</Link>
+                                <Link to="/FAQ">FAQs</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <span className="dropdown-label">PARTNERS ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/DoctorLogin">Doctor</Link>
+                                <Link to="/Login">Admin</Link>
+                                <Link to="/OperatorLogin">Operator</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <span className="dropdown-label">SERVICES ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Individual Therapy">Individual Therapy</Link>
+                                <Link to="/Corporate Wellness">Corporate Wellness</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">RESOURCES ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Articles">Articles</Link>
+                                <Link to="/ABC">Blog</Link>
+                            </div>
+                        </div>
+                    </>
+                )}
+
                 {isOperatorLoggedIn && (
                     <>
                         <Link
@@ -945,86 +975,69 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                 )}
                 {isDocLoggedIn && (
                     <>
-                        <Link
-                            to="/Patients"
-                            style={
-                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                            }
-                        >
-                            Patients
-                        </Link>
-                        <button
-                            onClick={onLogout}
-                            style={{
-                                ...linkStyle,
-                                background: "none",
-                                border: "none",
-                                cursor: "pointer",
-                            }}
-                        >
-                            Logout
-                        </button>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Patients ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Patients">Patients list</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Appointments ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Appointments">Appointments list</Link>
+                            </div>
+                        </div>
                     </>
                 )}
                 {isLoggedIn && (
                     <>
-                        <Link
-                            to="/Doctors"
-                            style={
-                                location.pathname === "/Doctors" ? activeLinkStyle : linkStyle
-                            }
-                        >
-                            Doctors
-                        </Link>
-                        <Link
-                            to="/Patients"
-                            style={
-                                location.pathname === "/Patients" ? activeLinkStyle : linkStyle
-                            }
-                        >
-                            Patients
-                        </Link>
-                        <Link
-                            to="/DoctorSchedule"
-                            style={
-                                location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
-                            }
-                        >
-                            Doctor's schedule
-                        </Link>
-                    </>
-                )}
-                {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
-                    <>
-                        <Link
-                            to="/Login"
-                            style={location.pathname === "/Login" ? activeLinkStyle : linkStyle}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Admin
-                        </Link>
-                        <Link
-                            to="/DoctorLogin"
-                            style={
-                                location.pathname === "/DoctorLogin"
-                                    ? activeLinkStyle
-                                    : linkStyle
-                            }
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            I am Doctor
-                        </Link>
-                        <Link
-                            to="/OperatorLogin"
-                            style={
-                                location.pathname === "/OperatorLogin"
-                                    ? activeLinkStyle
-                                    : linkStyle
-                            }
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Operator
-                        </Link>
+                        <Link to="/" style={{ fontWeight: "bold", color: "#4285F4", padding: "10px", marginLeft: "20px" }}>Home</Link>
+                        {/* ✅ Corporates dropdown */}
+                        <div className="dropdown">
+                            <span className="dropdown-label">Corporates ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/RegisterCorporates">Register Corporates</Link>
+                                <Link to="/RechargeCredits">Recharge Credits</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Accounts ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/CompanyAccountsTab">Company Accounts</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Utility ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/EmailPanel">Send bulk email</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Doctor ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Doctors">Doctor list</Link>
+                                <Link to="/DoctorSchedule">Doctor Schedule</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Patients ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/Patients">Patients list</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Screening Test ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/ScreeningTest">Add Screening Test</Link>
+                            </div>
+                        </div>
+                        <div className="dropdown">
+                            <span className="dropdown-label">Operator ▾</span>
+                            <div className="dropdown-content">
+                                <Link to="/AddOperator">Add Operator</Link>
+                                <Link to="/OperatorDetails">Operator Details</Link>
+                            </div>
+                        </div>
                     </>
                 )}
                 {(isLoggedIn || isDocLoggedIn || isOperatorLoggedIn) && (
@@ -1037,7 +1050,9 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             ...linkStyle,
                             background: "none",
                             border: "none",
-                            textAlign: "left",
+                            fontWeight:"bold",
+                            color:"#4285F4",
+                            fontSize:"1rem"
                         }}
                     >
                         Logout
