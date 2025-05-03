@@ -13,7 +13,8 @@ const RegisterCorporateEmployee = () => {
     Gender: "",
     Location: "",
     Mobile: "",
-    Problem: ""
+    Problem: "",
+    Department: ""    // <-- added
   });
 
   const [message, setMessage] = useState("");
@@ -61,6 +62,7 @@ const RegisterCorporateEmployee = () => {
         <input name="Location" placeholder="City / Location" value={formData.Location} onChange={handleChange} required />
         <input name="Mobile" placeholder="Mobile Number" value={formData.Mobile} onChange={handleChange} required />
         <input name="Problem" placeholder="Brief Problem" value={formData.Problem} onChange={handleChange} required />
+        <input name="Department" placeholder="Department" value={formData.Department} onChange={handleChange} required />
 
         <select name="Gender" value={formData.Gender} onChange={handleChange} required>
           <option value="">Select Gender</option>
