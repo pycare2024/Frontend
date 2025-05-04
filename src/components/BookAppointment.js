@@ -22,8 +22,14 @@ const BookAppointment = () => {
   const [doctorName, setDoctorName] = useState("");
   const [familyOption, setFamilyOption] = useState("");
   const [familyList, setFamilyList] = useState([]);
+  const [selectedProblems, setSelectedProblems] = useState([]);
+  const [selectedPatient, setSelectedPatient] = useState({});
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("SelectedPatient has changed:", selectedPatient);
+  }, [selectedPatient]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -53,13 +59,10 @@ const BookAppointment = () => {
       const data = await response.json();
       if (response.ok && data.exists) {
         setUserType("corporate");
+        setPatientData(data.employee);
+        setFamilyList(data.employee.familyMembers);
         const emp = data.employee;
-        if (emp.familyMembers?.length > 0) {
-          setFamilyList(emp.familyMembers);
-          setStep(1.5);
-        } else {
-          setStep(1.6);
-        }
+        setStep(1.6);
       } else if (data.message.includes("Employee not found")) {
         navigate("/RegisterCorporateEmployee", { state: { empId, companyCode } });
       } else if (data.message.includes("Company not registered")) {
@@ -145,6 +148,29 @@ const BookAppointment = () => {
     }
   };
 
+  const fetchPatientByPhone = async (phone) => {
+    try {
+      const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/getPatientByPhone/${phone}`);
+      const data = await response.json();
+      console.log("Fetched patient:", data);
+  
+      if (response.ok && data.patient) {
+        setSelectedPatient({
+          id: data.patient?._id || "",
+          name: data.patient?.Name || "",
+          gender: data.patient?.Gender || "",
+          mobile: data.patient?.Mobile || "",
+        });
+        
+
+      } else {
+        console.error("No patient found with this phone");
+      }
+    } catch (error) {
+      console.error("Error fetching patient:", error);
+    }
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -164,33 +190,134 @@ const BookAppointment = () => {
             )}
           </div>
         );
-      case 1.5:
-        return (
-          <div className="book-step-section">
-            <h4>Book appointment for:</h4>
-            <button onClick={() => { setFamilyOption("self"); setStep(2); }}>Self</button>
-            <button onClick={() => { setFamilyOption("family"); setStep(1.6); }}>Family Member</button>
-          </div>
-        );
+      // case 1.5:
+      //   return (
+      //     <div className="book-step-section">
+      //       <h4>Book appointment for:</h4>
+      //       <button onClick={() => { setFamilyOption("self"); setStep(2); }}>Self</button>
+      //       <button onClick={() => { setFamilyOption("family"); setStep(1.6); }}>Family Member</button>
+      //     </div>
+      //   );
+
       case 1.6:
         return (
           <div className="book-step-section">
-            {familyList.length > 0 && (
-              <>
-                <h4>Select Family Member</h4>
-                {familyList.map((fm, index) => (
-                  <button key={index} onClick={() => {
+            <h4>Select Patient</h4>
+
+            {/* Always show Self option first */}
+            <button
+              onClick={() => {
+                console.log(patientData);
+                setPhoneNumber(patientData?.employeePhone);
+                // console.log(phoneNumber);
+                setUserType("corporate");
+                setFamilyOption("self");
+                fetchPatientByPhone(patientData?.employeePhone);
+                console.log(selectedPatient);
+                setStep(1.7);
+              }}
+            >
+              Self
+            </button>
+
+            {/* Then if family members exist, list them */}
+            {familyList.length > 0 &&
+              familyList.map((fm, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
                     setPhoneNumber(fm.mobile);
                     setUserType("corporate");
                     setFamilyOption("family");
-                    sendOTP(fm.mobile);
-                  }}>
-                    {fm.name} ({fm.relation})
-                  </button>
+                    fetchPatientByPhone(fm.mobile);  
+                    console.log(selectedPatient);// 🛜 fetch full patient data
+                    setStep(1.7);
+                  }}
+                >
+                  {fm.name} ({fm.relation})
+                </button>
+              ))}
+
+            {/* Always show Add New Family Member option */}
+            <button
+              onClick={() =>
+                navigate("/RegisterFamilyMember", { state: { empId, companyCode } })
+              }
+            >
+              + Add New Family Member
+            </button>
+          </div>
+        );
+
+      case 1.7:
+        return (
+          <div className="book-step-section">
+            <h4>What would you like to do?</h4>
+
+            <div className="problem-selection">
+              <p>Select the issues you are facing (for Screening Test):</p>
+              <div className="problems-list">
+                {[
+                  "anxiety",
+                  "depression",
+                  "sleep",
+                  "ocd",
+                  "ptsd",
+                  "other"
+                ].map((problem, index) => (
+                  <label key={index} className="problem-option">
+                    <input
+                      type="checkbox"
+                      value={problem}
+                      checked={selectedProblems.includes(problem)}
+                      onChange={() => {
+                        setSelectedProblems(prev =>
+                          prev.includes(problem)
+                            ? prev.filter(p => p !== problem)
+                            : [...prev, problem]
+                        );
+                      }}
+                    />
+                    {problem}
+                  </label>
                 ))}
-              </>
-            )}
-            <button onClick={() => navigate("/RegisterFamilyMember", { state: { empId, companyCode } })}>+ Add New Family Member</button>
+              </div>
+
+              <button
+                onClick={() => {
+                  if (selectedProblems.length === 0) {
+                    alert("Please select at least one issue before proceeding.");
+                    return;
+                  }
+                  console.log(selectedPatient);
+                  console.log(selectedProblems);
+                  navigate("/ScreenTestForm", {
+                    state: {
+                      patientId: selectedPatient?.id,
+                      patientName: selectedPatient?.name,
+                      phoneNumber: selectedPatient?.mobile,
+                      patientGender: selectedPatient?.gender,
+                      problems: selectedProblems
+                    }
+                  });
+                }}
+              >
+                Proceed to Screening Test
+              </button>
+            </div>
+
+            <hr />
+
+            <div className="appointment-option">
+              <p>OR</p>
+              <button
+                onClick={() => {
+                  sendOTP(phoneNumber);  // ⏩ direct booking
+                }}
+              >
+                Book Appointment
+              </button>
+            </div>
           </div>
         );
       case 2:
