@@ -26,7 +26,7 @@ const RegisterCorporateEmployee = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setMessage("");
-
+  
     try {
       const response = await fetch("https://backend-xhl4.onrender.com/CorporateRoute/registerCorporateEmployee", {
         method: "POST",
@@ -34,10 +34,11 @@ const RegisterCorporateEmployee = () => {
         body: JSON.stringify({
           ...formData,
           empId,
-          companyCode
+          companyCode,
+          userType: "corporate" // ✅ important new field
         })
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         setMessage("🎉 Registered successfully. You can now book an appointment.");

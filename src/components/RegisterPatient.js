@@ -83,6 +83,7 @@ const RegisterPatient = () => {
                     Location,
                     Mobile,
                     Problem: selectedProblems, // ✅ pass array here
+                    userType: "retail",   
                 }),
             });
 
@@ -96,7 +97,7 @@ const RegisterPatient = () => {
                 setError(data.error);
             }
         } catch (err) {
-            setError("Registration failed.");
+            setError("Failed to register. Please try again.");
         }
     };
 

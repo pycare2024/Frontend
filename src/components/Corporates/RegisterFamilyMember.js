@@ -34,7 +34,8 @@ const RegisterFamilyMember = () => {
         body: JSON.stringify({
           empId,
           companyCode,
-          ...formData
+          ...formData,
+          userType: "corporate"  // ✅ Important addition here
         })
       });
 
