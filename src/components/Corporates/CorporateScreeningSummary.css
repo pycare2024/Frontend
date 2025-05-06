@@ -1,0 +1,26 @@
+/* For printing properly */
+@media print {
+    .screen-only {
+      display: none;
+    }
+    .print-only {
+      display: block;
+    }
+  }
+  
+  @media screen {
+    .print-only {
+      display: none;
+    }
+  }
+  
+  .print-section, .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+  
+  /* Optional better look for screen */
+  .screen-only {
+    margin-bottom: 2rem;
+  }

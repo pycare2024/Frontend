@@ -47,6 +47,7 @@ import RegisterFamilyMember from './components/Corporates/RegisterFamilyMember';
 import RechargeCredits from './components/Corporates/RechargeCredits';
 import EmailPanel from './components/EmailUtility/EmailPanel';
 import CorporateScreeningSummary from './components/Corporates/CorporateScreeningSummary';
+import DemographicInsights from './components/Corporates/DemographicInsights';
 
 
 
@@ -200,6 +201,7 @@ function App() {
                 <Route path="/RechargeCredits" element={<RechargeCredits />} />
                 <Route path="/EmailPanel" element={<EmailPanel />} />
                 <Route path="/CorporateScreeningSummary" element={<CorporateScreeningSummary />} />
+                <Route path="/DemographicInsights" element={<DemographicInsights />} />
             </Routes>
             {/* <Footer/> */}
         </div>

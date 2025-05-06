@@ -578,7 +578,22 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                             onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            CorporateScreeningSummary
+                                            Corporate screening summary report
+                                        </Link>
+                                        <Link
+                                            to="/DemographicInsights"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Demographic insights report
                                         </Link>
                                     </div>
                                 )}
@@ -1013,7 +1028,8 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             <div className="dropdown-content">
                                 <Link to="/RegisterCorporates">Register Corporates</Link>
                                 <Link to="/RechargeCredits">Recharge Credits</Link>
-                                <Link to="/CorporateScreeningSummary">CorporateScreeningSummary</Link>
+                                <Link to="/CorporateScreeningSummary">Corporate screening summary report</Link>
+                                <Link to="/DemographicInsights">Demographic insights report</Link>
                             </div>
                         </div>
                         <div className="dropdown">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import "./CorporateScreeningSummary.css";
 
 function CorporateScreeningSummary() {
     const [companyCode, setCompanyCode] = useState("");
@@ -24,6 +25,7 @@ function CorporateScreeningSummary() {
                 `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/screening-summary?startDate=${startDate}&endDate=${endDate}`
             );
             setSummaryData(response.data);
+            // console.log(response.data);
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong.");
             setSummaryData(null);
@@ -39,29 +41,116 @@ function CorporateScreeningSummary() {
             return;
         }
 
-        const printWindow = window.open('', '', 'height=600,width=800');
+        const printWindow = window.open('', '', 'height=900,width=1200');
         printWindow.document.write(`
-            <html>
+          <html>
             <head>
-                <title>Screening Report</title>
-                <style>
-                    * {
-                        pointer-events: none;
-                        user-select: none;
-                    }
-                    body {
-                        font-family: Arial, sans-serif;
-                        padding: 20px;
-                    }
-                    h2 {
-                        color: #4285F4;
-                    }
-                </style>
+              <title>Mental health screening summary Report - PsyCare</title>
+              <style>
+                body {
+                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                  margin: 0;
+                  padding: 40px;
+                  background: #ffffff;
+                  color: #333;
+                  width: 100%;
+                  box-sizing: border-box;
+                }
+                .header {
+                  text-align: center;
+                  margin-bottom: 30px;
+                }
+                .header img {
+                  width: 120px;
+                  margin-bottom: 10px;
+                }
+                .header h1 {
+                  color: #4285F4;
+                  margin: 0;
+                  font-size: 32px;
+                  letter-spacing: 1px;
+                }
+                .header p {
+                  font-size: 18px;
+                  color: #666;
+                  margin-top: 8px;
+                }
+                hr {
+                  margin: 20px 0;
+                  border: none;
+                  border-top: 2px solid #4285F4;
+                }
+                h2, h3 {
+                  color: #333;
+                  margin-top: 20px;
+                  margin-bottom: 10px;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                  margin-top: 10px;
+                  font-size: 14px;
+                }
+                th, td {
+                  border: 1px solid #ccc;
+                  padding: 10px;
+                  text-align: center;
+                }
+                th {
+                  background-color: #4285F4;
+                  color: white;
+                }
+                tr:nth-child(even) {
+                  background-color: #f2f2f2;
+                }
+                .legend-print {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 10px;
+                  margin-top: 20px;
+                  justify-content: center;
+                }
+                .legend-item {
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 14px;
+                }
+                .legend-color {
+                  width: 16px;
+                  height: 16px;
+                  border-radius: 50%;
+                }
+                .section {
+                  page-break-inside: avoid;
+                  margin-bottom: 30px;
+                }
+                .footer {
+                  margin-top: 40px;
+                  text-align: center;
+                  font-size: 14px;
+                  color: #999;
+                }
+                @media print {
+                  body {
+                    zoom: 100%;
+                  }
+                }
+              </style>
             </head>
             <body>
-                ${printContent.innerHTML}
+              <div class="header">
+                <img src="${window.location.origin}/PsyCareMain.png" alt="PsyCare Logo" />
+                <h1>PsyCare</h1>
+                <p>Your Path to Mental Wellness</p>
+              </div>
+              <hr />
+              ${printContent.innerHTML}
+              <div class="footer">
+                <p>Generated by PsyCare | ${new Date().toLocaleDateString()}</p>
+              </div>
             </body>
-            </html>
+          </html>
         `);
         printWindow.document.close();
         printWindow.focus();
@@ -129,41 +218,135 @@ function CorporateScreeningSummary() {
             {/* Printable Content */}
             {summaryData && (
                 <div id="print-section" style={{ backgroundColor: "white", padding: "2rem", borderRadius: "10px" }}>
-                    <h2>Summary for {companyCode}</h2>
+                    <h2>Mental health screening summary report</h2>
+                    <h2>Summary for {summaryData.companyName}</h2>
                     <p>Date Range: {startDate} to {endDate}</p>
+                    <p>Total Screenings: {summaryData.totalScreenings}</p>
+                    <p>Total Patients: {summaryData.totalPatients}</p>
+                    <p>Insomnia Cases: {summaryData.insomniaCases}</p>
+                    <p>Anxiety Cases: {summaryData.anxietyCases}</p>
+                    <p>Depression Cases: {summaryData.depressionCases}</p>
+                    <p>PTSD Cases: {summaryData.ptsdCases}</p>
 
-                    {/* Cases Pie Chart */}
-                    <h3 style={{ marginTop: "2rem" }}>Cases Distribution</h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                            <Pie
-                                data={casesPieData}
-                                dataKey="value"
-                                nameKey="name"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={100}
-                                label
-                            >
+                    <div className="section">
+                        {/* Cases Pie Chart */}
+                        <h3 style={{ marginTop: "2rem" }}>Cases Distribution</h3>
+                        {/* Screen View: PieChart */}
+                        <div className="screen-only">
+                            <ResponsiveContainer width="100%" height={300}>
+                                <PieChart>
+                                    <Pie
+                                        data={casesPieData}
+                                        dataKey="value"
+                                        nameKey="name"
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={100}
+                                        label={({ name, value }) => `${name}: ${value}`}
+                                    >
+                                        {casesPieData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip formatter={(value, name) => [`${value}`, `${name}`]} />
+                                </PieChart>
+                            </ResponsiveContainer>
+
+                            {/* Legends */}
+                            <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
                                 {casesPieData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    <div key={index} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                                        <div style={{
+                                            width: "20px",
+                                            height: "20px",
+                                            backgroundColor: COLORS[index % COLORS.length],
+                                            borderRadius: "50%",
+                                        }}></div>
+                                        <span>{entry.name}</span>
+                                    </div>
                                 ))}
-                            </Pie>
-                            <Tooltip />
-                        </PieChart>
-                    </ResponsiveContainer>
+                            </div>
+                        </div>
 
-                    {/* Department Bar Chart */}
-                    <h3 style={{ marginTop: "2rem" }}>Department Scores</h3>
-                    <ResponsiveContainer width="100%" height={400}>
-                        <BarChart data={departmentBarData}>
-                            <XAxis dataKey="department" />
-                            <YAxis />
-                            <Tooltip />
-                            <Bar dataKey="GAD-7" fill="#4285F4" />
-                            <Bar dataKey="PCL-5" fill="#EA4335" />
-                        </BarChart>
-                    </ResponsiveContainer>
+                        {/* Print View: Static Table */}
+                        <div className="print-only" style={{ marginTop: "1rem" }}>
+                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                <thead>
+                                    <tr style={{ backgroundColor: "#4285F4", color: "white" }}>
+                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Case Type</th>
+                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Number of Cases</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {casesPieData.map((caseItem, index) => (
+                                        <tr key={index}>
+                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{caseItem.name}</td>
+                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{caseItem.value}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="section">
+                        {/* Department Bar Chart */}
+                        <h3 style={{ marginTop: "2rem" }}>Department Scores</h3>
+                        {/* Screen View: Bar Chart */}
+                        <div className="screen-only">
+                            <ResponsiveContainer width="100%" height={400}>
+                                <BarChart data={departmentBarData}>
+                                    <XAxis dataKey="department" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Bar dataKey="GAD-7" fill="#4285F4" name="GAD-7 Score" />
+                                    <Bar dataKey="PCL-5" fill="#EA4335" name="PCL-5 Score" />
+                                </BarChart>
+                            </ResponsiveContainer>
+
+                            {/* Legend below for better clarity */}
+                            <div style={{ marginTop: "1rem", display: "flex", gap: "2rem" }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                                    <div style={{ width: "20px", height: "20px", backgroundColor: "#4285F4" }}></div>
+                                    <span>GAD-7 Score</span>
+                                </div>
+                                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                                    <div style={{ width: "20px", height: "20px", backgroundColor: "#EA4335" }}></div>
+                                    <span>PCL-5 Score</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Print View: Static Table */}
+                        <div className="print-only" style={{ marginTop: "1rem" }}>
+                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                                <thead>
+                                    <tr style={{ backgroundColor: "#4285F4", color: "white" }}>
+                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Department</th>
+                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>GAD-7 Score</th>
+                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>PCL-5 Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {departmentBarData.map((dept, index) => (
+                                        <tr key={index}>
+                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept.department}</td>
+                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept["GAD-7"]}</td>
+                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept["PCL-5"]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            {/* Legend for print also */}
+                            <div style={{ marginTop: "1rem" }}>
+                                <p><strong>Legends:</strong></p>
+                                <p><span style={{ color: "#4285F4" }}>■</span> GAD-7 Score (Anxiety Measure)</p>
+                                <p><span style={{ color: "#EA4335" }}>■</span> PCL-5 Score (PTSD Measure)</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             )}
         </div>
