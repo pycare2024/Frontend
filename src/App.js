@@ -46,6 +46,7 @@ import RegisterCorporateEmployee from './components/Corporates/RegisterCorporate
 import RegisterFamilyMember from './components/Corporates/RegisterFamilyMember';
 import RechargeCredits from './components/Corporates/RechargeCredits';
 import EmailPanel from './components/EmailUtility/EmailPanel';
+import CorporateScreeningSummary from './components/Corporates/CorporateScreeningSummary';
 
 
 
@@ -198,6 +199,7 @@ function App() {
                 <Route path="/RegisterFamilyMember" element={<RegisterFamilyMember />} />
                 <Route path="/RechargeCredits" element={<RechargeCredits />} />
                 <Route path="/EmailPanel" element={<EmailPanel />} />
+                <Route path="/CorporateScreeningSummary" element={<CorporateScreeningSummary />} />
             </Routes>
             {/* <Footer/> */}
         </div>
