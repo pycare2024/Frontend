@@ -239,74 +239,76 @@ const ScreenTestForm = () => {
   const currentQuestion = questions[currentIndex];
 
   return (
-    <div className="screening-container">
-      <h2>Screening Test</h2>
+    <div className="test-form-container">
+      <div className="screening-container">
+        <h2>Screening Test</h2>
 
-      {report ? (
-        <div className="report-box">
-          <h3>Your Screening Report</h3>
-          <div className="report-text">
-            <h4><strong>Report for {patientName}</strong></h4>
-            {report
-              .split(/(?=\*\*Summary:|\*\*Findings:|\*\*Recommendations:)/)
-              .map((section, index) => (
-                <div key={index} style={{ marginBottom: "1.2rem", lineHeight: "1.6" }}>
-                  <p dangerouslySetInnerHTML={{ __html: section.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }}></p>
-                </div>
-              ))}
+        {report ? (
+          <div className="report-box">
+            <h3>Your Screening Report</h3>
+            <div className="report-text">
+              <h4><strong>Report for {patientName}</strong></h4>
+              {report
+                .split(/(?=\*\*Summary:|\*\*Findings:|\*\*Recommendations:)/)
+                .map((section, index) => (
+                  <div key={index} style={{ marginBottom: "1.2rem", lineHeight: "1.6" }}>
+                    <p dangerouslySetInnerHTML={{ __html: section.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }}></p>
+                  </div>
+                ))}
+            </div>
+            <div className="report-actions">
+              <button className="print-btn" onClick={handlePrint}>Print Report</button>
+              <button
+                className="proceed-btn"
+                onClick={() => navigate("/BookAppointment", {
+                  state: {
+                    patientId,
+                    phoneNumber,
+                    patientName,
+                  },
+                })}
+              >
+                Proceed to Book Appointment
+              </button>
+            </div>
           </div>
-          <div className="report-actions">
-            <button className="print-btn" onClick={handlePrint}>Print Report</button>
-            <button
-              className="proceed-btn"
-              onClick={() => navigate("/BookAppointment", {
-                state: {
-                  patientId,
-                  phoneNumber,
-                  patientName,
-                },
-              })}
-            >
-              Proceed to Book Appointment
-            </button>
-          </div>
-        </div>
-      ) : (
-        <>
-          {currentQuestion ? (
-            <>
-              <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
-              <div className="question-box">
-                <h3>{currentQuestion.question}</h3>
-                <div className="options">
-                  {currentQuestion.options.map((option, index) => (
-                    <button
-                      key={index}
-                      className={`option-button ${answers[currentIndex] === index + 1 ? "selected" : ""}`}
-                      onClick={() => handleOptionSelect(index + 1)}
-                    >
-                      {option}
-                    </button>
-                  ))}
+        ) : (
+          <>
+            {currentQuestion ? (
+              <>
+                <p className="question-count">Question {currentIndex + 1} of {questions.length}</p>
+                <div className="question-box">
+                  <h3>{currentQuestion.question}</h3>
+                  <div className="options">
+                    {currentQuestion.options.map((option, index) => (
+                      <button
+                        key={index}
+                        className={`option-button ${answers[currentIndex] === index + 1 ? "selected" : ""}`}
+                        onClick={() => handleOptionSelect(index + 1)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </>
-          ) : (
-            <p style={{ textAlign: "center", marginTop: "2rem" }}>No questions available. Please try again later.</p>
-          )}
-          <div className="navigation-buttons">
-            <button onClick={handleBack} disabled={currentIndex === 0}>Back</button>
-            {currentIndex < questions.length - 1 ? (
-              <button onClick={handleNext} disabled={answers[currentIndex] === null}>Next</button>
+              </>
             ) : (
-              <button onClick={handleSubmit} disabled={submitting}>Submit</button>
+              <p style={{ textAlign: "center", marginTop: "2rem" }}>No questions available. Please try again later.</p>
             )}
-          </div>
-        </>
-      )}
+            <div className="navigation-buttons">
+              <button onClick={handleBack} disabled={currentIndex === 0}>Back</button>
+              {currentIndex < questions.length - 1 ? (
+                <button onClick={handleNext} disabled={answers[currentIndex] === null}>Next</button>
+              ) : (
+                <button onClick={handleSubmit} disabled={submitting}>Submit</button>
+              )}
+            </div>
+          </>
+        )}
 
-      {error && <p className="error">{error}</p>}
-      {success && <p className="success">{success}</p>}
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
+      </div>
     </div>
   );
 };

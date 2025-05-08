@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- important import
 import './Psyco.css';
 
 const Psyco = () => {
+  const navigate = useNavigate(); // <-- initialize navigate
+
   return (
     <div className="psyco">
       <div className="content-section5">
@@ -21,7 +24,12 @@ const Psyco = () => {
             <p className="description5">
               At PsyCare, our expert psychologists provide personalized consulting to help you navigate life’s challenges. Whether you’re seeking clarity, emotional support, or strategies for well-being, we’re here for you.
             </p>
-            <button className="read-more-btn5">Take Free Test</button>
+            <button
+              className="read-more-btn5"
+              onClick={() => navigate('/StartScreeningTest')} // <-- Correct navigation
+            >
+              Take Free Test
+            </button>
           </div>
         </div>
       </div>
