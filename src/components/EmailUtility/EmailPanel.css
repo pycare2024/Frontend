@@ -1,111 +1,286 @@
+.email-main-container {
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.227), rgba(0, 0, 0, 0.168)), url('./EmailUtility.png') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-attachment: fixed;
+}
+
 .email-panel-container {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 40px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", sans-serif;
+  width: 100%;
+  max-width: 950px;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.588);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe UI", "Roboto", sans-serif;
+  animation: fadeIn 0.7s ease-in-out;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Smooth fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: Make the table inside look better */
+.results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.results th, .results td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.results th {
+  background-color: #4285F4;
+  color: white;
+  font-weight: bold;
+}
+
+.results td {
+  font-size: 14px;
+}
+
+/* Status colors */
+.status-sent {
+  color: green;
+  font-weight: bold;
+}
+
+.status-failed {
+  color: red;
+  font-weight: bold;
+}
+
+.status-aborted {
+  color: gray;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #f4b400; /* Google yellow */
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .email-panel-container h2 {
   text-align: center;
   color: #2c7be5;
-  font-size: 2.2rem;
-  margin-bottom: 30px;
+  font-size: 2.5rem;
+  margin-bottom: 35px;
+}
+
+.form-group {
+  margin-bottom: 25px;
 }
 
 .email-panel-container label {
   display: block;
   font-weight: 600;
   color: #333;
-  margin-top: 20px;
   margin-bottom: 8px;
 }
 
 .email-panel-container input[type="text"],
+.email-panel-container input[type="email"],
+.email-panel-container input[type="password"],
 .email-panel-container input[type="file"],
+.email-panel-container select,
 .email-panel-container .ql-container {
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   background: #f9f9f9;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  transition: 0.3s all ease;
 }
 
-.email-panel-container input[type="text"]:focus {
+.email-panel-container input[type="text"]:focus,
+.email-panel-container input[type="email"]:focus,
+.email-panel-container input[type="password"]:focus,
+.email-panel-container select:focus {
   border-color: #2c7be5;
   outline: none;
+  background: #fff;
 }
 
 .email-panel-container .ql-container {
   height: 180px;
-  border-radius: 6px;
   background: white;
+  border-radius: 8px;
 }
 
-.email-panel-container button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 30px;
-  background-color: #2c7be5;
-  color: #fff;
+.save-template {
+  margin-top: 10px;
+  background-color: #6c63ff;
   border: none;
-  border-radius: 6px;
+  color: #fff;
+  padding: 10px 18px;
   font-weight: bold;
-  font-size: 1.05rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.3s;
 }
 
-.email-panel-container button:hover {
-  background-color: #1a5ed8;
+.save-template:hover {
+  background-color: #5a54d1;
 }
 
-.results {
-  margin-top: 40px;
+.excel-preview {
+  margin-top: 15px;
 }
 
-.results h3 {
-  font-size: 1.3rem;
-  color: #333;
-  margin-bottom: 15px;
+.excel-preview h4 {
+  margin-bottom: 10px;
+  color: #2c7be5;
 }
 
-.results table {
+.excel-preview table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
 
+.excel-preview th,
+.excel-preview td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.excel-preview th {
+  background-color: #f1f3f5;
+}
+
+.excel-preview tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Send/Abort Button Styles */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.send-button,
+.abort-button {
+  flex: 1;
+  background-color: #2c7be5;
+  color: #fff;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abort-button {
+  background-color: #dc3545;
+}
+
+.send-button:hover {
+  background-color: #1a5ed8;
+}
+
+.abort-button:hover {
+  background-color: #bd2130;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  font-size: 1.3rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Result Table */
+.results {
+  margin-top: 50px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.results h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 .results th,
 .results td {
-  padding: 10px 12px;
+  padding: 12px;
   border: 1px solid #ddd;
   text-align: left;
 }
 
 .results th {
-  background-color: #f1f3f5;
-  color: #333;
+  background: #2c7be5;
+  color: #fff;
 }
 
 .results tr:nth-child(even) {
-  background-color: #fafafa;
+  background: #f9f9f9;
 }
 
-.results td {
-  color: #444;
-}
-
-.results td:nth-child(2).status-failed {
-  color: #dc3545;
-}
-
-.results td:nth-child(2).status-sent {
+.status-sent {
   color: #28a745;
+  font-weight: bold;
 }
 
+.status-failed {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+/* Fade in for new rows */
+.fade-in {
+  animation: fadeInRow 0.5s ease;
+}
+
+@keyframes fadeInRow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.status-aborted {
+  color: gray;
+  font-style: italic;
+}
