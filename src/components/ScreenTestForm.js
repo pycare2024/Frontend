@@ -4,6 +4,77 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./ScreenTestForm.css";
 
+function formatAssessmentId(rawId, testDate) {
+  if (!rawId) return "";
+
+  const year = new Date(testDate).getFullYear();
+  const shortId = rawId.slice(-4);  // last 4 characters
+
+  return `P-${year}-${shortId}`;
+}
+
+function parseReport(generatedReport) {
+  if (!generatedReport) return null;
+
+  const sections = {
+    topDetails: {},
+    testSummary: [],
+    observations: "",
+    riskClassification: "",
+    recommendations: "",
+    confidentialityNote: ""
+  };
+
+  // 1. Extract Top Details first
+  const topDetailsMatch = generatedReport.match(/Top Details:\s*([\s\S]*?)\s*1\. Test Summary:/);
+
+  if (topDetailsMatch) {
+    const topDetailsText = topDetailsMatch[1].trim();
+    topDetailsText.split("\n").forEach(line => {
+      const [key, value] = line.split(":").map(part => part.trim());
+      if (key && value) {
+        sections.topDetails[key] = value;
+      }
+    });
+  }
+
+  // 2. Now split the remaining sections by section numbers
+  const parts = generatedReport.split(/(?:\n|^)1\. Test Summary:|2\. AI Generated Observations:|3\. Risk Classification:|4\. Recommended Next Steps:|5\. Confidentiality Note:/);
+
+  if (parts.length < 6) {
+    console.error("Report format invalid!");
+    return null;
+  }
+
+  // parts[0] = top details text
+  // parts[1] = Test Summary
+  // parts[2] = Observations
+  // parts[3] = Risk Classification
+  // parts[4] = Recommendations
+  // parts[5] = Confidentiality Note
+
+  // 3. Parse Test Summary table
+  const lines = parts[1].trim().split("\n").filter(line => line.trim() !== "");
+  for (let i = 2; i < lines.length; i++) { // skip header and separator
+    const cells = lines[i].split("|").map(cell => cell.trim());
+    if (cells.length === 3) {
+      sections.testSummary.push({
+        tool: cells[0],
+        score: cells[1],
+        risk: cells[2]
+      });
+    }
+  }
+
+  // 4. Assign other parts
+  sections.observations = parts[2]?.trim() || "";
+  sections.riskClassification = parts[3]?.trim() || "";
+  sections.recommendations = parts[4]?.trim() || "";
+  sections.confidentialityNote = parts[5]?.trim() || "";
+
+  return sections;
+}
+
 const ScreenTestForm = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,6 +85,8 @@ const ScreenTestForm = () => {
   const [success, setSuccess] = useState("");
   const [report, setReport] = useState("");
   const [testMeta, setTestMeta] = useState({ date: "", time: "" });
+  const [parsedReport, setParsedReport] = useState(null);
+  const [testId, setTestId] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,12 +157,10 @@ const ScreenTestForm = () => {
       const date = now.toLocaleDateString();
       const time = now.toLocaleTimeString();
       setTestMeta({ date, time });
-
+  
       const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           patient_id: patientId,
           patientName,
@@ -101,34 +172,38 @@ const ScreenTestForm = () => {
           }, {})
         }),
       });
-
+  
       const data = await response.json();
+  
       if (response.ok) {
         setSuccess("Assessment submitted successfully!");
-        setReport(data.report || "No report generated.");
+        setReport(data.report || "No report generated."); // ✅ Only setReport
+        setTestId(data.assessment_id);
       } else {
         setError(data.message || "Submission failed.");
       }
     } catch (err) {
+      console.log(err);
       setError("Error submitting assessment.");
     } finally {
       setSubmitting(false);
     }
   };
+  
+  // ✅ OUTSIDE of handleSubmit:
+  useEffect(() => {
+    if (report) {
+      const structuredReport = parseReport(report);
+      setParsedReport(structuredReport);
+    }
+  }, [report]);
 
   const handlePrint = () => {
-    // Split report into paragraphs with bold sections
-    const formattedReportHTML = `
-      <p><strong>Report for ${patientName}</strong></p>
-      ${report
-        .split(/(?=\*\*Summary:|\*\*Findings:|\*\*Recommendations:)/)
-        .map(paragraph =>
-          `<p>${paragraph.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}</p>`
-        )
-        .join("")
-      }
-    `;
-
+    if (!parsedReport) {
+      alert("No report available to print!");
+      return;
+    }
+  
     const printWindow = window.open('', '_blank');
     printWindow.document.write(`
       <html>
@@ -139,93 +214,208 @@ const ScreenTestForm = () => {
               body {
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                margin: 0;
+                padding: 0;
+                page-break-inside: avoid;
               }
             }
   
             body {
               font-family: 'Segoe UI', sans-serif;
-              padding: 40px;
-              background-color: #f4f6f8;
-              color: #333;
+              margin: 20px;
+              background-color: #ffffff;
+              color: #000;
+              font-size: 12px;
+              position: relative;
+            }
+  
+            .watermark {
+              position: fixed;
+              top: 30%;
+              left: 50%;
+              transform: translate(-50%, -50%) rotate(-30deg);
+              font-size: 80px;
+              color: rgba(0, 0, 0, 0.05);
+              z-index: 0;
+              pointer-events: none;
+              user-select: none;
             }
   
             .report-container {
-              max-width: 800px;
+              max-width: 750px;
               margin: auto;
+              padding: 20px;
               background-color: #fff;
-              padding: 40px;
-              border-radius: 12px;
-              box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+              z-index: 1;
+              position: relative;
             }
   
             .header {
-              text-align: center;
+              display: flex;
+              align-items: center;
               margin-bottom: 30px;
             }
   
             .header img {
-              width: 100px;
-              margin-bottom: 10px;
+              width: 60px;
+              height: 60px;
+              margin-right: 20px;
               border: 2px solid #4285F4;
               border-radius: 10px;
             }
   
-            .header h1 {
+            .header-text {
+              display: flex;
+              flex-direction: column;
+            }
+  
+            .header-text h1 {
               color: #4285F4;
-              font-size: 2.2rem;
+              font-size: 1.8rem;
               margin: 0;
             }
   
-            .header p {
+            .header-text p {
               font-style: italic;
               color: #555;
               margin-top: 4px;
+              font-size: 0.9rem;
+            }
+  
+            .info-row {
+              display: flex;
+              gap: 40px;
+              margin-bottom: 30px;
+            }
+  
+            .info-block {
+              flex: 1;
+            }
+  
+            .section {
+              margin-bottom: 30px;
+              page-break-inside: avoid;
             }
   
             .section-title {
-              font-size: 1.3rem;
+              font-size: 1.2rem;
               color: #4285F4;
-              border-bottom: 2px solid #e0e0e0;
-              padding-bottom: 6px;
-              margin-bottom: 15px;
+              margin-bottom: 12px;
               font-weight: 600;
             }
   
-            .summary p {
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 10px;
+            }
+  
+            th, td {
+              border: 1px solid #ccc;
+              padding: 8px;
+              text-align: center;
+              font-size: 11px;
+            }
+  
+            th {
+              background-color: #4285F4;
+              color: white;
+              font-weight: bold;
+            }
+  
+            .section p {
               margin: 8px 0;
-              font-size: 1rem;
-              line-height: 1.6;
+              font-size: 0.95rem;
+              line-height: 1.4;
               white-space: pre-wrap;
+            }
+  
+            /* Page Breaks between big sections (if needed) */
+            .page-break {
+              page-break-before: always;
             }
           </style>
         </head>
         <body>
+          <div class="watermark">PsyCare</div>
+  
           <div class="report-container">
             <div class="header">
               <img src="${window.location.origin}/PsyCareMain.png" alt="PsyCare Logo" />
-              <h1>PsyCare</h1>
-              <p>Your Path to Mental Wellness</p>
-            </div>
-  
-            <div class="section">
-              <div class="section-title">Patient Details</div>
-              <p><strong>Name:</strong> ${patientName}</p>
-              <p><strong>Mobile:</strong> ${phoneNumber}</p>
-              <p><strong>Gender:</strong> ${patientGender}</p>
-              <p><strong>Date:</strong> ${testMeta.date}</p>
-              <p><strong>Time:</strong> ${testMeta.time}</p>
-            </div>
-  
-            <div class="section">
-              <div class="section-title">AI-Generated Report Summary</div>
-              <div class="summary">
-                ${formattedReportHTML}
+              <div class="header-text">
+                <h1>PsyCare</h1>
+                <p>Your Path to Mental Wellness</p>
               </div>
+            </div>
+  
+            <div class="info-row">
+              <div class="info-block">
+                <div class="section-title">Patient Details</div>
+                <p><strong>Name:</strong> ${patientName}</p>
+                <p><strong>Mobile:</strong> ${phoneNumber}</p>
+                <p><strong>Gender:</strong> ${patientGender}</p>
+              </div>
+  
+              <div class="info-block">
+                <div class="section-title">Assessment Details</div>
+                <p><strong>Date:</strong> ${parsedReport.topDetails["Date"]}</p>
+                <p><strong>Assessment ID:</strong> ${formatAssessmentId(testId, testMeta.date)}</p>
+                <p><strong>Assessment Mode:</strong> ${parsedReport.topDetails["Assessment_Mode"]}</p>
+                <p><strong>Assessment Type:</strong> ${parsedReport.topDetails["Assessment_Type"]}</p>
+                <p><strong>Tools Used:</strong> ${parsedReport.topDetails["Tools_Used"]}</p>
+              </div>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">1. Test Summary</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tool Used</th>
+                    <th>Score</th>
+                    <th>Risk Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${
+                    parsedReport.testSummary.length > 0 ?
+                    parsedReport.testSummary.map(item => `
+                      <tr>
+                        <td>${item.tool}</td>
+                        <td>${item.score}</td>
+                        <td>${item.risk}</td>
+                      </tr>
+                    `).join('') :
+                    `<tr><td colspan="3">No data available</td></tr>`
+                  }
+                </tbody>
+              </table>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">2. AI Generated Observations</div>
+              <p>${parsedReport.observations}</p>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">3. Risk Classification</div>
+              <p>${parsedReport.riskClassification}</p>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">4. Recommended Next Steps</div>
+              <p>${parsedReport.recommendations}</p>
+            </div>
+  
+            <div class="section">
+              <div class="section-title">5. Confidentiality Note</div>
+              <p>${parsedReport.confidentialityNote}</p>
             </div>
           </div>
         </body>
       </html>
     `);
+  
     printWindow.document.close();
     setTimeout(() => {
       printWindow.focus();

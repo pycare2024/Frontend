@@ -56,6 +56,7 @@ function GeminiApi() {
             });
             
             const data = await res.json();
+            console.log(data);
             setTestReport(data.report || "No report generated.");
         } catch (error) {
             console.error("Error generating report:", error);
