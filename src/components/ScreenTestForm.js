@@ -161,7 +161,7 @@ const ScreenTestForm = () => {
       const time = now.toLocaleTimeString();
       setTestMeta({ date, time });
   
-      const response = await fetch("http://localhost:4000/NewScreeningTestRoute/submitAssessment", {
+      const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
