@@ -89,7 +89,7 @@ const ScreenTestForm = () => {
   const [testId, setTestId] = useState("");
   const [userType, setUserType] = useState("");
   const [empId, setEmpId] = useState("");
-  const [compCode, setCompCode] = useState("");
+  const [compName, setCompName] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -161,7 +161,7 @@ const ScreenTestForm = () => {
       const time = now.toLocaleTimeString();
       setTestMeta({ date, time });
   
-      const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
+      const response = await fetch("http://localhost:4000/NewScreeningTestRoute/submitAssessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -185,7 +185,7 @@ const ScreenTestForm = () => {
         setTestId(data.assessment_id);
         setUserType(data.userType || "");
         setEmpId(data.empId || ""); 
-        setCompCode(data.companyCode || "");
+        setCompName(data.companyName || "");
 
       } else {
         setError(data.message || "Submission failed.");
@@ -364,7 +364,7 @@ const ScreenTestForm = () => {
                 <p><strong>Gender:</strong> ${patientGender}</p>
                 ${userType === "corporate" ? `
                   <p><strong>Employee Id:</strong> ${empId}</p>
-                  <p><strong>Company Code:</strong> ${compCode}</p>
+                  <p><strong>Company Name:</strong> ${compName}</p>
                 ` : ""}
               </div>
   
