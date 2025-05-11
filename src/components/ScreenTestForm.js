@@ -87,6 +87,9 @@ const ScreenTestForm = () => {
   const [testMeta, setTestMeta] = useState({ date: "", time: "" });
   const [parsedReport, setParsedReport] = useState(null);
   const [testId, setTestId] = useState("");
+  const [userType, setUserType] = useState("");
+  const [empId, setEmpId] = useState("");
+  const [compCode, setCompCode] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -174,11 +177,16 @@ const ScreenTestForm = () => {
       });
   
       const data = await response.json();
+      // console.log("DATA->",data);
   
       if (response.ok) {
         setSuccess("Assessment submitted successfully!");
         setReport(data.report || "No report generated."); // ✅ Only setReport
         setTestId(data.assessment_id);
+        setUserType(data.userType || "");
+        setEmpId(data.empId || ""); 
+        setCompCode(data.companyCode || "");
+
       } else {
         setError(data.message || "Submission failed.");
       }
@@ -354,6 +362,10 @@ const ScreenTestForm = () => {
                 <p><strong>Name:</strong> ${patientName}</p>
                 <p><strong>Mobile:</strong> ${phoneNumber}</p>
                 <p><strong>Gender:</strong> ${patientGender}</p>
+                ${userType === "corporate" ? `
+                  <p><strong>Employee Id:</strong> ${empId}</p>
+                  <p><strong>Company Code:</strong> ${compCode}</p>
+                ` : ""}
               </div>
   
               <div class="info-block">
