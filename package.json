@@ -16,6 +16,7 @@
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "lucide-react": "^0.484.0",
+    "marked": "^15.0.11",
     "quill": "^2.0.3",
     "react": "^18.3.1",
     "react-datepicker": "^8.3.0",
