@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+    PieChart,
+    Pie,
+    Cell,
+    RadarChart,
+    PolarGrid,
+    PolarAngleAxis,
+    PolarRadiusAxis,
+    Radar,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+} from "recharts";
 import "./CorporateScreeningSummary.css";
 
 function CorporateScreeningSummary() {
@@ -11,7 +23,7 @@ function CorporateScreeningSummary() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const COLORS = ["#4285F4", "#FBBC05", "#34A853", "#EA4335"];
+    const COLORS = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"];
 
     const handleGenerate = async () => {
         if (!companyCode || !startDate || !endDate) {
@@ -25,7 +37,6 @@ function CorporateScreeningSummary() {
                 `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/screening-summary?startDate=${startDate}&endDate=${endDate}`
             );
             setSummaryData(response.data);
-            // console.log(response.data);
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong.");
             setSummaryData(null);
@@ -35,317 +46,350 @@ function CorporateScreeningSummary() {
     };
 
     const handlePrint = () => {
-        const printContent = document.getElementById('print-section');
+        const printContent = document.getElementById("print-section");
         if (!printContent) {
             console.error("Print section not found!");
             return;
         }
 
-        const printWindow = window.open('', '', 'height=900,width=1200');
-        printWindow.document.write(`
-          <html>
-            <head>
-              <title>Mental health screening summary Report - PsyCare</title>
-              <style>
-                body {
-                  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                  margin: 0;
-                  padding: 40px;
-                  background: #ffffff;
-                  color: #333;
-                  width: 100%;
-                  box-sizing: border-box;
-                }
-                .header {
-                  text-align: center;
-                  margin-bottom: 30px;
-                }
-                .header img {
-                  width: 120px;
-                  margin-bottom: 10px;
-                }
-                .header h1 {
-                  color: #4285F4;
-                  margin: 0;
-                  font-size: 32px;
-                  letter-spacing: 1px;
-                }
-                .header p {
-                  font-size: 18px;
-                  color: #666;
-                  margin-top: 8px;
-                }
-                hr {
-                  margin: 20px 0;
-                  border: none;
-                  border-top: 2px solid #4285F4;
-                }
-                h2, h3 {
-                  color: #333;
-                  margin-top: 20px;
-                  margin-bottom: 10px;
-                }
-                table {
-                  width: 100%;
-                  border-collapse: collapse;
-                  margin-top: 10px;
-                  font-size: 14px;
-                }
-                th, td {
-                  border: 1px solid #ccc;
-                  padding: 10px;
-                  text-align: center;
-                }
-                th {
-                  background-color: #4285F4;
-                  color: white;
-                }
-                tr:nth-child(even) {
-                  background-color: #f2f2f2;
-                }
-                .legend-print {
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 10px;
-                  margin-top: 20px;
-                  justify-content: center;
-                }
-                .legend-item {
-                  display: flex;
-                  align-items: center;
-                  gap: 5px;
-                  font-size: 14px;
-                }
-                .legend-color {
-                  width: 16px;
-                  height: 16px;
-                  border-radius: 50%;
-                }
-                .section {
-                  page-break-inside: avoid;
-                  margin-bottom: 30px;
-                }
-                .footer {
-                  margin-top: 40px;
-                  text-align: center;
-                  font-size: 14px;
-                  color: #999;
-                }
-                @media print {
-                  body {
-                    zoom: 100%;
-                  }
-                }
-              </style>
-            </head>
-            <body>
-              <div class="header">
-                <img src="${window.location.origin}/PsyCareMain.png" alt="PsyCare Logo" />
+        const WindowPrt = window.open("", "", "width=1200,height=900");
+        WindowPrt.document.write(`
+      <html>
+        <head>
+          <title>Corporate Screening Summary Report - PsyCare</title>
+          <style>
+            body {
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              margin: 0;
+              padding: 50px 70px;
+              background: #fff;
+              color: #333;
+            }
+            .report-container {
+              width: 100%;
+            }
+            .header {
+              display: flex;
+              align-items: center;
+              gap: 30px;
+              margin-bottom: 40px;
+            }
+            .header img {
+              width: 100px;
+              height: 100px;
+              object-fit: cover;
+              border-radius: 14px;
+              border: 2px solid #4285F4;
+            }
+            .header-text {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            }
+            .header-text h1 {
+              font-size: 38px;
+              color: #4285F4;
+              margin: 0;
+              font-weight: 700;
+            }
+            .header-text p {
+              margin-top: 8px;
+              font-size: 18px;
+              color: #555;
+              font-weight: 500;
+            }
+            hr {
+              border: none;
+              border-top: 2px solid #4285F4;
+              margin: 30px 0;
+            }
+            h2 {
+              color: #4285F4;
+              font-size: 26px;
+              margin-bottom: 15px;
+            }
+            h3 {
+              font-size: 22px;
+              color: #4285F4;
+              margin-top: 30px;
+            }
+            p {
+              font-size: 16px;
+              line-height: 1.6;
+              margin: 5px 0 15px 0;
+            }
+            ul {
+              margin-top: 10px;
+              padding-left: 20px;
+            }
+            li {
+              margin-bottom: 8px;
+              font-size: 15px;
+            }
+            table {
+              width: 100%;
+              border-collapse: separate;
+              border-spacing: 0 10px;
+              font-size: 15px;
+              margin-top: 15px;
+            }
+            th {
+              background: #4285F4;
+              color: #fff;
+              padding: 12px;
+              font-size: 16px;
+              border-radius: 8px 8px 0 0;
+            }
+            td {
+              background: #f9f9f9;
+              padding: 12px;
+              border: 1px solid #ddd;
+            }
+            .section {
+              margin-bottom: 50px;
+            }
+            .footer {
+              border-top: 1px solid #ddd;
+              margin-top: 50px;
+              padding-top: 20px;
+              text-align: center;
+              font-size: 13px;
+              color: #888;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="report-container">
+            <div class="header">
+              <img src="${window.location.origin}/PsyCareMain.png" alt="PsyCare Logo" />
+              <div class="header-text">
                 <h1>PsyCare</h1>
                 <p>Your Path to Mental Wellness</p>
               </div>
-              <hr />
-              ${printContent.innerHTML}
-              <div class="footer">
-                <p>Generated by PsyCare | ${new Date().toLocaleDateString()}</p>
-              </div>
-            </body>
-          </html>
-        `);
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
+            </div>
+  
+            <hr />
+  
+            ${printContent.innerHTML}
+  
+            <div class="footer">
+              Generated by <strong>PsyCare</strong> | ${new Date().toLocaleDateString()}
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+
+        WindowPrt.document.close();
+        WindowPrt.focus();
+        setTimeout(() => {
+            WindowPrt.print();
+            WindowPrt.close();
+        }, 500);
     };
 
-    const casesPieData = summaryData ? [
-        { name: "Insomnia", value: summaryData.insomniaCases },
-        { name: "Anxiety", value: summaryData.anxietyCases },
-        { name: "Depression", value: summaryData.depressionCases },
-        { name: "PTSD", value: summaryData.ptsdCases },
-    ] : [];
+    const casesPieData = summaryData
+        ? [
+            { name: "Insomnia", value: summaryData.insomniaCases },
+            { name: "Anxiety", value: summaryData.anxietyCases },
+            { name: "Depression", value: summaryData.depressionCases },
+            { name: "PTSD", value: summaryData.ptsdCases },
+        ]
+        : [];
 
-    const departmentBarData = summaryData ? Object.keys(summaryData.departmentScores).map(dept => ({
-        department: dept,
-        "GAD-7": summaryData.departmentScores[dept]["GAD-7"]?.length ? summaryData.departmentScores[dept]["GAD-7"][0] : 0,
-        "PCL-5": summaryData.departmentScores[dept]["PCL-5"]?.length ? summaryData.departmentScores[dept]["PCL-5"][0] : 0,
-    })) : [];
+    // Preparing Radar Chart data with dynamic tests based on available data
+    const radarChartData = summaryData
+        ? Object.keys(summaryData).reduce((acc, key) => {
+            const scoreValue = summaryData[key];
+            if (scoreValue !== undefined) {
+                acc.push({ subject: key, score: scoreValue });
+            }
+            return acc;
+        }, [])
+        : [];
 
     return (
-        <div style={{ padding: "2rem", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-            <h1 style={{ color: "#4285F4", marginBottom: "2rem" }}>Corporate Screening Summary</h1>
+        <div className="screening-summary-container">
+            <center><h1 style={{fontSize:"2.5rem", fontWeight:"bold",color:"#4285F4"}}>Corporate Screening Summary</h1></center>
 
-            {/* Filters */}
-            <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem" }}>
+            <div className="filters">
                 <input
                     type="text"
                     placeholder="Company Code"
                     value={companyCode}
                     onChange={(e) => setCompanyCode(e.target.value)}
-                    style={{ padding: "0.7rem", borderRadius: "5px", border: "1px solid #ccc", flex: 1 }}
                 />
                 <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    style={{ padding: "0.7rem", borderRadius: "5px", border: "1px solid #ccc" }}
                 />
                 <input
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    style={{ padding: "0.7rem", borderRadius: "5px", border: "1px solid #ccc" }}
                 />
-                <button
-                    onClick={handleGenerate}
-                    style={{ backgroundColor: "#4285F4", color: "white", padding: "0.7rem 1.5rem", border: "none", borderRadius: "5px", cursor: "pointer" }}
-                >
-                    Generate
-                </button>
+                <button onClick={handleGenerate}>Generate</button>
                 {summaryData && (
-                    <button
-                        onClick={handlePrint}
-                        style={{ backgroundColor: "#34A853", color: "white", padding: "0.7rem 1.5rem", border: "none", borderRadius: "5px", cursor: "pointer" }}
-                    >
+                    <button onClick={handlePrint} className="print-btn">
                         Print
                     </button>
                 )}
             </div>
 
-            {/* Error or Loading */}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error">{error}</p>}
             {loading && <p>Loading...</p>}
 
-            {/* Printable Content */}
             {summaryData && (
-                <div id="print-section" style={{ backgroundColor: "white", padding: "2rem", borderRadius: "10px" }}>
-                    <h2>Mental health screening summary report</h2>
-                    <h2>Summary for {summaryData.companyName}</h2>
-                    <p>Date Range: {startDate} to {endDate}</p>
-                    <p>Total Screenings: {summaryData.totalScreenings}</p>
-                    <p>Total Patients: {summaryData.totalPatients}</p>
-                    <p>Insomnia Cases: {summaryData.insomniaCases}</p>
-                    <p>Anxiety Cases: {summaryData.anxietyCases}</p>
-                    <p>Depression Cases: {summaryData.depressionCases}</p>
-                    <p>PTSD Cases: {summaryData.ptsdCases}</p>
-
+                <div id="print-section" className="report-content">
                     <div className="section">
-                        {/* Cases Pie Chart */}
-                        <h3 style={{ marginTop: "2rem" }}>Cases Distribution</h3>
-                        {/* Screen View: PieChart */}
-                        <div className="screen-only">
-                            <ResponsiveContainer width="100%" height={300}>
-                                <PieChart>
-                                    <Pie
-                                        data={casesPieData}
-                                        dataKey="value"
-                                        nameKey="name"
-                                        cx="50%"
-                                        cy="50%"
-                                        outerRadius={100}
-                                        label={({ name, value }) => `${name}: ${value}`}
-                                    >
-                                        {casesPieData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip formatter={(value, name) => [`${value}`, `${name}`]} />
-                                </PieChart>
-                            </ResponsiveContainer>
+                        <h2>Screening Overview</h2>
+                        <p>
+                            <strong>Company Name:</strong> {summaryData.companyName}
+                        </p>
+                        <p>
+                            <strong>Date Range:</strong> {startDate} to {endDate}
+                        </p>
+                        <p>
+                            <strong>Total Screenings:</strong> {summaryData.totalScreenings}
+                        </p>
+                        <p>
+                            <strong>Total Patients:</strong> {summaryData.totalPatients}
+                        </p>
+                    </div>
 
-                            {/* Legends */}
-                            <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                                {casesPieData.map((entry, index) => (
-                                    <div key={index} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                                        <div style={{
-                                            width: "20px",
-                                            height: "20px",
-                                            backgroundColor: COLORS[index % COLORS.length],
-                                            borderRadius: "50%",
-                                        }}></div>
-                                        <span>{entry.name}</span>
-                                    </div>
-                                ))}
-                            </div>
+                    <div className="section" style={{ marginTop: "2rem" }}>
+                        <h2 style={{ color: "#4285F4", marginBottom: "1rem", fontSize: "24px", textAlign: "center" }}>
+                            Summary of Cases
+                        </h2>
+                        <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0 10px", fontSize: "16px" }}>
+                            <thead>
+                                <tr style={{ backgroundColor: "#4285F4", color: "white" }}>
+                                    <th style={{ padding: "12px", borderRadius: "8px 0 0 8px" }}>Condition</th>
+                                    <th style={{ padding: "12px", borderRadius: "0 8px 8px 0" }}>Number of Cases</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style={{ backgroundColor: "#fff" }}>
+                                    <td style={{ padding: "12px" }}>Insomnia</td>
+                                    <td style={{ padding: "12px" }}>{summaryData.insomniaCases}</td>
+                                </tr>
+                                <tr style={{ backgroundColor: "#fff" }}>
+                                    <td style={{ padding: "12px" }}>Anxiety</td>
+                                    <td style={{ padding: "12px" }}>{summaryData.anxietyCases}</td>
+                                </tr>
+                                <tr style={{ backgroundColor: "#fff" }}>
+                                    <td style={{ padding: "12px" }}>Depression</td>
+                                    <td style={{ padding: "12px" }}>{summaryData.depressionCases}</td>
+                                </tr>
+                                <tr style={{ backgroundColor: "#fff" }}>
+                                    <td style={{ padding: "12px" }}>PTSD</td>
+                                    <td style={{ padding: "12px" }}>{summaryData.ptsdCases}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="section" style={{ backgroundColor: "#f9fbfd", padding: "2rem", borderRadius: "12px", boxShadow: "0 4px 12px rgba(66, 133, 244, 0.1)" }}>
+                        <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "28px", marginBottom: "1rem" }}>
+                            Cases Distribution
+                        </h2>
+                        <p style={{ textAlign: "center", color: "#666", fontSize: "15px", marginBottom: "2rem" }}>
+                            Overview of primary mental health conditions observed among employees.
+                        </p>
+
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <PieChart width={600} height={400}>
+                                <Pie
+                                    data={casesPieData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={70} // <-- donut style
+                                    outerRadius={140}
+                                    paddingAngle={3}
+                                    label={({ name, value }) => `${name}: ${value}`}
+                                    labelLine={false}
+                                    dataKey="value"
+                                >
+                                    {casesPieData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip
+                                    contentStyle={{ fontSize: "14px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.15)" }}
+                                />
+                            </PieChart>
                         </div>
 
-                        {/* Print View: Static Table */}
-                        <div className="print-only" style={{ marginTop: "1rem" }}>
-                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                <thead>
-                                    <tr style={{ backgroundColor: "#4285F4", color: "white" }}>
-                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Case Type</th>
-                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Number of Cases</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {casesPieData.map((caseItem, index) => (
-                                        <tr key={index}>
-                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{caseItem.name}</td>
-                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{caseItem.value}</td>
-                                        </tr>
+                        {/* Tiny legends */}
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: "1.5rem",
+                            marginTop: "2rem",
+                            flexWrap: "wrap"
+                        }}>
+                            {casesPieData.map((entry, index) => (
+                                <div key={index} style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    backgroundColor: "#eef3fb",
+                                    padding: "8px 12px",
+                                    borderRadius: "8px",
+                                    fontSize: "14px",
+                                    color: "#333"
+                                }}>
+                                    <div style={{
+                                        width: "16px",
+                                        height: "16px",
+                                        backgroundColor: COLORS[index % COLORS.length],
+                                        borderRadius: "50%",
+                                        marginRight: "8px"
+                                    }}></div>
+                                    {entry.name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="section" style={{ backgroundColor: "#f9fbfd", padding: "2rem", borderRadius: "12px" }}>
+                        <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "28px", marginBottom: "1rem" }}>
+                            Department-wise Screening Insights
+                        </h2>
+                        <p style={{ textAlign: "center", color: "#666", fontSize: "15px", marginBottom: "2rem" }}>
+                            Analysis of mental health scores across departments.
+                        </p>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <ResponsiveContainer width="100%" height={400}>
+                                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarChartData}>
+                                    <PolarGrid />
+                                    <PolarAngleAxis dataKey="subject" />
+                                    <PolarRadiusAxis />
+                                    {radarChartData.map((test, index) => (
+                                        <Radar
+                                            key={index}
+                                            name={test.subject}
+                                            dataKey="score"
+                                            stroke={COLORS[index % COLORS.length]}
+                                            fill={COLORS[index % COLORS.length]}
+                                            fillOpacity={0.4}
+                                        />
                                     ))}
-                                </tbody>
-                            </table>
+                                    <Tooltip />
+                                    <Legend />
+                                </RadarChart>
+                            </ResponsiveContainer>
                         </div>
                     </div>
 
                     <div className="section">
-                        {/* Department Bar Chart */}
-                        <h3 style={{ marginTop: "2rem" }}>Department Scores</h3>
-                        {/* Screen View: Bar Chart */}
-                        <div className="screen-only">
-                            <ResponsiveContainer width="100%" height={400}>
-                                <BarChart data={departmentBarData}>
-                                    <XAxis dataKey="department" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Bar dataKey="GAD-7" fill="#4285F4" name="GAD-7 Score" />
-                                    <Bar dataKey="PCL-5" fill="#EA4335" name="PCL-5 Score" />
-                                </BarChart>
-                            </ResponsiveContainer>
-
-                            {/* Legend below for better clarity */}
-                            <div style={{ marginTop: "1rem", display: "flex", gap: "2rem" }}>
-                                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                                    <div style={{ width: "20px", height: "20px", backgroundColor: "#4285F4" }}></div>
-                                    <span>GAD-7 Score</span>
-                                </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                                    <div style={{ width: "20px", height: "20px", backgroundColor: "#EA4335" }}></div>
-                                    <span>PCL-5 Score</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Print View: Static Table */}
-                        <div className="print-only" style={{ marginTop: "1rem" }}>
-                            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                                <thead>
-                                    <tr style={{ backgroundColor: "#4285F4", color: "white" }}>
-                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>Department</th>
-                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>GAD-7 Score</th>
-                                        <th style={{ padding: "0.5rem", border: "1px solid #ccc" }}>PCL-5 Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {departmentBarData.map((dept, index) => (
-                                        <tr key={index}>
-                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept.department}</td>
-                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept["GAD-7"]}</td>
-                                            <td style={{ padding: "0.5rem", border: "1px solid #ccc" }}>{dept["PCL-5"]}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                            {/* Legend for print also */}
-                            <div style={{ marginTop: "1rem" }}>
-                                <p><strong>Legends:</strong></p>
-                                <p><span style={{ color: "#4285F4" }}>■</span> GAD-7 Score (Anxiety Measure)</p>
-                                <p><span style={{ color: "#EA4335" }}>■</span> PCL-5 Score (PTSD Measure)</p>
-                            </div>
-                        </div>
-
+                        <h3>Key Insights</h3>
+                        <ul>
+                            <li>Insomnia often indicates early mental distress in employees.</li>
+                            <li>Elevated anxiety and depression levels impact workplace productivity.</li>
+                            <li>PTSD symptoms highlight need for psychological safety policies.</li>
+                            <li>Regular mental wellness checks significantly enhance workforce resilience.</li>
+                        </ul>
                     </div>
                 </div>
             )}

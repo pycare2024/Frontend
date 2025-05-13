@@ -1,26 +1,90 @@
-/* For printing properly */
-@media print {
-    .screen-only {
-      display: none;
-    }
-    .print-only {
-      display: block;
-    }
-  }
-  
-  @media screen {
-    .print-only {
-      display: none;
-    }
-  }
-  
-  .print-section, .section {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 2rem;
-  }
-  
-  /* Optional better look for screen */
-  .screen-only {
-    margin-bottom: 2rem;
-  }
+.screening-summary-container {
+  padding: 2rem;
+  min-height: 100vh;
+  background: url('./reports.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filters input,
+.filters button {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.filters input:focus {
+  border-color: #4285F4;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.filters button {
+  background-color: #4285F4;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+}
+
+.filters button:hover {
+  background-color: #3367D6;
+}
+
+.print-btn {
+  background-color: #34A853 !important;
+}
+
+.print-btn:hover {
+  background-color: #2a8a45 !important;
+}
+
+.error {
+  color: #d93025;
+  background-color: #fce8e6;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.report-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2,
+.section h3 {
+  color: #4285F4;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.section p {
+  font-size: 15px;
+  margin: 5px 0;
+  color: #333;
+}
