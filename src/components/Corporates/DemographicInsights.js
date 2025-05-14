@@ -31,7 +31,7 @@ const DemographicInsights = () => {
     setGeminiSummary("");
 
     try {
-      const response = await fetch("http://localhost:4000/GeminiRoute/summarizeDemographics", {
+      const response = await fetch("https://backend-xhl4.onrender.com/GeminiRoute/summarizeDemographics", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
