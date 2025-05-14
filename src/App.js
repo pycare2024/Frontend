@@ -50,7 +50,6 @@ import CorporateScreeningSummary from './components/Corporates/CorporateScreenin
 import DemographicInsights from './components/Corporates/DemographicInsights';
 
 
-
 import { useState, useEffect } from 'react';
 
 function App() {

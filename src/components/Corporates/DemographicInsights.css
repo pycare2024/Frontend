@@ -4,6 +4,21 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.demographic {
+  background-image: url('./reports.jpg');
+  background-size: cover;            /* Ensures image covers entire area */
+  background-position: center;       /* Keeps focal point in center */
+  background-repeat: no-repeat;      /* Prevents tiling */
+  min-height: 100vh;                 /* Full screen height */
+  padding: 40px;                     /* Adds spacing inside */
+  color: #fff;                       /* Ensures text is readable on dark images */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .di-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,6 +26,7 @@ body {
   background: linear-gradient(145deg, #f9f9f9, #ffffff);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
+  
 }
 
 .di-title {

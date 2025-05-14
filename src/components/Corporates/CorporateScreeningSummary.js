@@ -14,6 +14,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import "./CorporateScreeningSummary.css";
+import { marked } from "marked";
 
 function CorporateScreeningSummary() {
     const [companyCode, setCompanyCode] = useState("");
@@ -22,6 +23,7 @@ function CorporateScreeningSummary() {
     const [summaryData, setSummaryData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [summaryInsights, setSummaryInsights] = useState(null);
 
     const COLORS = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"];
 
@@ -32,14 +34,28 @@ function CorporateScreeningSummary() {
         }
         setError("");
         setLoading(true);
+
         try {
+            // Make API call to your existing screening summary route
             const response = await axios.get(
                 `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/screening-summary?startDate=${startDate}&endDate=${endDate}`
             );
+
+            // Once we have the screening summary data, pass it to Gemini route
+            const insightsResponse = await axios.post(
+                "https://backend-xhl4.onrender.com/GeminiRoute/summarizeScreeningSummary", // Update with your Gemini route URL
+                {
+                    screeningData: response.data,
+                }
+            );
+
+            // Set the insights data
             setSummaryData(response.data);
+            setSummaryInsights(insightsResponse.data.summary); // Store the generated insights
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong.");
             setSummaryData(null);
+            setSummaryInsights(null);
         } finally {
             setLoading(false);
         }
@@ -188,6 +204,10 @@ function CorporateScreeningSummary() {
         }, 500);
     };
 
+    const renderMarkdown = (markdownContent) => {
+        return marked(markdownContent);
+    };
+
     const casesPieData = summaryData
         ? [
             { name: "Insomnia", value: summaryData.insomniaCases },
@@ -210,7 +230,7 @@ function CorporateScreeningSummary() {
 
     return (
         <div className="screening-summary-container">
-            <center><h1 style={{fontSize:"2.5rem", fontWeight:"bold",color:"#4285F4"}}>Corporate Screening Summary</h1></center>
+            <center><h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#4285F4" }}>Corporate Screening Summary</h1></center>
 
             <div className="filters">
                 <input
@@ -382,14 +402,14 @@ function CorporateScreeningSummary() {
                         </div>
                     </div>
 
-                    <div className="section">
-                        <h3>Key Insights</h3>
-                        <ul>
-                            <li>Insomnia often indicates early mental distress in employees.</li>
-                            <li>Elevated anxiety and depression levels impact workplace productivity.</li>
-                            <li>PTSD symptoms highlight need for psychological safety policies.</li>
-                            <li>Regular mental wellness checks significantly enhance workforce resilience.</li>
-                        </ul>
+                    <div className="summary-container">
+                        {loading && <p>Loading...</p>}
+                        {error && <p className="error-message">{error}</p>}
+                        <h2>Summary Insights</h2>
+                        <div
+                            className="markdown-content"
+                            dangerouslySetInnerHTML={{ __html: renderMarkdown(summaryInsights) }}
+                        />
                     </div>
                 </div>
             )}

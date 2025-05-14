@@ -66,10 +66,12 @@
 }
 
 .report-content {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.563); /* Slight opacity to allow background visibility */
   padding: 2rem;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(7px); /* Apply blur effect */
+  -webkit-backdrop-filter: blur(7px); /* For Safari compatibility */
 }
 
 .section {
@@ -87,4 +89,34 @@
   font-size: 15px;
   margin: 5px 0;
   color: #333;
+}
+
+/* CorporateScreeningSummary.css */
+.markdown-content {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  color: #4285F4;
+}
+
+.markdown-content p {
+  margin-bottom: 10px;
+}
+
+.markdown-content ul {
+  padding-left: 20px;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
 }
