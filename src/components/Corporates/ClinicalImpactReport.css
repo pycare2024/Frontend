@@ -1,0 +1,190 @@
+/* ClinicalImpactReport.css */
+
+/* Global styles */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f8ff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .report-container {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: #ffffff;
+    border-radius: 1.25rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+  
+  /* Header */
+  .report-header {
+    text-align: center;
+    color: #4285f4;
+    margin-bottom: 2.5rem;
+  }
+  
+  .report-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .report-header p {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  /* Grid Section */
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .report-card {
+    background-color: #f9fbff;
+    padding: 1.8rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 20px rgba(66, 133, 244, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(66, 133, 244, 0.25);
+  }
+  
+  .report-card h3 {
+    color: #1a1a1a;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .report-card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0b3d91;
+  }
+  
+  /* Charts Section */
+  .chart-section {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .chart-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #1967d2;
+    border-left: 4px solid #1967d2;
+    padding-left: 0.75rem;
+  }
+  
+  /* Follow-up Summary */
+  .followup-summary {
+    background: linear-gradient(to right, #eef4fb, #f0f6ff);
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: inset 0 0 12px rgba(66, 133, 244, 0.12);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #1a1a1a;
+    margin-top: 2.5rem;
+  }
+  
+  .followup-summary h3 {
+    font-size: 1.35rem;
+    color: #0b57d0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  /* Print Button */
+  .print-button-container {
+    text-align: right;
+    margin-top: 3rem;
+  }
+  
+  .print-button {
+    background-color: #34a853;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(52, 168, 83, 0.4);
+  }
+  
+  .print-button:hover {
+    background-color: #2c8c46;
+    box-shadow: 0 8px 20px rgba(52, 168, 83, 0.6);
+  }
+  
+  /* Input Section */
+  .input-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .input-section input {
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    min-width: 220px;
+    transition: border 0.3s ease;
+  }
+  
+  .input-section input:focus {
+    border-color: #4285f4;
+    outline: none;
+    box-shadow: 0 0 5px rgba(66, 133, 244, 0.4);
+  }
+  
+  .input-section button {
+    background-color: #4285f4;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.65rem 1.5rem;
+    border: none;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .input-section button:hover {
+    background-color: #3367d6;
+    box-shadow: 0 6px 12px rgba(66, 133, 244, 0.3);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .report-container {
+      padding: 1.5rem;
+    }
+  
+    .report-card p {
+      font-size: 1.6rem;
+    }
+  
+    .input-section {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .print-button-container {
+      text-align: center;
+    }
+  }

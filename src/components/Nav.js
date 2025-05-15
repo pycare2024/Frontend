@@ -595,6 +595,21 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         >
                                             Demographic insights report
                                         </Link>
+                                        <Link
+                                            to="/ClinicalImpactReport"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Clinical impact report
+                                        </Link>
                                     </div>
                                 )}
                             </div>
@@ -1030,6 +1045,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 <Link to="/RechargeCredits">Recharge Credits</Link>
                                 <Link to="/CorporateScreeningSummary">Corporate screening summary report</Link>
                                 <Link to="/DemographicInsights">Demographic insights report</Link>
+                                <Link to="/ClinicalImpactReport">Clinical impact report</Link>
                             </div>
                         </div>
                         <div className="dropdown">
