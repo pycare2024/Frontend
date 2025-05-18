@@ -1,190 +1,287 @@
 /* ClinicalImpactReport.css */
 
-/* Global styles */
+/* Core Layout */
 /* body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f8ff;
-    margin: 0;
-    padding: 0;
-    color: #333;
-  } */
-  
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fd;
+  color: #333;
+  margin: 0;
+  padding: 0;
+} */
+
+.main-report-container {
+  background: url('./ClinicalImpact.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  /* Optional: for a subtle parallax effect in digital view */
+  padding: 60px 40px;
+  color: #fff;
+  /* Ensure text is readable on the image */
+  min-height: 100vh;
+  /* Ensure it covers full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.report-container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.07);
+}
+
+/* Header Section */
+.report-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #4285f4;
+  margin-bottom: 0.5rem;
+}
+
+.report-header p {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Summary Cards */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.report-card {
+  background: linear-gradient(to bottom right, #e8f0fe, #ffffff);
+  padding: 2rem;
+  border-radius: 18px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 25px rgba(66, 133, 244, 0.15);
+}
+
+.report-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(66, 133, 244, 0.3);
+}
+
+.report-card h3 {
+  font-size: 1.2rem;
+  color: #1f1f1f;
+  margin-bottom: 0.75rem;
+}
+
+.report-card p {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #0b3d91;
+  margin: 0;
+}
+
+.report-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #f8faff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(66, 133, 244, 0.1);
+  margin-bottom: 2rem;
+  align-items: flex-end;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+}
+
+.control-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #0b3d91;
+}
+
+.control-group input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid #d3e2f5;
+  border-radius: 0.75rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.control-group input:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.15);
+}
+
+.fetch-button {
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.fetch-button:hover {
+  background: #3367d6;
+}
+
+/* Overview Charts Section */
+.chart-section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.chart-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0b3d91;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5px;
+}
+
+/* Grid for charts */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2.5rem;
+}
+
+/* Chart Card */
+.chart-card {
+  background: linear-gradient(145deg, #ffffff, #f0f4ff);
+  border: 1px solid #e3e9f9;
+  border-radius: 24px;
+  padding: 2rem 2rem 1.5rem 2rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  height: auto;
+}
+
+.chart-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 1rem;
+}
+
+/* Chart figure and caption */
+.chart-card figure {
+  margin: 0;
+}
+
+.chart-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.chart-card.full-width {
+  width: 100%;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(145deg, #ffffff, #f1f6ff);
+  border-radius: 24px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid #dde5f4;
+}
+
+.chart-card.full-width h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #1a237e;
+}
+
+.chart-card figure {
+  margin: 0;
+}
+
+.chart-card figcaption {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #666;
+}
+
+/* Ensure consistent chart height */
+.chart-card canvas {
+  max-height: 320px !important;
+}
+
+.di-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+.di-chart-box {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.di-chart-box:hover {
+  transform: translateY(-5px);
+}
+
+.di-chart-box h3 {
+  font-size: 1.4rem;
+  color: #0b3d91;
+  margin-bottom: 1rem;
+}
+
+.di-description {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+
   .report-container {
-    max-width: 1100px;
-    margin: 3rem auto;
-    padding: 2.5rem;
-    background: #ffffff;
-    border-radius: 1.25rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-  }
-  
-  /* Header */
-  .report-header {
-    text-align: center;
-    color: #4285f4;
-    margin-bottom: 2.5rem;
-  }
-  
-  .report-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-  }
-  
-  .report-header p {
-    font-size: 1.1rem;
-    color: #555;
-  }
-  
-  /* Grid Section */
-  .report-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-  }
-  
-  .report-card {
-    background-color: #f9fbff;
-    padding: 1.8rem;
-    border-radius: 1.2rem;
-    box-shadow: 0 8px 20px rgba(66, 133, 244, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .report-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(66, 133, 244, 0.25);
-  }
-  
-  .report-card h3 {
-    color: #1a1a1a;
-    font-size: 1.15rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .report-card p {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #0b3d91;
-  }
-  
-  /* Charts Section */
-  .chart-section {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-  }
-  
-  .chart-section h3 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    color: #1967d2;
-    border-left: 4px solid #1967d2;
-    padding-left: 0.75rem;
-  }
-  
-  /* Follow-up Summary */
-  .followup-summary {
-    background: linear-gradient(to right, #eef4fb, #f0f6ff);
+    box-shadow: none;
     padding: 2rem;
-    border-radius: 1.25rem;
-    box-shadow: inset 0 0 12px rgba(66, 133, 244, 0.12);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: #1a1a1a;
-    margin-top: 2.5rem;
+    max-width: 100%;
   }
-  
-  .followup-summary h3 {
-    font-size: 1.35rem;
-    color: #0b57d0;
-    margin-bottom: 1rem;
-    font-weight: 600;
+
+  .report-card,
+  .di-chart-box {
+    box-shadow: none !important;
+    page-break-inside: avoid;
   }
-  
-  /* Print Button */
-  .print-button-container {
-    text-align: right;
-    margin-top: 3rem;
+
+  .di-charts {
+    display: block;
   }
-  
-  .print-button {
-    background-color: #34a853;
-    color: #fff;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 6px 15px rgba(52, 168, 83, 0.4);
+
+  .di-chart-box {
+    margin-bottom: 2rem;
   }
-  
-  .print-button:hover {
-    background-color: #2c8c46;
-    box-shadow: 0 8px 20px rgba(52, 168, 83, 0.6);
-  }
-  
-  /* Input Section */
-  .input-section {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .input-section input {
-    padding: 0.6rem 1rem;
-    border-radius: 0.6rem;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    min-width: 220px;
-    transition: border 0.3s ease;
-  }
-  
-  .input-section input:focus {
-    border-color: #4285f4;
-    outline: none;
-    box-shadow: 0 0 5px rgba(66, 133, 244, 0.4);
-  }
-  
-  .input-section button {
-    background-color: #4285f4;
-    color: #fff;
-    font-weight: 600;
-    padding: 0.65rem 1.5rem;
-    border: none;
-    border-radius: 0.6rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .input-section button:hover {
-    background-color: #3367d6;
-    box-shadow: 0 6px 12px rgba(66, 133, 244, 0.3);
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .report-container {
-      padding: 1.5rem;
-    }
-  
-    .report-card p {
-      font-size: 1.6rem;
-    }
-  
-    .input-section {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  
-    .print-button-container {
-      text-align: center;
-    }
-  }
+}

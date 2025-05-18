@@ -83,98 +83,201 @@ const DemographicInsights = () => {
         <head>
           <title>Demographic Insights Report - PsyCare</title>
           <style>
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              margin: 0;
-              padding: 50px 70px;
-              background: #fff;
-              color: #333;
-            }
+  /* Print color fix */
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 50px 60px;
+  background: #f9fafb;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container holding whole report */
+.report-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Each "page" that will break after printing */
+.print-page {
+  background: #fff;
+  padding: 40px 50px;
+  margin-bottom: 70px;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  page-break-after: always;
+  break-after: page;
+  /* Avoid page break inside */
+  page-break-inside: avoid;
+}
+
+/* Prevent break after last page */
+.print-page:last-child {
+  page-break-after: auto;
+}
+
+/* Header section with logo and title */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.header img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 3px solid #4285F4;
+  box-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
+}
+
+.header-text h1 {
+  font-size: 36px;
+  color: #4285F4;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-text p {
+  font-size: 18px;
+  color: #555;
+  margin-top: 6px;
+}
+
+/* Main Titles */
+h1, h2, h3 {
+  color: #4285F4;
+  font-weight: 700;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+h3 {
+  font-size: 22px;
+  margin-top: 25px;
+  margin-bottom: 12px;
+}
+
+/* Text content */
+p, li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+}
+
+ul {
+  margin-left: 22px;
+  margin-bottom: 15px;
+}
+
+/* Horizontal rule with accent color */
+hr {
+  border: none;
+  border-top: 3px solid #4285F4;
+  margin: 30px 0;
+}
+
+/* Chart container for print */
+.chart-container {
+  margin-top: 35px;
+  padding: 20px;
+  background: #f0f5ff;
+  border-radius: 12px;
+  box-shadow: inset 0 0 12px rgba(66, 133, 244, 0.12);
+}
+
+/* Summary box */
+.di-summary {
+  background: #e8f0fe;
+  border-left: 6px solid #4285F4;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(66, 133, 244, 0.1);
+  margin-bottom: 40px;
+}
+
+/* Description text for charts */
+.di-description {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+th, td {
+  border: 1px solid #d1d9e6;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #4285F4;
+  color: white;
+  font-weight: 600;
+}
+
+/* Thank you page */
+.thank-you {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+.thank-you h1 {
+  font-size: 42px;
+  color: #34A853;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+}
+
+/* Responsive tweaks */
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-page {
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0 0 40px 0;
+    padding: 30px 40px;
+  }
   
-            .report-container {
-              width: 100%;
-            }
-  
-            .header {
-              display: flex;
-              align-items: center;
-              gap: 20px;
-              margin-bottom: 40px;
-            }
-  
-            .header img {
-              width: 80px;
-              height: 80px;
-              border-radius: 12px;
-              border: 2px solid #4285F4;
-              object-fit: cover;
-            }
-  
-            .header-text {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-            }
-  
-            .header-text h1 {
-              font-size: 32px;
-              color: #4285F4;
-              margin: 0;
-              font-weight: 700;
-            }
-  
-            .header-text p {
-              margin-top: 6px;
-              font-size: 16px;
-              color: #555;
-              font-weight: 500;
-            }
-  
-            hr {
-              border: none;
-              border-top: 2px solid #4285F4;
-              margin: 30px 0;
-            }
-  
-            h2 {
-              font-size: 24px;
-              color: #4285F4;
-              margin-top: 30px;
-            }
-  
-            h3 {
-              font-size: 20px;
-              color: #4285F4;
-              margin-top: 20px;
-            }
-  
-            p, li {
-              font-size: 15px;
-              line-height: 1.6;
-            }
-  
-            table {
-              width: 100%;
-              border-collapse: collapse;
-              margin-top: 20px;
-            }
-  
-            th, td {
-              border: 1px solid #ddd;
-              padding: 10px;
-              font-size: 14px;
-              text-align: left;
-            }
-  
-            th {
-              background-color: #4285F4;
-              color: white;
-            }
-  
-            .chart-container {
-              margin-top: 40px;
-            }
-          </style>
+  /* Hide elements you don’t want to print here */
+  button, input, form {
+    display: none !important;
+  }
+}
+</style>
         </head>
         <body>
           <div class="report-container">
@@ -227,85 +330,114 @@ const DemographicInsights = () => {
         {data && (
           <div id="print-section">
             <div className="di-data-section">
-              <div className="di-summary">
-                <h1 style={{ color: "#4285F4", alignContent: "center", fontWeight: "bold" }}>📊 Demographic Insights Report</h1>
-                <h2>Total Patients: {data.totalPatients}</h2>
-                <p>Company Code: {data.companyCode}</p>
-                <p><strong>Overview:</strong> This report presents a demographic breakdown of employees who have participated in mental wellness programs under the provided company code.</p>
-                <ul>
-                  <li>Useful for identifying engagement patterns across departments or branches.</li>
-                  <li>Supports HR teams in customizing initiatives for targeted groups.</li>
-                  <li>Helps understand organizational diversity and inclusivity.</li>
-                </ul>
+              <div className="print-page">
+                <div className="di-summary">
+                  <h1 style={{ color: "#4285F4", alignContent: "center", fontWeight: "bold" }}>📊 Demographic Insights Report</h1>
+                  <h2>Total Patients: {data.totalPatients}</h2>
+                  <p>Company Code: {data.companyCode}</p>
+                  <p><strong>Overview:</strong> This report presents a demographic breakdown of employees who have participated in mental wellness programs under the provided company code.</p>
+                  <ul>
+                    <li>Useful for identifying engagement patterns across departments or branches.</li>
+                    <li>Supports HR teams in customizing initiatives for targeted groups.</li>
+                    <li>Helps understand organizational diversity and inclusivity.</li>
+                  </ul>
+                </div>
               </div>
 
               <div className="di-charts">
-                <div className="di-chart-box">
-                  <h3>Age Group Distribution</h3>
-                  <p className="di-description">
-                    This graph illustrates the spread of participants across predefined age categories. Understanding which age groups are most active helps tailor engagement strategies (e.g., workshops, resources).
-                  </p>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={formatData(data.ageGroups)}>
-                      <XAxis dataKey="name" />
-                      <YAxis allowDecimals={false} />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#4285F4" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="di-chart-box">
-                  <h3>Gender Split</h3>
-                  <p className="di-description">
-                    This pie chart highlights gender representation among participants. A balanced gender ratio is often a sign of inclusive wellness culture, while imbalances may signal the need for more inclusive outreach.
-                  </p>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={formatData(data.genderSplit)}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={100}
-                        label
-                      >
-                        {formatData(data.genderSplit).map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
+                <div className="print-page">
+                  <div className="di-chart-box">
+                    <h3>Age Group Distribution</h3>
+                    <p className="di-description">
+                      This graph illustrates the spread of participants across predefined age categories. Understanding which age groups are most active helps tailor engagement strategies (e.g., workshops, resources).
+                    </p>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={formatData(data.ageGroups)}>
+                        <XAxis dataKey="name" />
+                        <YAxis allowDecimals={false} />
+                        <Tooltip />
+                        <Bar dataKey="value" fill="#4285F4" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="di-chart-box">
+                    <h3>Gender Split</h3>
+                    <p className="di-description">
+                      This pie chart highlights gender representation among participants. A balanced gender ratio is often a sign of inclusive wellness culture, while imbalances may signal the need for more inclusive outreach.
+                    </p>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <PieChart>
+                        <Pie
+                          data={formatData(data.genderSplit)}
+                          dataKey="value"
+                          nameKey="name"
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={100}
+                          label
+                        >
+                          {formatData(data.genderSplit).map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
 
-                <div className="di-chart-box">
-                  <h3>Location Participation</h3>
-                  <p className="di-description">
-                    This chart breaks down participant count by location. It helps identify which offices or cities have the highest wellness engagement. Low participation areas might benefit from targeted awareness campaigns.
-                  </p>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={formatData(data.locationParticipation)}>
-                      <XAxis dataKey="name" />
-                      <YAxis allowDecimals={false} />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#34A853" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="print-page">
+                  <div className="di-chart-box">
+                    <h3>Location Participation</h3>
+                    <p className="di-description">
+                      This chart visualizes participant count across all office locations. Use horizontal scroll to explore all data points.
+                    </p>
+                    <div style={{ width: '100%', overflowX: 'auto' }}>
+                      <div style={{ minWidth: Math.max(600, data.locationParticipation.length * 80) }}>
+                        <ResponsiveContainer width="100%" height={700}>
+                          <BarChart
+                            data={formatData(data.locationParticipation)}
+                            layout="vertical"
+                            margin={{ top: 10, right: 30, left: 100, bottom: 10 }}
+                          >
+                            <XAxis type="number" />
+                            <YAxis dataKey="name" type="category" width={150} />
+                            <Tooltip />
+                            <Bar dataKey="value" fill="#34A853" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {geminiSummary && (
-                <div className="gemini-summary-container">
-                  <h2>🤖 AI-Powered HR Analytics Summary</h2>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: marked.parse(geminiSummary),
-                    }}
-                  />
-                </div>
-              )}
+              <div className="print-page">
+                {geminiSummary && (
+                  <div className="gemini-summary-container">
+                    <h2>🤖 AI-Powered HR Analytics Summary</h2>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: marked.parse(geminiSummary),
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="print-page thank-you">
+                <h1>Thank You!</h1>
+                <p>
+                  We appreciate your time and collaboration.<br />
+                  Together, we’re building a healthier tomorrow 💙.
+                </p>
+                <hr />
+                <footer className="thank-you-footer">
+                  <a href="https://www.psy-care.in" target="_blank" rel="noopener noreferrer">www.psy-care.in</a> &nbsp; | &nbsp;
+                  <a href="mailto:contactus@psy-care.in">contactus@psy-care.in</a>
+                </footer>
+              </div>
 
 
             </div>
