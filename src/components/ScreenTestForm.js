@@ -160,7 +160,7 @@ const ScreenTestForm = () => {
       const date = now.toLocaleDateString();
       const time = now.toLocaleTimeString();
       setTestMeta({ date, time });
-  
+
       const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -175,16 +175,16 @@ const ScreenTestForm = () => {
           }, {})
         }),
       });
-  
+
       const data = await response.json();
       // console.log("DATA->",data);
-  
+
       if (response.ok) {
         setSuccess("Assessment submitted successfully!");
         setReport(data.report || "No report generated."); // ✅ Only setReport
         setTestId(data.assessment_id);
         setUserType(data.userType || "");
-        setEmpId(data.empId || ""); 
+        setEmpId(data.empId || "");
         setCompName(data.companyName || "");
 
       } else {
@@ -197,7 +197,7 @@ const ScreenTestForm = () => {
       setSubmitting(false);
     }
   };
-  
+
   // ✅ OUTSIDE of handleSubmit:
   useEffect(() => {
     if (report) {
@@ -206,12 +206,30 @@ const ScreenTestForm = () => {
     }
   }, [report]);
 
+  const testData = [
+    { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
+    { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
+    { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
+    { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
+    { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
+    { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
+    { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
+  ];
+
+  const testRows = testData.map((test, index) => `
+  <tr>
+    <td>${index + 1}</td>
+    <td>${test.abbreviation}</td>
+    <td>${test.fullForm}</td>
+  </tr>
+`).join("");
+
   const handlePrint = () => {
     if (!parsedReport) {
       alert("No report available to print!");
       return;
     }
-  
+
     const printWindow = window.open('', '_blank');
     printWindow.document.write(`
       <html>
@@ -311,6 +329,26 @@ const ScreenTestForm = () => {
               margin-bottom: 12px;
               font-weight: 600;
             }
+
+            .section-2
+            {
+              font-size: 1.2rem;
+              color: #4285F4;
+              margin-bottom: 15px;
+              font-weight: 600;
+              text-align: center;
+              text-decoration: underline;
+            }
+
+            .section-3
+            {
+              font-size: 1.2rem;
+              color: #4285F4;
+              margin-bottom: 25px;
+              font-weight: 600;
+              text-align: center;
+              text-decoration: underline;
+            }
   
             table {
               width: 100%;
@@ -342,6 +380,33 @@ const ScreenTestForm = () => {
             .page-break {
               page-break-before: always;
             }
+
+            .tests-heading {
+font-size: 1.2rem;
+              color: #4285F4;
+              margin-bottom: 12px;
+              font-weight: 600;
+}
+
+.tests-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.tests-table th,
+.tests-table td {
+  border: 1px solid #ddd;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.tests-table th {
+  background-color: #4285F4;
+  color: white;
+  font-weight: 600;
+}
           </style>
         </head>
         <body>
@@ -354,6 +419,11 @@ const ScreenTestForm = () => {
                 <h1>PsyCare</h1>
                 <p>Your Path to Mental Wellness</p>
               </div>
+            </div>
+
+            <div>
+            <h1 class="section-2">Screening Test Report</h1>
+            <h2 class="section-3">Psycometric Analysis - Individual(Report 1)</h2>
             </div>
   
             <div class="info-row">
@@ -389,17 +459,16 @@ const ScreenTestForm = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  ${
-                    parsedReport.testSummary.length > 0 ?
-                    parsedReport.testSummary.map(item => `
+                  ${parsedReport.testSummary.length > 0 ?
+        parsedReport.testSummary.map(item => `
                       <tr>
                         <td>${item.tool}</td>
                         <td>${item.score}</td>
                         <td>${item.risk}</td>
                       </tr>
                     `).join('') :
-                    `<tr><td colspan="3">No data available</td></tr>`
-                  }
+        `<tr><td colspan="3">No data available</td></tr>`
+      }
                 </tbody>
               </table>
             </div>
@@ -423,11 +492,35 @@ const ScreenTestForm = () => {
               <div class="section-title">5. Confidentiality Note</div>
               <p>${parsedReport.confidentialityNote}</p>
             </div>
+
+            <div class="page-break">
+            <h2 class="tests-heading">Psycometric Tools Used</h2>
+            <table class="tests-table">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Test Abbreviation</th>
+                  <th>Test Full Form</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${testRows}
+              </tbody>
+            </table>
+            <div className="section">
+            <h3 class="section-title">🔵 Screening Test Report</h3>
+              <ul>
+                  <li>Summary of the mental health screening results based on standardized tools (e.g., PHQ-9, GAD-7, ISI), highlighting key symptoms or concerns.</li>
+                  <li>Scores and severity levels (e.g., mild, moderate, severe) for each test taken, with brief interpretation.</li>
+                  <li>Personalized recommendations or next steps based on the individual’s mental health profile.</li>
+              </ul>
+            </div>
+          </div>
           </div>
         </body>
       </html>
     `);
-  
+
     printWindow.document.close();
     setTimeout(() => {
       printWindow.focus();
@@ -439,6 +532,8 @@ const ScreenTestForm = () => {
   if (loading) return <div className="loading">Loading questions...</div>;
 
   const currentQuestion = questions[currentIndex];
+
+
 
   return (
     <div className="test-form-container">

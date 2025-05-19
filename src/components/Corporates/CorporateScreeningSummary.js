@@ -127,7 +127,7 @@ function CorporateScreeningSummary() {
             }
             h2 {
               color: #4285F4;
-              font-size: 26px;
+              font-size: 18px;
               margin-bottom: 15px;
             }
             h3 {
@@ -174,10 +174,10 @@ function CorporateScreeningSummary() {
 .heatmap-title {
   text-align: center;
   color: #1e2a38;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 24px;
   border-bottom: 3px solid #3b82f6; /* brighter blue */
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   font-family: 'Segoe UI Semibold', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -217,7 +217,7 @@ function CorporateScreeningSummary() {
 }
 
 .heatmap-cell {
-  padding: 10px 11px;
+  padding: 9px 10px;
   text-align: center;
   border-right: 1px solid #d1d9e6;
   border-bottom: 1px solid #d1d9e6;
@@ -355,6 +355,17 @@ function CorporateScreeningSummary() {
 
     const tools = ["PHQ-9", "BDI-II", "GAD-7", "BAI", "ISI", "PCL-5", "Y-BOCS-II"];
 
+    const testData = [
+        { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
+        { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
+        { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
+        { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
+        { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
+        { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
+        { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
+    ];
+
+
     const getHeatmapData = (departmentScores) => {
         return Object.entries(departmentScores || {}).map(([dept, toolsData]) => {
             const row = { department: dept };
@@ -406,7 +417,8 @@ function CorporateScreeningSummary() {
                 <div id="print-section" className="report-content">
                     <div className="print-page">
                         <div className="section">
-                            <h1 style={{textAlign:"center"}}>Corporate Screening Summary Report</h1>
+                            <h1 style={{ textAlign: "center" }}>Corporate Screening Summary Report</h1>
+                            <h2 style={{ textAlign: "center" }}>Psycometric Analysis - Enterprise(Report 2)</h2>
                             <p>
                                 <strong>Company Name:</strong> {summaryData.companyName}
                             </p>
@@ -610,6 +622,39 @@ function CorporateScreeningSummary() {
                                 className="markdown-content"
                                 dangerouslySetInnerHTML={{ __html: renderMarkdown(summaryInsights) }}
                             />
+                        </div>
+                    </div>
+
+                    <div className="print-page">
+                        <h2 className="tests-heading">🧪 Psychological Tests Used</h2>
+
+                        <table className="tests-table">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Test Abbreviation</th>
+                                    <th>Test Full Form</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {testData.map((test, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{test.abbreviation}</td>
+                                        <td>{test.fullForm}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
+                        <div className="report-note">
+                            <h3>🔵 Corporate Mental Health Screening Summary</h3>
+                            <ul>
+                                <li>Department-wise breakdown of how many screenings were conducted.</li>
+                                <li>Analysis of which screening tools (e.g., PCL, ISI, GAD) were used and how frequently per department.</li>
+                                <li>Total number of individuals showing signs of insomnia, depression, anxiety, etc.</li>
+                                <li>AI-generated summary with key insights and recommended next steps for organizational well-being.</li>
+                            </ul>
                         </div>
                     </div>
 

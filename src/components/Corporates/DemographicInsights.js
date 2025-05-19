@@ -162,18 +162,18 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 18px;
   margin-top: 35px;
   margin-bottom: 15px;
 }
 
 h3 {
-  font-size: 22px;
+  font-size: 14px;
   margin-top: 25px;
   margin-bottom: 12px;
 }
@@ -256,7 +256,6 @@ th {
   font-weight: 800;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
 }
-
 /* Responsive tweaks */
 @media print {
   body {
@@ -310,6 +309,16 @@ th {
   const formatData = (obj) =>
     obj ? Object.entries(obj).map(([name, value]) => ({ name, value })) : [];
 
+  const testData = [
+    { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
+    { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
+    { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
+    { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
+    { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
+    { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
+    { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
+  ];
+
   return (
     <div className="demographic">
       <div className="di-container">
@@ -332,7 +341,8 @@ th {
             <div className="di-data-section">
               <div className="print-page">
                 <div className="di-summary">
-                  <h1 style={{ color: "#4285F4", alignContent: "center", fontWeight: "bold" }}>📊 Demographic Insights Report</h1>
+                  <h1 style={{ color: "#4285F4", textAlign: "center", fontWeight: "bold" }}>📊 Demographic Insights Report</h1>
+                  <h2 style={{ textAlign: "center" }}>Psycometric Analysis - Enterprise(Report 3)</h2>
                   <h2>Total Patients: {data.totalPatients}</h2>
                   <p>Company Code: {data.companyCode}</p>
                   <p><strong>Overview:</strong> This report presents a demographic breakdown of employees who have participated in mental wellness programs under the provided company code.</p>
@@ -424,6 +434,38 @@ th {
                     />
                   </div>
                 )}
+              </div>
+
+              <div className="print-page">
+                <h2 className="tests-heading">🧪 Psychological Tests Used</h2>
+
+                <table className="tests-table">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Test Abbreviation</th>
+                      <th>Test Full Form</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {testData.map((test, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{test.abbreviation}</td>
+                        <td>{test.fullForm}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <div className="report-note">
+                  <h3>🔵 Demographic Insights Report</h3>
+                  <ul>
+                    <li>Detailed participation across various age groups, helping identify which segments are most engaged.</li>
+                    <li>Clear gender-wise distribution of individuals booking appointments.</li>
+                    <li>Location or branch-wise breakdown (if data available), offering geographic insights into mental health engagement.</li>
+                  </ul>
+                </div>
               </div>
 
               <div className="print-page thank-you">

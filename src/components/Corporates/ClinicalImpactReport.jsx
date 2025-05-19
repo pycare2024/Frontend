@@ -172,7 +172,7 @@ img.chart-img {
 .followup-summary {
   page-break-before: always;
   background: #f4f8ff;
-  padding: 30px 40px;
+  padding: 20px 40px;
   border-radius: 12px;
   font-size: 1.125rem;
   line-height: 1.75;
@@ -181,6 +181,31 @@ img.chart-img {
   max-width: 900px;
   white-space: normal; /* changed here */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.print-page
+{
+page-break-before: always;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+th, td {
+  border: 1px solid #d1d9e6;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #4285F4;
+  color: white;
+  font-weight: 600;
 }
 
 /* === THANK YOU SECTION === */
@@ -315,6 +340,16 @@ img.chart-img {
     }
     : null;
 
+  const testDataAbb = [
+    { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
+    { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
+    { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
+    { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
+    { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
+    { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
+    { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
+  ];
+
   return (
     <div className="main-report-container">
       <div className="report-container">
@@ -363,6 +398,7 @@ img.chart-img {
         {reportData && (
           <div id="print-section">
             <h1 className="report-header">📊 Clinical Impact Report</h1>
+            <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "18px", marginBottom: "20px" }}>Psycometric Analysis - Enterprise(Report 4)</h2>
             {/* Summary Cards */}
             <section className="report-grid" aria-label="Summary statistics">
               <article className="report-card">
@@ -409,10 +445,45 @@ img.chart-img {
               </div>
             </section>
 
+
             {/* Follow-up Summary */}
             <section className="followup-summary" aria-label="Follow-up summary"
               dangerouslySetInnerHTML={{ __html: marked.parse(reportData.followUpTrends || "No summary available.") }}
               style={{ textAlign: "justify" }} />
+
+            <div className="print-page">
+              <h2 className="tests-heading">🧪 Psychological Tests Used</h2>
+
+              <table className="tests-table">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Test Abbreviation</th>
+                    <th>Test Full Form</th>
+                  </tr>
+                </thead>
+                <tbody style={{ color: "black" }}>
+                  {testDataAbb.map((test, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{test.abbreviation}</td>
+                      <td>{test.fullForm}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="report-note">
+                <h3>🔵 Clinical Impact Report</h3>
+                <ul>
+                  <li>Tracks total number of mental health screenings conducted within a selected date range.</li>
+                  <li>Shows how many individuals proceeded to book therapy sessions after the screening.</li>
+                  <li>Identifies users who took screening tests multiple times.</li>
+                  <li>Categorizes cases into severity levels (e.g., mild, moderate, severe) and presents them using bar and line charts.</li>
+                  <li>Includes an AI-generated summary highlighting key insights and overall psychological impact.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         )}
 
