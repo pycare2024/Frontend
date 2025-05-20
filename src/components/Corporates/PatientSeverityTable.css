@@ -1,0 +1,89 @@
+/* PatientSeverityTable.css */
+
+/* General Container */
+.heatmap-container {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Table Styling */
+.heatmap-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+/* Table Header */
+.heatmap-table th {
+  background-color: #4285f4;
+  color: #ffffff;
+  padding: 10px 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Table Body */
+.heatmap-table td {
+  border: 1px solid #ddd;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+/* Heatmap Cell Styling */
+.heat-cell {
+  color: #ffffff;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+/* Headings */
+.heatmap-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 20px;
+}
+
+/* Ensure full width print and no scrollbars */
+@media print {
+  .heatmap-container {
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .heatmap-table {
+    width: 100% !important;
+    font-size: 12px;
+  }
+
+  .heatmap-table th,
+  .heatmap-table td {
+    padding: 6px 4px;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 1cm;
+  }
+}
+
+@page {
+  size: A4 landscape;
+}

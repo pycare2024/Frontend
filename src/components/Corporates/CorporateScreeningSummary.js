@@ -4,11 +4,6 @@ import {
     PieChart,
     Pie,
     Cell,
-    RadarChart,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis,
-    Radar,
     Tooltip,
     Legend,
     ResponsiveContainer,
@@ -16,6 +11,8 @@ import {
 } from "recharts";
 import "./CorporateScreeningSummary.css";
 import { marked } from "marked";
+import PatientSeverityTable from "./PatientSeverityTable";
+import './PatientSeverityTable.css';
 
 function CorporateScreeningSummary() {
     const [companyCode, setCompanyCode] = useState("");
@@ -25,6 +22,9 @@ function CorporateScreeningSummary() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [summaryInsights, setSummaryInsights] = useState(null);
+    const [heatmapData2, setHeatmapData] = useState([]);
+    const [heatmapLoading, setHeatmapLoading] = useState(false);
+    const [heatmapError, setHeatmapError] = useState("");
 
     const COLORS = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"];
 
@@ -37,26 +37,57 @@ function CorporateScreeningSummary() {
         setLoading(true);
 
         try {
-            // Make API call to your existing screening summary route
+            // 1. Get screening summary data
             const response = await axios.get(
                 `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/screening-summary?startDate=${startDate}&endDate=${endDate}`
             );
 
-            // Once we have the screening summary data, pass it to Gemini route
+            // 2. Send screening data to Gemini for insights
             const insightsResponse = await axios.post(
-                "https://backend-xhl4.onrender.com/GeminiRoute/summarizeScreeningSummary", // Update with your Gemini route URL
-                {
-                    screeningData: response.data,
-                }
+                "https://backend-xhl4.onrender.com/GeminiRoute/summarizeScreeningSummary",
+                { screeningData: response.data }
             );
 
-            // Set the insights data
+            // 3. Fetch heatmap data (your provided try-catch block)
+            try {
+                setHeatmapLoading(true);
+                setHeatmapError("");
+
+                const heatmapResponse = await axios.post(
+                    "https://backend-xhl4.onrender.com/CorporateRoute/summary-per-patient",
+                    {
+                        companyCode,
+                        startDate,
+                        endDate,
+                    }
+                );
+
+                const heatmapPayload = Array.isArray(heatmapResponse.data)
+                    ? heatmapResponse.data
+                    : Array.isArray(heatmapResponse.data.data)
+                        ? heatmapResponse.data.data
+                        : null;
+
+                if (heatmapPayload) {
+                    setHeatmapData(heatmapPayload);
+                } else {
+                    setHeatmapError("Unexpected heatmap response format.");
+                }
+            } catch (heatmapErr) {
+                setHeatmapError("Failed to fetch heatmap data.");
+                console.error(heatmapErr);
+            } finally {
+                setHeatmapLoading(false);
+            }
+
+            // Set summary data and insights after all calls succeed
             setSummaryData(response.data);
-            setSummaryInsights(insightsResponse.data.summary); // Store the generated insights
+            setSummaryInsights(insightsResponse.data.summary);
         } catch (err) {
             setError(err.response?.data?.message || "Something went wrong.");
             setSummaryData(null);
             setSummaryInsights(null);
+            setHeatmapData(null);  // Optional: clear heatmap on error
         } finally {
             setLoading(false);
         }
@@ -75,6 +106,10 @@ function CorporateScreeningSummary() {
         <head>
           <title>Corporate Screening Summary Report - PsyCare</title>
           <style>
+          * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
             body {
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
               margin: 0;
@@ -129,6 +164,7 @@ function CorporateScreeningSummary() {
               color: #4285F4;
               font-size: 18px;
               margin-bottom: 15px;
+              text-align:center;
             }
             h3 {
               font-size: 22px;
@@ -202,7 +238,7 @@ function CorporateScreeningSummary() {
 }
 
 .heatmap-row.header {
-  background-color: #e0f0ff;
+  background-color: WHITE;
   color: #0a2540;
   font-weight: 300;
   border-bottom: 3px solid #3b82f6;
@@ -280,6 +316,39 @@ function CorporateScreeningSummary() {
     page-break-after: auto;
   }
 }
+
+/* This must go in your print-specific CSS or @media print section */
+
+@media print {
+  .print-page,
+  .heatmap-container {
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .heatmap-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    word-wrap: break-word !important;
+    font-size: 11px;
+  }
+
+  .heatmap-table th,
+  .heatmap-table td {
+    padding: 4px !important;
+    word-break: break-word !important;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact; /* Ensures colors like heatmap are printed */
+    print-color-adjust: exact;
+    margin: 0;
+  }
+}
+
+
           </style>
         </head>
         <body>
@@ -356,13 +425,41 @@ function CorporateScreeningSummary() {
     const tools = ["PHQ-9", "BDI-II", "GAD-7", "BAI", "ISI", "PCL-5", "Y-BOCS-II"];
 
     const testData = [
-        { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
-        { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
-        { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
-        { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
-        { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
-        { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
-        { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
+        {
+            abbreviation: "PCL-5",
+            fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition",
+            description: "A 20-item self-report measure assessing symptoms of PTSD based on DSM-5 criteria."
+        },
+        {
+            abbreviation: "ISI",
+            fullForm: "Insomnia Severity Index",
+            description: "Evaluates the nature, severity, and impact of insomnia over a 2-week period."
+        },
+        {
+            abbreviation: "PHQ-9",
+            fullForm: "Patient Health Questionnaire-9",
+            description: "Screens for depression severity by assessing frequency of depressive symptoms."
+        },
+        {
+            abbreviation: "GAD-7",
+            fullForm: "Generalized Anxiety Disorder-7",
+            description: "Assesses anxiety severity and symptoms based on the GAD criteria."
+        },
+        {
+            abbreviation: "BAI",
+            fullForm: "Beck Anxiety Inventory",
+            description: "Measures the severity of anxiety symptoms through a 21-question inventory."
+        },
+        {
+            abbreviation: "BDI-II",
+            fullForm: "Beck Depression Inventory-II",
+            description: "A widely used tool to evaluate the intensity of depression in individuals aged 13 and older."
+        },
+        {
+            abbreviation: "Y-BOCS",
+            fullForm: "Yale-Brown Obsessive Compulsive Scale",
+            description: "Clinician-administered or self-report scale to assess severity of OCD symptoms."
+        }
     ];
 
 
@@ -613,6 +710,16 @@ function CorporateScreeningSummary() {
                         </div>
                     </div>
 
+                     <div className="print-page">
+                        <section>
+                            {heatmapLoading && <p>Loading heatmap data...</p>}
+                            {heatmapError && <p className="error">{heatmapError}</p>}
+                            {!heatmapLoading && !heatmapError && heatmapData2.length > 0 && (
+                                <PatientSeverityTable data={heatmapData2} />
+                            )}
+                        </section>
+                    </div>
+
                     <div className="print-page">
                         <div className="summary-container" style={{ textAlign: "justify" }}>
                             {loading && <p>Loading...</p>}
@@ -634,6 +741,7 @@ function CorporateScreeningSummary() {
                                     <th>S.No</th>
                                     <th>Test Abbreviation</th>
                                     <th>Test Full Form</th>
+                                    <th>Test Info</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -642,6 +750,7 @@ function CorporateScreeningSummary() {
                                         <td>{index + 1}</td>
                                         <td>{test.abbreviation}</td>
                                         <td>{test.fullForm}</td>
+                                        <td>{test.description}</td>
                                     </tr>
                                 ))}
                             </tbody>

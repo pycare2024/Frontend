@@ -193,7 +193,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 th, td {
@@ -340,15 +340,43 @@ th {
     }
     : null;
 
-  const testDataAbb = [
-    { abbreviation: "PCL-5", fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition" },
-    { abbreviation: "ISI", fullForm: "Insomnia Severity Index" },
-    { abbreviation: "PHQ-9", fullForm: "Patient Health Questionnaire-9" },
-    { abbreviation: "GAD-7", fullForm: "Generalized Anxiety Disorder-7" },
-    { abbreviation: "BAI", fullForm: "Beck Anxiety Inventory" },
-    { abbreviation: "BDI-II", fullForm: "Beck Depression Inventory-II" },
-    { abbreviation: "Y-BOCS", fullForm: "Yale-Brown Obsessive Compulsive Scale" },
-  ];
+    const testData = [
+      {
+        abbreviation: "PCL-5",
+        fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition",
+        description: "A 20-item self-report measure assessing symptoms of PTSD based on DSM-5 criteria."
+      },
+      {
+        abbreviation: "ISI",
+        fullForm: "Insomnia Severity Index",
+        description: "Evaluates the nature, severity, and impact of insomnia over a 2-week period."
+      },
+      {
+        abbreviation: "PHQ-9",
+        fullForm: "Patient Health Questionnaire-9",
+        description: "Screens for depression severity by assessing frequency of depressive symptoms."
+      },
+      {
+        abbreviation: "GAD-7",
+        fullForm: "Generalized Anxiety Disorder-7",
+        description: "Assesses anxiety severity and symptoms based on the GAD criteria."
+      },
+      {
+        abbreviation: "BAI",
+        fullForm: "Beck Anxiety Inventory",
+        description: "Measures the severity of anxiety symptoms through a 21-question inventory."
+      },
+      {
+        abbreviation: "BDI-II",
+        fullForm: "Beck Depression Inventory-II",
+        description: "A widely used tool to evaluate the intensity of depression in individuals aged 13 and older."
+      },
+      {
+        abbreviation: "Y-BOCS",
+        fullForm: "Yale-Brown Obsessive Compulsive Scale",
+        description: "Clinician-administered or self-report scale to assess severity of OCD symptoms."
+      }
+    ];
 
   return (
     <div className="main-report-container">
@@ -460,14 +488,16 @@ th {
                     <th>S.No</th>
                     <th>Test Abbreviation</th>
                     <th>Test Full Form</th>
+                    <th>Test Info</th>
                   </tr>
                 </thead>
                 <tbody style={{ color: "black" }}>
-                  {testDataAbb.map((test, index) => (
+                  {testData.map((test, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{test.abbreviation}</td>
                       <td>{test.fullForm}</td>
+                      <td>{test.description}</td>
                     </tr>
                   ))}
                 </tbody>
