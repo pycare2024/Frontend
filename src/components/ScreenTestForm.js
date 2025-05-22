@@ -452,7 +452,7 @@ font-size: 1.2rem;
 
             <div>
             <h1 class="section-2">Screening Test Report</h1>
-            <h2 class="section-3">Psycometric Analysis - Individual(Report 1)</h2>
+            <h2 class="section-3">Psychometric Analysis - Individual(Report 1)</h2>
             </div>
   
             <div class="info-row">

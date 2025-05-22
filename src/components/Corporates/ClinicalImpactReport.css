@@ -9,6 +9,8 @@
   padding: 0;
 } */
 
+
+
 .main-report-container {
   background: url('./ClinicalImpact.jpg') no-repeat center center;
   background-size: cover;
@@ -170,7 +172,7 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
-  height: auto;
+  height: 100%;
 }
 
 .chart-card:hover {
@@ -337,4 +339,152 @@
   color: #333;
   font-size: 15px;
   line-height: 1.5;
+}
+
+.heatmap-wrapper {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #fefefe;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.heatmap-title {
+  font-size: 2rem;
+  color: #4285F4;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 cells per row */
+  gap: 4px 2px; /* 6px vertical gap, 4px horizontal gap (very small) */
+  justify-items: center;
+  margin-bottom: 1rem; /* reduce bottom margin */
+}
+
+.heatmap-rectangle {
+  width: 100%;
+  max-width: 150px; /* reduced width to fit 6 nicely */
+  height: 30px;
+  border-radius: 10px; /* slightly smaller radius for tighter spacing */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); /* lighter shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.677); /* darker text for readability */
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  transition: transform 0.2s;
+}
+
+.heatmap-rectangle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.severity-label {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.heatmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.heatmap-info {
+  /* // padding: 1.5rem 2rem; */
+  background: #f9fbfd;
+  border-radius: 16px;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.heatmap-info h4 {
+  font-size: 1.4rem;
+  color: #4285F4;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.heatmap-info ul {
+  padding-left: 1.2rem;
+}
+
+.heatmap-info ul li {
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.heatmap-info ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  top: 0;
+}
+
+.chart-info {
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-left: 2rem;
+}
+
+.chart-info h4 {
+  font-size: 1.4rem;
+  color: #4285F4;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.chart-info ul {
+  padding-left: 1.2rem;
+}
+
+.chart-info ul li {
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.chart-info ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  top: 0;
 }

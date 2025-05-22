@@ -1,21 +1,62 @@
-import React, { useState } from "react";
-import { marked } from "marked";
+import React, { useState, useEffect } from "react";
 import { Bar, Pie, Doughnut, Line } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { marked } from "marked";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
 import "chart.js/auto";
 import "./ClinicalImpactReport.css";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  ChartDataLabels
+);
 
 export default function ClinicalImpactReport() {
   const [companyCode, setCompanyCode] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [reportData, setReportData] = useState(null);
+  const [evaluations, setEvaluations] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchReport = async () => {
-    const res = await fetch(
-      `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/clinical-impact?startDate=${startDate}&endDate=${endDate}`
-    );
-    const data = await res.json();
-    setReportData(data);
+    try {
+      // Fetch clinical impact report
+      const res1 = await fetch(
+        `https://backend-xhl4.onrender.com/CorporateRoute/${companyCode}/clinical-impact?startDate=${startDate}&endDate=${endDate}`
+      );
+      const data1 = await res1.json();
+      setReportData(data1);
+
+      // Fetch severity evaluations
+      setLoading(true);
+      const res2 = await fetch('http://localhost:4000/CorporateRoute/categorize-overall-severity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ companyCode, startDate, endDate }),
+      });
+      const data2 = await res2.json();
+      setEvaluations(data2.evaluations || []);
+      console.log('Evaluations =>', data2.evaluations);
+    } catch (err) {
+      console.error('Error in fetchReport:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePrint = () => {
@@ -28,6 +69,7 @@ export default function ClinicalImpactReport() {
     const clone = original.cloneNode(true);
     const liveCanvases = original.querySelectorAll("canvas");
     const clonedCanvases = clone.querySelectorAll("canvas");
+
 
     liveCanvases.forEach((canvas, index) => {
       const img = new Image();
@@ -86,7 +128,7 @@ body {
   border-radius: 18px;
   margin-bottom: 25px;
   border: 2px solid #4285F4;
-  box-shadow: 0 8px 30px rgba(66, 133, 244, 0.3);
+  // box-shadow: 0 8px 30px rgba(66, 133, 244, 0.3);
 }
 
 .cover-page h1 {
@@ -100,6 +142,18 @@ body {
   font-size: 1.4rem;
   color: #555;
   font-weight: 500;
+}
+
+.h3-title
+{
+color:#4285F4;
+}
+
+.h3-inside-title
+{
+font-size:24px;
+color:#4285F4;
+text-align:center;
 }
 
 /* === SECTION TITLES === */
@@ -123,7 +177,7 @@ body {
 
 .report-header {
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #4285f4;
   margin-bottom: 0.5rem;
@@ -134,7 +188,7 @@ body {
   padding: 20px 24px;
   border-radius: 14px;
   text-align: center;
-  box-shadow: 0 6px 16px rgba(66, 133, 244, 0.12);
+  // box-shadow: 0 6px 16px rgba(66, 133, 244, 0.12);
 }
 
 .summary-card h3 {
@@ -150,12 +204,19 @@ body {
 }
 
 /* === CHARTS === */
+.chart-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #4285F4;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5px;
+}
+
 .chart-card {
   background: linear-gradient(145deg, #ffffff, #f0f4ff);
-  border: 1px solid #e3e9f9;
-  border-radius: 24px;
   padding: 2rem 2rem 1.5rem 2rem;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+  // box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
   margin-bottom: 40px;
   page-break-inside: avoid;
   height:35%;
@@ -166,19 +227,19 @@ img.chart-img {
   margin: 30px auto;
   display: block;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 .followup-summary {
   page-break-before: always;
-  background: #f4f8ff;
-  padding: 20px 40px;
+  background:white;
+  // padding: 20px 40px;
   border-radius: 12px;
   font-size: 1.125rem;
   line-height: 1.75;
-  color: #222;
-  margin: 40px auto 60px auto;
-  max-width: 900px;
+  color: #4285F4;
+  // margin: 40px auto 60px auto;
+  // max-width: 900px;
   white-space: normal; /* changed here */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -189,6 +250,13 @@ page-break-before: always;
 }
 
 /* Table styling */
+.tests-heading {
+  font-size: 24px;
+  color: #4285F4;
+  margin-bottom: 20px;
+  text-align:center;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -197,14 +265,14 @@ table {
 }
 
 th, td {
-  border: 1px solid #d1d9e6;
+  border: 1px solid #4285F4;
   padding: 12px 15px;
-  text-align: left;
+  text-align: justify;
 }
 
 th {
   background-color: #4285F4;
-  color: white;
+  color: #4285F4;
   font-weight: 600;
 }
 
@@ -223,7 +291,7 @@ th {
   padding: 60px 50px;
   border: 2px solid #4285F4;
   border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  // box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   text-align: center;
   max-width: 600px;
   width: 90%;
@@ -240,6 +308,171 @@ th {
   color: #555;
   font-size: 1.15rem;
   line-height: 1.6;
+}
+
+.heatmap-wrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #fefefe;
+}
+
+.heatmap-title {
+  font-size: 24px;
+  color: #4285F4;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 cells per row */
+  gap: 4px 2px; /* 6px vertical gap, 4px horizontal gap (very small) */
+  justify-items: center;
+  margin-bottom: 1rem; /* reduce bottom margin */
+}
+
+.heatmap-rectangle {
+  width: 100%;
+  max-width: 150px; /* reduced width to fit 6 nicely */
+  height: 30px;
+  border: 0.5px solid white;
+  border-radius: 10px; /* slightly smaller radius for tighter spacing */
+  // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); /* lighter shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.677); /* darker text for readability */
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  transition: transform 0.2s;
+}
+
+.heatmap-rectangle:hover {
+  transform: scale(1.05);
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.severity-label {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.heatmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  // box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.heatmap-rectangle {
+  -webkit-print-color-adjust: exact !important; /* Chrome/Safari */
+  print-color-adjust: exact !important;         /* Firefox */
+}
+.color-box {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.heatmap-info {
+  // padding: 1.5rem 2rem;
+  background: #f9fbfd;
+  border-radius: 16px;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.heatmap-info h4 {
+  font-size: 1.4rem;
+  color: #4285F4;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.heatmap-info ul {
+  padding-left: 1.2rem;
+}
+
+.heatmap-info ul li {
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.heatmap-info li {
+  text-align:justify;
+}
+
+.heatmap-info ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  top: 0;
+}
+
+.chart-info {
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.chart-info h4 {
+  font-size: 1.4rem;
+  color: #4285F4;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.chart-info ul {
+  padding-left: 1.2rem;
+}
+
+.chart-info ul li {
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.chart-info ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  top: 0;
+}
+
+.report-note li
+{
+text-align:justify;
 }
           </style>
         </head>
@@ -317,6 +550,18 @@ th {
     }
     : null;
 
+  const severityColors = {
+    minimal: '#7ED6A7',          // bright mint green
+    mild: '#FFF176',             // sunny yellow
+    moderate: '#FFB74D',         // bright orange
+    moderately_severe: '#FF8A65',// warm coral
+    severe: '#F44336',           // vivid red (classic bright red)
+    extreme: '#AB47BC'           // bright purple
+  };
+
+  console.log("Report Data => ", reportData);
+  console.log("Evaluations => ", evaluations);
+
   // Prepare data for Line chart (dummy example with severity levels over the date range)
   // Since you have no time series, we'll simulate using severity counts as points.
   const lineData = reportData
@@ -340,43 +585,43 @@ th {
     }
     : null;
 
-    const testData = [
-      {
-        abbreviation: "PCL-5",
-        fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition",
-        description: "A 20-item self-report measure assessing symptoms of PTSD based on DSM-5 criteria."
-      },
-      {
-        abbreviation: "ISI",
-        fullForm: "Insomnia Severity Index",
-        description: "Evaluates the nature, severity, and impact of insomnia over a 2-week period."
-      },
-      {
-        abbreviation: "PHQ-9",
-        fullForm: "Patient Health Questionnaire-9",
-        description: "Screens for depression severity by assessing frequency of depressive symptoms."
-      },
-      {
-        abbreviation: "GAD-7",
-        fullForm: "Generalized Anxiety Disorder-7",
-        description: "Assesses anxiety severity and symptoms based on the GAD criteria."
-      },
-      {
-        abbreviation: "BAI",
-        fullForm: "Beck Anxiety Inventory",
-        description: "Measures the severity of anxiety symptoms through a 21-question inventory."
-      },
-      {
-        abbreviation: "BDI-II",
-        fullForm: "Beck Depression Inventory-II",
-        description: "A widely used tool to evaluate the intensity of depression in individuals aged 13 and older."
-      },
-      {
-        abbreviation: "Y-BOCS",
-        fullForm: "Yale-Brown Obsessive Compulsive Scale",
-        description: "Clinician-administered or self-report scale to assess severity of OCD symptoms."
-      }
-    ];
+  const testData = [
+    {
+      abbreviation: "PCL-5",
+      fullForm: "Post-Traumatic Stress Disorder Checklist for Diagnostic and Statistical Manual of Mental Disorders, 5th Edition",
+      description: "A 20-item self-report measure assessing symptoms of PTSD based on DSM-5 criteria."
+    },
+    {
+      abbreviation: "ISI",
+      fullForm: "Insomnia Severity Index",
+      description: "Evaluates the nature, severity, and impact of insomnia over a 2-week period."
+    },
+    {
+      abbreviation: "PHQ-9",
+      fullForm: "Patient Health Questionnaire-9",
+      description: "Screens for depression severity by assessing frequency of depressive symptoms."
+    },
+    {
+      abbreviation: "GAD-7",
+      fullForm: "Generalized Anxiety Disorder-7",
+      description: "Assesses anxiety severity and symptoms based on the GAD criteria."
+    },
+    {
+      abbreviation: "BAI",
+      fullForm: "Beck Anxiety Inventory",
+      description: "Measures the severity of anxiety symptoms through a 21-question inventory."
+    },
+    {
+      abbreviation: "BDI-II",
+      fullForm: "Beck Depression Inventory-II",
+      description: "A widely used tool to evaluate the intensity of depression in individuals aged 13 and older."
+    },
+    {
+      abbreviation: "Y-BOCS",
+      fullForm: "Yale-Brown Obsessive Compulsive Scale",
+      description: "Clinician-administered or self-report scale to assess severity of OCD symptoms."
+    }
+  ];
 
   return (
     <div className="main-report-container">
@@ -426,19 +671,19 @@ th {
         {reportData && (
           <div id="print-section">
             <h1 className="report-header">📊 Clinical Impact Report</h1>
-            <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "18px", marginBottom: "20px" }}>Psycometric Analysis - Enterprise(Report 4)</h2>
+            <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "18px", marginBottom: "20px" }}>Psychometric Analysis - Enterprise(Report 4)</h2>
             {/* Summary Cards */}
             <section className="report-grid" aria-label="Summary statistics">
               <article className="report-card">
-                <h3>Total Screening Tests</h3>
+                <h3 className="h3-title">Total Screening Tests</h3>
                 <p>{reportData.totalScreenings}</p>
               </article>
               <article className="report-card">
-                <h3>Therapy Sessions</h3>
+                <h3 className="h3-title">Therapy Sessions</h3>
                 <p>{reportData.followUpAppointments}</p>
               </article>
               <article className="report-card">
-                <h3>Repeat Screening Tests</h3>
+                <h3 className="h3-title">Repeat Screening Tests</h3>
                 <p>{reportData.repeatScreenings}</p>
               </article>
             </section>
@@ -448,7 +693,7 @@ th {
 
               <div className="chart-vertical">
                 <div className="chart-card full-width">
-                  <h3>Screenings Distribution</h3>
+                  <h3 className="h3-inside-title">Screenings Distribution</h3>
                   <figure>
                     <Doughnut data={doughnutData} />
                     <figcaption>A glance at how users are distributed across screening types.</figcaption>
@@ -456,22 +701,82 @@ th {
                 </div>
 
                 <div className="chart-card full-width">
-                  <h3>Severity Breakdown</h3>
+                  <h3 className="h3-inside-title">Severity Breakdown</h3>
                   <figure>
-                    <Bar data={barData} />
+                    <Bar
+                      data={barData}
+                      options={{
+                        plugins: {
+                          datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            color: '#000',
+                            font: {
+                              weight: 'bold',
+                              size: 14,
+                            },
+                            formatter: Math.round, // Optional: Round values
+                          },
+                        },
+                      }}
+                      plugins={[ChartDataLabels]}
+                    />
                     <figcaption>Shows severity classification for assessments.</figcaption>
                   </figure>
                 </div>
-
-                <div className="chart-card full-width">
-                  <h3>Severity Trend</h3>
-                  <figure>
-                    <Line data={lineData} />
-                    <figcaption>Monthly fluctuations in case severity.</figcaption>
-                  </figure>
+                <div className="chart-info">
+                  <h4>Severity Breakdown — Key Insights</h4>
+                  <ul>
+                    <li>Displays the total number of assessments falling into each severity category.</li>
+                    <li>Bar height represents the count of patients or assessments in each level.</li>
+                    <li>Categories range from <strong>Minimal</strong> to <strong>Extreme</strong>, visualizing mental health distribution.</li>
+                    <li>Clear numeric labels on each bar make the chart easy to interpret at a glance.</li>
+                    <li>Great for tracking trends, spotting patterns, or analyzing severity shifts over time.</li>
+                    <li>Supports data-driven decisions for clinicians and administrative insights.</li>
+                  </ul>
                 </div>
               </div>
             </section>
+
+            <div className="print-page">
+              <div className="heatmap-wrapper">
+                <h3 className="heatmap-title">Severity Heatmap</h3>
+                <div className="heatmap-grid">
+                  {evaluations.map((entry, index) => (
+                    <div
+                      key={index}
+                      className="heatmap-rectangle"
+                      style={{
+                        backgroundColor: severityColors[entry.overallSeverity?.toLowerCase()] || '#ccc'
+                      }}
+                      title={`ID: ${entry.patient_id}\nSeverity: ${entry.overallSeverity}`}
+                    >
+                      <span className="severity-label">{entry.overallSeverity?.replace(/_/g, ' ')}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="heatmap-legend">
+                  {Object.entries(severityColors).map(([label, color]) => (
+                    <div key={label} className="legend-item">
+                      <span className="color-box" style={{ backgroundColor: color }}></span>
+                      <span className="legend-label">{label.replace(/_/g, ' ')}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="heatmap-info">
+                <h4 className="h3-title">Severity Heatmap — Key Information</h4>
+                <ul>
+                  <li>Visualizes patient severity levels across different evaluations in a clear, color-coded format.</li>
+                  <li>Six severity categories ranging from <strong>Minimal</strong> to <strong>Extreme</strong>, each represented by a distinct bright color.</li>
+                  <li>Color intensity and hue correspond to increasing severity, making it easy to spot critical cases at a glance.</li>
+                  <li>Each rectangle displays the severity label with a hover effect and patient ID info.</li>
+                  <li>The heatmap grid is responsive and organized with 6 cells per row for compact, efficient space usage.</li>
+                  <li>The accompanying legend clarifies the meaning of each color, improving accessibility and understanding.</li>
+                  <li>Designed to support quick clinical decisions by highlighting severity trends visually.</li>
+                </ul>
+              </div>
+            </div>
 
 
             {/* Follow-up Summary */}
@@ -504,7 +809,7 @@ th {
               </table>
 
               <div className="report-note">
-                <h3>🔵 Clinical Impact Report</h3>
+                <h3 className="h3-title">🔵 Clinical Impact Report</h3>
                 <ul>
                   <li>Tracks total number of mental health screenings conducted within a selected date range.</li>
                   <li>Shows how many individuals proceeded to book therapy sessions after the screening.</li>

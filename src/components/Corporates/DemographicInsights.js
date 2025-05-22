@@ -12,6 +12,8 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
+  LabelList,
+  Label
 } from "recharts";
 import "./DemographicInsights.css";
 import { marked } from 'marked';
@@ -370,7 +372,7 @@ th {
               <div className="print-page">
                 <div className="di-summary">
                   <h1 style={{ color: "#4285F4", textAlign: "center", fontWeight: "bold" }}>📊 Demographic Insights Report</h1>
-                  <h2 style={{ textAlign: "center" }}>Psycometric Analysis - Enterprise(Report 3)</h2>
+                  <h2 style={{ textAlign: "center" }}>Psychometric Analysis - Enterprise(Report 3)</h2>
                   <h2>Total Patients: {data.totalPatients}</h2>
                   <p>Company Code: {data.companyCode}</p>
                   <p><strong>Overview:</strong> This report presents a demographic breakdown of employees who have participated in mental wellness programs under the provided company code.</p>
@@ -384,17 +386,46 @@ th {
 
               <div className="di-charts">
                 <div className="print-page">
-                  <div className="di-chart-box">
+                  <div className="di-chart-box premium-chart">
                     <h3>Age Group Distribution</h3>
                     <p className="di-description">
                       This graph illustrates the spread of participants across predefined age categories. Understanding which age groups are most active helps tailor engagement strategies (e.g., workshops, resources).
                     </p>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={formatData(data.ageGroups)}>
-                        <XAxis dataKey="name" />
-                        <YAxis allowDecimals={false} />
-                        <Tooltip />
-                        <Bar dataKey="value" fill="#4285F4" />
+                    <ResponsiveContainer width="100%" height={320}>
+                      <BarChart data={formatData(data.ageGroups)} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
+                        <defs>
+                          <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#4285F4" stopOpacity={0.9} />
+                            <stop offset="100%" stopColor="#AECBFA" stopOpacity={0.8} />
+                          </linearGradient>
+                        </defs>
+
+                        <XAxis
+                          dataKey="name"
+                          tick={{ fontSize: 13, fill: "#444", fontWeight: 600 }}
+                          axisLine={{ stroke: "#ccc" }}
+                          tickLine={false}
+                          label={{ value: "Age Groups", position: "insideBottom", dy: 20, fill: "#666", fontSize: 13 }}
+                        />
+                        <YAxis
+                          allowDecimals={false}
+                          tick={{ fontSize: 13, fill: "#444", fontWeight: 600 }}
+                          axisLine={{ stroke: "#ccc" }}
+                          tickLine={false}
+                          label={{ value: "Participants", angle: -90, position: "insideLeft", dx: -10, fill: "#666", fontSize: 13 }}
+                        />
+                        <Tooltip
+                          cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
+                          contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+                          itemStyle={{ fontWeight: 'bold' }}
+                        />
+                        <Bar dataKey="value" fill="url(#blueGradient)" radius={[6, 6, 6, 6]} barSize={20}>
+                          <LabelList
+                            dataKey="value"
+                            position="top"
+                            style={{ fill: "#222", fontWeight: "bold", fontSize: 14 }}
+                          />
+                        </Bar>
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -426,23 +457,58 @@ th {
                 </div>
 
                 <div className="print-page">
-                  <div className="di-chart-box">
+                  <div className="di-chart-box premium-chart">
                     <h3>Location Participation</h3>
                     <p className="di-description">
                       This chart visualizes participant count across all office locations. Use horizontal scroll to explore all data points.
                     </p>
-                    <div style={{ width: '100%', overflowX: 'auto' }}>
-                      <div style={{ minWidth: Math.max(600, data.locationParticipation.length * 80) }}>
+                    <div className="chart-scroll-wrapper">
+                      <div className="chart-inner-container">
                         <ResponsiveContainer width="100%" height={700}>
                           <BarChart
                             data={formatData(data.locationParticipation)}
                             layout="vertical"
-                            margin={{ top: 10, right: 30, left: 100, bottom: 10 }}
+                            margin={{ top: 20, right: 40, left: 120, bottom: 20 }}
                           >
-                            <XAxis type="number" />
-                            <YAxis dataKey="name" type="category" width={150} />
-                            <Tooltip />
-                            <Bar dataKey="value" fill="#34A853" />
+                            <defs>
+                              <linearGradient id="barGradient" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stopColor="#34A853" stopOpacity={0.9} />
+                                <stop offset="100%" stopColor="#8BC34A" stopOpacity={0.7} />
+                              </linearGradient>
+                            </defs>
+                            <XAxis
+                              type="number"
+                              tick={{ fontSize: 14, fontWeight: "600", fill: "#444" }}
+                              label={{ value: "Participants", position: "insideBottomRight", offset: 0, fill: "#666", fontSize: 14 }}
+                              axisLine={{ stroke: "#ddd" }}
+                              tickLine={false}
+                            />
+                            <YAxis
+                              dataKey="name"
+                              type="category"
+                              width={180}
+                              tick={{ fontSize: 14, fontWeight: "600", fill: "#333" }}
+                              label={{ value: "Office Location", angle: -90, position: "insideLeft", fill: "#666", fontSize: 14 }}
+                              axisLine={{ stroke: "#ddd" }}
+                              tickLine={false}
+                            />
+                            <Tooltip
+                              cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
+                              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+                              itemStyle={{ fontWeight: '600' }}
+                            />
+                            <Bar
+                              dataKey="value"
+                              fill="url(#barGradient)"
+                              radius={[8, 8, 8, 8]}
+                              barSize={22}
+                            >
+                              <LabelList
+                                dataKey="value"
+                                position="right"
+                                style={{ fill: "#222", fontWeight: "700", fontSize: 15 }}
+                              />
+                            </Bar>
                           </BarChart>
                         </ResponsiveContainer>
                       </div>

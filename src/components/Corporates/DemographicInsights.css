@@ -249,3 +249,45 @@
   font-size: 15px;
   line-height: 1.5;
 }
+
+.premium-chart {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(66, 133, 244, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  max-width: 100%;
+  margin: 2rem auto;
+}
+
+.premium-chart h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.premium-chart .di-description {
+  font-size: 16px;
+  font-weight: 400;
+  color: #555;
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chart-scroll-wrapper {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chart-inner-container {
+  min-width: max(600px, calc(var(--num-locations) * 80px));
+  /* --num-locations: dynamically set via inline style or JS */
+}

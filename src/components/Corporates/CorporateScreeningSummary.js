@@ -8,6 +8,8 @@ import {
     Legend,
     ResponsiveContainer,
     BarChart, Bar, XAxis, YAxis, CartesianGrid,
+    LabelList,
+    Label
 } from "recharts";
 import "./CorporateScreeningSummary.css";
 import { marked } from "marked";
@@ -515,7 +517,7 @@ function CorporateScreeningSummary() {
                     <div className="print-page">
                         <div className="section">
                             <h1 style={{ textAlign: "center" }}>Corporate Screening Summary Report</h1>
-                            <h2 style={{ textAlign: "center" }}>Psycometric Analysis - Enterprise(Report 2)</h2>
+                            <h2 style={{ textAlign: "center" }}>Psychometric Analysis - Enterprise(Report 2)</h2>
                             <p>
                                 <strong>Company Name:</strong> {summaryData.companyName}
                             </p>
@@ -642,8 +644,8 @@ function CorporateScreeningSummary() {
                                     >
                                         <defs>
                                             <linearGradient id="barColor" x1="0" y1="0" x2="1" y2="0">
-                                                <stop offset="0%" stopColor="#4285F4" stopOpacity={0.8} />
-                                                <stop offset="100%" stopColor="#AECBFA" stopOpacity={0.8} />
+                                                <stop offset="0%" stopColor="#4285F4" stopOpacity={1} />
+                                                <stop offset="100%" stopColor="#AECBFA" stopOpacity={1} />
                                             </linearGradient>
                                         </defs>
 
@@ -651,14 +653,29 @@ function CorporateScreeningSummary() {
                                         <XAxis
                                             type="number"
                                             domain={[0, 'dataMax + 5']}
-                                            tick={{ fontSize: 12 }}
-                                        />
+                                            tick={{ fontSize: 20, fontWeight: "bold" }}
+                                        >
+                                            <Label
+                                                value="No of Screenings"
+                                                position="insideBottom"
+                                                offset={-20}
+                                                style={{ textAnchor: "middle", fontSize: 20, fill: "#333", textDecoration:"underline" }}
+                                            />
+                                        </XAxis>
                                         <YAxis
                                             type="category"
                                             dataKey="department"
                                             width={150}
-                                            tick={{ fontSize: 12 }}
-                                        />
+                                            tick={{ fontSize: 20, fontWeight: "bold" }}
+                                        >
+                                            <Label
+                                                value="Department Names"
+                                                angle={-90}
+                                                position="insideLeft"
+                                                offset={-10}
+                                                style={{ textAnchor: "middle", fontSize: 20, fill: "#333" , textDecoration:"underline"}}
+                                            />
+                                        </YAxis>
                                         <Tooltip />
                                         <Legend />
                                         <Bar
@@ -666,7 +683,9 @@ function CorporateScreeningSummary() {
                                             fill="url(#barColor)"
                                             radius={[6, 6, 6, 6]}
                                             barSize={18}
-                                        />
+                                        >
+                                            <LabelList dataKey="score" position="right" style={{ fill: "#000", fontSize: 20, fontWeight: "bold" }} />
+                                        </Bar>
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -674,43 +693,6 @@ function CorporateScreeningSummary() {
                     </div>
 
                     <div className="print-page">
-                        <div className="section" style={{ backgroundColor: "#f9fbfd", padding: "2rem", borderRadius: "12px" }}>
-                            {/* <h3 className="heatmap-title">Department-wise Tool Usage (Heatmap)</h3> */}
-                            <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "28px", marginBottom: "1rem" }}>
-                                Department-wise Tool Usage (Heatmap)
-                            </h2>
-                            <div className="heatmap-grid">
-                                <div className="heatmap-row header">
-                                    <div className="heatmap-cell">Department</div>
-                                    {tools.map((tool) => (
-                                        <div key={tool} className="heatmap-cell">{tool}</div>
-                                    ))}
-                                </div>
-
-                                {heatmapData.map((row, idx) => (
-                                    <div key={idx} className="heatmap-row">
-                                        <div className="heatmap-cell dept">{row.department}</div>
-                                        {tools.map((tool) => {
-                                            const count = row[tool];
-                                            const opacity = Math.min(count / 5, 1);
-                                            return (
-                                                <div
-                                                    key={tool}
-                                                    className="heatmap-cell"
-                                                    style={{ backgroundColor: `rgba(66, 133, 244, ${opacity})` }}
-                                                    title={`${count} screenings`}
-                                                >
-                                                    {count}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                     <div className="print-page">
                         <section>
                             {heatmapLoading && <p>Loading heatmap data...</p>}
                             {heatmapError && <p className="error">{heatmapError}</p>}
