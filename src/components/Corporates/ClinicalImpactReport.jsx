@@ -42,7 +42,7 @@ export default function ClinicalImpactReport() {
 
       // Fetch severity evaluations
       setLoading(true);
-      const res2 = await fetch('http://localhost:4000/CorporateRoute/categorize-overall-severity', {
+      const res2 = await fetch('https://backend-xhl4.onrender.com/CorporateRoute/categorize-overall-severity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
