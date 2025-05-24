@@ -386,44 +386,21 @@ th {
 
               <div className="di-charts">
                 <div className="print-page">
-                  <div className="di-chart-box premium-chart">
+                  <div className="di-chart-box">
                     <h3>Age Group Distribution</h3>
                     <p className="di-description">
                       This graph illustrates the spread of participants across predefined age categories. Understanding which age groups are most active helps tailor engagement strategies (e.g., workshops, resources).
                     </p>
-                    <ResponsiveContainer width="100%" height={320}>
-                      <BarChart data={formatData(data.ageGroups)} margin={{ top: 20, right: 30, left: 20, bottom: 30 }}>
-                        <defs>
-                          <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#4285F4" stopOpacity={0.9} />
-                            <stop offset="100%" stopColor="#AECBFA" stopOpacity={0.8} />
-                          </linearGradient>
-                        </defs>
-
-                        <XAxis
-                          dataKey="name"
-                          tick={{ fontSize: 13, fill: "#444", fontWeight: 600 }}
-                          axisLine={{ stroke: "#ccc" }}
-                          tickLine={false}
-                          label={{ value: "Age Groups", position: "insideBottom", dy: 20, fill: "#666", fontSize: 13 }}
-                        />
-                        <YAxis
-                          allowDecimals={false}
-                          tick={{ fontSize: 13, fill: "#444", fontWeight: 600 }}
-                          axisLine={{ stroke: "#ccc" }}
-                          tickLine={false}
-                          label={{ value: "Participants", angle: -90, position: "insideLeft", dx: -10, fill: "#666", fontSize: 13 }}
-                        />
-                        <Tooltip
-                          cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
-                          contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
-                          itemStyle={{ fontWeight: 'bold' }}
-                        />
-                        <Bar dataKey="value" fill="url(#blueGradient)" radius={[6, 6, 6, 6]} barSize={20}>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={formatData(data.ageGroups)}>
+                        <XAxis dataKey="name" />
+                        <YAxis allowDecimals={false} />
+                        <Tooltip />
+                        <Bar dataKey="value" fill="#4285F4" radius={[6, 6, 6, 6]} barSize={15}>
                           <LabelList
                             dataKey="value"
                             position="top"
-                            style={{ fill: "#222", fontWeight: "bold", fontSize: 14 }}
+                            style={{ fill: "#000", fontWeight: "bold", fontSize: 14 }}
                           />
                         </Bar>
                       </BarChart>

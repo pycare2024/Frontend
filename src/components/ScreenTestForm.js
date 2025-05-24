@@ -90,6 +90,8 @@ const ScreenTestForm = () => {
   const [userType, setUserType] = useState("");
   const [empId, setEmpId] = useState("");
   const [compName, setCompName] = useState("");
+  const [actualQues, setActualQues] = useState([]);
+  const [actualAns, setActualAns] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -154,6 +156,7 @@ const ScreenTestForm = () => {
       setError("Please answer all questions before submitting.");
       return;
     }
+
     setSubmitting(true);
     try {
       const now = new Date();
@@ -161,6 +164,32 @@ const ScreenTestForm = () => {
       const time = now.toLocaleTimeString();
       setTestMeta({ date, time });
 
+      // ✅ Build grouped responses by instrument
+      const groupedResponses = {};
+      questions.forEach((question, index) => {
+        const selectedIndex = answers[index]; // 1-based
+        if (selectedIndex === null || selectedIndex === undefined) return;
+
+        const instrument = question.instrument || "Unknown";
+        const selectedAnswer = question.options[selectedIndex - 1]; // 0-based access
+
+        if (!groupedResponses[instrument]) {
+          groupedResponses[instrument] = [];
+        }
+
+        groupedResponses[instrument].push({
+          question: question.question,
+          answer: selectedAnswer
+        });
+      });
+
+      // ✅ Build section counts
+      const sectionCounts = problems.reduce((acc, p) => {
+        acc[p] = questions.filter(q => q.section === p).length;
+        return acc;
+      }, {});
+
+      // ✅ Send POST request to backend
       const response = await fetch("https://backend-xhl4.onrender.com/NewScreeningTestRoute/submitAssessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -169,29 +198,25 @@ const ScreenTestForm = () => {
           patientName,
           answers,
           problems,
-          sectionCounts: problems.reduce((acc, p) => {
-            acc[p] = questions.filter(q => q.section === p).length;
-            return acc;
-          }, {})
+          sectionCounts,
+          responses: groupedResponses // ✅ new field
         }),
       });
 
       const data = await response.json();
-      // console.log("DATA->",data);
 
       if (response.ok) {
         setSuccess("Assessment submitted successfully!");
-        setReport(data.report || "No report generated."); // ✅ Only setReport
+        setReport(data.report || "No report generated.");
         setTestId(data.assessment_id);
         setUserType(data.userType || "");
         setEmpId(data.empId || "");
         setCompName(data.companyName || "");
-
       } else {
         setError(data.message || "Submission failed.");
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error submitting assessment:", err);
       setError("Error submitting assessment.");
     } finally {
       setSubmitting(false);

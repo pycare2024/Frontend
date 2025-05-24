@@ -10,6 +10,7 @@ function ScreeningTestDetails() {
     const [screeningTests, setScreeningTests] = useState([]);
     const [error, setError] = useState(null);
     const [openRecordId, setOpenRecordId] = useState(null);
+    const [openQAId, setOpenQAId] = useState(null);
 
     useEffect(() => {
         const fetchScreeningTests = async () => {
@@ -24,6 +25,8 @@ function ScreeningTestDetails() {
         };
         fetchScreeningTests();
     }, [id]);
+
+    console.log("Data->", screeningTests);
 
     const handlePrint = (test) => {
         const doc = new jsPDF();
@@ -71,6 +74,25 @@ function ScreeningTestDetails() {
                                     ))}
                             </ul>
 
+                            {openQAId === test._id && test.responses && (
+                                <div className="screening-qa-section">
+                                    <h4>Question & Answer Summary</h4>
+                                    {Object.entries(test.responses).map(([instrument, qaList]) => (
+                                        <div key={instrument} className="screening-instrument-block">
+                                            <h5>{instrument}</h5>
+                                            <ul className="screening-qa-list">
+                                                {qaList.map((item, index) => (
+                                                    <li key={index}>
+                                                        <strong>Q:</strong> {item.question} <br />
+                                                        <strong>A:</strong> {item.answer}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
                             <p className="screening-report-preview">
                                 {test.report ? test.report.substring(0, 150) + "..." : "No report available."}
                             </p>
@@ -89,7 +111,17 @@ function ScreeningTestDetails() {
                                         setOpenRecordId(openRecordId === test._id ? null : test._id)
                                     }
                                 >
-                                    {openRecordId === test._id ? "Close" : "Open"}
+                                    {openRecordId === test._id ? "Hide Report" : "Show Report"}
+                                </button>
+
+                                {/* Toggle Q&A */}
+                                <button
+                                    className="screening-card-button screening-open-btn"
+                                    onClick={() =>
+                                        setOpenQAId(openQAId === test._id ? null : test._id)
+                                    }
+                                >
+                                    {openQAId === test._id ? "Hide Q&A" : "Show Q&A"}
                                 </button>
 
                                 <button

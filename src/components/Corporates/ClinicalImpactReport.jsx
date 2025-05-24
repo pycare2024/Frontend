@@ -508,6 +508,37 @@ text-align:justify;
     printWindow.focus();
     setTimeout(() => printWindow.print(), 500);
   };
+
+  const totalScreeningsData = reportData
+  ? {
+      labels: ["Total Screenings"],
+      datasets: [
+        {
+          data: [reportData.totalScreenings],
+          backgroundColor: ["#4285F4"],
+          hoverOffset: 30
+        }
+      ]
+    }
+  : null;
+
+  const screeningBreakdownData = reportData
+  ? {
+      labels: ["Only Screening", "Therapy Sessions", "Repeat Screenings"],
+      datasets: [
+        {
+          data: [
+            reportData.totalScreenings - reportData.followUpAppointments,
+            reportData.followUpAppointments,
+            reportData.repeatScreenings
+          ],
+          backgroundColor: ["#4285F4", "#34A853", "#FBBC05"],
+          hoverOffset: 30
+        }
+      ]
+    }
+  : null;
+
   // Prepare data for Doughnut chart: Total Screenings vs Follow-ups vs Repeat
   const doughnutData = reportData
     ? {
@@ -559,8 +590,10 @@ text-align:justify;
     extreme: '#AB47BC'           // bright purple
   };
 
-  console.log("Report Data => ", reportData);
-  console.log("Evaluations => ", evaluations);
+  // console.log("Report Data => ", reportData);
+  // console.log("Evaluations => ", evaluations);
+
+  console.log("Doughnut Data -> ",doughnutData);
 
   // Prepare data for Line chart (dummy example with severity levels over the date range)
   // Since you have no time series, we'll simulate using severity counts as points.
@@ -695,7 +728,7 @@ text-align:justify;
                 <div className="chart-card full-width">
                   <h3 className="h3-inside-title">Screenings Distribution</h3>
                   <figure>
-                    <Doughnut data={doughnutData} />
+                    <Doughnut data={screeningBreakdownData} />
                     <figcaption>A glance at how users are distributed across screening types.</figcaption>
                   </figure>
                 </div>
@@ -721,7 +754,7 @@ text-align:justify;
                       }}
                       plugins={[ChartDataLabels]}
                     />
-                    <figcaption>Shows severity classification for assessments.</figcaption>
+                    <figcaption>This chart reflects the total number of severity classifications across all instruments used. Since a single assessment may include multiple tools, a patient can appear under multiple severity levels — totals do not represent unique individuals.</figcaption>
                   </figure>
                 </div>
                 <div className="chart-info">

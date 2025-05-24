@@ -569,7 +569,7 @@ function CorporateScreeningSummary() {
                                 Cases Distribution
                             </h2>
                             <p style={{ textAlign: "center", color: "#666", fontSize: "15px", marginBottom: "2rem" }}>
-                                Overview of primary mental health conditions observed among employees.
+                                Overview of emotional wellbeing conditions observed among employees.
                             </p>
 
                             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -593,7 +593,9 @@ function CorporateScreeningSummary() {
                                         contentStyle={{ fontSize: "14px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.15)" }}
                                     />
                                 </PieChart>
+                                
                             </div>
+                            <figcaption style={{textAlign:"justify"}}>This chart reflects the total number of severity classifications across all instruments used. Since a single assessment may include multiple tools, a patient can appear under multiple severity levels — totals do not represent unique individuals.</figcaption>
 
                             {/* Tiny legends */}
                             <div style={{
@@ -633,7 +635,7 @@ function CorporateScreeningSummary() {
                                 Department-wise Screening Insights
                             </h2>
                             <p style={{ textAlign: "center", color: "#666", fontSize: "15px", marginBottom: "2rem" }}>
-                                Analysis of mental health scores across departments.
+                                Analysis of emotional Well-being scores across departments.
                             </p>
                             <div style={{ display: "flex", justifyContent: "center" }}>
                                 <ResponsiveContainer width="100%" height={1000}>
@@ -739,7 +741,7 @@ function CorporateScreeningSummary() {
                         </table>
 
                         <div className="report-note">
-                            <h3>🔵 Corporate Mental Health Screening Summary</h3>
+                            <h3>🔵 Corporate emotional well-being  Screening Summary</h3>
                             <ul>
                                 <li>Department-wise breakdown of how many screenings were conducted.</li>
                                 <li>Analysis of which screening tools (e.g., PCL, ISI, GAD) were used and how frequently per department.</li>

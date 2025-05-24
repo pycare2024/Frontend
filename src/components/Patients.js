@@ -14,7 +14,7 @@ function Patients() {
     useEffect(() => {
         const fetchPatients = async () => {
             try {
-                const response = await fetch("http://backend-xhl4.onrender.com/PatientRoute");
+                const response = await fetch("https://backend-xhl4.onrender.com/PatientRoute");
                 if (!response.ok) {
                     throw new Error("Failed to fetch patients");
                 }
@@ -44,6 +44,8 @@ function Patients() {
     const handleRedirect = (id) => {
         navigate(`/PatientInfo/${id}`);
     };
+
+    // console.log("Patients - > ",patients);
 
     return (
         <div style={{ padding: "20px", margin: "auto", height: "100%",backgroundColor:"white" }}>
