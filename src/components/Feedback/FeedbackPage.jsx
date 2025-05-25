@@ -57,11 +57,11 @@ const FeedbackPage = () => {
             const res = await axios.get(`https://backend-xhl4.onrender.com/FeedbackRoute/appointments-without-feedback/${patientId}`);
             setAppointments(res.data);
         } catch {
-            setMessage("No appointments found or feedback already submitted.");
+            setMessage("Either feedback for all appointments has been submitted, or no sessions have been marked as completed yet.");
         }
     };
 
-    console.log("AppointmentData->", appointments);
+    // console.log("AppointmentData->", appointments);
 
     // Submit feedback
     const submitFeedback = async () => {
