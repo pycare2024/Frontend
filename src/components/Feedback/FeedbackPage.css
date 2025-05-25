@@ -1,0 +1,57 @@
+.feedback-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background: #f9f9ff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-container input,
+.feedback-container textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.feedback-container button {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.feedback-message {
+  margin: 1rem 0;
+  color: #0a7d2d;
+}
+
+.appointment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.appointment-list li {
+  margin-bottom: 10px;
+}
+
+.rating-row {
+  margin-bottom: 1rem;
+}
+
+.rating-row input[type="range"] {
+  width: 70%;
+  margin-left: 1rem;
+}
+
+.thank-you {
+  text-align: center;
+  margin-top: 2rem;
+}

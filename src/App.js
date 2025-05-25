@@ -49,6 +49,7 @@ import EmailPanel from './components/EmailUtility/EmailPanel';
 import CorporateScreeningSummary from './components/Corporates/CorporateScreeningSummary';
 import DemographicInsights from './components/Corporates/DemographicInsights';
 import ClinicalImpactReport from './components/Corporates/ClinicalImpactReport';
+import FeedbackPage from './components/Feedback/FeedbackPage';
 
 
 import { useState, useEffect } from 'react';
@@ -203,6 +204,7 @@ function App() {
                 <Route path="/CorporateScreeningSummary" element={<CorporateScreeningSummary />} />
                 <Route path="/DemographicInsights" element={<DemographicInsights />} />
                 <Route path="/ClinicalImpactReport" element={<ClinicalImpactReport />} />
+                <Route path="/FeedbackPage" element={<FeedbackPage />} />
             </Routes>
             {/* <Footer/> */}
         </div>
