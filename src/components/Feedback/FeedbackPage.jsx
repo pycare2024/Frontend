@@ -81,88 +81,89 @@ const FeedbackPage = () => {
     };
 
     return (
-        <div className="feedback-container">
-            <h2>Therapy Feedback</h2>
-            {message && <p className="feedback-message">{message}</p>}
+        <div className="feedback-mainbg">
+            <div className={`feedback-container ${step === 4 ? "feedback-expanded" : ""}`}>
+                <h2>Therapy Feedback</h2>
+                {message && <p className="feedback-message">{message}</p>}
 
-            {step === 1 && (
-                <>
-                    <input
-                        type="text"
-                        placeholder="Enter your mobile number"
-                        value={mobile}
-                        onChange={(e) => setMobile(e.target.value)}
-                    />
-                    <button onClick={sendOtp}>Send OTP</button>
-                </>
-            )}
+                {step === 1 && (
+                    <>
+                        <input
+                            type="text"
+                            placeholder="Enter your mobile number"
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value)}
+                        />
+                        <button onClick={sendOtp}>Send OTP</button>
+                    </>
+                )}
 
-            {step === 2 && (
-                <>
-                    <input
-                        type="text"
-                        placeholder="Enter OTP"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value)}
-                    />
-                    <button onClick={verifyOtp}>Verify OTP</button>
-                </>
-            )}
+                {step === 2 && (
+                    <>
+                        <input
+                            type="text"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <button onClick={verifyOtp}>Verify OTP</button>
+                    </>
+                )}
 
-            {step === 3 && (
-                <>
-                    <h4>Select an appointment to give feedback</h4>
-                    <ul className="appointment-list">
-                        {appointments.map((appt) => (
-                            <li key={appt._id}>
-                                <button
-                                    onClick={() => {
-                                        setSelectedAppointment(appt);
-                                        setStep(4);
-                                    }}
-                                >
-                                    {new Date(appt.DateOfAppointment).toLocaleString(undefined, {
-                                        dateStyle: "medium",
-                                        timeStyle: "short"
-                                    })}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )}
+                {step === 3 && (
+                    <>
+                        <h4>Select an appointment to give feedback</h4>
+                        <ul className="appointment-list">
+                            {appointments.map((appt) => (
+                                <li key={appt._id}>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedAppointment(appt);
+                                            setStep(4);
+                                        }}
+                                    >
+                                        {new Date(appt.DateOfAppointment).toLocaleString(undefined, {
+                                            dateStyle: "medium",
+                                            timeStyle: "short"
+                                        })}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                )}
 
-            {step === 4 && (
-                <>
-                    <h4>Rate your session</h4>
-                    {[
-                        {
-                            key: "relationship",
-                            left: "I did not feel heard, understood, or respected",
-                            right: "I felt heard, understood, and respected"
-                        },
-                        {
-                            key: "goalsTopics",
-                            left: "We did not talk about what I wanted to work on",
-                            right: "We talked about what I wanted to work on"
-                        },
-                        {
-                            key: "approachFit",
-                            left: "The therapist’s approach is not a good fit for me",
-                            right: "The therapist’s approach is a good fit for me"
-                        },
-                        {
-                            key: "overall",
-                            left: "There was something missing in the session today",
-                            right: "Overall today’s session was right for me"
-                        }
-                    ].map(({ key, left, right }) => (
-                        <div className="srs-question-block" key={key}>
-                            <div className="srs-labels">
-                                <span>{left}</span>
-                                <span>{right}</span>
-                            </div>
-                            <div className="srs-scale">
+                {step === 4 && (
+                    <>
+                        <h4>Rate your session</h4>
+                        {[
+                            {
+                                key: "relationship",
+                                left: "I did not feel heard, understood, or respected",
+                                right: "I felt heard, understood, and respected"
+                            },
+                            {
+                                key: "goalsTopics",
+                                left: "We did not talk about what I wanted to work on",
+                                right: "We talked about what I wanted to work on"
+                            },
+                            {
+                                key: "approachFit",
+                                left: "The therapist’s approach is not a good fit for me",
+                                right: "The therapist’s approach is a good fit for me"
+                            },
+                            {
+                                key: "overall",
+                                left: "There was something missing in the session today",
+                                right: "Overall today’s session was right for me"
+                            }
+                        ].map(({ key, left, right }) => (
+                            <div className="srs-question-block" key={key}>
+                                <div className="srs-labels">
+                                    <span>{left}</span>
+                                    <span>{right}</span>
+                                </div>
+                                {/* <div className="srs-scale">
                                 {Array.from({ length: 11 }, (_, i) => (
                                     <label key={i}>
                                         <input
@@ -175,25 +176,69 @@ const FeedbackPage = () => {
                                         <span>{i}</span>
                                     </label>
                                 ))}
+                            </div> */}
+                                <div className="rating-row">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="10"
+                                        value={ratings[key]}
+                                        onChange={(e) =>
+                                            setRatings({ ...ratings, [key]: parseInt(e.target.value) })
+                                        }
+                                    />
+                                    {/* <div class="slider-scale" style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem" }}>
+     <span>0</span>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>6</span>
+    <span>7</span>
+    <span>8</span>
+    <span>9</span>
+    <span>10</span> 
+   
+  </div> */}
+                                    <div className="slider-scale">
+                                        {[...Array(11)].map((_, i) => (
+                                            <span key={i}>{i}</span>
+                                        ))}
+                                    </div>
+
+                                </div>
+
                             </div>
-                        </div>
-                    ))}
+                        ))}
 
-                    <textarea
-                        placeholder="Any comments about your session?"
-                        value={comments}
-                        onChange={(e) => setComments(e.target.value)}
-                    />
-                    <button onClick={submitFeedback}>Submit Feedback</button>
-                </>
-            )}
+                        <textarea
+                            placeholder="Any comments about your session?"
+                            value={comments}
+                            onChange={(e) => setComments(e.target.value)}
 
-            {step === 5 && (
-                <div className="thank-you">
-                    <h4>Thank you for your feedback!</h4>
-                    <p>We appreciate your input to help improve our services.</p>
-                </div>
-            )}
+                            style={{
+                                width: "100%",
+                                minHeight: "150px",
+                                fontSize: "1rem",
+                                padding: "10px",
+                                resize: "none",
+                                overflow: "hidden",
+                                boxSizing: "border-box",
+
+                            }}
+                        />
+                        <button onClick={submitFeedback}>Submit Feedback</button>
+                    </>
+                )}
+
+                {step === 5 && (
+                    <div className="thank-you">
+                        <h4>Thank you for your feedback!</h4>
+                        <p>We appreciate your input to help improve our services.</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
