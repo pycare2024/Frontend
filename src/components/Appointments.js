@@ -127,6 +127,7 @@ const Appointments = () => {
                                 <th>Patient</th>
                                 <th>Phone</th>
                                 <th>Date</th>
+                                <th>Start time - End time</th>
                                 <th className="text-center">Payment</th>
                                 <th className="text-center">Session</th>
                             </tr>
@@ -137,6 +138,8 @@ const Appointments = () => {
                                     <td>{appointment.patientName}</td>
                                     <td>{appointment.patientPhoneNumber}</td>
                                     <td>{new Date(appointment.DateOfAppointment).toLocaleDateString()}</td>
+                                    <td>{appointment.AppStartTime}-{appointment.AppEndTime}</td>
+                                    
                                     <td className="text-center">
                                         <span className={`status ${appointment.payment_status === "Paid" ? "paid" : "unpaid"}`}>
                                             {appointment.payment_status}

@@ -78,6 +78,7 @@ function AppointmentDetails() {
             ["Appointment ID", appointment._id],
             ["Date of Appointment", new Date(appointment.DateOfAppointment).toLocaleDateString()],
             ["Weekday", appointment.WeekDay],
+            ["Time", appointment.AppStartTime + " - " + appointment.AppEndTime],
             ["Patient Name", patient.Name || "Unknown"],
             ["Doctor", doctor ? doctor.Name : "Loading..."],
         ];
@@ -94,15 +95,16 @@ function AppointmentDetails() {
     return (
         <div style={styles.container}>
             <h1 style={styles.heading}>Appointment Details</h1>
-            <p style={styles.text}>Patient Id: <strong>{patient._id || "Loading..."}</strong></p>
-            <p style={styles.text}>Patient Name: <strong>{patient.Name || "Loading..."}</strong></p>
-            
             <input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
                 style={styles.dateInput}
             />
+            <p style={styles.text}>Patient Id: <strong>{patient._id || "Loading..."}</strong></p>
+            <p style={styles.text}>Patient Name: <strong>{patient.Name || "Loading..."}</strong></p>
+            
+            
             
             {loading ? (
                 <p>Loading appointments...</p>
@@ -115,6 +117,9 @@ function AppointmentDetails() {
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Notes</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -122,6 +127,9 @@ function AppointmentDetails() {
                         {appointments.map((appointment) => (
                             <tr key={appointment._id}>
                                 <td>{new Date(appointment.DateOfAppointment).toLocaleDateString()}</td>
+                                <td>{appointment.AppStartTime} - {appointment.AppEndTime}</td>
+                                <td>{appointment.appointment_status}</td>
+                                <td>{appointment.notes || "Appointment not started yet"}</td>
                                 <td>
                                     <button onClick={() => handleView(appointment)} style={styles.button}>View</button>
                                     <button onClick={() => handleDownloadPDF(appointment)} style={styles.button}>Download</button>
@@ -137,10 +145,13 @@ function AppointmentDetails() {
                     <div style={styles.modalContent}>
                         <h2>Appointment Details</h2>
                         <p><strong>Appointment ID:</strong> {modalData._id}</p>
+                        <p><strong>Patient Name:</strong> {patient.Name || "Unknown"}</p>
+                        <p><strong>Doctor Name:</strong> {doctor ? doctor.Name : "Loading..."}</p>
                         <p><strong>Date of Appointment:</strong> {new Date(modalData.DateOfAppointment).toLocaleDateString()}</p>
                         <p><strong>Weekday:</strong> {modalData.WeekDay}</p>
-                        <p><strong>Patient Name:</strong> {patient.Name || "Unknown"}</p>
-                        <p><strong>Doctor:</strong> {doctor ? doctor.Name : "Loading..."}</p>
+                        <p><strong>Time:</strong> {modalData.AppStartTime} - {modalData.AppEndTime}</p>
+                        <p><strong>Status</strong> {modalData.appointment_status}</p>
+                        <p><strong>Notes</strong> {modalData.notes || "Appointment not started yet"}</p>
                         <button onClick={() => handleDownloadPDF(modalData)} style={styles.button}>Download</button>
                         <button onClick={() => setModalData(null)} style={styles.button}>Close</button>
                     </div>
