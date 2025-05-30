@@ -51,6 +51,7 @@ import DemographicInsights from './components/Corporates/DemographicInsights';
 import ClinicalImpactReport from './components/Corporates/ClinicalImpactReport';
 import FeedbackPage from './components/Feedback/FeedbackPage';
 import ORSFeedback from './components/Feedback/ORSFeedback';
+import AdminFeedbackSender from './components/Feedback/AdminFeedbackSender';
 
 
 import { useState, useEffect } from 'react';
@@ -207,6 +208,7 @@ function App() {
                 <Route path="/ClinicalImpactReport" element={<ClinicalImpactReport />} />
                 <Route path="/FeedbackPage" element={<FeedbackPage />} />
                 <Route path="/ORSFeedback" element={<ORSFeedback />} />
+                <Route path="/AdminFeedbackSender" element={<AdminFeedbackSender />} />
             </Routes>
             {/* <Footer/> */}
         </div>

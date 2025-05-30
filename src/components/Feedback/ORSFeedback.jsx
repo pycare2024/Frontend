@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./ORSFeedback.css"
 
 const ORSFeedback = () => {
     const [step, setStep] = useState(1);
@@ -59,7 +60,7 @@ const ORSFeedback = () => {
 
     const submitORSFeedback = async () => {
         try {
-            await axios.post(`http://localhost:4000/FeedbackRoute/submit-ors`, {
+            await axios.post(`https://backend-xhl4.onrender.com/FeedbackRoute/submit-ors`, {
                 patientId: patient._id,
                 therapistId: selectedAppointment.doctor_id,
                 sessionId: selectedAppointment._id,
@@ -81,9 +82,10 @@ const ORSFeedback = () => {
     };
 
     return (
-        <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto", fontFamily: "Arial, sans-serif" }}>
+        <div className="orsmain">
+        <div className={`feedback-container ${step === 4 ? "feedback-expanded" : ""}`}> 
             <h2>ORS Feedback</h2>
-            {message && <p style={{ color: "green" }}>{message}</p>}
+            {message && <p className="feedback-message">{message}</p>}
 
             {step === 1 && (
                 <>
@@ -92,7 +94,7 @@ const ORSFeedback = () => {
                         placeholder="Enter your mobile number"
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
-                        style={{ padding: "10px", width: "100%", marginBottom: "10px" }}
+                        
                     />
                     <button onClick={sendOtp} style={{ padding: "10px 20px" }}>Send OTP</button>
                 </>
@@ -114,7 +116,7 @@ const ORSFeedback = () => {
             {step === 3 && (
                 <>
                     <h4>Select an appointment to give ORS feedback</h4>
-                    <ul style={{ listStyle: "none", padding: 0 }}>
+                    <ul className="appointment-list">
                         {appointments.map((appt) => (
                             <li key={appt._id} style={{ marginBottom: "10px" }}>
                                 <button
@@ -144,9 +146,11 @@ const ORSFeedback = () => {
                         { key: "social", label: "Socially (work, school, friendships)" },
                         { key: "overall", label: "Overall (general sense of well-being)" },
                     ].map(({ key, label }) => (
-                        <div key={key} style={{ margin: "20px 0" }}>
-                            <label><strong>{label}</strong></label>
-                            <input
+                        <div key={key} className="srs-question-block">
+                            <div className="srs-labels"><label><strong>{label}</strong></label></div>
+                            
+                            <div className="rating-row">
+                                <input
                                 type="range"
                                 min="0"
                                 max="10"
@@ -156,10 +160,11 @@ const ORSFeedback = () => {
                                 }
                                 style={{ width: "100%" }}
                             />
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <div className="slider-scale">
                                 {[...Array(11)].map((_, i) => (
                                     <span key={i}>{i}</span>
                                 ))}
+                            </div>
                             </div>
                         </div>
                     ))}
@@ -169,11 +174,18 @@ const ORSFeedback = () => {
                         value={comments}
                         onChange={(e) => setComments(e.target.value)}
                         style={{
-                            width: "100%",
-                            minHeight: "100px",
-                            padding: "10px",
-                            marginTop: "20px",
-                            resize: "none",
+                            // width: "100%",
+                            // minHeight: "100px",
+                            // padding: "10px",
+                            // marginTop: "20px",
+                            // resize: "none",
+                                width: "100%",
+                                minHeight: "150px",
+                                fontSize: "1rem",
+                                padding: "10px",
+                                resize: "none",
+                                overflow: "hidden",
+                                boxSizing: "border-box",
                         }}
                     />
                     <button onClick={submitORSFeedback} style={{ marginTop: "10px", padding: "10px 20px" }}>
@@ -183,11 +195,12 @@ const ORSFeedback = () => {
             )}
 
             {step === 5 && (
-                <div style={{ marginTop: "20px" }}>
+                <div className="thank-you">
                     <h4>Thank you for your ORS feedback!</h4>
                     <p>We value your input to enhance our services.</p>
                 </div>
             )}
+        </div>
         </div>
     );
 };

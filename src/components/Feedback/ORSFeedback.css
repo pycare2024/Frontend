@@ -1,0 +1,248 @@
+.orsmain {
+  background-image: url("./9848264.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  padding: 2rem;
+
+}
+
+.feedback-container {
+  width: 40%;
+  margin: auto;
+  padding: 2rem 2rem 2.5rem;
+  font-family: "Segoe UI", sans-serif;
+  background: rgba(249, 249, 255, 0.295); /* More translucent for blur */
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px); /* Safari support */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.feedback-expanded {
+  max-width: 1000px;
+  width: 70vw;
+  padding: 2rem 3rem;
+  overflow-y: auto;
+  align-items: stretch;
+}
+
+
+.rating-row input[type="range"] {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+
+.srs-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  width: 100%;
+
+}
+
+.srs-labels span {
+  max-width: 15ch;
+  text-align: left;
+  line-height: 1.2;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.srs-labels span:last-child {
+  text-align: right;
+}
+
+
+/* Main wrapper */
+.slider-block {
+  width: 100%;
+  max-width: 800px;
+  /* increase this if you want */
+  margin: 2rem auto;
+
+}
+
+/* Top labels on either end */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.slider-labels span {
+  max-width: 100px;
+  text-align: left;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+
+.slider-labels span:last-child {
+  text-align: right;
+}
+
+/* Slider itself */
+.slider {
+  width: 100%;
+  margin: 0.5rem 0;
+
+}
+
+
+
+
+.feedback-container input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+.feedback-container button {
+  max-width: 200px;
+}
+
+.feedback-container>h2,
+.feedback-container>button {
+  align-self: flex-start;
+  /* align these to the left */
+}
+
+/* Remove all positioning from the input */
+.feedback-container input[placeholder="Enter OTP"] {
+  /* reset to normal input style */
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  position: static;
+  /* or just remove position */
+  transform: none;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+
+.feedback-container button {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.feedback-message {
+  margin: 0.2rem 0;
+  color: #4285f4;
+  font-weight: 500;
+}
+
+.appointment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.appointment-list li {
+  margin-bottom: 10px;
+}
+
+.rating-row {
+  margin-bottom: 1rem;
+  padding-left: 0px;
+}
+.thank-you {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.rating-row input[type="range"] {
+  width: 100%;
+  height: 12px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.rating-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  background: #4285f4;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-top: -8px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.rating-row input[type="range"]::-moz-range-thumb {
+  height: 10px;
+  width: 10px;
+  background: #4285f4;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.slider-scale {
+  display: flex;
+  justify-content: space-between;
+  height: 10px;
+  width: 100%;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+.slider-scale span {
+  flex: 1;
+  text-align: center;
+  width: 15px;
+}
+
+.feedback-container textarea {
+  width: 100%;
+  height: 20%;
+  /* Increase as needed, e.g., 200px for more */
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  resize: none;
+  /* Let user resize vertically; use 'none' to disable */
+  font-size: 1rem;
+  margin-top: 2%;
+  background-color: white;
+  overflow: scroll;
+  font-family: "Segoe UI";
+
+}

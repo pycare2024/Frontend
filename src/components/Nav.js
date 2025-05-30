@@ -805,6 +805,21 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         >
                                             Patients List
                                         </Link>
+                                        <Link
+                                            to="/AdminFeedbackSender"
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "black",
+                                                fontWeight: "normal",
+                                                padding: "8px 12px",
+                                                borderRadius: "4px",
+                                                transition: "background 0.2s",
+                                            }}
+                                            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+                                            onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
+                                        >
+                                            Send Feedback Forms
+                                        </Link>
                                     </div>
                                 )}
                             </div>
@@ -1071,6 +1086,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             <span className="dropdown-label">Patients ▾</span>
                             <div className="dropdown-content">
                                 <Link to="/Patients">Patients list</Link>
+                                <Link to="/AdminFeedbackSender">Send Feedback Forms</Link>
                             </div>
                         </div>
                         <div className="dropdown">
