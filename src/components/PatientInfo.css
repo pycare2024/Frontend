@@ -157,3 +157,179 @@
     font-size: 0.95rem;
     resize: vertical;
   }
+
+  .input-disabled {
+  width: 100%;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+}
+.input-box {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+}
+
+/* Overlay for modal background */
+.gaf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2.5rem; /* 40px */
+  z-index: 50;
+  overflow-y: auto;
+  margin-top: 5%;
+}
+
+/* Modal container */
+.gaf-modal-container {
+  background-color: #ffffff;
+  padding: 1.5rem; /* 24px */
+  border-radius: 1rem; /* 16px */
+  width: 100%;
+  max-width: 48rem; /* 768px */
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal heading */
+.gaf-modal-container h2 {
+  font-size: 1.6rem; /* 20px */
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #4285f4; /* Tailwind slate-900 */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Labels */
+.gaf-modal-container label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem; /* 4px */
+  color: #374151; /* Tailwind gray-700 */
+}
+
+/* Input boxes for read-only and editable */
+.gaf-modal-container input[type="text"],
+.gaf-modal-container input[type="number"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #d1d5db; /* Tailwind gray-300 */
+  border-radius: 0.5rem; /* 8px */
+  font-size: 1rem;
+  color: #111827;
+  background-color: #f9fafb; /* Tailwind gray-50 */
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* Editable input focus effect */
+.gaf-modal-container input[type="number"]:focus {
+  outline: none;
+  border-color: #10b981; /* Tailwind emerald-500 */
+  background-color: #ffffff;
+}
+
+/* Disabled inputs */
+.gaf-modal-container input[readonly] {
+  background-color: #f3f4f6; /* Tailwind gray-100 */
+  cursor: not-allowed;
+  color: #6b7280; /* Tailwind gray-500 */
+  border-color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+/* Description Reference box */
+.gaf-modal-container .description-reference {
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.75rem; /* 12px */
+  background-color: #f9fafb;
+  max-height: 16rem; /* 256px */
+  padding: 1rem;
+  overflow-y: auto;
+  color: #374151;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.4;
+}
+
+/* Each description item */
+.gaf-modal-container .description-reference > div {
+  margin-bottom: 1rem;
+}
+
+/* Bold the score range */
+.gaf-modal-container .description-reference strong {
+  color: #111827;
+}
+
+/* Current Description box */
+.gaf-modal-container .current-description {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.75rem;
+  background-color: #f3f4f6;
+  min-height: 5rem; /* 80px */
+  color: #374151;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+/* Button container */
+.gaf-modal-container .button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+/* Buttons base style */
+.gaf-modal-container button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Cancel button */
+.gaf-modal-container button.cancel-btn {
+  background-color: #d1d5db; /* gray-300 */
+  color: #374151;
+}
+
+.gaf-modal-container button.cancel-btn:hover {
+  background-color: #9ca3af; /* gray-400 */
+}
+
+/* Submit button */
+.gaf-modal-container button.submit-btn {
+  background-color: #059669; /* emerald-600 */
+  color: #ffffff;
+}
+
+.gaf-modal-container button.submit-btn:hover {
+  background-color: #047857; /* emerald-700 */
+}
+
+/* Scrollbar styling for WebKit browsers */
+.gaf-modal-container .description-reference::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gaf-modal-container .description-reference::-webkit-scrollbar-thumb {
+  background-color: #10b981; /* emerald-500 */
+  border-radius: 4px;
+}
+
+.gaf-modal-container .description-reference::-webkit-scrollbar-track {
+  background-color: #f9fafb;
+}
