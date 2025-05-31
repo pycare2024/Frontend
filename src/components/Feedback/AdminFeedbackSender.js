@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './AdminFeedbackSender.css';
 
 const AdminFeedbackSender = () => {
     const [formType, setFormType] = useState(null);
@@ -9,6 +10,7 @@ const AdminFeedbackSender = () => {
     const [selectedPatients, setSelectedPatients] = useState([]);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleFormType = (type) => {
         setFormType(type);
@@ -43,8 +45,6 @@ const AdminFeedbackSender = () => {
         setPatients(data);
     };
 
-    // console.log("Patients->", patients);
-
     const togglePatient = (patient) => {
         setSelectedPatients((prev) =>
             prev.find((p) => p._id === patient._id)
@@ -65,8 +65,6 @@ const AdminFeedbackSender = () => {
             })),
         };
 
-        // console.log("Payload=>",payload);
-
         const res = await fetch('https://backend-xhl4.onrender.com/FeedbackRoute/sendFeedbackForms', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -74,99 +72,105 @@ const AdminFeedbackSender = () => {
         });
 
         const data = await res.json();
-
-        // console.log("Status Data -> ",status);
         setLoading(false);
         setStatus(data);
     };
 
-    useEffect(() => {
-        console.log("Selected Patients:", selectedPatients);
-    }, [selectedPatients]);
-
-    useEffect(() => {
-        console.log("Selected Patients (re-render trigger):", selectedPatients);
-    }, [selectedPatients]);
-
     return (
-        <div className="max-w-4xl mx-auto p-6 space-y-4 bg-white rounded-xl shadow">
-            <h1 className="text-2xl font-semibold">Send Feedback Form</h1>
+        <div className='feedback-sender-main'>
+            <div className="feedback-sender-wrapper">
+                <h1 className="feedback-sender-title">Send Feedback Form</h1>
 
-            {!formType && (
-                <div className="space-x-4">
-                    <button onClick={() => handleFormType('SRS')} className="btn">Send SRS Form</button>
-                    <button onClick={() => handleFormType('ORS')} className="btn">Send ORS Form</button>
-                </div>
-            )}
-
-            {formType && !userType && (
-                <div className="space-x-4">
-                    <button onClick={() => handleUserType('corporate')} className="btn">Corporate Patients</button>
-                    <button onClick={() => handleUserType('retail')} className="btn">Retail Patients</button>
-                </div>
-            )}
-
-            {userType === 'corporate' && corporates.length > 0 && (
-                <div className="mt-4">
-                    <label className="block mb-2 font-medium">Select Corporate:</label>
-                    <select onChange={(e) => handleCorporateSelect(e.target.value)} className="border p-2 rounded w-full">
-                        <option value="">-- Choose --</option>
-                        {corporates.map((corp) => (
-                            <option key={corp._id} value={corp._id}>
-                                {corp.companyName}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            )}
-
-            {patients.length > 0 && (
-                <div className="mt-4">
-                    <h2 className="font-medium mb-2">Select Patients to Send Form:</h2>
-                    <div className="max-h-64 overflow-y-auto border p-2 rounded">
-                        {patients.map((patient) => (
-                            <div key={patient._id} className="flex items-center mb-2">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedPatients.some((p) => p._id === patient._id)}
-                                    onChange={() => togglePatient(patient)}
-                                    className="mr-2"
-                                />
-                                <span>{patient.Name} ({patient.Mobile})</span>
-                            </div>
-                        ))}
+                {!formType && (
+                    <div className="feedback-button-group">
+                        <button onClick={() => handleFormType('SRS')} className="feedback-button">Send SRS Form</button>
+                        <button onClick={() => handleFormType('ORS')} className="feedback-button">Send ORS Form</button>
                     </div>
-                </div>
-            )}
+                )}
 
-            <div className="mt-4">
-                <h2>Debug Selected Patients: {selectedPatients.length}</h2>
-                {selectedPatients.length > 0 ? (
+                {formType && !userType && (
+                    <div className="feedback-button-group">
+                        <button onClick={() => handleUserType('corporate')} className="feedback-button">Corporate Patients</button>
+                        <button onClick={() => handleUserType('retail')} className="feedback-button">Retail Patients</button>
+                    </div>
+                )}
+
+                {userType === 'corporate' && corporates.length > 0 && (
                     <div>
+                        <label className="feedback-select-label">Select Corporate:</label>
+                        <select onChange={(e) => handleCorporateSelect(e.target.value)} className="feedback-select">
+                            <option value="">-- Choose --</option>
+                            {corporates.map((corp) => (
+                                <option key={corp._id} value={corp._id}>
+                                    {corp.companyName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
+
+                <input
+                    type="text"
+                    placeholder="Search patient by name..."
+                    className="feedback-search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+                {patients.length > 0 && (
+                    <div className="feedback-patient-section">
+                        <h2 className="feedback-sender-title">Select Patients to Send Form:</h2>
+                        <div className="feedback-patient-list">
+                            {patients
+                                .filter((p) =>
+                                    p.Name.toLowerCase().includes(searchTerm.toLowerCase())
+                                )
+                                .map((patient) => (
+                                    <div key={patient._id} className="feedback-patient-item">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedPatients.some((p) => p._id === patient._id)}
+                                            onChange={() => togglePatient(patient)}
+                                        />
+                                        <span>{patient.Name} ({patient.Mobile})</span>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ marginTop: "1rem" }}>
+                    <h2>Selected Patients: {selectedPatients.length}</h2>
+                    {selectedPatients.length > 0 ? (
                         <button
                             onClick={sendForms}
-                            className="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+                            className="feedback-send-button"
                         >
                             {loading ? 'Sending...' : 'Send Form'}
                         </button>
+                    ) : (
+                        <p>No patients selected</p>
+                    )}
+                </div>
+
+                {status && (
+                    <div className="feedback-status">
+                        <h3 className="feedback-sender-title">Send Status:</h3>
+                        <ul className="feedback-status-list">
+                            {status.results.map((r, i) => (
+                                <li
+                                    key={i}
+                                    className={r.status === 'success'
+                                        ? 'feedback-status-success'
+                                        : 'feedback-status-fail'}
+                                >
+                                    {r.phone}: {r.status}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                ) : (
-                    <p>No patients selected</p>
                 )}
             </div>
-
-            {status && (
-                <div className="mt-4">
-                    <h3 className="font-semibold text-lg">Send Status:</h3>
-                    <ul className="list-disc pl-5">
-                        {status.results.map((r, i) => (
-                            <li key={i} className={r.status === 'success' ? 'text-green-600' : 'text-red-600'}>
-                                {r.phone}: {r.status}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
         </div>
     );
 };

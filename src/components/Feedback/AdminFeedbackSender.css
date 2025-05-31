@@ -1,0 +1,251 @@
+.feedback-sender-main {
+    background: linear-gradient(rgba(255, 255, 255, 0.219), rgba(255, 255, 255, 0.236)),
+                url('./feedback_sender.jpg') no-repeat center center / cover;
+    min-height: 100vh;
+    background-attachment: fixed;
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.feedback-sender-wrapper {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.75); /* semi-transparent */
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    font-family: 'Segoe UI', sans-serif;
+    backdrop-filter: blur(10px); /* blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* optional border for frosted look */
+}
+
+.feedback-sender-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1e1e2f;
+    text-align: center;
+}
+
+.feedback-button-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.feedback-button {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #4e91ff, #3c61e0);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(78, 145, 255, 0.3);
+}
+
+.feedback-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(78, 145, 255, 0.4);
+}
+
+.feedback-select-label {
+    font-weight: 600;
+    margin-right: 1rem;
+    font-size: 1rem;
+}
+
+.feedback-select {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #d0d0d5;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9fb;
+    transition: border 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.feedback-select:focus {
+    border-color: #4e91ff;
+}
+
+.feedback-patient-section {
+    margin-top: 2rem;
+}
+
+.feedback-patient-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.feedback-patient-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #e1e1e8;
+    border-radius: 10px;
+    background-color: #fefefe;
+    transition: box-shadow 0.3s ease;
+}
+
+.feedback-patient-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: #f7f9ff;
+}
+
+.feedback-patient-item input[type='checkbox'] {
+    transform: scale(1.2);
+    accent-color: #4e91ff;
+}
+
+.feedback-send-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.8rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feedback-send-button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+    transform: translateY(-1px);
+}
+
+.feedback-status {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f5f7fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-status-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.feedback-status-success {
+    color: #10b981;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-status-fail {
+    color: #ef4444;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .feedback-button-group {
+        flex-direction: column;
+    }
+
+    .feedback-patient-list {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-sender-wrapper {
+        padding: 1.25rem;
+    }
+}
+
+.feedback-search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.feedback-search-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+    .feedback-sender-wrapper {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .feedback-sender-title {
+        font-size: 1.5rem;
+    }
+
+    .feedback-button-group {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .feedback-button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.9rem;
+    }
+
+    .feedback-select {
+        width: 100%;
+    }
+
+    .feedback-patient-list {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-search-input {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .feedback-send-button {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .feedback-status {
+        padding: 1rem;
+    }
+
+    .feedback-patient-item {
+        padding: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .feedback-sender-title {
+        font-size: 1.3rem;
+    }
+
+    .feedback-button {
+        font-size: 0.95rem;
+    }
+
+    .feedback-send-button {
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+}
