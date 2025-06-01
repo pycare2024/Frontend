@@ -128,7 +128,7 @@ const BookAppointment = () => {
         patient_id: patientData.patientId,
         userType,
         empId,
-        companyCode
+        companyCode,
       })
     });
 

@@ -7,6 +7,7 @@ const Appointments = () => {
     const [loading, setLoading] = useState(false);
     const [sessionNotes, setSessionNotes] = useState({});
     const [sessionRecommendations, setSessionRecommendations] = useState({});
+    const [followUpMap, setFollowUpMap] = useState({});
 
     const doctor_id = localStorage.getItem("doctor_id");
 
@@ -46,13 +47,17 @@ const Appointments = () => {
             alert("Please enter Notes before marking session as completed.");
             return;
         }
+
+        const followUpRecommended = followUpMap[appointmentId] || false;
+
         try {
             const response = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/markCompleted/${appointmentId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     notes: sessionNotes[appointmentId],
-                    recommendations: sessionRecommendations[appointmentId] || ""
+                    recommendations: sessionRecommendations[appointmentId] || "",
+                    followUpRecommended: followUpRecommended
                 })
             });
             const data = await response.json();
@@ -139,7 +144,7 @@ const Appointments = () => {
                                     <td>{appointment.patientPhoneNumber}</td>
                                     <td>{new Date(appointment.DateOfAppointment).toLocaleDateString()}</td>
                                     <td>{appointment.AppStartTime}-{appointment.AppEndTime}</td>
-                                    
+
                                     <td className="text-center">
                                         <span className={`status ${appointment.payment_status === "Paid" ? "paid" : "unpaid"}`}>
                                             {appointment.payment_status}
@@ -177,6 +182,21 @@ const Appointments = () => {
                                                             />
                                                             <button className="mic-button" onClick={() => handleVoiceInput("recommendations", appointment._id)}>🎙️</button>
                                                         </div>
+                                                    </div>
+                                                    <div className="field">
+                                                        <label className="flex items-center gap-2">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={followUpMap[appointment._id] || false}
+                                                                onChange={(e) =>
+                                                                    setFollowUpMap((prev) => ({
+                                                                        ...prev,
+                                                                        [appointment._id]: e.target.checked,
+                                                                    }))
+                                                                }
+                                                            />
+                                                            Recommend Follow-Up
+                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-2">
