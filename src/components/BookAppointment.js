@@ -24,12 +24,31 @@ const BookAppointment = () => {
   const [familyList, setFamilyList] = useState([]);
   const [selectedProblems, setSelectedProblems] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState({});
+  const [latestAppointment, setLatestAppointment] = useState(null);
+  const [doctorId, setDoctorId] = useState(null);
+  const [bookingFollowUp, setBookingFollowUp] = useState(false);
+  // Additional state for follow-up booking confirmation
+  const [awaitingFollowUpChoice, setAwaitingFollowUpChoice] = useState(false);
+  const [followUpData, setFollowUpData] = useState(null);
+  const [isFollowUp, setIsFollowUp] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log("SelectedPatient has changed:", selectedPatient);
   }, [selectedPatient]);
+
+  useEffect(() => {
+    if (!awaitingFollowUpChoice && followUpData) {
+      setStep(4); // proceed to booking step after user decides
+    }
+  }, [awaitingFollowUpChoice, followUpData]);
+
+  useEffect(() => {
+    if (!awaitingFollowUpChoice && followUpData) {
+      bookAppointment(); // Now it will book with correct isFollowUp value
+    }
+  }, [awaitingFollowUpChoice, followUpData]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -60,7 +79,7 @@ const BookAppointment = () => {
       if (response.ok && data.exists) {
         setUserType("corporate");
         setPatientData(data.employee);
-        setFamilyList(data.employee.familyMembers);
+        setFamilyList(data.employee.familyMembers || []);
         const emp = data.employee;
         setStep(1.6);
       } else if (data.message.includes("Employee not found")) {
@@ -85,13 +104,23 @@ const BookAppointment = () => {
   const verifyOTP = async () => {
     const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/verify-otp/${phoneNumber}/${otp}`);
     const data = await response.json();
+
     if (response.ok) {
       const patientRes = await fetch(`https://backend-xhl4.onrender.com/patientRoute/check/${phoneNumber}`);
       const pdata = await patientRes.json();
+
       if (patientRes.ok) {
         setPatientData(pdata);
         fetchAvailableDates();
-        setStep(4);
+
+        const latest = await fetchLatestAppointment(phoneNumber);
+        if (latest?.followUpRecommended) {
+          setFollowUpData(latest);
+          setAwaitingFollowUpChoice(true);
+          return; // Wait for user confirmation before proceeding
+        }
+
+        setStep(4); // go to appointment step
       } else {
         if (userType === "corporate" && familyOption === "family") {
           navigate("/RegisterFamilyMember", { state: { empId, companyCode } });
@@ -99,7 +128,9 @@ const BookAppointment = () => {
           navigate("/RegisterPatient", { state: { phoneNumber } });
         }
       }
-    } else setError(data.message);
+    } else {
+      setError(data.message);
+    }
   };
 
   const fetchAvailableDates = async () => {
@@ -113,38 +144,87 @@ const BookAppointment = () => {
     }
   };
 
+  const fetchLatestAppointment = async (number) => {
+    try {
+      const res = await fetch(`https://backend-xhl4.onrender.com/AppointmentRoute/appointments/latest/${number}`);
+      const data = await res.json();
+
+      if (res.ok && data) {
+        setLatestAppointment(data); // for UI display
+        return data;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching latest appointment:", error);
+      return null;
+    }
+  };
+
+
   const bookAppointment = async () => {
     if (!patientData?.patientId) {
       setError("Patient ID missing. Please verify your mobile number again.");
       return;
     }
 
-    const res = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/bookAppointment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        selectedDate,
-        preferredTime: preferredSlot,
-        patient_id: patientData.patientId,
-        userType,
-        empId,
-        companyCode,
-      })
-    });
+    try {
+      const latest = await fetchLatestAppointment(phoneNumber);
 
-    const data = await res.json();
-    if (res.ok) {
-      setPaymentLink(data.paymentLink);
-      setAppointmentId(data.appointmentDetails._id);
-      setDoctorName(data.doctorName);
-      if (userType === "corporate") {
-        setAppointmentConfirmed(data.appointmentDetails);
-        setStep(5);
-      } else {
-        setStep(4.5);
+      if (latest?.followUpRecommended && !awaitingFollowUpChoice && followUpData === null) {
+        setFollowUpData(latest);
+        setAwaitingFollowUpChoice(true);
+        return;
       }
-    } else {
-      setError(data.message || "Slot not available for the selected time. Please try another.");
+
+      let res;
+      if (isFollowUp && followUpData) {
+        res = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/bookFollowupAppointment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            selectedDate,
+            preferredTime: preferredSlot,
+            patient_id: patientData.patientId,
+            userType,
+            empId,
+            companyCode,
+            previousAppointmentId: followUpData._id,
+            doctor_id: followUpData.doctor_id,
+          }),
+        });
+      } else {
+        res = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/bookAppointment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            selectedDate,
+            preferredTime: preferredSlot,
+            patient_id: patientData.patientId,
+            userType,
+            empId,
+            companyCode,
+          }),
+        });
+      }
+
+      const data = await res.json();
+      if (res.ok) {
+        setPaymentLink(data.paymentLink);
+        setAppointmentId(data.appointmentDetails._id);
+        setDoctorName(data.doctorName);
+        if (userType === "corporate") {
+          setAppointmentConfirmed(data.appointmentDetails);
+          setStep(5);
+        } else {
+          setStep(4.5);
+        }
+      } else {
+        setError(data.message || "Slot not available for the selected time. Please try another.");
+      }
+    } catch (error) {
+      console.error("Booking error:", error);
+      setError("Something went wrong while booking the appointment.");
     }
   };
 
@@ -153,7 +233,7 @@ const BookAppointment = () => {
       const response = await fetch(`https://backend-xhl4.onrender.com/patientRoute/getPatientByPhone/${phone}`);
       const data = await response.json();
       console.log("Fetched patient:", data);
-  
+
       if (response.ok && data.patient) {
         setSelectedPatient({
           id: data.patient?._id || "",
@@ -161,8 +241,6 @@ const BookAppointment = () => {
           gender: data.patient?.Gender || "",
           mobile: data.patient?.Mobile || "",
         });
-        
-
       } else {
         console.error("No patient found with this phone");
       }
@@ -206,31 +284,59 @@ const BookAppointment = () => {
 
             {/* Always show Self option first */}
             <button
-              onClick={() => {
+              onClick={async () => {
                 console.log(patientData);
-                setPhoneNumber(patientData?.employeePhone);
-                // console.log(phoneNumber);
+                const phone = patientData?.employeePhone;
+                setPhoneNumber(phone);
                 setUserType("corporate");
                 setFamilyOption("self");
-                fetchPatientByPhone(patientData?.employeePhone);
-                console.log(selectedPatient);
+
+                // 1. Fetch full patient data
+                await fetchPatientByPhone(phone);
+
+                // 2. Check for follow-up
+                await fetchLatestAppointment(phone);
+                if (latestAppointment && latestAppointment.followUpRecommended) {
+                  alert("A follow-up was recommended in the last session. Booking with the same doctor.");
+                  setBookingFollowUp(true);
+                  setDoctorId(latestAppointment.doctorId);
+                } else {
+                  setDoctorId(null);
+                  setLatestAppointment(null);
+                }
+
+                // 3. Proceed
                 setStep(1.7);
               }}
             >
               Self
             </button>
 
-            {/* Then if family members exist, list them */}
             {familyList.length > 0 &&
               familyList.map((fm, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setPhoneNumber(fm.mobile);
+                  onClick={async () => {
+                    const phone = fm.mobile;
+                    setPhoneNumber(phone);
                     setUserType("corporate");
                     setFamilyOption("family");
-                    fetchPatientByPhone(fm.mobile);  
-                    console.log(selectedPatient);// 🛜 fetch full patient data
+
+                    // 1. Fetch full patient data
+                    await fetchPatientByPhone(phone);
+
+                    // 2. Check for follow-up
+                    await fetchLatestAppointment(phone);
+                    if (latestAppointment && latestAppointment.followUpRecommended) {
+                      alert("A follow-up was recommended in the last session. Booking with the same doctor.");
+                      setBookingFollowUp(true);
+                      setDoctorId(latestAppointment.doctorId);
+                    } else {
+                      setDoctorId(null);
+                      setLatestAppointment(null);
+                    }
+
+                    // 3. Proceed
                     setStep(1.7);
                   }}
                 >
@@ -378,6 +484,30 @@ const BookAppointment = () => {
       <div className="book-appointment-card">
         <h2>Book Appointment</h2>
         {error && <p className="book-error-text">{error}</p>}
+        {/* Follow-up confirmation dialog */}
+        {awaitingFollowUpChoice && followUpData && (
+          <div className="followup-dialog enhanced-dialog">
+            <h3>👩‍⚕️ Follow-Up Recommendation</h3>
+            <p>
+              Our records indicate that <strong>Dr. {followUpData.doctorName}</strong> recommended a follow-up session based on your last appointment.
+            </p>
+            <p>Would you like to proceed with booking this follow-up now?</p>
+            <div className="followup-dialog-buttons">
+              <button className="confirm-btn" onClick={() => {
+                setIsFollowUp(true);
+                setAwaitingFollowUpChoice(false);
+              }}>
+                ✅ Yes, Book Follow-Up
+              </button>
+              <button className="decline-btn" onClick={() => {
+                setIsFollowUp(false);
+                setAwaitingFollowUpChoice(false);
+              }}>
+                ❌ No, Book New Appointment
+              </button>
+            </div>
+          </div>
+        )}
         {renderStep()}
       </div>
     </div>

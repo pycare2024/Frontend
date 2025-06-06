@@ -158,3 +158,63 @@
     flex-direction: column;
   }
 }
+
+/* === Follow-Up Recommendation Styles === */
+.enhanced-dialog {
+  background-color: #f7fbff;
+  border-left: 5px solid #1e90ff;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(30, 144, 255, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.enhanced-dialog h3 {
+  margin-top: 0;
+  color: #1e3a8a;
+  font-size: 1.25rem;
+}
+
+.enhanced-dialog p {
+  font-size: 1rem;
+  color: #333;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.followup-dialog-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.confirm-btn,
+.decline-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-btn {
+  background-color: #10b981; /* Green */
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #059669;
+}
+
+.decline-btn {
+  background-color: #f87171; /* Red */
+  color: white;
+}
+
+.decline-btn:hover {
+  background-color: #ef4444;
+}
