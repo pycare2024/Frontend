@@ -28,7 +28,7 @@ const Psyco = () => {
               className="read-more-btn5"
               onClick={() => navigate('/StartScreeningTest')} // <-- Correct navigation
             >
-              Take Free Test
+              Take Pyschometric Test
             </button>
           </div>
         </div>
