@@ -18,11 +18,14 @@ function Doctors() {
         password: "",
         Gender: "",
         Mobile: "",
+        Role: "",
     });
 
     const [fieldErrors, setFieldErrors] = useState({});
 
-    const qualifications = ["M.phil Clinical Psycology"];
+    const qualifications = ["M.phil Clinical Psycology","M A Psychology"];
+
+    const Roles = ["Therapist","Consultant"];
 
     useEffect(() => {
         fetchDoctors();
@@ -61,7 +64,7 @@ function Doctors() {
 
     const validateForm = () => {
         const errors = {};
-        const requiredFields = ["Name", "City", "Qualification", "Gender", "Mobile"];
+        const requiredFields = ["Name", "City", "Qualification", "Gender", "Mobile", "Role"];
 
         requiredFields.forEach((field) => {
             if (!newDoctor[field]) {
@@ -144,6 +147,7 @@ function Doctors() {
                 password: "", // Keep password as it is
                 Gender: "",
                 Mobile: "",
+                Role: "",
             });
             setFieldErrors({});
             fetchDoctors();
@@ -163,7 +167,8 @@ function Doctors() {
             loginId: "",
             password: "",
             Gender: "",
-            Mobile: ""
+            Mobile: "",
+            Role:"",
         });
         setFieldErrors({});
     };
@@ -228,6 +233,16 @@ function Doctors() {
                                 <option value="">Select Qualification</option>
                                 {qualifications.map((qualification, index) => (
                                     <option key={index} value={qualification}>{qualification}</option>
+                                ))}
+                            </select>
+                            <select
+                                value={newDoctor.Role}
+                                onChange={(e) => setNewDoctor({ ...newDoctor, Role: e.target.value })}
+                                required
+                            >
+                                <option value="">Select Role</option>
+                                {Roles.map((Role, index) => (
+                                    <option key={index} value={Role}>{Role}</option>
                                 ))}
                             </select>
                             <input type="text" placeholder="Login ID (Auto-generated)" value={newDoctor.loginId} readOnly />
