@@ -11,6 +11,15 @@ const StartScreeningTest = () => {
     const [selectedProblems, setSelectedProblems] = useState([]);
     const navigate = useNavigate();
 
+    const problemSymptoms = {
+        anxiety: ["Restlessness", "Racing thoughts", "Sweating"],
+        depression: ["Low mood", "Fatigue", "Loss of interest"],
+        sleep: ["Insomnia", "Nightmares", "Early waking"],
+        ocd: ["Compulsive behaviors", "Intrusive thoughts", "Perfectionism"],
+        ptsd: ["Flashbacks", "Irritability", "Avoidance"],
+        others: ["Unspecified symptoms", "General distress", "Low confidence"]
+    };
+
     const sendOTP = async (number = phoneNumber) => {
         const response = await fetch(`https://backend-xhl4.onrender.com/OtpRoute/send-otp/${number}`);
         const data = await response.json();
@@ -101,17 +110,25 @@ const StartScreeningTest = () => {
                 {step === 3 && (
                     <>
                         <h2>📝 Select Problems You Are Facing</h2>
-                        <div className="problems-list">
-                            {["anxiety", "depression", "sleep", "ocd", "ptsd", "others"].map(problem => (
-                                <div
-                                    key={problem}
-                                    className={`problem-option ${selectedProblems.includes(problem) ? "selected" : ""}`}
-                                    onClick={() => handleProblemSelect(problem)}
-                                >
-                                    {problem}
-                                </div>
-                            ))}
-                        </div>
+                        <h3 style={{color:"#4285f4"}}>(You can choose more than one)</h3>
+                        <div className="problem-grid-container">
+  {Object.entries(problemSymptoms).map(([problem, symptoms]) => (
+    <div
+      key={problem}
+      className={`problem-tile ${selectedProblems.includes(problem) ? "selected" : ""}`}
+      onClick={() => handleProblemSelect(problem)}
+    >
+      <h3 className="problem-name">{problem.charAt(0).toUpperCase() + problem.slice(1)}</h3>
+      
+      <p className="symptom-label">Symptoms:</p>
+      <div className="symptom-chip-container">
+        {symptoms.map((symptom, i) => (
+          <span key={i} className="symptom-chip">{symptom}</span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
                         <button onClick={proceedToScreening}>Proceed to Screening Test</button>
                     </>
                 )}
