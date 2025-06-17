@@ -4,6 +4,7 @@ import { CalendarDays, Video } from "lucide-react";
 import surabhi from "./drghosh.jpeg";
 import shatakshi from "./Shatakshi.jpg";
 import saachi from "./saachi.png";
+import shilpa from "./shilpa.jpeg";
 
 const experts = [
   { label: "Therapist", icon: "💬" },
@@ -40,6 +41,16 @@ const expertDetails = [
     speaks: ["English"],
     slot: "Today, 03:45 PM",
     image: saachi,
+  },
+  {
+    name: "Shilpa Soni",
+    experience: "3+ years",
+    price: "₹2000",
+    duration: "60 mins",
+    expertise: ["Relationship issues", "Work stress","Anxiety"],
+    speaks: ["English","Hindi","Punjabi"],
+    slot: "Today, 03:45 PM",
+    image: shilpa,
   },
 ];
 
