@@ -15,7 +15,7 @@ const StartScreeningTest = () => {
         anxiety: ["Restlessness", "Racing thoughts", "Sweating"],
         depression: ["Low mood", "Fatigue", "Loss of interest"],
         sleep: ["Insomnia", "Nightmares", "Early waking"],
-        ocd: ["Compulsive behaviors", "Intrusive thoughts", "Perfectionism"],
+        Ocd: ["Compulsive behaviors", "Intrusive thoughts", "Perfectionism"],
         ptsd: ["Flashbacks", "Irritability", "Avoidance"],
         others: ["Unspecified symptoms", "General distress", "Low confidence"]
     };
