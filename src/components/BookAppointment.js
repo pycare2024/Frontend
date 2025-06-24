@@ -75,22 +75,32 @@ const BookAppointment = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ companyCode, empId })
       });
+
       const data = await response.json();
+      console.log("Data ->", data);
+
       if (response.ok && data.exists) {
+        // ✅ Employee already registered
         setUserType("corporate");
         setPatientData(data.employee);
         setFamilyList(data.employee.familyMembers || []);
-        const emp = data.employee;
         setStep(1.6);
-      } else if (data.message.includes("Employee not found")) {
-        navigate("/RegisterCorporateEmployee", { state: { empId, companyCode } });
-      } else if (data.message.includes("Company not registered")) {
-        setCompanyError("Company not found. Please continue as retail.");
+      } else if (response.ok && !data.exists) {
+        // ✅ Found in master list, proceed to registration with pre-filled name
+        navigate("/RegisterCorporateEmployee", {
+          state: {
+            empId: data.masterRecord.empId,
+            companyCode,
+            name: data.masterRecord.name
+          }
+        });
       } else {
+        // ⛔️ If error like not authorized or company not found
         setCompanyError(data.message);
       }
     } catch (error) {
-      setCompanyError("Verification failed. Try again later.");
+      console.error("❌ Error during corporate verification:", error.message);
+      setCompanyError("Verification failed. Please try again.");
     }
   };
 
@@ -358,67 +368,12 @@ const BookAppointment = () => {
       case 1.7:
         return (
           <div className="book-step-section">
-            <h4>What would you like to do?</h4>
-
-            <div className="problem-selection">
-              <p>Select the issues you are facing (for Screening Test):</p>
-              <div className="problems-list">
-                {[
-                  "anxiety",
-                  "depression",
-                  "sleep",
-                  "ocd",
-                  "ptsd",
-                  "other"
-                ].map((problem, index) => (
-                  <label key={index} className="problem-option">
-                    <input
-                      type="checkbox"
-                      value={problem}
-                      checked={selectedProblems.includes(problem)}
-                      onChange={() => {
-                        setSelectedProblems(prev =>
-                          prev.includes(problem)
-                            ? prev.filter(p => p !== problem)
-                            : [...prev, problem]
-                        );
-                      }}
-                    />
-                    {problem}
-                  </label>
-                ))}
-              </div>
-
-              <button
-                onClick={() => {
-                  if (selectedProblems.length === 0) {
-                    alert("Please select at least one issue before proceeding.");
-                    return;
-                  }
-                  console.log(selectedPatient);
-                  console.log(selectedProblems);
-                  navigate("/ScreenTestForm", {
-                    state: {
-                      patientId: selectedPatient?.id,
-                      patientName: selectedPatient?.name,
-                      phoneNumber: selectedPatient?.mobile,
-                      patientGender: selectedPatient?.gender,
-                      problems: selectedProblems
-                    }
-                  });
-                }}
-              >
-                Proceed to Screening Test
-              </button>
-            </div>
-
-            <hr />
+            <h4>Proceed to Appointment Booking</h4>
 
             <div className="appointment-option">
-              <p>OR</p>
               <button
                 onClick={() => {
-                  sendOTP(phoneNumber);  // ⏩ direct booking
+                  sendOTP(phoneNumber); // ⏩ Direct booking via OTP
                 }}
               >
                 Book Appointment
