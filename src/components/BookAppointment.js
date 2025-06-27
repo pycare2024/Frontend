@@ -77,16 +77,18 @@ const BookAppointment = () => {
       });
 
       const data = await response.json();
-      console.log("Data ->", data);
+      console.log("📡 Verification Response:", data);
 
-      if (response.ok && data.exists) {
-        // ✅ Employee already registered
+      if (response.status === 200) {
+        // ✅ Employee already registered in system
         setUserType("corporate");
         setPatientData(data.employee);
         setFamilyList(data.employee.familyMembers || []);
         setStep(1.6);
-      } else if (response.ok && !data.exists) {
-        // ✅ Found in master list, proceed to registration with pre-filled name
+      }
+
+      else if (response.status === 400 && data.exists === false && data.masterRecord) {
+        // ✅ Found in master list, but not yet registered — proceed to registration
         navigate("/RegisterCorporateEmployee", {
           state: {
             empId: data.masterRecord.empId,
@@ -94,13 +96,21 @@ const BookAppointment = () => {
             name: data.masterRecord.name
           }
         });
-      } else {
-        // ⛔️ If error like not authorized or company not found
-        setCompanyError(data.message);
       }
+
+      else if (response.status === 404) {
+        // ❌ Not in master list OR company not registered
+        setCompanyError(data.message || "Unauthorized access.");
+      }
+
+      else {
+        // 🛑 Any other unknown response
+        setCompanyError(data.message || "Unexpected error. Please try again.");
+      }
+
     } catch (error) {
-      console.error("❌ Error during corporate verification:", error.message);
-      setCompanyError("Verification failed. Please try again.");
+      console.error("❌ Error in verifyCorporatePatient:", error.message);
+      setCompanyError("Network error. Please try again.");
     }
   };
 
