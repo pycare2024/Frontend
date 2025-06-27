@@ -257,6 +257,17 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                         >
                                             Corporate Wellness
                                         </Link>
+                                        <Link
+                                            to="/StartScreeningTest"
+                                            style={{
+                                                display: "block",
+                                                padding: "5px 10px",
+                                                color: "#333",
+                                                textDecoration: "none",
+                                            }}
+                                        >
+                                            Psychometric Assessment
+                                        </Link>
                                     </div>
                                 )}
                             </div>
@@ -320,11 +331,15 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 )}
                             </div>
                         )}
+
                         {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
                             <div className="auth-buttons">
-                                <Link to="/BookAppointment" className="auth-btn signup-btn">Book Appointment</Link>
+                                <Link to="/BookAppointment" className="auth-btn signup-btn">
+                                    Book Appointment
+                                </Link>
                             </div>
                         )}
+
 
                     </div>
 
@@ -990,6 +1005,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             <div className="dropdown-content">
                                 <Link to="/Individual Therapy">Individual Therapy</Link>
                                 <Link to="/Corporate Wellness">Corporate Wellness</Link>
+                                <Link to="/StartScreeningTest">Psychometric Assessment</Link>
                             </div>
                         </div>
                         <div className="dropdown">
@@ -1114,9 +1130,9 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             ...linkStyle,
                             background: "none",
                             border: "none",
-                            fontWeight:"bold",
-                            color:"#4285F4",
-                            fontSize:"1rem"
+                            fontWeight: "bold",
+                            color: "#4285F4",
+                            fontSize: "1rem"
                         }}
                     >
                         Logout
