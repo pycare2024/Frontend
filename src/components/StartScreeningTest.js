@@ -17,7 +17,6 @@ const StartScreeningTest = () => {
         sleep: ["Insomnia", "Nightmares", "Early waking"],
         Ocd: ["Compulsive behaviors", "Intrusive thoughts", "Perfectionism"],
         ptsd: ["Flashbacks", "Irritability", "Avoidance"],
-        others: ["Unspecified symptoms", "General distress", "Low confidence"]
     };
 
     const sendOTP = async (number = phoneNumber) => {

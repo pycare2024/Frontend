@@ -155,7 +155,6 @@ const RegisterPatient = () => {
                             { key: "ocd", label: "OCD", symptoms: "Repetitive thoughts or behaviors" },
                             { key: "ptsd", label: "PTSD", symptoms: "Flashbacks, nightmares, hypervigilance" },
                             { key: "sleep", label: "Sleep Issues", symptoms: "Trouble falling/staying asleep" },
-                            { key: "other", label: "Other", symptoms: "Different or unclear symptoms" }
                         ].map((problem) => (
                             <label key={problem.key} className="checkbox-label">
                                 <input
