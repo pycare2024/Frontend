@@ -41,8 +41,8 @@ const RegisterCorporateEmployee = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setMessage("🎉 Registered successfully. You can now book an appointment.");
-        setTimeout(() => navigate("/BookAppointment", { state: { phoneNumber: formData.Mobile } }), 2000);
+        setMessage("🎉 Registered successfully. You can now take the Psychometric test.");
+        setTimeout(() => navigate("/StartScreeningTest", 5000));
       } else {
         setMessage(data.message || "Something went wrong.");
       }

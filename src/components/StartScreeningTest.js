@@ -38,7 +38,10 @@ const StartScreeningTest = () => {
                 setPatientData(pdata);
                 setStep(3); // Now show problem selection
             } else {
-                // Not found - redirect to registration
+                // Show popup message
+                window.alert("You're found in your company records, but we will need some basic details. Please proceed with registration.");
+
+                // Then redirect
                 navigate("/BookAppointment", { state: { phoneNumber } });
             }
         } else {
@@ -78,6 +81,7 @@ const StartScreeningTest = () => {
 
     return (
         <div className="start-screening-page">
+            <h1>Psychometric Assessment</h1>
             <div className="start-screening-container">
                 {step === 1 && (
                     <>
@@ -110,25 +114,25 @@ const StartScreeningTest = () => {
                 {step === 3 && (
                     <>
                         <h2>📝 Select Problems You Are Facing</h2>
-                        <h3 style={{color:"#4285f4"}}>(You can choose more than one)</h3>
+                        <h3 style={{ color: "#4285f4" }}>(You can choose more than one)</h3>
                         <div className="problem-grid-container">
-  {Object.entries(problemSymptoms).map(([problem, symptoms]) => (
-    <div
-      key={problem}
-      className={`problem-tile ${selectedProblems.includes(problem) ? "selected" : ""}`}
-      onClick={() => handleProblemSelect(problem)}
-    >
-      <h3 className="problem-name">{problem.charAt(0).toUpperCase() + problem.slice(1)}</h3>
-      
-      <p className="symptom-label">Symptoms:</p>
-      <div className="symptom-chip-container">
-        {symptoms.map((symptom, i) => (
-          <span key={i} className="symptom-chip">{symptom}</span>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
+                            {Object.entries(problemSymptoms).map(([problem, symptoms]) => (
+                                <div
+                                    key={problem}
+                                    className={`problem-tile ${selectedProblems.includes(problem) ? "selected" : ""}`}
+                                    onClick={() => handleProblemSelect(problem)}
+                                >
+                                    <h3 className="problem-name">{problem.charAt(0).toUpperCase() + problem.slice(1)}</h3>
+
+                                    <p className="symptom-label">Symptoms:</p>
+                                    <div className="symptom-chip-container">
+                                        {symptoms.map((symptom, i) => (
+                                            <span key={i} className="symptom-chip">{symptom}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                         <button onClick={proceedToScreening}>Proceed to Screening Test</button>
                     </>
                 )}
