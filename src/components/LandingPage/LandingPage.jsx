@@ -5,6 +5,7 @@ import WhyPsycare from '../WhyPsycare/WhyPsyCare';
 import Facts from '../Facts/Facts';
 import './LandingPage.css';
 import Genie from "./genie.png";
+import Intropage from '../Intropage/Intropage';
 
 const LandingPage = () => {
 
@@ -18,7 +19,7 @@ const LandingPage = () => {
   const wrapperRef = useRef();
   const pauseTimeoutRef = useRef(null);
 
-  const slides = [<Header />, <Facts />, <WhyPsycare />, <Working />];
+  const slides = [<Intropage /> , <Header />, <Facts />, <WhyPsycare />, <Working />];
 
   // Auto sliding interval
   useEffect(() => {

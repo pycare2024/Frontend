@@ -52,6 +52,7 @@ import ClinicalImpactReport from './components/Corporates/ClinicalImpactReport';
 import FeedbackPage from './components/Feedback/FeedbackPage';
 import ORSFeedback from './components/Feedback/ORSFeedback';
 import AdminFeedbackSender from './components/Feedback/AdminFeedbackSender';
+import Intropage from './components/Intropage/Intropage';
 
 
 import { useState, useEffect } from 'react';
@@ -209,6 +210,7 @@ function App() {
                 <Route path="/FeedbackPage" element={<FeedbackPage />} />
                 <Route path="/ORSFeedback" element={<ORSFeedback />} />
                 <Route path="/AdminFeedbackSender" element={<AdminFeedbackSender />} />
+                <Route path="/Intropage" element={<Intropage />} />
             </Routes>
             {/* <Footer/> */}
         </div>
