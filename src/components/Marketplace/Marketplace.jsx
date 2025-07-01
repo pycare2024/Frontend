@@ -1,0 +1,135 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Marketplace.css";
+
+function Marketplace() {
+    const [doctors, setDoctors] = useState([]);
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [filters, setFilters] = useState({ gender: "", role: "" });
+    const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+    const [availableSchedules, setAvailableSchedules] = useState([]);
+    const [selectedDateIndex, setSelectedDateIndex] = useState(null);
+
+    useEffect(() => {
+        fetchDoctors();
+    }, []);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        applyFilters();
+    }, [filters, doctors]);
+
+    const fetchDoctors = async () => {
+        try {
+            const res = await axios.get("https://backend-xhl4.onrender.com/DoctorRoute/");
+            setDoctors(res.data || []);
+        } catch (err) {
+            console.error("Error fetching doctors:", err);
+        }
+    };
+
+    const applyFilters = () => {
+        let filtered = [...doctors];
+        if (filters.gender) filtered = filtered.filter(doc => doc.Gender === filters.gender);
+        if (filters.role) filtered = filtered.filter(doc => doc.Role === filters.role);
+        setFilteredDoctors(filtered);
+    };
+
+    const fetchSlots = async (doctorId) => {
+        try {
+            const res = await axios.get(`https://backend-xhl4.onrender.com/AppointmentRoute/marketplace/getAvailableSlots/${doctorId}`);
+            setAvailableSchedules(res.data.availableSchedules || []);
+            setSelectedDoctorId(doctorId);
+            setSelectedDateIndex(null); // Reset on new doctor
+        } catch (err) {
+            console.error("Error fetching slots:", err);
+        }
+    };
+
+    return (
+        <div className="marketplace-wrapper">
+            <div className="marketplace-glass">
+                <div className="marketplace-header">
+                    <h1>Meet Our Experts</h1>
+                    <p>Choose your own doctor and begin your healing journey today.</p>
+                </div>
+
+                {/* Filters */}
+                <div className="marketplace-filters">
+                    <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
+                        <option value="">All Genders</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <select onChange={(e) => setFilters({ ...filters, role: e.target.value })}>
+                        <option value="">All Roles</option>
+                        <option value="Therapist">Therapist</option>
+                        <option value="Consultant">Consultant</option>
+                        <option value="Psychiatrist">Psychiatrist</option>
+                    </select>
+                </div>
+
+                {/* Doctor Cards */}
+                <div className="doctor-grid">
+                    {filteredDoctors.length > 0 ? (
+                        filteredDoctors.map((doc) => (
+                            <div className="doctor-card" key={doc._id}>
+                                <img
+                                    className="doctor-photo"
+                                    src={doc.photo || "/default-doc.png"}
+                                    alt={doc.Name}
+                                />
+                                <h2>{doc.Name}</h2>
+                                <p className="role">{doc.Role}</p>
+                                <p className="gender">{doc.Gender}</p>
+                                <button className="book-button" onClick={() => navigate(`/marketplace/${doc._id}`)}>
+                                    Book Now
+                                </button>
+
+                                {/* If this doctor is selected, show their slot calendar */}
+                                {selectedDoctorId === doc._id && availableSchedules.length > 0 && (
+                                    <div className="slots-section">
+                                        <div className="date-selector">
+                                            {availableSchedules.map((schedule, index) => (
+                                                <button
+                                                    key={schedule.schedule_id}
+                                                    className={`date-button ${selectedDateIndex === index ? "active" : ""}`}
+                                                    onClick={() => setSelectedDateIndex(index)}
+                                                >
+                                                    {new Date(schedule.date).toLocaleDateString("en-IN", {
+                                                        weekday: "short",
+                                                        day: "numeric",
+                                                        month: "short"
+                                                    })}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {/* Show slots for selected date */}
+                                        {selectedDateIndex !== null && (
+                                            <div className="slots-grid">
+                                                {availableSchedules[selectedDateIndex].slots.map((slot, idx) => (
+                                                    <button key={idx} className="slot-button">
+                                                        {slot.startTime} - {slot.endTime}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        ))
+                    ) : (
+                        <p className="no-results">No doctors match the selected filters.</p>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Marketplace;
