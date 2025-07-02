@@ -11,6 +11,7 @@ function Doctors() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [newDoctor, setNewDoctor] = useState({
         id: "",
+        photo: "", // Cloudinary URL will be stored here
         Name: "",
         City: "",
         Qualification: "",
@@ -23,6 +24,8 @@ function Doctors() {
     });
 
     const [fieldErrors, setFieldErrors] = useState({});
+
+    const [photoFile, setPhotoFile] = useState(null);
 
     const qualifications = ["M.phil Clinical Psycology", "M A Psychology"];
 
@@ -105,53 +108,92 @@ function Doctors() {
         }
     };
 
+    const uploadPhotoToBackend = async (file, doctorId) => {
+        const formData = new FormData();
+        formData.append("photo", file); // must match backend 'upload.single("photo")'
+
+        const response = await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/uploadPhoto/${doctorId}`, {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        return data.url; // cloudinary URL returned from backend
+    };
+
     const handleAddDoctor = async () => {
         console.log("Add Doctor button clicked");
 
         const doctorId = generateDoctorId();
         const autoPassword = generateRandomPassword(8);
-        setNewDoctor(prev => ({ ...prev, password: autoPassword }));
 
         if (!validateForm()) {
             console.log("Form validation failed", fieldErrors);
             return;
         }
 
-        const doctorWithId = { ...newDoctor, id: doctorId, loginId: doctorId, password: autoPassword }; // Set loginId same as id
-
-        console.log("Doctor Data:", doctorWithId);
+        const doctorWithoutPhoto = {
+            ...newDoctor,
+            id: doctorId,
+            loginId: doctorId,
+            password: autoPassword,
+            photo: "", // photo will be updated after upload
+        };
 
         try {
+            // Step 1: Register doctor (without photo)
             const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(doctorWithId)
+                body: JSON.stringify(doctorWithoutPhoto)
             });
 
-            console.log("Response status:", response.status);
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Error response:", errorData);
                 throw new Error(errorData.message || "Failed to add doctor");
             }
 
-            console.log("Doctor added successfully! ✅");
+            const savedDoctor = await response.json(); // 👈 backend should return { success: true, doctor: savedDoctor }
+            const doctorMongoId = savedDoctor.doctor?._id; // 👈 backend should return full doctor object
 
-            // ✅ Display login credentials after successful registration
+            let uploadedPhotoUrl = "";
+
+            // Step 2: Upload photo to backend
+            if (photoFile && doctorMongoId) {
+                try {
+                    uploadedPhotoUrl = await uploadPhotoToBackend(photoFile, doctorMongoId);
+                    console.log("Uploaded photo URL:", uploadedPhotoUrl);
+                } catch (err) {
+                    alert("Photo upload failed. Try again.");
+                    console.error("Cloudinary upload error:", err);
+                }
+            }
+
+            // Step 3: Send credentials
+            await handleSendCredentials({
+                ...doctorWithoutPhoto,
+                password: autoPassword,
+                id: doctorId
+            });
+
             alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${autoPassword}`);
-            await handleSendCredentials(doctorWithId);
 
+            // ✅ Reset form
             setShowAddForm(false);
+            setPhotoFile(null);
             setNewDoctor({
                 id: "",
                 Name: "",
                 City: "",
                 Qualification: "",
-                password: "", // Keep password as it is
+                loginId: "",
+                password: "",
                 Gender: "",
                 Mobile: "",
                 Role: "",
                 platformType: "",
+                photo: "",
             });
             setFieldErrors({});
             fetchDoctors();
@@ -259,6 +301,11 @@ function Doctors() {
                                     <option key={index} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
                                 ))}
                             </select>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setPhotoFile(e.target.files[0])}
+                            />
                             <input type="text" placeholder="Login ID (Auto-generated)" value={newDoctor.loginId} readOnly />
                             <input
                                 type="text"
@@ -312,19 +359,32 @@ function Doctors() {
 
             <div className="doctor-list">
                 {doctors.map((doctor) => (
-                    <div key={doctor._id}
+                    <div
+                        key={doctor._id}
                         className="doctor-card"
                         onClick={() => navigate(`/doctor/${doctor._id}`)}
-                        style={{ cursor: "pointer" }}>
-                        <h3>{doctor.Name}<i class="fa-solid fa-stethoscope"></i></h3>
+                        style={{ cursor: "pointer" }}
+                    >
+                        {/* 👇 Display Doctor Photo */}
+                        {doctor.photo ? (
+                            <img
+                                src={doctor.photo}
+                                alt={`${doctor.Name}`}
+                                className="doctor-photo"
+                            />
+                        ) : (
+                            <img
+                                src="/default-doctor.png" // ✅ fallback image if no photo
+                                alt="No Photo"
+                                className="doctor-photo"
+                            />
+                        )}
+
+                        <h3>{doctor.Name} <i className="fa-solid fa-stethoscope"></i></h3>
                         <p><strong>City:</strong> {doctor.City}</p>
                         <p><strong>Gender:</strong> {doctor.Gender}</p>
                         <p><strong>Qualification:</strong> {doctor.Qualification}</p>
                         <p><strong>Mobile:</strong> {doctor.Mobile}</p>
-
-                        {/* <button onClick={() => handleDeleteDoctor(doctor.id)} className="btn btn-danger">
-                            <FaTrash /> Remove
-                        </button> */}
                     </div>
                 ))}
             </div>
