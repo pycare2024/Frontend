@@ -19,13 +19,16 @@ function Doctors() {
         Gender: "",
         Mobile: "",
         Role: "",
+        platformType: "" // 👈 Add this
     });
 
     const [fieldErrors, setFieldErrors] = useState({});
 
-    const qualifications = ["M.phil Clinical Psycology","M A Psychology"];
+    const qualifications = ["M.phil Clinical Psycology", "M A Psychology"];
 
-    const Roles = ["Therapist","Consultant"];
+    const platforms = ["marketplace", "corporate", "school"];
+
+    const Roles = ["Therapist", "Consultant"];
 
     useEffect(() => {
         fetchDoctors();
@@ -148,6 +151,7 @@ function Doctors() {
                 Gender: "",
                 Mobile: "",
                 Role: "",
+                platformType: "",
             });
             setFieldErrors({});
             fetchDoctors();
@@ -168,7 +172,7 @@ function Doctors() {
             password: "",
             Gender: "",
             Mobile: "",
-            Role:"",
+            Role: "",
         });
         setFieldErrors({});
     };
@@ -243,6 +247,16 @@ function Doctors() {
                                 <option value="">Select Role</option>
                                 {Roles.map((Role, index) => (
                                     <option key={index} value={Role}>{Role}</option>
+                                ))}
+                            </select>
+                            <select
+                                value={newDoctor.platformType}
+                                onChange={(e) => setNewDoctor({ ...newDoctor, platformType: e.target.value })}
+                                required
+                            >
+                                <option value="">Select Platform</option>
+                                {platforms.map((type, index) => (
+                                    <option key={index} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
                                 ))}
                             </select>
                             <input type="text" placeholder="Login ID (Auto-generated)" value={newDoctor.loginId} readOnly />

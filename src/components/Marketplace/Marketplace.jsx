@@ -23,7 +23,7 @@ function Marketplace() {
 
     const fetchDoctors = async () => {
         try {
-            const res = await axios.get("https://backend-xhl4.onrender.com/DoctorRoute/");
+            const res = await axios.get("https://backend-xhl4.onrender.com/DoctorRoute/marketplacedoctors");
             setDoctors(res.data || []);
         } catch (err) {
             console.error("Error fetching doctors:", err);
