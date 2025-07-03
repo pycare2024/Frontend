@@ -11,7 +11,7 @@ function Doctors() {
     const [showAddForm, setShowAddForm] = useState(false);
     const [newDoctor, setNewDoctor] = useState({
         id: "",
-        photo: "", // Cloudinary URL will be stored here
+        photo: "",
         Name: "",
         City: "",
         Qualification: "",
@@ -20,14 +20,18 @@ function Doctors() {
         Gender: "",
         Mobile: "",
         Role: "",
-        platformType: "" // 👈 Add this
+        platformType: "",
+        consultsStudents: false, // ✅ NEW
+        languagesSpoken: "",      // ✅ comma-separated input
+        experienceYears: "",      // ✅ number
+        areaOfExpertise: "",      // ✅ comma-separated
+        certifications: []        // ✅ file upload
     });
+    const [certFiles, setCertFiles] = useState([]); // for certification file uploads
 
     const [fieldErrors, setFieldErrors] = useState({});
 
     const [photoFile, setPhotoFile] = useState(null);
-
-    const qualifications = ["M.phil Clinical Psycology", "M A Psychology"];
 
     const platforms = ["marketplace", "corporate", "school"];
 
@@ -122,71 +126,60 @@ function Doctors() {
     };
 
     const handleAddDoctor = async () => {
-        console.log("Add Doctor button clicked");
-
         const doctorId = generateDoctorId();
         const autoPassword = generateRandomPassword(8);
 
-        if (!validateForm()) {
-            console.log("Form validation failed", fieldErrors);
-            return;
-        }
+        if (!validateForm()) return;
 
-        const doctorWithoutPhoto = {
+        const doctorData = {
             ...newDoctor,
             id: doctorId,
             loginId: doctorId,
             password: autoPassword,
-            photo: "", // photo will be updated after upload
+            photo: "",
+            areaOfExpertise: newDoctor.areaOfExpertise.split(",").map(s => s.trim()),
+            experienceYears: parseInt(newDoctor.experienceYears || "0"),
+            certifications: []
         };
 
         try {
-            // Step 1: Register doctor (without photo)
             const response = await fetch("https://backend-xhl4.onrender.com/DoctorRoute/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(doctorWithoutPhoto)
+                body: JSON.stringify(doctorData)
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Error response:", errorData);
-                throw new Error(errorData.message || "Failed to add doctor");
-            }
+            if (!response.ok) throw new Error("Doctor registration failed");
+            const savedDoctor = await response.json();
+            const doctorMongoId = savedDoctor.doctor?._id;
 
-            const savedDoctor = await response.json(); // 👈 backend should return { success: true, doctor: savedDoctor }
-            const doctorMongoId = savedDoctor.doctor?._id; // 👈 backend should return full doctor object
-
-            let uploadedPhotoUrl = "";
-
-            // Step 2: Upload photo to backend
             if (photoFile && doctorMongoId) {
-                try {
-                    uploadedPhotoUrl = await uploadPhotoToBackend(photoFile, doctorMongoId);
-                    console.log("Uploaded photo URL:", uploadedPhotoUrl);
-                } catch (err) {
-                    alert("Photo upload failed. Try again.");
-                    console.error("Cloudinary upload error:", err);
-                }
+                const formData = new FormData();
+                formData.append("photo", photoFile);
+                await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/uploadPhoto/${doctorMongoId}`, {
+                    method: "POST",
+                    body: formData
+                });
             }
 
-            // Step 3: Send credentials
-            await handleSendCredentials({
-                ...doctorWithoutPhoto,
-                password: autoPassword,
-                id: doctorId
-            });
+            if (certFiles.length > 0 && doctorMongoId) {
+                const formData = new FormData();
+                certFiles.forEach((file) => formData.append("certifications", file));
+                await fetch(`https://backend-xhl4.onrender.com/DoctorRoute/uploadCertifications/${doctorMongoId}`, {
+                    method: "POST",
+                    body: formData
+                });
+            }
 
             alert(`Doctor registered successfully!\nLogin ID: ${doctorId}\nPassword: ${autoPassword}`);
-
-            // ✅ Reset form
             setShowAddForm(false);
             setPhotoFile(null);
+            setCertFiles([]);
             setNewDoctor({
                 id: "",
                 Name: "",
                 City: "",
-                Qualification: "",
+                Qualification: [],
                 loginId: "",
                 password: "",
                 Gender: "",
@@ -194,11 +187,15 @@ function Doctors() {
                 Role: "",
                 platformType: "",
                 photo: "",
+                consultsStudents: false,
+                languagesSpoken: [],
+                experienceYears: "",
+                areaOfExpertise: "",
+                certifications: [],
             });
             setFieldErrors({});
             fetchDoctors();
         } catch (error) {
-            console.error("Fetch error:", error.message);
             setError(error.message);
         }
     };
@@ -245,7 +242,7 @@ function Doctors() {
 
     return (
         <div className="doctors-page">
-            <h1 style={{ color: "#4285F4", fontWeight: "bold" }}>Doctors List</h1>
+            <h1 style={{ color: "#4285F4", fontWeight: "bold", textAlign: "center" }}>Doctors List</h1>
             <button onClick={() => setShowAddForm(!showAddForm)} className="add-btn">
                 <FaUserPlus /> {showAddForm ? "Cancel" : "Add Doctor"}
             </button>
@@ -271,14 +268,106 @@ function Doctors() {
                                 required
                             />
                             <input type="text" placeholder="City" value={newDoctor.City} onChange={(e) => setNewDoctor({ ...newDoctor, City: e.target.value })} required />
+                            <label>Qualifications</label>
                             <select
+                                multiple
                                 value={newDoctor.Qualification}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, Qualification: e.target.value })}
-                                required
+                                onChange={(e) =>
+                                    setNewDoctor({
+                                        ...newDoctor,
+                                        Qualification: Array.from(e.target.selectedOptions, (option) => option.value),
+                                    })
+                                }
                             >
-                                <option value="">Select Qualification</option>
-                                {qualifications.map((qualification, index) => (
-                                    <option key={index} value={qualification}>{qualification}</option>
+                                {[
+                                    "B.A (H) Applied Psychology",
+                                    "BA(Hons) in Social Science",
+                                    "BA Psychology",
+                                    "BA Applied Psychology",
+                                    "BSc Psychology",
+                                    "B.Sc (Nursing)",
+                                    "Bachelor of Arts (Honours) in Psychology",
+                                    "Bachelor in Applied Psychology",
+                                    "Doctorate in Psychology",
+                                    "Diploma in Counseling",
+                                    "Diploma in Psychology",
+                                    "M.A (Clinical Psychology)",
+                                    "M.A Clinical Psychology",
+                                    "M.A Counselling Psychology",
+                                    "M.A in Psychology with counselling specialization",
+                                    "M.A. Applied Psychology (Clinical and Counseling Practice)",
+                                    "M.A. Clinical Psychology + PG Diploma (Pursuing)",
+                                    "M.A. Clinical Psychology",
+                                    "M.A. Psychology, PGDGC",
+                                    "MA +B.ED + Diploma NCERT, Diploma ISTD",
+                                    "MA (Applied Psychology)",
+                                    "MA (Clinical Psychology)",
+                                    "MA Applied Psychology",
+                                    "MA Clinical Psychology",
+                                    "MA Counselling Psychology",
+                                    "MA Psychology",
+                                    "MA Psychology+ PG Diploma Counselling Psychology",
+                                    "MA in Applied Psychology",
+                                    "MA in Applied Psychology (Specialized in Clinical and Counseling)",
+                                    "MA in Clinical Psychology",
+                                    "MA in Counselling Psychology",
+                                    "MA in Psychology",
+                                    "MA(Psy) PGDRP PGDGC",
+                                    "Mac Clinical Psychology",
+                                    "Masters",
+                                    "Masters Clinical Psychology",
+                                    "Masters Degree in Applied Psychology (Clinical Specialisation)",
+                                    "Masters In Applied Psychology (Clinical Psychology) and B.Ed",
+                                    "Masters in Clinical Psychology",
+                                    "Masters in Counselling Psychology",
+                                    "Masters in Lifespan Counselling",
+                                    "Masters in Psychology",
+                                    "Masters of Science in Psychology",
+                                    "Masters in child, clinical and counselling psychology",
+                                    "MPhil in Clinical Psychology",
+                                    "M.Phil in Clinical Psychology",
+                                    "M.Sc (Cl.Psy)",
+                                    "M.Sc Counseling Psychology",
+                                    "M.Sc Clinical Psychology",
+                                    "M.Sc in Applied Psychology",
+                                    "M.Sc in Clinical Psychology",
+                                    "M.Sc in Psychology (Clinical and Counseling Psychology)",
+                                    "M.Sc. Clinical Psychology",
+                                    "M.Sc. Psychology (Clinical)",
+                                    "MSc Clinical Psycho Oncology",
+                                    "MSc Clinical Psychology",
+                                    "MSc Counselling Psychology",
+                                    "MSc Counseling Psychology",
+                                    "MSc Psychology",
+                                    "MSc in Applied Psychology",
+                                    "MSc in Clinical Psychology",
+                                    "MSc in Counselling Psychology",
+                                    "MSc in Psychology",
+                                    "MSc Psychology with Clinical Specialization",
+                                    "MSCCFT",
+                                    "MSW",
+                                    "PG Diploma in Clinical Psychology",
+                                    "PG Diploma in Counseling and Psychotherapy",
+                                    "PG Diploma in Guidance and Career Counseling",
+                                    "PG Diploma in Guidance and Counselling",
+                                    "PG Diploma in Mental Health",
+                                    "PGD in Child Psychology",
+                                    "PGD in Gender Studies",
+                                    "PGD-PH",
+                                    "PGDGC",
+                                    "PGDRP",
+                                    "PGDRP RCI License",
+                                    "PGDDRM",
+                                    "Post Graduate (MSc Clinical Psychology)",
+                                    "Post Graduate in Psychology",
+                                    "Post Graduate Diploma in Rehabilitation Psychology",
+                                    "Post Graduation",
+                                    "Post Graduation Diploma in Rehabilitation Psychology",
+                                    "PsyD"
+                                ].map((deg) => (
+                                    <option key={deg} value={deg}>
+                                        {deg}
+                                    </option>
                                 ))}
                             </select>
                             <select
@@ -301,11 +390,72 @@ function Doctors() {
                                     <option key={index} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
                                 ))}
                             </select>
+                            {newDoctor.platformType === "marketplace" && (
+                                <label style={{ fontSize: "14px", marginTop: "10px" }}>
+                                    <input
+                                        type="checkbox"
+                                        checked={newDoctor.consultsStudents}
+                                        onChange={(e) => setNewDoctor({ ...newDoctor, consultsStudents: e.target.checked })}
+                                    />
+                                    &nbsp;Consults Students
+                                </label>
+                            )}
+                            <label>Languages Spoken</label>
+                            <select
+                                multiple
+                                value={newDoctor.languagesSpoken}
+                                onChange={(e) =>
+                                    setNewDoctor({
+                                        ...newDoctor,
+                                        languagesSpoken: Array.from(e.target.selectedOptions, (option) => option.value),
+                                    })
+                                }
+                            >
+                                {[
+                                    "English", "Hindi", "Bengali", "Spanish", "French", "Arabic", "Russian",
+                                    "Mandarin", "German", "Portuguese", "Japanese", "Urdu", "Tamil",
+                                    "Telugu", "Marathi", "Gujarati", "Kannada", "Malayalam", "Punjabi", "Odia"
+                                ].map((lang) => (
+                                    <option key={lang} value={lang}>
+                                        {lang}
+                                    </option>
+                                ))}
+                            </select>
+                            <input
+                                type="number"
+                                placeholder="Years of Experience"
+                                value={newDoctor.experienceYears}
+                                onChange={(e) => setNewDoctor({ ...newDoctor, experienceYears: e.target.value })}
+                            />
+
+                            <input
+                                type="text"
+                                placeholder="Areas of Expertise (comma-separated)"
+                                value={newDoctor.areaOfExpertise}
+                                onChange={(e) => setNewDoctor({ ...newDoctor, areaOfExpertise: e.target.value })}
+                            />
+                            <label>Upload Profile Photo</label>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setPhotoFile(e.target.files[0])}
                             />
+
+                            <label>Upload Certifications (PDF/Images)</label>
+                            <input
+                                type="file"
+                                multiple
+                                accept="application/pdf,image/*"
+                                onChange={(e) => setCertFiles(Array.from(e.target.files))}
+                            />
+
+                            {certFiles.length > 0 && (
+                                <ul style={{ fontSize: "12px", marginTop: "5px" }}>
+                                    {certFiles.map((file, idx) => (
+                                        <li key={idx}>{file.name}</li>
+                                    ))}
+                                </ul>
+                            )}
                             <input type="text" placeholder="Login ID (Auto-generated)" value={newDoctor.loginId} readOnly />
                             <input
                                 type="text"
