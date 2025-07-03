@@ -151,13 +151,13 @@ function Marketplace() {
                                     alt={doc.Name}
                                 />
                                 <h2>{doc.Name}</h2>
-                                <p className="role" style={{color:"white"}}>{doc.Role}</p>
-                                <p className="gender" style={{color:"white"}}>Gender: {doc.Gender}</p>
-                                <p className="city" style={{color:"white"}}>City: {doc.City}</p>
-                                <p className="qualification" style={{color:"white"}}>Qualifications: {doc.Qualification.join(", ")}</p>
-                                <p className="experience" style={{color:"white"}}>Experience: {doc.experienceYears} yrs {doc.experienceMonths || 0} mos</p>
-                                <p className="languages" style={{color:"white"}}>Languages: {doc.languagesSpoken.join(", ")}</p>
-                                <p className="expertise" style={{color:"white"}}>Expertise: {doc.areaOfExpertise.join(", ")}</p>
+                                <p className="role" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>{doc.Role}</p>
+                                <p className="gender" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Gender: {doc.Gender}</p>
+                                <p className="city" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>City: {doc.City}</p>
+                                <p className="qualification" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Qualifications: {doc.Qualification.join(", ")}</p>
+                                <p className="experience" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Experience: {doc.experienceYears} year(s) {doc.experienceMonths || 0} months</p>
+                                <p className="languages" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Languages: {doc.languagesSpoken.join(", ")}</p>
+                                {/* <p className="expertise" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Expertise: {doc.areaOfExpertise.join(", ")}</p> */}
                                 <button className="book-button" onClick={() => navigate(`/marketplace/${doc._id}`)}>
                                     Book Now
                                 </button>
