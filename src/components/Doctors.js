@@ -3,6 +3,7 @@ import "./Doctors.css"; // Import CSS for styling
 import { FaUserPlus, FaTrash } from "react-icons/fa"; // Icons for better visual appeal
 import "./doctorform.css";  //Importing css for add doctor page
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 function Doctors() {
     const [doctors, setDoctors] = useState([]);
@@ -23,9 +24,11 @@ function Doctors() {
         platformType: "",
         consultsStudents: false, // ✅ NEW
         languagesSpoken: "",      // ✅ comma-separated input
-        experienceYears: "",      // ✅ number
+        experienceYears: 0,
+        experienceMonths: 0,      // ✅ number
         areaOfExpertise: "",      // ✅ comma-separated
-        certifications: []        // ✅ file upload
+        certifications: [],
+        certificationNames: []        // ✅ file upload
     });
     const [certFiles, setCertFiles] = useState([]); // for certification file uploads
 
@@ -40,6 +43,74 @@ function Doctors() {
     useEffect(() => {
         fetchDoctors();
     }, []);
+
+    const areaOfExpertiseOptions = [
+        "Child Psychology (6–12 years)",
+        "Adolescent / Teen Psychology (13–18 yrs)",
+        "Young Adults (18–25 yrs)",
+        "Adults (25–45 yrs)",
+        "Geriatric Psychology (45+ yrs)",
+        "Couples & Relationship Therapy",
+        "Family Therapy",
+        "LGBTQIA+ Affirmative Therapy",
+        "Parental Counselling",
+        "Student Academic Stress Support",
+        "Corporate / Employee Wellness",
+        "Anxiety Disorders",
+        "Depression",
+        "Obsessive Compulsive Disorder (OCD)",
+        "Panic Disorders",
+        "Phobias",
+        "Post-Traumatic Stress Disorder (PTSD)",
+        "Attention Deficit Hyperactivity Disorder (ADHD)",
+        "Autism Spectrum Disorders (ASD)",
+        "Eating Disorders",
+        "Grief & Loss",
+        "Sleep Disorders",
+        "Cognitive Behavioural Therapy (CBT)",
+        "Rational Emotive Behaviour Therapy (REBT)",
+        "Dialectical Behaviour Therapy (DBT)",
+        "Mindfulness-Based Interventions",
+        "Trauma-Informed Therapy",
+        "Narrative Therapy",
+        "Art-Based Therapy",
+        "Play Therapy",
+        "Behaviour Modification",
+        "Hypnotherapy",
+        "Career Counselling & Guidance",
+        "Psychometric Testing & Interpretation"
+    ];
+
+    const certificationNameOptions = [
+        { value: "Certificate in Cognitive Behavioural Therapy (CBT)", label: "CBT" },
+        { value: "Certificate in Rational Emotive Behaviour Therapy (REBT)", label: "REBT" },
+        { value: "Certificate in Dialectical Behaviour Therapy (DBT)", label: "DBT" },
+        { value: "Certificate in Acceptance & Commitment Therapy (ACT)", label: "ACT" },
+        { value: "Certificate in Transactional Analysis (TA)", label: "Transactional Analysis (TA)" },
+        { value: "Certificate in Solution Focused Brief Therapy (SFBT)", label: "SFBT" },
+        { value: "Certificate in Mindfulness-Based Cognitive Therapy (MBCT)", label: "MBCT" },
+        { value: "Certificate in Narrative Therapy", label: "Narrative Therapy" },
+        { value: "Certificate in Gestalt Therapy", label: "Gestalt Therapy" },
+        { value: "Certificate in Hypnotherapy", label: "Hypnotherapy" },
+        { value: "Certificate in Art-Based Therapy", label: "Art-Based Therapy" },
+        { value: "Certificate in Music Therapy", label: "Music Therapy" },
+        { value: "Certificate in Dance Movement Therapy", label: "Dance Movement Therapy" },
+        { value: "Certificate in Play Therapy", label: "Play Therapy" },
+        { value: "Certificate in Drama Therapy", label: "Drama Therapy" },
+        { value: "Trauma-Informed Care Certification", label: "Trauma-Informed Care" },
+        { value: "Suicide Prevention & Crisis Intervention Training", label: "Suicide Prevention" },
+        { value: "Certificate in Grief & Loss Counselling", label: "Grief & Loss" },
+        { value: "Certificate in Child Sexual Abuse Counselling", label: "Child Sexual Abuse" },
+        { value: "LGBTQIA+ Affirmative Counselling Certificate", label: "LGBTQIA+ Affirmative" },
+        { value: "Certificate in Gender & Sexuality Studies for Counsellors", label: "Gender & Sexuality" },
+        { value: "Certificate in Psychometric Testing & Interpretation", label: "Psychometric Testing" },
+        { value: "Certificate in Clinical Assessments (like Rorschach, TAT, etc.)", label: "Clinical Assessments" },
+        { value: "Certificate in Career Assessment & Guidance", label: "Career Assessment" },
+        { value: "Certificate in School Counselling", label: "School Counselling" },
+        { value: "Certificate in Family and Marriage Counselling", label: "Family/Marriage Counselling" },
+        { value: "Certificate in Addiction Counselling", label: "Addiction Counselling" },
+        { value: "Certificate in Behaviour Modification", label: "Behaviour Modification" }
+    ];
 
     const navigate = useNavigate();
 
@@ -56,6 +127,11 @@ function Doctors() {
             setLoading(false);
         }
     };
+
+    const areaOptions = areaOfExpertiseOptions.map((item) => ({
+        value: item,
+        label: item
+    }));
 
     const generateDoctorId = () => {
         const initials = newDoctor.Name?.split(" ").map(w => w[0].toUpperCase()).join("").slice(0, 2) || "DR";
@@ -137,9 +213,11 @@ function Doctors() {
             loginId: doctorId,
             password: autoPassword,
             photo: "",
-            areaOfExpertise: newDoctor.areaOfExpertise.split(",").map(s => s.trim()),
-            experienceYears: parseInt(newDoctor.experienceYears || "0"),
-            certifications: []
+            areaOfExpertise: newDoctor.areaOfExpertise,
+            experienceYears: newDoctor.experienceYears,
+            experienceMonths: newDoctor.experienceMonths,
+            certifications: [],
+            certificationNames: newDoctor.certificationNames
         };
 
         try {
@@ -192,6 +270,7 @@ function Doctors() {
                 experienceYears: "",
                 areaOfExpertise: "",
                 certifications: [],
+                certificationNames: "",
             });
             setFieldErrors({});
             fetchDoctors();
@@ -421,24 +500,61 @@ function Doctors() {
                                     </option>
                                 ))}
                             </select>
-                            <input
-                                type="number"
-                                placeholder="Years of Experience"
-                                value={newDoctor.experienceYears}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, experienceYears: e.target.value })}
-                            />
+                            <div style={{ display: "flex", gap: "10px" }}>
+                                <input
+                                    type="number"
+                                    placeholder="Years"
+                                    min="0"
+                                    value={newDoctor.experienceYears}
+                                    onChange={(e) =>
+                                        setNewDoctor({ ...newDoctor, experienceYears: parseInt(e.target.value || 0) })
+                                    }
+                                    style={{ width: "50%" }}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Months"
+                                    min="0"
+                                    max="11"
+                                    value={newDoctor.experienceMonths}
+                                    onChange={(e) =>
+                                        setNewDoctor({ ...newDoctor, experienceMonths: parseInt(e.target.value || 0) })
+                                    }
+                                    style={{ width: "50%" }}
+                                />
+                            </div>
 
-                            <input
-                                type="text"
-                                placeholder="Areas of Expertise (comma-separated)"
-                                value={newDoctor.areaOfExpertise}
-                                onChange={(e) => setNewDoctor({ ...newDoctor, areaOfExpertise: e.target.value })}
+                            <Select
+                                isMulti
+                                options={areaOptions}
+                                value={areaOptions.filter(opt => newDoctor.areaOfExpertise.includes(opt.value))}
+                                onChange={(selected) =>
+                                    setNewDoctor({
+                                        ...newDoctor,
+                                        areaOfExpertise: selected.map((s) => s.value)
+                                    })
+                                }
                             />
                             <label>Upload Profile Photo</label>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => setPhotoFile(e.target.files[0])}
+                            />
+
+                            <label>Certification Names</label>
+                            <Select
+                                isMulti
+                                options={certificationNameOptions}
+                                value={certificationNameOptions.filter(opt =>
+                                    newDoctor.certificationNames.includes(opt.value)
+                                )}
+                                onChange={(selected) =>
+                                    setNewDoctor({
+                                        ...newDoctor,
+                                        certificationNames: selected.map((s) => s.value)
+                                    })
+                                }
                             />
 
                             <label>Upload Certifications (PDF/Images)</label>

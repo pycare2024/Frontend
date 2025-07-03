@@ -1,5 +1,4 @@
-
-
+/* === Overall Wrapper === */
 .booking-wrapper {
   min-height: 100vh;
   background: url("../Marketplace/marketplace.jpg") center center / cover no-repeat;
@@ -8,24 +7,26 @@
   align-items: center;
   padding: 3rem 1.5rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
 }
 
+/* === Booking Container Glassmorphism === */
 .booking-container {
   display: flex;
   flex-wrap: wrap;
   gap: 2.5rem;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
   padding: 3rem;
-  border-radius: 24px;
+  border-radius: 28px;
   width: 100%;
   max-width: 1200px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
 }
 
-/* === Doctor Profile === */
+/* === Doctor Profile Styling === */
 .doctor-profile {
   flex: 1;
   display: flex;
@@ -35,39 +36,46 @@
 }
 
 .doctor-profile img {
-  width: 170px;
-  height: 170px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   border: 4px solid #fff;
   object-fit: cover;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.doctor-profile img:hover {
+  transform: scale(1.05);
 }
 
 .doctor-profile h2 {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #ffffff;
 }
 
 .doctor-profile p {
-  margin: 0.25rem 0;
-  font-size: 14px;
+  font-size: 0.95rem;
   opacity: 0.9;
+  margin: 0.2rem 0;
 }
 
-/* === Slot Section === */
+/* === Booking Slot Section === */
 .booking-slot-section {
   flex: 2;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
+/* === Date Selection === */
 .date-selector {
   display: flex;
   gap: 0.8rem;
   overflow-x: auto;
-  margin-bottom: 2rem;
   padding-bottom: 0.5rem;
   scrollbar-width: none;
 }
@@ -78,60 +86,57 @@
 
 .date-button {
   padding: 0.65rem 1.3rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
   cursor: pointer;
   font-weight: 500;
-  color: #fff;
-  border: 1px solid transparent;
   transition: all 0.3s ease;
-  backdrop-filter: blur(6px);
   white-space: nowrap;
+  backdrop-filter: blur(6px);
 }
 
-.date-button:hover {
-  background-color: rgba(31, 128, 224, 0.85);
-}
-
+.date-button:hover,
 .date-button.active {
   background-color: #1f80e0;
+  color: #fff;
   border-color: #fff;
 }
 
-/* === Slot Buttons === */
+/* === Slots Grid === */
 .slots-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .slot-button {
-  padding: 0.6rem 1rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  padding: 0.65rem 1.2rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-  transition: all 0.3s ease;
+  color: white;
   font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
 }
 
 .slot-button.selected,
 .slot-button:hover {
   background-color: #1f80e0;
   border-color: #fff;
-  color: white;
 }
 
-/* === Input Sections === */
+/* === OTP & Registration Inputs === */
 .otp-section,
 .register-section {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
 
 .otp-section input,
@@ -140,11 +145,11 @@
   padding: 0.75rem;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  outline: none;
-  font-size: 14px;
   background: rgba(255, 255, 255, 0.1);
   color: white;
-  backdrop-filter: blur(10px);
+  font-size: 14px;
+  outline: none;
+  backdrop-filter: blur(8px);
   transition: all 0.3s ease;
 }
 
@@ -152,59 +157,106 @@
 .register-section input:focus,
 .register-section select:focus {
   border-color: #1f80e0;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
 }
 
-.otp-section input::placeholder,
-.register-section input::placeholder {
-  color: #ddd;
+::placeholder {
+  color: #ccc;
 }
 
-/* === Buttons === */
+/* === Action Buttons === */
 .otp-section button,
 .register-section button {
-  padding: 0.75rem 1.4rem;
-  background-color: #1f80e0;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #007aff, #3a8fff);
   border: none;
   border-radius: 12px;
-  color: white;
-  font-weight: bold;
   font-size: 14px;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .otp-section button:hover,
 .register-section button:hover {
-  background-color: #166ac2;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #005ecb, #357df7);
+  transform: scale(1.03);
 }
 
-/* === Confirmation === */
+/* === Confirmation Section === */
 .confirmation {
-  background: rgba(0, 255, 0, 0.12);
+  margin-top: 1.5rem;
   padding: 2rem;
-  border-radius: 16px;
+  border-radius: 18px;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(12px);
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  margin-top: 1rem;
-  color: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .confirmation h3 {
   color: #00ffaa;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
 }
 
 .confirmation p {
   font-size: 15px;
-  margin: 0.5rem 0;
+  margin: 0.4rem 0;
 }
 
 .confirmation a {
   color: #ffffff;
   font-weight: bold;
   text-decoration: underline;
+  word-break: break-all;
+}
+
+/* === Responsive Enhancements === */
+@media screen and (max-width: 768px) {
+  .booking-container {
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .doctor-profile img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .doctor-profile h2 {
+    font-size: 1.4rem;
+  }
+
+  .booking-slot-section {
+    gap: 1rem;
+  }
+}
+
+.qualifications-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.qualification-pill {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.qualification-pill:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
 }

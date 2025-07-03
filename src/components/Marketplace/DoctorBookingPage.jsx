@@ -119,16 +119,31 @@ function DoctorBookingPage() {
         }
     };
 
+    const qualifications = Array.isArray(doctor?.Qualification)
+        ? doctor.Qualification
+        : doctor?.Qualification?.split(",").map(q => q.trim());
+
     return (
         <div className="booking-wrapper">
             <div className="booking-container">
                 <div className="doctor-profile">
                     <img src={doctor?.photo || "/default-doc.png"} alt={doctor?.Name} />
                     <h2>{doctor?.Name}</h2>
-                    <p>{doctor?.Role}</p>
-                    <p>{doctor?.Qualification}</p>
-                    <p>{doctor?.Gender}</p>
-                    <p>{doctor?.City}</p>
+                    <p style={{ color: "white" }}>{doctor?.Role}</p>
+                    {doctor?.Qualification && (
+                        <div className="qualifications-wrapper">
+                            {(Array.isArray(doctor.Qualification)
+                                ? doctor.Qualification
+                                : doctor.Qualification.split(",").map(q => q.trim())
+                            ).map((q, idx) => (
+                                <span key={idx} className="qualification-pill">
+                                    {q}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                    <p style={{ color: "white" }}>{doctor?.Gender}</p>
+                    <p style={{ color: "white" }}>{doctor?.City}</p>
                 </div>
 
                 <div className="booking-slot-section">
