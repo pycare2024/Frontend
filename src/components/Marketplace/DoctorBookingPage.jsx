@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./DoctorBookingPage.css";
 
@@ -16,6 +16,9 @@ function DoctorBookingPage() {
     const [isNewUser, setIsNewUser] = useState(false);
     const [patientData, setPatientData] = useState({ Name: "", Age: "", Gender: "", Location: "", Problem: [] });
     const [appointmentInfo, setAppointmentInfo] = useState(null);
+
+    const location = useLocation();
+    const isStudentBooking = location.state?.isStudentBooking || false;
 
     useEffect(() => {
         fetchDoctor();
@@ -101,6 +104,7 @@ function DoctorBookingPage() {
                 schedule_id: availableSchedules[selectedDateIndex].schedule_id,
                 slot_time: selectedSlot.startTime,
                 patient_id: patientId,
+                isStudentBooking
             });
             setAppointmentInfo(res.data);
         } catch (err) {

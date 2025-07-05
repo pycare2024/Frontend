@@ -7,11 +7,12 @@ import "./Marketplace.css";
 function Marketplace() {
     const [doctors, setDoctors] = useState([]);
     const [filteredDoctors, setFilteredDoctors] = useState([]);
-    const [filters, setFilters] = useState({ gender: "", role: "", language: "" });
+    const [filters, setFilters] = useState({ gender: "", role: "", language: "", bookingType: "" });
     const [selectedDoctorId, setSelectedDoctorId] = useState(null);
     const [availableSchedules, setAvailableSchedules] = useState([]);
     const [selectedDateIndex, setSelectedDateIndex] = useState(null);
     const [selectedExpertise, setSelectedExpertise] = useState([]);
+    const [studentBookingFlags, setStudentBookingFlags] = useState({});
 
     useEffect(() => {
         fetchDoctors();
@@ -32,6 +33,13 @@ function Marketplace() {
         }
     };
 
+    const handleStudentCheckboxToggle = (doctorId) => {
+        setStudentBookingFlags(prev => ({
+            ...prev,
+            [doctorId]: !prev[doctorId]
+        }));
+    };
+
     const applyFilters = () => {
         let filtered = [...doctors];
 
@@ -44,6 +52,13 @@ function Marketplace() {
             filtered = filtered.filter(doc =>
                 selectedExpertise.every(expertise => doc.areaOfExpertise.includes(expertise))
             );
+        }
+
+        if (filters.bookingType === "student") {
+            filtered = filtered.filter(doc => doc.consultsStudents === true);
+        }
+        if (filters.bookingType === "adult") {
+            filtered = filtered.filter(doc => doc.consultsStudents === false || doc.consultsStudents === undefined);
         }
 
         setFilteredDoctors(filtered);
@@ -106,6 +121,11 @@ function Marketplace() {
 
                 {/* Filters */}
                 <div className="marketplace-filters">
+                    <select onChange={(e) => setFilters({ ...filters, bookingType: e.target.value })}>
+                        <option value="">All Types</option>
+                        <option value="student">Consults Students</option>
+                        <option value="adult">Adults Only</option>
+                    </select>
                     <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
                         <option value="">All Genders</option>
                         <option value="Male">Male</option>
@@ -122,9 +142,20 @@ function Marketplace() {
 
                     <select onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
                         <option value="">All Languages</option>
-                        {Array.from(new Set(doctors.flatMap(doc => doc.languagesSpoken))).map((lang, idx) => (
-                            <option key={idx} value={lang}>{lang}</option>
-                        ))}
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Gujarati">Gujarati</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Malayalam">Malayalam</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Urdu">Urdu</option>
+                        <option value="Odia">Odia</option>
+                        <option value="Assamese">Assamese</option>
+                        <option value="Konkani">Konkani</option>
                     </select>
 
                     <Select
@@ -151,14 +182,36 @@ function Marketplace() {
                                     alt={doc.Name}
                                 />
                                 <h2>{doc.Name}</h2>
-                                <p className="role" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>{doc.Role}</p>
-                                <p className="gender" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Gender: {doc.Gender}</p>
-                                <p className="city" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>City: {doc.City}</p>
-                                <p className="qualification" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Qualifications: {doc.Qualification.join(", ")}</p>
-                                <p className="experience" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Experience: {doc.experienceYears} year(s) {doc.experienceMonths || 0} months</p>
-                                <p className="languages" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Languages: {doc.languagesSpoken.join(", ")}</p>
+                                <p className="role" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>{doc.Role}</p>
+                                <p className="gender" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Gender: {doc.Gender}</p>
+                                <p className="city" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>City: {doc.City}</p>
+                                <p className="qualification" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Qualifications: {doc.Qualification.join(", ")}</p>
+                                <p className="experience" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Experience: {doc.experienceYears} year(s) {doc.experienceMonths || 0} months</p>
+                                <p className="languages" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Languages: {doc.languagesSpoken.join(", ")}</p>
+                                {doc.consultsStudents && (
+                                    <div className="student-checkbox" style={{ margin: "10px 0" }}>
+                                        <label style={{ color: "black", fontWeight: "bold", fontSize: "14px" }}>
+                                            <input
+                                                type="checkbox"
+                                                checked={studentBookingFlags[doc._id] || false}
+                                                onChange={() => handleStudentCheckboxToggle(doc._id)}
+                                                style={{ marginRight: "8px" }}
+                                            />
+                                            Book as Student (₹400)
+                                        </label>
+                                    </div>
+                                )}
                                 {/* <p className="expertise" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Expertise: {doc.areaOfExpertise.join(", ")}</p> */}
-                                <button className="book-button" onClick={() => navigate(`/marketplace/${doc._id}`)}>
+                                <button
+                                    className="book-button"
+                                    onClick={() =>
+                                        navigate(`/marketplace/${doc._id}`, {
+                                            state: {
+                                                isStudentBooking: studentBookingFlags[doc._id] || false
+                                            }
+                                        })
+                                    }
+                                >
                                     Book Now
                                 </button>
 

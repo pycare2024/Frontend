@@ -426,3 +426,12 @@
     width: 100%;
   }
 }
+
+.student-checkbox {
+  display: flex;
+  align-items: center;
+}
+.student-checkbox input[type="checkbox"] {
+  accent-color: #1f80e0;
+  transform: scale(1.2);
+}
