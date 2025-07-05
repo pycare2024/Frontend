@@ -1,0 +1,124 @@
+/* DoctorOwnSchedule.css */
+
+.schedule-container {
+  padding: 30px;
+  max-width: 600px;
+  margin: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+}
+
+.schedule-title {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+input[type="date"],
+input[type="time"] {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.message {
+  color: gray;
+  margin-top: 10px;
+}
+
+.slot-list {
+  margin-top: 20px;
+}
+
+.slot-card {
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.slot-card p {
+  margin: 0 0 10px;
+  font-weight: 500;
+}
+
+.slot-card button {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.slot-card button:first-of-type {
+  background-color: #ffc107;
+  color: #000;
+  margin-right: 8px;
+}
+
+.slot-card button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-slot,
+.add-slot {
+  margin-top: 30px;
+  background-color: #eef6ff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.edit-slot h4,
+.add-slot h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.time-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.time-input-group button {
+  padding: 6px 10px;
+  border: none;
+  background-color: #f44336;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button,
+.save-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.add-button {
+  background-color: #007bff;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .time-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .time-input-group button {
+    width: 100%;
+  }
+}

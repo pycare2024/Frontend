@@ -55,6 +55,7 @@ import AdminFeedbackSender from './components/Feedback/AdminFeedbackSender';
 import Intropage from './components/Intropage/Intropage';
 import Marketplace from './components/Marketplace/Marketplace';
 import DoctorBookingPage from './components/Marketplace/DoctorBookingPage';
+import DoctorOwnSchedule from './components/DoctorOwnSchedule';
 
 
 import { useState, useEffect } from 'react';
@@ -215,6 +216,7 @@ function App() {
                 <Route path="/Intropage" element={<Intropage />} />
                 <Route path="/Marketplace" element={<Marketplace />} />
                 <Route path="/marketplace/:doctorId" element={<DoctorBookingPage />} />
+                <Route path="/DoctorOwnSchedule" element={<DoctorOwnSchedule />} />
             </Routes>
             {/* <Footer/> */}
         </div>
