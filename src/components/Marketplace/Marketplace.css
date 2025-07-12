@@ -1,13 +1,11 @@
-/* === Marketplace.css === */
-
 /* === Wrapper === */
 .marketplace-wrapper {
   min-height: 100vh;
   padding: 3rem 1rem;
   background-image: url("../Marketplace/marketplace.jpg");
   background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
-  background-position: center;
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
@@ -16,7 +14,6 @@
   font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
-/* === Dark Overlay for Readability === */
 .marketplace-wrapper::before {
   content: "";
   position: absolute;
@@ -36,10 +33,10 @@
   max-width: 1200px;
   padding: 2rem;
   border-radius: 25px;
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(3px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.25);
 }
 
 /* === Header === */
@@ -49,27 +46,75 @@
 }
 
 .marketplace-header h1 {
-  font-size: 2.8rem;
+  font-size: 3rem;
   font-weight: 700;
-  color: #f1f1f1;
+  color: #fefefe;
+  letter-spacing: 1px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .marketplace-header p {
-  font-size: 1.2rem;
-  color: #e3e3e3;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #dddddd;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-/* === Filters === */
 .marketplace-filters {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 filters per row */
+  gap: 1rem 1.2rem;
+  padding: 1rem;
   margin-bottom: 2.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.marketplace-filters > * {
+  width: 100%;
+  min-width: 160px;
+}
+
+@media screen and (max-width: 768px) {
+  .marketplace-filters {
+    grid-template-columns: 1fr; /* stack all vertically on mobile */
+  }
+}
+
+/* === Date Filter === */
+.date-filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.date-filter-container label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: white;
+}
+
+input[type="date"] {
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input[type="date"]:hover,
+input[type="date"]:focus {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: #007aff;
+  outline: none;
+}
+
+/* === Select Dropdowns === */
 .marketplace-filters select {
   padding: 0.6rem 1.4rem;
   font-size: 1rem;
@@ -88,6 +133,108 @@
   outline: none;
 }
 
+/* === Expertise Filter === */
+.expertise-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.expertise-filter {
+  width: 100%;
+  font-size: 0.95rem;
+  z-index: 3;
+}
+
+.expertise-filter .react-select__control {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+  min-height: 44px;
+}
+
+.expertise-filter .react-select__multi-value {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #333;
+  border-radius: 12px;
+  padding: 0 4px;
+}
+
+.expertise-filter .react-select__multi-value__label {
+  font-size: 0.85rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.expertise-filter .react-select__menu {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+}
+
+.expertise-filter .react-select__option {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+}
+
+.expertise-filter .react-select__option--is-focused {
+  background-color: #cce4ff;
+  color: #000;
+}
+
+.expertise-filter .react-select__option--is-selected {
+  background-color: #1f80e0;
+  color: white;
+}
+
+.expertise-hint {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  padding-left: 4px;
+  line-height: 1.2;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* === Apply Button === */
+.apply-filters-button {
+  background: linear-gradient(135deg, #007aff, #44aaff);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 0.65rem 1.8rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 122, 255, 0.35);
+  transition: all 0.3s ease-in-out;
+
+  /* Center in grid */
+  grid-column: span 3;
+  justify-self: center;
+}
+
+@media screen and (max-width: 768px) {
+  .marketplace-filters {
+    grid-template-columns: 1fr; /* stack filters */
+  }
+
+  .apply-filters-button {
+    grid-column: span 1;
+    width: 100%; /* full-width on mobile if needed */
+    justify-self: stretch;
+  }
+}
+
+.apply-filters-button:hover {
+  background: linear-gradient(135deg, #005ecb, #3096f0);
+  transform: translateY(-2px) scale(1.03);
+}
+
 /* === Doctor Grid === */
 .doctor-grid {
   display: grid;
@@ -98,15 +245,14 @@
 
 /* === Doctor Card === */
 .doctor-card {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 2rem 1.5rem;
   width: 100%;
   max-width: 420px;
-  height: 460px;
+  min-height: 460px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,19 +261,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-}
-
-.doctor-card::after {
-  content: "";
-  position: absolute;
-  top: -40%;
-  left: -40%;
-  width: 230%;
-  height: 230%;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent);
-  transform: rotate(25deg);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .doctor-card:hover {
@@ -146,20 +279,23 @@
 }
 
 .doctor-card h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.3rem;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  z-index: 1;
 }
 
 .role,
-.gender {
-  font-size: 1rem;
+.gender,
+.city,
+.qualification,
+.experience,
+.languages,
+.expertise {
   color: #f0f0f0;
-  margin: 0.2rem 0;
-  z-index: 1;
+  font-size: 0.95rem;
+  margin: 0.15rem 0;
 }
 
 /* === Book Button === */
@@ -173,7 +309,6 @@
   cursor: pointer;
   font-size: 1rem;
   transition: background 0.3s ease, transform 0.3s ease;
-  z-index: 1;
 }
 
 .book-button:hover {
@@ -191,7 +326,24 @@
 }
 
 /* === Mobile Responsive === */
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 768px) {
+  .marketplace-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .apply-filters-button,
+  .expertise-container,
+  .date-filter-container {
+    width: 100%;
+  }
+
+  .date-filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .doctor-grid {
     grid-template-columns: 1fr;
   }
@@ -200,270 +352,4 @@
     max-width: 90%;
     height: auto;
   }
-}
-
-.slots-section {
-  margin-top: 1.5rem;
-  width: 100%;
-}
-
-.date-selector {
-  display: flex;
-  overflow-x: auto;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-}
-
-.date-button {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
-  cursor: pointer;
-  white-space: nowrap;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.date-button.active {
-  background-color: #1f80e0;
-  color: white;
-  border: none;
-}
-
-.slots-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.slot-button {
-  padding: 0.6rem 1.2rem;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 500;
-  backdrop-filter: blur(4px);
-  color: white;
-  transition: background 0.2s ease;
-}
-
-.slot-button:hover {
-  background-color: #1f80e0;
-  color: #fff;
-}
-
-/* === React-Select Custom Styling === */
-.expertise-filter {
-  min-width: 240px;
-  font-size: 0.95rem;
-  color: #000;
-  z-index: 3;
-}
-
-.expertise-filter .react-select__control {
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: none;
-  transition: all 0.3s ease;
-  min-height: 44px;
-}
-
-.expertise-filter .react-select__control:hover {
-  background-color: rgba(255, 255, 255, 0.35);
-}
-
-.expertise-filter .react-select__multi-value {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  color: #000;
-}
-
-.expertise-filter .react-select__multi-value__label {
-  color: #000;
-  font-weight: 500;
-}
-
-.expertise-filter .react-select__menu {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #000;
-  border-radius: 10px;
-  z-index: 10;
-}
-
-.expertise-filter .react-select__option {
-  padding: 10px;
-  transition: background 0.2s ease;
-}
-
-.expertise-filter .react-select__option--is-focused {
-  background-color: #cce4ff;
-  color: #000;
-}
-
-.expertise-filter .react-select__option--is-selected {
-  background-color: #1f80e0;
-  color: white;
-}
-
-/* === Apply Filters Button === */
-.apply-filters-button {
-  padding: 0.6rem 1.5rem;
-  background: linear-gradient(135deg, #007aff, #3a8fff);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.apply-filters-button:hover {
-  background: linear-gradient(135deg, #005ecb, #3a7df7);
-  transform: scale(1.05);
-}
-
-/* === Glass Effect Optimization === */
-.marketplace-glass {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.25);
-}
-
-/* === Header === */
-.marketplace-header h1 {
-  font-size: 3rem;
-  letter-spacing: 1px;
-  color: #fefefe;
-}
-
-.marketplace-header p {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #dddddd;
-}
-
-/* === Doctor Card Enhancements === */
-.doctor-card {
-  background: rgba(255, 255, 255, 0.12);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  height: auto;
-  min-height: 460px;
-}
-
-.doctor-card h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.role,
-.gender,
-.city,
-.qualification,
-.experience,
-.languages,
-.expertise {
-  color: #f0f0f0;
-  font-size: 0.95rem;
-  margin: 0.15rem 0;
-}
-
-/* === React-Select Premium Styling === */
-.expertise-filter .react-select__control {
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
-}
-
-.expertise-filter .react-select__multi-value {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #333;
-  border-radius: 12px;
-  padding: 0 4px;
-}
-
-.expertise-filter .react-select__multi-value__label {
-  font-size: 0.85rem;
-  color: #222;
-  font-weight: 600;
-}
-
-.expertise-filter .react-select__option {
-  font-size: 0.95rem;
-  padding: 10px 14px;
-}
-
-.expertise-filter .react-select__menu {
-  backdrop-filter: blur(6px);
-}
-
-/* === Apply Filter Button Premium === */
-.apply-filters-button {
-  background: linear-gradient(135deg, #007aff, #44aaff);
-  padding: 0.65rem 1.8rem;
-  font-size: 1.05rem;
-  border-radius: 25px;
-  font-weight: 600;
-  box-shadow: 0 6px 18px rgba(0, 122, 255, 0.35);
-  transition: all 0.3s ease-in-out;
-}
-
-.apply-filters-button:hover {
-  background: linear-gradient(135deg, #005ecb, #3096f0);
-  transform: translateY(-2px) scale(1.03);
-}
-
-/* === Responsive Enhancements === */
-@media screen and (max-width: 768px) {
-  .marketplace-filters {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.8rem;
-  }
-
-  .apply-filters-button {
-    width: 100%;
-  }
-
-  .expertise-filter {
-    width: 100%;
-  }
-}
-
-.student-checkbox {
-  display: flex;
-  align-items: center;
-}
-
-.student-checkbox input[type="checkbox"] {
-  accent-color: #1f80e0;
-  transform: scale(1.2);
-}
-
-.expertise-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 260px;
-  max-width: 320px;
-  gap: 6px;
-}
-
-.expertise-hint {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  padding-left: 4px;
-  line-height: 1.2;
-  margin: 0;
-  opacity: 0.85;
 }

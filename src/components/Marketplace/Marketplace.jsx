@@ -13,16 +13,22 @@ function Marketplace() {
     const [selectedDateIndex, setSelectedDateIndex] = useState(null);
     const [selectedExpertise, setSelectedExpertise] = useState([]);
     const [studentBookingFlags, setStudentBookingFlags] = useState({});
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split("T")[0]; // format: YYYY-MM-DD
+    });
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchDoctorsWithSlots();
-    }, []);
+        fetchDoctorsWithSlots(selectedDate);
+    }, [selectedDate]);
 
-    const fetchDoctorsWithSlots = async () => {
+    const fetchDoctorsWithSlots = async (date) => {
         try {
-            const res = await axios.get("https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots");
+            const res = await axios.get(
+                `https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots?date=${date}`
+            );
             const doctors = res.data || [];
             setDoctors(doctors);
             setFilteredDoctors(doctors);
@@ -118,60 +124,73 @@ function Marketplace() {
                 </div>
 
                 {/* Filters */}
-                <div className="marketplace-filters">
-                    <select onChange={(e) => setFilters({ ...filters, bookingType: e.target.value })}>
-                        <option value="">All Types</option>
-                        <option value="student">Consults Students</option>
-                        <option value="adult">Adults Only</option>
-                    </select>
-                    <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
-                        <option value="">All Genders</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                <div className="filter-wrapper">
 
-                    <select onChange={(e) => setFilters({ ...filters, role: e.target.value })}>
-                        <option value="">All Roles</option>
-                        <option value="Therapist">Therapist</option>
-                        <option value="Consultant">Consultant</option>
-                        <option value="Psychiatrist">Psychiatrist</option>
-                    </select>
+                    <div className="marketplace-filters">
+                        <div className="date-filter-container">
+                            <label htmlFor="date">Select Date:</label>
+                            <input
+                                type="date"
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                                min={new Date().toISOString().split("T")[0]} // 🔒 Prevent past dates
+                                style={{ marginLeft: "10px", padding: "5px" }}
+                            />
+                        </div>
+                        <select onChange={(e) => setFilters({ ...filters, bookingType: e.target.value })}>
+                            <option value="">All Types</option>
+                            <option value="student">Consults Students</option>
+                            <option value="adult">Adults Only</option>
+                        </select>
+                        <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
+                            <option value="">All Genders</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
 
-                    <select onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
-                        <option value="">All Languages</option>
-                        <option value="English">English</option>
-                        <option value="Hindi">Hindi</option>
-                        <option value="Bengali">Bengali</option>
-                        <option value="Marathi">Marathi</option>
-                        <option value="Telugu">Telugu</option>
-                        <option value="Tamil">Tamil</option>
-                        <option value="Gujarati">Gujarati</option>
-                        <option value="Kannada">Kannada</option>
-                        <option value="Malayalam">Malayalam</option>
-                        <option value="Punjabi">Punjabi</option>
-                        <option value="Urdu">Urdu</option>
-                        <option value="Odia">Odia</option>
-                        <option value="Assamese">Assamese</option>
-                        <option value="Konkani">Konkani</option>
-                    </select>
+                        <select onChange={(e) => setFilters({ ...filters, role: e.target.value })}>
+                            <option value="">All Roles</option>
+                            <option value="Therapist">Therapist</option>
+                            <option value="Consultant">Consultant</option>
+                            <option value="Psychiatrist">Psychiatrist</option>
+                        </select>
 
-                    <div className="expertise-container">
-  <Select
-    isMulti
-    options={expertiseOptions}
-    placeholder="Filter by Expertise"
-    className="expertise-filter"
-    onChange={(selected) => setSelectedExpertise(selected.map(s => s.value))}
-  />
-  <div className="expertise-hint">
-    Tip: You can select multiple expertise areas to refine your results.
-  </div>
-</div>
+                        <select onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
+                            <option value="">All Languages</option>
+                            <option value="English">English</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Bengali">Bengali</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Kannada">Kannada</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Odia">Odia</option>
+                            <option value="Assamese">Assamese</option>
+                            <option value="Konkani">Konkani</option>
+                        </select>
 
-                    <button className="apply-filters-button" onClick={applyFilters}>
-                        Apply Filters
-                    </button>
+                        <div className="expertise-container">
+                            <Select
+                                isMulti
+                                options={expertiseOptions}
+                                placeholder="Filter by Expertise"
+                                className="expertise-filter"
+                                onChange={(selected) => setSelectedExpertise(selected.map(s => s.value))}
+                            />
+                            <div className="expertise-hint">
+                                Tip: You can select multiple expertise areas to refine your results.
+                            </div>
+                        </div>
+
+                        <button className="apply-filters-button" onClick={applyFilters}>
+                            Apply Filters
+                        </button>
+                    </div>
                 </div>
 
                 {/* Doctor Cards */}
