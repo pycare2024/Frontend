@@ -14,22 +14,20 @@ function Marketplace() {
     const [selectedExpertise, setSelectedExpertise] = useState([]);
     const [studentBookingFlags, setStudentBookingFlags] = useState({});
 
-    useEffect(() => {
-        fetchDoctors();
-    }, []);
-
     const navigate = useNavigate();
 
     useEffect(() => {
-        setFilteredDoctors(doctors); // Show all by default
-    }, [doctors]);
+        fetchDoctorsWithSlots();
+    }, []);
 
-    const fetchDoctors = async () => {
+    const fetchDoctorsWithSlots = async () => {
         try {
-            const res = await axios.get("https://backend-xhl4.onrender.com/DoctorRoute/marketplacedoctors");
-            setDoctors(res.data || []);
+            const res = await axios.get("https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots");
+            const doctors = res.data || [];
+            setDoctors(doctors);
+            setFilteredDoctors(doctors);
         } catch (err) {
-            console.error("Error fetching doctors:", err);
+            console.error("❌ Error fetching doctors with slots:", err);
         }
     };
 
