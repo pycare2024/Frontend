@@ -1,10 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Intropage.css";
 import corporateImg from "../Intropage/corporate.jpg";
 import marketplaceImg from "../Intropage/marketplace.jpg";
 import studentImg from "../Intropage/student.jpg";
 
 function Intropage() {
+  const navigate = useNavigate();
+
   return (
     <div className="intro-wrapper">
       <div className="intro-glass">
@@ -20,6 +23,9 @@ function Intropage() {
             <p>
               We partner with companies to provide therapy access for employees and families. Corporate codes enable direct access and no payments.
             </p>
+            <button onClick={() => navigate("/bookAppointment")} className="workflow-btn">
+              Explore Corporate
+            </button>
           </div>
 
           <div className="workflow-card">
@@ -28,6 +34,9 @@ function Intropage() {
             <p>
               Discover therapists, psychologists, and psychiatrists. Book sessions directly from our curated pool of licensed professionals.
             </p>
+            <button onClick={() => navigate("/marketplace")} className="workflow-btn">
+              Browse Therapists
+            </button>
           </div>
 
           <div className="workflow-card">
@@ -36,6 +45,9 @@ function Intropage() {
             <p>
               Through school partnerships, we provide confidential counseling services and group therapy tailored to young minds.
             </p>
+            <button className="workflow-btn" disabled>
+              Coming soon
+            </button>
           </div>
         </div>
       </div>

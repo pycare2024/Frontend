@@ -158,13 +158,18 @@ function Marketplace() {
                         <option value="Konkani">Konkani</option>
                     </select>
 
-                    <Select
-                        isMulti
-                        options={expertiseOptions}
-                        placeholder="Filter by Expertise"
-                        className="expertise-filter"
-                        onChange={(selected) => setSelectedExpertise(selected.map(s => s.value))}
-                    />
+                    <div className="expertise-container">
+  <Select
+    isMulti
+    options={expertiseOptions}
+    placeholder="Filter by Expertise"
+    className="expertise-filter"
+    onChange={(selected) => setSelectedExpertise(selected.map(s => s.value))}
+  />
+  <div className="expertise-hint">
+    Tip: You can select multiple expertise areas to refine your results.
+  </div>
+</div>
 
                     <button className="apply-filters-button" onClick={applyFilters}>
                         Apply Filters
