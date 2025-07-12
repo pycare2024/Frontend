@@ -112,7 +112,7 @@ function DoctorLogin({ onLogin }) {
                 zIndex: 0
             }}></div>
             <div style={formContainerStyle}>
-                <h2 style={{ marginBottom: "20px" , color:"#4285F4", fontWeight:"bold"}}>Doctor Login</h2>
+                <h2 style={{ marginBottom: "20px" , color:"#4285F4", fontWeight:"bold"}}>Experts Login</h2>
                 {message && <p style={{ color: "red" }}>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <input

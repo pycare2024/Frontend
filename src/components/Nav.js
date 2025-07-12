@@ -185,7 +185,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 textDecoration: "none",
                                             }}
                                         >
-                                            Doctor
+                                            Experts
                                         </Link>
                                         <Link
                                             to="/Login"

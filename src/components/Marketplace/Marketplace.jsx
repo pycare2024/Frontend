@@ -116,7 +116,7 @@ function Marketplace() {
             <div className="marketplace-glass">
                 <div className="marketplace-header">
                     <h1>Meet Our Experts</h1>
-                    <p>Choose your own doctor and begin your healing journey today.</p>
+                    <p>Choose your own therapist and begin your healing journey today.</p>
                 </div>
 
                 {/* Filters */}
