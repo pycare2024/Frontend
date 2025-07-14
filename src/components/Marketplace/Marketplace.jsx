@@ -7,6 +7,7 @@ import "./Marketplace.css";
 function Marketplace() {
     const [doctors, setDoctors] = useState([]);
     const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [filters, setFilters] = useState({ gender: "", role: "", language: "", bookingType: "" });
     const [selectedDoctorId, setSelectedDoctorId] = useState(null);
     const [availableSchedules, setAvailableSchedules] = useState([]);
@@ -24,16 +25,41 @@ function Marketplace() {
         fetchDoctorsWithSlots(selectedDate);
     }, [selectedDate]);
 
+    const getBookingLabel = (val) => {
+        switch (val) {
+            case "student": return "Consults Students";
+            case "adult": return "Adults Only";
+            default: return "All Types";
+        }
+    };
+
     const fetchDoctorsWithSlots = async (date) => {
         try {
+            setIsLoading(true);
             const res = await axios.get(
                 `https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots?date=${date}`
             );
             const doctors = res.data || [];
-            setDoctors(doctors);
-            setFilteredDoctors(doctors);
+            const shuffleArray = (array) => {
+                return [...array].sort(() => Math.random() - 0.5);
+            };
+
+            setDoctors(shuffleArray(doctors));
+            setFilteredDoctors(shuffleArray(doctors));
         } catch (err) {
             console.error("❌ Error fetching doctors with slots:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const getExperienceLabel = (val) => {
+        switch (val) {
+            case "0-2": return "0–2 years";
+            case "3-5": return "3–5 years";
+            case "6-10": return "6–10 years";
+            case "10+": return "10+ years";
+            default: return "All Levels";
         }
     };
 
@@ -65,7 +91,28 @@ function Marketplace() {
             filtered = filtered.filter(doc => doc.consultsStudents === false || doc.consultsStudents === undefined);
         }
 
+        if (filters.experience) {
+            const [minExp, maxExp] = filters.experience === "10+" ? [10, Infinity] : filters.experience.split("-").map(Number);
+            filtered = filtered.filter(doc => doc.experienceYears >= minExp && doc.experienceYears <= maxExp);
+        }
+
         setFilteredDoctors(filtered);
+    };
+
+    const clearFilters = () => {
+        setFilters({
+            gender: "",
+            role: "",
+            language: "",
+            bookingType: "",
+            experience: "",
+        });
+        setSelectedExpertise([]);
+        setSelectedDate(() => {
+            const today = new Date();
+            return today.toISOString().split("T")[0];
+        });
+        setFilteredDoctors([...doctors]);
     };
 
     const fetchSlots = async (doctorId) => {
@@ -79,40 +126,55 @@ function Marketplace() {
         }
     };
 
-    const expertiseOptions = [
-        { value: "Child Psychology ( 6-12 years)", label: "Child Psychology (6–12 yrs)" },
-        { value: "Adolescent / Teen Psychology (13–18 yrs)", label: "Teen Psychology (13–18 yrs)" },
-        { value: "Young Adults (18–25 yrs)", label: "Young Adults (18–25 yrs)" },
-        { value: "Adults (25–45 yrs)", label: "Adults (25–45 yrs)" },
-        { value: "Geriatric Psychology (45+ yrs)", label: "Geriatric Psychology (45+ yrs)" },
-        { value: "Couples & Relationship Therapy", label: "Couples Therapy" },
-        { value: "Family Therapy", label: "Family Therapy" },
-        { value: "LGBTQIA+ Affirmative Therapy", label: "LGBTQIA+ Therapy" },
-        { value: "Parental Counselling", label: "Parental Counselling" },
-        { value: "Student Academic Stress Support", label: "Academic Stress" },
-        { value: "Corporate / Employee Wellness, Anxiety Disorders", label: "Corporate Wellness" },
-        { value: "Depression", label: "Depression" },
-        { value: "Obsessive Compulsive Disorder (OCD)", label: "OCD" },
-        { value: "Panic Disorders", label: "Panic Disorders" },
-        { value: "Phobias", label: "Phobias" },
-        { value: "Post-Traumatic Stress Disorder (PTSD)", label: "PTSD" },
-        { value: "Attention Deficit Hyperactivity Disorder (ADHD)", label: "ADHD" },
-        { value: "Autism Spectrum Disorders (ASD)", label: "ASD" },
-        { value: "Eating Disorders", label: "Eating Disorders" },
-        { value: "Grief & Loss", label: "Grief & Loss" },
-        { value: "Sleep Disorders", label: "Sleep Disorders" },
-        { value: "Cognitive Behavioural Therapy (CBT)", label: "CBT" },
-        { value: "Rational Emotive Behaviour Therapy (REBT)", label: "REBT" },
-        { value: "Dialectical Behaviour Therapy (DBT)", label: "DBT" },
-        { value: "Mindfulness-Based Interventions", label: "Mindfulness" },
-        { value: "Trauma-Informed Therapy", label: "Trauma-Informed" },
-        { value: "Narrative Therapy", label: "Narrative Therapy" },
-        { value: "Art-Based Therapy", label: "Art Therapy" },
-        { value: "Play Therapy", label: "Play Therapy" },
-        { value: "Behaviour Modification", label: "Behaviour Modification" },
-        { value: "Hypnotherapy", label: "Hypnotherapy" },
-        { value: "Career Counselling & Guidance", label: "Career Counselling" },
-        { value: "Psychometric Testing & Interpretation", label: "Psychometric Testing" },
+    const expertiseGroupedOptions = [
+        {
+            label: "Age Group",
+            options: [
+                { value: "Child Psychology ( 6-12 years)", label: "Child (6–12 yrs)", color: "#f39c12" },
+                { value: "Adolescent / Teen Psychology (13–18 yrs)", label: "Teen (13–18 yrs)", color: "#f39c12" },
+                { value: "Young Adults (18–25 yrs)", label: "Young Adults", color: "#f39c12" },
+                { value: "Adults (25–45 yrs)", label: "Adults", color: "#f39c12" },
+                { value: "Geriatric Psychology (45+ yrs)", label: "Geriatric", color: "#f39c12" }
+            ]
+        },
+        {
+            label: "Area of Expertise",
+            options: [
+                { value: "Couples & Relationship Therapy", label: "Couples Therapy", color: "#e74c3c" },
+                { value: "Family Therapy", label: "Family Therapy", color: "#e74c3c" },
+                { value: "LGBTQIA+ Affirmative Therapy", label: "LGBTQIA+ Therapy", color: "#e74c3c" },
+                { value: "Parental Counselling", label: "Parental Counselling", color: "#e74c3c" },
+                { value: "Student Academic Stress Support", label: "Academic Stress", color: "#e74c3c" },
+                { value: "Corporate / Employee Wellness, Anxiety Disorders", label: "Corporate Wellness", color: "#e74c3c" },
+                { value: "Depression", label: "Depression", color: "#e74c3c" },
+                { value: "Obsessive Compulsive Disorder (OCD)", label: "OCD", color: "#e74c3c" },
+                { value: "Panic Disorders", label: "Panic Disorders", color: "#e74c3c" },
+                { value: "Phobias", label: "Phobias", color: "#e74c3c" },
+                { value: "Post-Traumatic Stress Disorder (PTSD)", label: "PTSD", color: "#e74c3c" },
+                { value: "Attention Deficit Hyperactivity Disorder (ADHD)", label: "ADHD", color: "#e74c3c" },
+                { value: "Autism Spectrum Disorders (ASD)", label: "ASD", color: "#e74c3c" },
+                { value: "Eating Disorders", label: "Eating Disorders", color: "#e74c3c" },
+                { value: "Grief & Loss", label: "Grief & Loss", color: "#e74c3c" },
+                { value: "Sleep Disorders", label: "Sleep Disorders", color: "#e74c3c" }
+            ]
+        },
+        {
+            label: "Certifications / Modalities",
+            options: [
+                { value: "Cognitive Behavioural Therapy (CBT)", label: "CBT", color: "#3498db" },
+                { value: "Rational Emotive Behaviour Therapy (REBT)", label: "REBT", color: "#3498db" },
+                { value: "Dialectical Behaviour Therapy (DBT)", label: "DBT", color: "#3498db" },
+                { value: "Mindfulness-Based Interventions", label: "Mindfulness", color: "#3498db" },
+                { value: "Trauma-Informed Therapy", label: "Trauma-Informed", color: "#3498db" },
+                { value: "Narrative Therapy", label: "Narrative Therapy", color: "#3498db" },
+                { value: "Art-Based Therapy", label: "Art Therapy", color: "#3498db" },
+                { value: "Play Therapy", label: "Play Therapy", color: "#3498db" },
+                { value: "Behaviour Modification", label: "Behaviour Modification", color: "#3498db" },
+                { value: "Hypnotherapy", label: "Hypnotherapy", color: "#3498db" },
+                { value: "Career Counselling & Guidance", label: "Career Counselling", color: "#3498db" },
+                { value: "Psychometric Testing & Interpretation", label: "Psychometric Testing", color: "#3498db" }
+            ]
+        }
     ];
 
     return (
@@ -124,78 +186,147 @@ function Marketplace() {
                 </div>
 
                 {/* Filters */}
-                <div className="filter-wrapper">
+                <div className="marketplace-filters-modern">
+                    {/* Date Filter */}
+                    <div className="filter-block">
+                        <label className="filter-label">Select Date</label>
+                        <input
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => setSelectedDate(e.target.value)}
+                            min={new Date().toISOString().split("T")[0]}
+                            className="filter-input-date"
+                        />
+                    </div>
 
-                    <div className="marketplace-filters">
-                        <div className="date-filter-container">
-                            <label htmlFor="date">Select Date:</label>
-                            <input
-                                type="date"
-                                value={selectedDate}
-                                onChange={(e) => setSelectedDate(e.target.value)}
-                                min={new Date().toISOString().split("T")[0]} // 🔒 Prevent past dates
-                                style={{ marginLeft: "10px", padding: "5px" }}
-                            />
-                        </div>
-                        <select onChange={(e) => setFilters({ ...filters, bookingType: e.target.value })}>
-                            <option value="">All Types</option>
-                            <option value="student">Consults Students</option>
-                            <option value="adult">Adults Only</option>
-                        </select>
-                        <select onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
-                            <option value="">All Genders</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
+                    {/* Booking Type */}
+                    <div className="filter-block">
+                        <label className="filter-label">Booking Type</label>
+                        <Select
+                            value={{ label: getBookingLabel(filters.bookingType), value: filters.bookingType }}
+                            options={[
+                                { value: "", label: "All Types" },
+                                { value: "student", label: "Consults Students" },
+                                { value: "adult", label: "Adults Only" },
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, bookingType: e.value })}
+                            className="filter-select"
+                        />
+                    </div>
 
-                        <select onChange={(e) => setFilters({ ...filters, role: e.target.value })}>
-                            <option value="">All Roles</option>
-                            <option value="Therapist">Therapist</option>
-                            <option value="Consultant">Consultant</option>
-                            <option value="Psychiatrist">Psychiatrist</option>
-                        </select>
+                    {/* Gender */}
+                    <div className="filter-block">
+                        <label className="filter-label">Gender</label>
+                        <Select
+                            value={{ label: filters.gender || "All Genders", value: filters.gender }}
+                            options={[
+                                { value: "", label: "All Genders" },
+                                { value: "Male", label: "Male" },
+                                { value: "Female", label: "Female" },
+                                { value: "Other", label: "Other" },
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, gender: e.value })}
+                            className="filter-select"
+                        />
+                    </div>
 
-                        <select onChange={(e) => setFilters({ ...filters, language: e.target.value })}>
-                            <option value="">All Languages</option>
-                            <option value="English">English</option>
-                            <option value="Hindi">Hindi</option>
-                            <option value="Bengali">Bengali</option>
-                            <option value="Marathi">Marathi</option>
-                            <option value="Telugu">Telugu</option>
-                            <option value="Tamil">Tamil</option>
-                            <option value="Gujarati">Gujarati</option>
-                            <option value="Kannada">Kannada</option>
-                            <option value="Malayalam">Malayalam</option>
-                            <option value="Punjabi">Punjabi</option>
-                            <option value="Urdu">Urdu</option>
-                            <option value="Odia">Odia</option>
-                            <option value="Assamese">Assamese</option>
-                            <option value="Konkani">Konkani</option>
-                        </select>
+                    {/* Role */}
+                    <div className="filter-block">
+                        <label className="filter-label">Role</label>
+                        <Select
+                            value={{ label: filters.role || "All Roles", value: filters.role }}
+                            options={[
+                                { value: "", label: "All Roles" },
+                                { value: "Therapist", label: "Therapist" },
+                                { value: "Consultant", label: "Consultant" },
+                                { value: "Psychiatrist", label: "Psychiatrist" },
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, role: e.value })}
+                            className="filter-select"
+                        />
+                    </div>
 
-                        <div className="expertise-container">
-                            <Select
-                                isMulti
-                                options={expertiseOptions}
-                                placeholder="Filter by Expertise"
-                                className="expertise-filter"
-                                onChange={(selected) => setSelectedExpertise(selected.map(s => s.value))}
-                            />
-                            <div className="expertise-hint">
-                                Tip: You can select multiple expertise areas to refine your results.
-                            </div>
-                        </div>
+                    {/* Language */}
+                    <div className="filter-block">
+                        <label className="filter-label">Language</label>
+                        <Select
+                            value={{ label: filters.language || "All Languages", value: filters.language }}
+                            options={[
+                                { value: "", label: "All Languages" },
+                                { value: "English", label: "English" },
+                                { value: "Hindi", label: "Hindi" },
+                                { value: "Tamil", label: "Tamil" },
+                                { value: "Bengali", label: "Bengali" },
+                                { value: "Telugu", label: "Telugu" },
+                                { value: "Marathi", label: "Marathi" },
+                                { value: "Gujarati", label: "Gujarati" },
+                                { value: "Kannada", label: "Kannada" },
+                                { value: "Malayalam", label: "Malayalam" },
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, language: e.value })}
+                            className="filter-select"
+                        />
+                    </div>
 
+                    {/* Experience */}
+                    <div className="filter-block">
+                        <label className="filter-label">Experience</label>
+                        <Select
+                            value={{ label: getExperienceLabel(filters.experience), value: filters.experience }}
+                            options={[
+                                { value: "", label: "All Levels" },
+                                { value: "0-2", label: "0–2 years" },
+                                { value: "3-5", label: "3–5 years" },
+                                { value: "6-10", label: "6–10 years" },
+                                { value: "10+", label: "10+ years" },
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, experience: e.value })}
+                            className="filter-select"
+                        />
+                    </div>
+
+                    {/* Expertise */}
+                    <div className="filter-block-full">
+                        <label className="filter-label">Filter by Expertise</label>
+                        <Select
+                            isMulti
+                            value={expertiseGroupedOptions
+                                .flatMap(group => group.options)
+                                .filter(option => selectedExpertise.includes(option.value))}
+                            onChange={(selected) => setSelectedExpertise(selected ? selected.map(s => s.value) : [])}
+                            options={expertiseGroupedOptions}
+                            className="expertise-multiselect"
+                            placeholder="Select areas of expertise"
+                            getOptionLabel={(e) => (
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                    <span style={{
+                                        width: "10px",
+                                        height: "10px",
+                                        backgroundColor: e.color,
+                                        borderRadius: "50%",
+                                    }}></span>
+                                    {e.label}
+                                </div>
+                            )}
+                        />
+                        <div className="expertise-hint">Tip: You can select multiple areas to refine your results.</div>
+                    </div>
+
+                    <div className="filter-actions">
                         <button className="apply-filters-button" onClick={applyFilters}>
                             Apply Filters
+                        </button>
+                        <button className="clear-filters-button" onClick={clearFilters}>
+                            Clear Filters
                         </button>
                     </div>
                 </div>
 
                 {/* Doctor Cards */}
                 <div className="doctor-grid">
-                    {filteredDoctors.length > 0 ? (
+                    {isLoading ? (
+                        <p className="loading-message">Finding the best experts for you. Please wait...</p>
+                    ) : filteredDoctors.length > 0 ? (
                         filteredDoctors.map((doc) => (
                             <div className="doctor-card" key={doc._id}>
                                 <img

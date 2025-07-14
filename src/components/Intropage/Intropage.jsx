@@ -34,7 +34,7 @@ function Intropage() {
             <p>
               Discover therapists, psychologists, and psychiatrists. Book sessions directly from our curated pool of licensed professionals.
             </p>
-            <button onClick={() => navigate("/marketplace")} className="workflow-btn">
+            <button onClick={() => navigate("/marketplacemain")} className="workflow-btn">
               Browse Therapists
             </button>
           </div>

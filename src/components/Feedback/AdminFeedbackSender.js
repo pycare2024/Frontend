@@ -111,7 +111,7 @@ const AdminFeedbackSender = () => {
 
                 <input
                     type="text"
-                    placeholder="Search patient by name..."
+                    placeholder="Search client by name..."
                     className="feedback-search-input"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -119,7 +119,7 @@ const AdminFeedbackSender = () => {
 
                 {patients.length > 0 && (
                     <div className="feedback-patient-section">
-                        <h2 className="feedback-sender-title">Select Patients to Send Form:</h2>
+                        <h2 className="feedback-sender-title">Select Clients to Send Form:</h2>
                         <div className="feedback-patient-list">
                             {patients
                                 .filter((p) =>
@@ -140,7 +140,7 @@ const AdminFeedbackSender = () => {
                 )}
 
                 <div style={{ marginTop: "1rem" }}>
-                    <h2>Selected Patients: {selectedPatients.length}</h2>
+                    <h2>Selected Clients: {selectedPatients.length}</h2>
                     {selectedPatients.length > 0 ? (
                         <button
                             onClick={sendForms}
@@ -149,7 +149,7 @@ const AdminFeedbackSender = () => {
                             {loading ? 'Sending...' : 'Send Form'}
                         </button>
                     ) : (
-                        <p>No patients selected</p>
+                        <p>No clients selected</p>
                     )}
                 </div>
 

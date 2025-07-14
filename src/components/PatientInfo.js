@@ -144,7 +144,7 @@ function PatientInfo() {
         </div>
       )}
 
-      <h1 className="text-center" style={{ color: "#4285F4", marginBottom: "30px", fontSize: "2.5rem", fontWeight: "bold" }}>Patient Information</h1>
+      <h1 className="text-center" style={{ color: "#4285F4", marginBottom: "30px", fontSize: "2.5rem", fontWeight: "bold" }}>Client Information</h1>
       {patient ? (
         <>
           <div className="patient-info-card">
@@ -175,10 +175,10 @@ function PatientInfo() {
             </button>
           </div>
 
-          <h2 style={{ color: "#4285F4", marginTop: "120px", textAlign: "center", fontSize: "2rem", fontWeight: "bold" }}>Patient Records</h2>
+          {/* <h2 style={{ color: "#4285F4", marginTop: "120px", textAlign: "center", fontSize: "2rem", fontWeight: "bold" }}>Patient Records</h2>
           <button onClick={() => setShowForm(true)} className="btn btn-success" style={{ marginBottom: "20px" }}>
             <FaPlusCircle /> Add Record
-          </button>
+          </button> */}
 
           {showGAFModal && (
             <div className="gaf-modal-overlay">
@@ -230,7 +230,7 @@ function PatientInfo() {
             </div>
           )}
 
-          {records.length > 0 ? (
+          {/* {records.length > 0 ? (
             <table className="records-table">
               <thead>
                 <tr>
@@ -288,7 +288,7 @@ function PatientInfo() {
                 </div>
               </form>
             </div>
-          )}
+          )} */}
         </>
       ) : (
         <p style={{ color: "#6c757d" }}>No patient found.</p>

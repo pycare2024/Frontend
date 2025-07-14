@@ -321,16 +321,16 @@ function Doctors() {
 
     return (
         <div className="doctors-page">
-            <h1 style={{ color: "#4285F4", fontWeight: "bold", textAlign: "center" }}>Doctors List</h1>
+            <h1 style={{ color: "#4285F4", fontWeight: "bold", textAlign: "center" }}>Experts List</h1>
             <button onClick={() => setShowAddForm(!showAddForm)} className="add-btn">
-                <FaUserPlus /> {showAddForm ? "Cancel" : "Add Doctor"}
+                <FaUserPlus /> {showAddForm ? "Cancel" : "Add Experts"}
             </button>
 
             {showAddForm && (
 
                 <div className="form-overlay">
                     <div className="form-modal">
-                        <h2 class="add-doctor" style={{ color: "#4285F4" }}>ADD DOCTOR</h2>
+                        <h2 class="add-doctor" style={{ color: "#4285F4" }}>ADD EXPERT</h2>
                         <form onSubmit={(e) => e.preventDefault()} className="doctor-form" >
                             <input id="name"
                                 type="text"
@@ -611,7 +611,7 @@ function Doctors() {
 
                             <div className="button-group">
                                 <button onClick={handleAddDoctor} className="btn btn-success" style={{ backgroundColor: "#4285F4" }}>
-                                    Register Doctor
+                                    Register
                                 </button>
                                 <button onClick={handleCancel} className="btn btn-secondary">
                                     Cancel

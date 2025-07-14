@@ -1,10 +1,10 @@
-/* === Wrapper === */
+/* === GLOBAL WRAPPER === */
 .marketplace-wrapper {
   min-height: 100vh;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
   background-image: url("../Marketplace/marketplace.jpg");
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   display: flex;
@@ -17,255 +17,195 @@
 .marketplace-wrapper::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.4);
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
   z-index: 0;
 }
 
-/* === Glass Container === */
+/* === GLASS CONTAINER === */
 .marketplace-glass {
   position: relative;
   z-index: 1;
+  max-width: 1280px;
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(2px) saturate(100%);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
 }
 
-/* === Header === */
+/* === HEADER === */
 .marketplace-header {
   text-align: center;
   margin-bottom: 2.5rem;
 }
-
 .marketplace-header h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  color: #fff;
   font-weight: 700;
-  color: #fefefe;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
-
 .marketplace-header p {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #dddddd;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  font-size: 1.1rem;
+  color: #ddd;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 0.5rem;
 }
 
+/* === FILTERS === */
 .marketplace-filters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 filters per row */
-  gap: 1rem 1.2rem;
-  padding: 1rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
 }
 
-.marketplace-filters > * {
-  width: 100%;
-  min-width: 160px;
-}
-
-@media screen and (max-width: 768px) {
-  .marketplace-filters {
-    grid-template-columns: 1fr; /* stack all vertically on mobile */
-  }
-}
-
-/* === Date Filter === */
-.date-filter-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 0.4rem;
-}
-
-.date-filter-container label {
+.date-filter-container label,
+.filter-label {
   font-weight: 600;
-  margin-bottom: 4px;
-  color: white;
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  display: block;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-input[type="date"] {
-  padding: 0.6rem 1rem;
+input[type="date"],
+.marketplace-filters select {
+  padding: 0.65rem 1rem;
   border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #333;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
+  color: #333;
+  height: 44px;
   transition: all 0.3s ease;
 }
 
 input[type="date"]:hover,
-input[type="date"]:focus {
-  background-color: rgba(255, 255, 255, 0.95);
+input[type="date"]:focus,
+.marketplace-filters select:hover,
+.marketplace-filters select:focus {
+  background: #fff;
   border-color: #007aff;
   outline: none;
 }
 
-/* === Select Dropdowns === */
-.marketplace-filters select {
-  padding: 0.6rem 1.4rem;
-  font-size: 1rem;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #1c1c1c;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
-
-.marketplace-filters select:hover,
-.marketplace-filters select:focus {
-  background-color: rgba(255, 255, 255, 0.35);
-  border-color: #aaa;
-  outline: none;
-}
-
-/* === Expertise Filter === */
+/* === EXPERTISE === */
 .expertise-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  min-width: 220px;
-  max-width: 320px;
+  gap: 0.5rem;
 }
-
-.expertise-filter {
-  width: 100%;
-  font-size: 0.95rem;
-  z-index: 3;
+.expertise-hint {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0.4rem;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
-
 .expertise-filter .react-select__control {
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   min-height: 44px;
 }
-
-.expertise-filter .react-select__multi-value {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #333;
-  border-radius: 12px;
-  padding: 0 4px;
-}
-
-.expertise-filter .react-select__multi-value__label {
-  font-size: 0.85rem;
-  color: #222;
-  font-weight: 600;
-}
-
 .expertise-filter .react-select__menu {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
-  backdrop-filter: blur(6px);
 }
-
-.expertise-filter .react-select__option {
-  padding: 10px 14px;
-  font-size: 0.95rem;
+.expertise-filter .react-select__multi-value {
+  background-color: rgba(255, 255, 255, 0.65);
+  color: #333;
 }
-
-.expertise-filter .react-select__option--is-focused {
-  background-color: #cce4ff;
-  color: #000;
-}
-
-.expertise-filter .react-select__option--is-selected {
-  background-color: #1f80e0;
-  color: white;
-}
-
-.expertise-hint {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  padding-left: 4px;
-  line-height: 1.2;
-  margin: 0;
-  opacity: 0.85;
-}
-
-/* === Apply Button === */
-.apply-filters-button {
-  background: linear-gradient(135deg, #007aff, #44aaff);
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  font-size: 1.05rem;
+.expertise-filter .react-select__multi-value__label {
   font-weight: 600;
-  padding: 0.65rem 1.8rem;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 122, 255, 0.35);
-  transition: all 0.3s ease-in-out;
-
-  /* Center in grid */
-  grid-column: span 3;
-  justify-self: center;
+  font-size: 0.85rem;
+  color: #222;
+}
+.expertise-filter .react-select__option--is-focused {
+  background: #e8f0fe;
+}
+.expertise-filter .react-select__option--is-selected {
+  background: #1f80e0;
+  color: #fff;
 }
 
-@media screen and (max-width: 768px) {
-  .marketplace-filters {
-    grid-template-columns: 1fr; /* stack filters */
-  }
-
-  .apply-filters-button {
-    grid-column: span 1;
-    width: 100%; /* full-width on mobile if needed */
-    justify-self: stretch;
-  }
+/* === FILTER BUTTONS === */
+.apply-filters-button,
+.clear-filters-button {
+  padding: 0.65rem 1.6rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-width: 220px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
 }
 
 .apply-filters-button:hover {
-  background: linear-gradient(135deg, #005ecb, #3096f0);
+  background: linear-gradient(135deg, #007aff, #44aaff);
+  color: white;
   transform: translateY(-2px) scale(1.03);
 }
 
-/* === Doctor Grid === */
+.clear-filters-button:hover {
+  background: linear-gradient(135deg, #e53935, #ff5252);
+  color: white;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.filter-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* === DOCTOR GRID === */
 .doctor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   justify-items: center;
 }
 
-/* === Doctor Card === */
 .doctor-card {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 2rem 1.5rem;
-  width: 100%;
   max-width: 420px;
-  min-height: 460px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   box-shadow: 0 10px 25px rgba(31, 38, 135, 0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: transform 0.3s ease;
+  text-align: center;
 }
 
 .doctor-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.4);
+  transform: scale(1.03);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
 }
 
 .doctor-photo {
@@ -273,83 +213,90 @@ input[type="date"]:focus {
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 1rem;
   border: 2px solid #fff;
-  z-index: 1;
+  margin-bottom: 1rem;
 }
 
 .doctor-card h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 0.3rem;
+  color: #fff;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-.role,
-.gender,
-.city,
-.qualification,
-.experience,
-.languages,
-.expertise {
-  color: #f0f0f0;
+.doctor-card p {
   font-size: 0.95rem;
-  margin: 0.15rem 0;
+  color: #eee;
+  margin: 0.3rem 0;
 }
 
-/* === Book Button === */
 .book-button {
+  margin-top: 1rem;
   background: linear-gradient(135deg, #007aff, #3a8fff);
   color: white;
-  padding: 0.7rem 1.6rem;
-  border: none;
-  border-radius: 25px;
+  padding: 0.65rem 1.5rem;
   font-weight: 600;
-  cursor: pointer;
+  border: none;
+  border-radius: 24px;
   font-size: 1rem;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
 }
-
 .book-button:hover {
   background: linear-gradient(135deg, #005ecb, #357df7);
   transform: scale(1.05);
 }
 
-/* === No Result === */
 .no-results {
   text-align: center;
   font-size: 1.1rem;
   color: #f5f5f5;
-  margin-top: 2rem;
+  margin: 3rem 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* === Mobile Responsive === */
-@media screen and (max-width: 768px) {
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .marketplace-header h1 {
+    font-size: 2rem;
+  }
+
   .marketplace-filters {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
     gap: 1rem;
   }
 
-  .apply-filters-button,
-  .expertise-container,
-  .date-filter-container {
-    width: 100%;
-  }
-
-  .date-filter-container {
+  .filter-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .apply-filters-button,
+  .clear-filters-button {
+    max-width: 100%;
+  }
+
+  .doctor-card {
+    max-width: 100%;
   }
 
   .doctor-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .doctor-card {
-    max-width: 90%;
-    height: auto;
-  }
+.loading-message {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin: 3rem 0;
+  font-weight: 500;
+  animation: pulse 1.5s infinite;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }

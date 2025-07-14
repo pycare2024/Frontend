@@ -49,7 +49,7 @@ function Patients() {
 
     return (
         <div style={{ padding: "20px", margin: "auto", height: "100%",backgroundColor:"white" }}>
-            <h1 style={{ textAlign: "center", color: "#4285F4", marginBottom: "20px", marginTop: "10%",fontWeight:"bold" }}>Patients List</h1>
+            <h1 style={{ textAlign: "center", color: "#4285F4", marginBottom: "20px", marginTop: "10%",fontWeight:"bold" }}>Clients List</h1>
 
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <FaSearch style={{ position: "relative", left: "30px", color: "#888" }} />

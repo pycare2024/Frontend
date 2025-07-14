@@ -1,0 +1,177 @@
+.marketplace-intro-wrapper {
+  min-height: 100vh;
+  padding: 2rem;
+  background-image: url("../Marketplace/marketplace.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+.marketplace-intro-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.marketplace-intro-glass {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 3rem 2rem;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px) saturate(100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-align: center;
+}
+
+.marketplace-intro-glass h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.marketplace-intro-glass h2 {
+  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #f5f5f5;
+}
+
+.marketplace-intro-glass p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #eaeaea;
+  margin-bottom: 1rem;
+}
+
+/* Progress Steps */
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.progress-step {
+  flex: 1;
+  min-width: 120px;
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+}
+
+.step-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #82cfff;
+  margin-bottom: 0.5rem;
+}
+
+/* Price Comparison */
+.price-comparison {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+.price-box {
+  padding: 1.2rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 180px;
+  color: #fff;
+}
+
+.price-box h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  color: #ffffff;
+}
+
+.price-box.highlighted1 {
+  border: 1px solid #ff6666;
+  background: rgba(255, 102, 102, 0.1);
+}
+
+.price-box.highlighted {
+  border: 1px solid #66d0ff;
+  background: rgba(102, 208, 255, 0.1);
+}
+
+/* Expert List */
+.expert-highlights {
+  list-style: none;
+  margin-top: 1.2rem;
+  text-align: center;
+  padding-left: 0;
+}
+
+.expert-highlights li {
+  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 1.05rem;
+  color: #f3f3f3;
+}
+
+/* Button */
+.explore-button {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.explore-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .marketplace-intro-glass h1 {
+    font-size: 2.2rem;
+  }
+
+  .marketplace-intro-glass h2 {
+    font-size: 1.6rem;
+  }
+
+  .progress-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .price-comparison {
+    flex-direction: column;
+    align-items: center;
+  }
+}
