@@ -352,7 +352,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     onMouseEnter={() => setOpenDropdown("patients")}
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
-                                    Patients
+                                    Clients
                                     {openDropdown === "patients" && (
                                         <div
                                             style={{
@@ -385,7 +385,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                                 onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                             >
-                                                Patients List
+                                                Clients List
                                             </Link>
                                         </div>
                                     )}
@@ -396,7 +396,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     onMouseEnter={() => setOpenDropdown("doctors")}
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
-                                    Doctors
+                                    Experts
                                     {openDropdown === "doctors" && (
                                         <div
                                             style={{
@@ -429,7 +429,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                                 onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                             >
-                                                Doctors List
+                                                Experts List
                                             </Link>
                                             <Link
                                                 to="/DoctorSchedule"
@@ -444,7 +444,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                                 onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                                 onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                             >
-                                                Doctor's Schedule
+                                                Expert's Schedule
                                             </Link>
                                         </div>
                                     )}
@@ -486,7 +486,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                     onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                     onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                 >
-                                    Patients
+                                    Clients
                                 </Link>
                                 <Link
                                     to="/DoctorOwnSchedule"
@@ -739,7 +739,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 onMouseEnter={() => setOpenDropdown("doctors")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
-                                Doctors
+                                Experts
                                 {openDropdown === "doctors" && (
                                     <div
                                         style={{
@@ -772,7 +772,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                             onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            Doctors List
+                                            Expert List
                                         </Link>
                                         <Link
                                             to="/DoctorSchedule"
@@ -787,7 +787,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                             onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            Doctor's Schedule
+                                            Expert's Schedule
                                         </Link>
                                     </div>
                                 )}
@@ -800,7 +800,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 onMouseEnter={() => setOpenDropdown("patients")}
                                 onMouseLeave={() => setOpenDropdown(null)}
                             >
-                                Patients
+                                Clients
                                 {openDropdown === "patients" && (
                                     <div
                                         style={{
@@ -833,7 +833,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                             onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
                                             onMouseLeave={(e) => (e.target.style.backgroundColor = "transparent")}
                                         >
-                                            Patients List
+                                            Clients List
                                         </Link>
                                         <Link
                                             to="/AdminFeedbackSender"
@@ -1009,7 +1009,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                         <div className="dropdown">
                             <span className="dropdown-label">PARTNERS ▾</span>
                             <div className="dropdown-content">
-                                <Link to="/DoctorLogin">Doctor</Link>
+                                <Link to="/DoctorLogin">Experts</Link>
                                 <Link to="/Login">Admin</Link>
                                 <Link to="/OperatorLogin">Operator</Link>
                             </div>
@@ -1041,7 +1041,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 location.pathname === "/Patients" ? activeLinkStyle : linkStyle
                             }
                         >
-                            Patients
+                            Clients
                         </Link>
                         <Link
                             to="/DoctorSchedule"
@@ -1049,7 +1049,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                                 location.pathname === "/DoctorSchedule" ? activeLinkStyle : linkStyle
                             }
                         >
-                            Doctor's schedule
+                            Experts's schedule
                         </Link>
                         <button
                             onClick={onLogout}
@@ -1067,9 +1067,9 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                 {isDocLoggedIn && (
                     <>
                         <div className="dropdown">
-                            <span className="dropdown-label">Patients ▾</span>
+                            <span className="dropdown-label">Clients ▾</span>
                             <div className="dropdown-content">
-                                <Link to="/Patients">Patients list</Link>
+                                <Link to="/Patients">Clients list</Link>
                             </div>
                         </div>
                         <div className="dropdown">
@@ -1113,16 +1113,16 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout, navBackg
                             </div>
                         </div>
                         <div className="dropdown">
-                            <span className="dropdown-label">Doctor ▾</span>
+                            <span className="dropdown-label">Experts ▾</span>
                             <div className="dropdown-content">
-                                <Link to="/Doctors">Doctor list</Link>
-                                <Link to="/DoctorSchedule">Doctor Schedule</Link>
+                                <Link to="/Doctors">Experts list</Link>
+                                <Link to="/DoctorSchedule">Experts Schedule</Link>
                             </div>
                         </div>
                         <div className="dropdown">
-                            <span className="dropdown-label">Patients ▾</span>
+                            <span className="dropdown-label">Clients ▾</span>
                             <div className="dropdown-content">
-                                <Link to="/Patients">Patients list</Link>
+                                <Link to="/Patients">Clients list</Link>
                                 <Link to="/AdminFeedbackSender">Send Feedback Forms</Link>
                             </div>
                         </div>

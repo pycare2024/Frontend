@@ -276,7 +276,7 @@ const BookAppointment = () => {
           <div className="book-step-section">
             <div className="book-user-type-buttons">
               <button onClick={() => setUserType("corporate")}>Corporate</button>
-              <button onClick={() => { setUserType("retail"); setStep(2); }}>Retail</button>
+              <button onClick={() => { setUserType("retail"); setStep(2); }} disabled style={{backgroundColor:"gray"}}>Retail</button>
             </div>
             {userType === "corporate" && (
               <>
