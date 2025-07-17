@@ -64,10 +64,21 @@ function Marketplace() {
     };
 
     const handleStudentCheckboxToggle = (doctorId) => {
-        setStudentBookingFlags(prev => ({
-            ...prev,
-            [doctorId]: !prev[doctorId]
-        }));
+        setStudentBookingFlags(prev => {
+            const isChecked = prev[doctorId] || false;
+
+            if (!isChecked) {
+                const confirmed = window.confirm(
+                     "You are opting to book as a student. Please note that therapists may verify your student identity at the start of the session. If you fail to verify, the session may be cancelled without any refund. Do you wish to continue?"
+                );
+                if (!confirmed) return prev; // return unchanged state if user cancels
+            }
+
+            return {
+                ...prev,
+                [doctorId]: !isChecked
+            };
+        });
     };
 
     const applyFilters = () => {

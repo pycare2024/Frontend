@@ -1,0 +1,153 @@
+/* Background wrapper with uploaded image */
+.schoolGlass_bgWrapper {
+  min-height: 100vh;
+  background: url('./school.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Main glass container */
+.schoolGlass_glassCard {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #ffffff;
+  padding: 50px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1.2s ease;
+}
+
+/* Typography */
+.schoolGlass_heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.schoolGlass_tagline {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* Section Styling */
+.schoolGlass_section {
+  margin-top: 30px;
+}
+
+.schoolGlass_section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.schoolGlass_section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.schoolGlass_section li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  opacity: 0.95;
+  transition: transform 0.3s ease;
+}
+
+.schoolGlass_section li:hover {
+  transform: scale(1.03);
+}
+
+/* CTA */
+.schoolGlass_cta {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.schoolGlass_button {
+  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.schoolGlass_button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animation Classes */
+.fadeInUp {
+  animation: fadeInUp 1.2s ease;
+}
+
+.slideInLeft {
+  animation: slideInLeft 1s ease;
+}
+
+.slideInRight {
+  animation: slideInRight 1s ease;
+}
+
+.bounceIn {
+  animation: bounceIn 1s ease;
+}
