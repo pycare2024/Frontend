@@ -157,9 +157,18 @@ const BookAppointment = () => {
     const res = await fetch("https://backend-xhl4.onrender.com/AppointmentRoute/availableDates");
     const data = await res.json();
     if (res.ok) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // normalize to midnight
+
       const dates = Object.entries(data)
         .filter(([key]) => key.startsWith("Date"))
-        .map(([, val]) => val);
+        .map(([, val]) => val)
+        .filter((dateStr) => {
+          const dateObj = new Date(dateStr);
+          dateObj.setHours(0, 0, 0, 0);
+          return dateObj >= today;
+        });
+
       setAvailableDates(dates);
     }
   };
@@ -276,7 +285,7 @@ const BookAppointment = () => {
           <div className="book-step-section">
             <div className="book-user-type-buttons">
               <button onClick={() => setUserType("corporate")}>Corporate</button>
-              <button onClick={() => { setUserType("retail"); setStep(2); }} disabled style={{backgroundColor:"gray"}}>Retail</button>
+              <button onClick={() => { setUserType("retail"); setStep(2); }} disabled style={{ backgroundColor: "gray" }}>Retail</button>
             </div>
             {userType === "corporate" && (
               <>
