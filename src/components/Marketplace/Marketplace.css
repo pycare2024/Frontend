@@ -447,3 +447,175 @@ input[type="date"]:focus,
   padding: 10px;
   border-radius: 12px;
 }
+
+.marketplace-filters-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+.filter-block,
+.filter-block-full {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.filter-input-date,
+.filter-select .css-13cymwt-control,
+.expertise-multiselect .css-13cymwt-control {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  min-height: 40px;
+  font-size: 0.95rem;
+}
+
+.filter-input-date {
+  padding: 0.5rem;
+}
+
+.filter-select .css-1dimb5e-singleValue,
+.expertise-multiselect .css-1dimb5e-singleValue {
+  color: #fff !important;
+}
+
+.expertise-hint {
+  font-size: 0.85rem;
+  color: #ddd;
+  margin-top: 0.5rem;
+}
+
+.filter-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.apply-filters-button,
+.clear-filters-button {
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.apply-filters-button {
+  background: #4ecdc4;
+  color: #000;
+}
+
+.clear-filters-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.apply-filters-button:hover {
+  background: #3bbcb3;
+}
+
+.clear-filters-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive: stack buttons on small screens */
+@media screen and (max-width: 600px) {
+  .filter-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .apply-filters-button,
+  .clear-filters-button {
+    width: 100%;
+  }
+}
+
+/* Dropdown Menu - Improved Visibility */
+div[class*="menu"] {
+  background: rgba(30, 30, 30, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Dropdown Options */
+div[class*="option"] {
+  background: transparent !important;
+  color: #ffffff !important;
+  padding: 10px 12px !important;
+  transition: background 0.2s ease;
+}
+
+/* Hover Effect on Options */
+div[class*="option"]:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  cursor: pointer;
+}
+
+/* Selected Option Style */
+div[class*="option--is-selected"] {
+  background: rgba(78, 205, 196, 0.8) !important;
+  color: #000 !important;
+  font-weight: bold;
+}
+
+/* React Select Control Text Fix */
+.filter-select .css-1dimb5e-singleValue,
+.expertise-multiselect .css-1dimb5e-singleValue {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Datepicker Adjustments */
+.react-datepicker,
+.react-datepicker__header {
+  background: rgba(30, 30, 30, 0.85) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Date text and highlight */
+.react-datepicker__day,
+.react-datepicker__day-name,
+.react-datepicker__current-month {
+  color: #ffffff !important;
+}
+
+.react-datepicker__day--selected {
+  background: #4ecdc4 !important;
+  color: #000 !important;
+  font-weight: bold;
+  border-radius: 50%;
+}

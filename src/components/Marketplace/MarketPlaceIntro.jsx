@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FaGraduationCap, FaUsers, FaStar, FaCheckCircle } from "react-icons/fa";
 import "./MarketplaceIntro.css";
 
 function MarketPlaceIntro() {
@@ -7,68 +9,81 @@ function MarketPlaceIntro() {
 
     return (
         <div className="marketplace-intro-wrapper">
-            <div className="marketplace-intro-glass">
-                <h1>Welcome to PsyCare</h1>
+            <motion.div
+                className="marketplace-intro-glass"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+            >
+                <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+                    Welcome to PsyCare 🧠
+                </motion.h1>
+
                 <p>
-                    Your journey to better mental health begins here. At <strong>PsyCare</strong>, we believe in personalized,
-                    accessible, and compassionate care. Whether you're facing stress, anxiety, relationship struggles, or
-                    seeking personal growth — we’re here for you.
+                    At <strong>PsyCare</strong>, your mental well-being is our top priority. Whether you're battling anxiety, 
+                    stress, depression, or just seeking clarity — we're here to help with empathy, innovation, and affordability.
                 </p>
+
+                <motion.div className="highlight-box" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+                    <FaGraduationCap size={24} color="#4ecdc4" /> <strong>New:</strong> We've introduced <strong>Student ID Verification</strong> to unlock exclusive therapy rates for students. Just upload your ID before booking.
+                </motion.div>
 
                 <h2>How It Works</h2>
                 <div className="progress-container">
-                    <div className="progress-step">
-                        <div className="step-number">1</div>
-                        <p>Explore Experts</p>
-                    </div>
-                    <div className="progress-step">
-                        <div className="step-number">2</div>
-                        <p>Apply Filters</p>
-                    </div>
-                    <div className="progress-step">
-                        <div className="step-number">3</div>
-                        <p>View Profiles</p>
-                    </div>
-                    <div className="progress-step">
-                        <div className="step-number">4</div>
-                        <p>Book a Session</p>
-                    </div>
+                    {["Explore Experts", "Apply Filters", "View Profiles", "Book a Session"].map((step, idx) => (
+                        <motion.div className="progress-step" key={idx} whileHover={{ scale: 1.05 }}>
+                            <div className="step-number">{idx + 1}</div>
+                            <p>{step}</p>
+                        </motion.div>
+                    ))}
                 </div>
 
                 <h2>Why Choose PsyCare?</h2>
-                <p>We’re one of India’s most affordable and reliable mental health platforms.</p>
+                <p>
+                    We're one of India's most affordable and trusted mental health platforms. See for yourself:
+                </p>
+
                 <div className="price-comparison">
-                    <div className="price-box highlighted1">
+                    <motion.div className="price-box highlighted1" whileHover={{ scale: 1.03 }}>
                         <h3>Others</h3>
                         <p>₹1000 - ₹2000/session</p>
-                    </div>
-                    <div className="price-box highlighted">
+                    </motion.div>
+                    <motion.div className="price-box highlighted" whileHover={{ scale: 1.03 }}>
                         <h3>PsyCare</h3>
-                        <p><strong>From ₹400/session<br/>(For Students)</strong></p>
-                        <p><strong>From ₹800/session<br/>(For Others)</strong></p>
-                    </div>
+                        <p><strong>₹400/session</strong><br/>(for verified students)</p>
+                        <p><strong>₹800/session</strong><br/>(for others)</p>
+                    </motion.div>
                 </div>
 
-                <h2>Meet Our Experts</h2>
-                <p>
-                    Our diverse team includes passionate young minds and seasoned professionals across therapy disciplines.
-                </p>
+                <h2>Our Expert Panel</h2>
                 <ul className="expert-highlights">
-                    <li>✔ Certified Clinical Psychologists</li>
-                    <li>✔ Experienced Counsellors & Therapists</li>
-                    <li>✔ Senior Psychiatrists</li>
-                    <li>✔ LGBTQIA+ Affirmative & Trauma-Informed Professionals</li>
-                    <li>✔ Trained in CBT, DBT, Mindfulness & more</li>
+                    <li><FaCheckCircle /> Certified Clinical Psychologists</li>
+                    <li><FaCheckCircle /> Senior Psychiatrists & Therapists</li>
+                    <li><FaCheckCircle /> LGBTQIA+ Affirmative Professionals</li>
+                    <li><FaCheckCircle /> Trauma-Informed Care Providers</li>
+                    <li><FaCheckCircle /> Experts in CBT, DBT, Mindfulness & more</li>
                 </ul>
 
-                <h2>Start Your Journey</h2>
+                <h2>Student Verification</h2>
                 <p>
-                    Select your ideal therapist and begin your healing process today.
+                    As a verified student, you unlock <strong>discounted therapy sessions</strong>. Just upload your valid student ID during booking.
+                    Your ID is securely stored and verified by our team. It’s simple, safe, and takes under 30 seconds!
                 </p>
-                <button className="explore-button" onClick={() => navigate("/marketplace")}>
-                    Choose Your Expert
-                </button>
-            </div>
+
+                <div className="student-info">
+                    <FaUsers size={22} color="#fff" />
+                    <span>Already trusted by 10,000+ students across India</span>
+                </div>
+
+                <h2>Let’s Begin Your Healing Journey</h2>
+                <motion.button
+                    className="explore-button"
+                    whileHover={{ scale: 1.08 }}
+                    onClick={() => navigate("/marketplace")}
+                >
+                    🌿 Choose Your Expert
+                </motion.button>
+            </motion.div>
         </div>
     );
 }
