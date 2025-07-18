@@ -19,6 +19,9 @@ function DoctorBookingPage() {
 
     const location = useLocation();
     const isStudentBooking = location.state?.isStudentBooking || false;
+    const studentIdUrl = location.state?.studentIdUrl || null;
+
+    // console.log("Student id url -> ",studentIdUrl);
 
     useEffect(() => {
         fetchDoctor();
@@ -104,7 +107,8 @@ function DoctorBookingPage() {
                 schedule_id: availableSchedules[selectedDateIndex].schedule_id,
                 slot_time: selectedSlot.startTime,
                 patient_id: patientId,
-                isStudentBooking
+                isStudentBooking,
+                studentIdUrl // <-- ✅ new field here
             });
             setAppointmentInfo(res.data);
         } catch (err) {
@@ -253,6 +257,17 @@ function DoctorBookingPage() {
                     ) : appointmentInfo.payment_status === "confirmed" ? (
                         <div className="confirmation">
                             <h3>Appointment Confirmed</h3>
+                            {isStudentBooking && (
+                                <div className="student-booking-info">
+                                    <p><strong>Student Booking:</strong> Yes</p>
+                                    {studentIdUrl && (
+                                        <p>
+                                            <strong>Student ID:</strong><br />
+                                            <a href={studentIdUrl} target="_blank" rel="noreferrer">View Uploaded ID</a>
+                                        </p>
+                                    )}
+                                </div>
+                            )}
                             <p>Doctor: {appointmentInfo.doctorName}</p>
                             <p>Date & Time: {selectedSlot.startTime} - {selectedSlot.endTime}</p>
                             <p>Status: Paid</p>

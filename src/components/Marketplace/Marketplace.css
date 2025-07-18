@@ -300,3 +300,150 @@ input[type="date"]:focus,
   50% { opacity: 1; }
   100% { opacity: 0.6; }
 }
+
+.upload-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #ccc;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.upload-box {
+  margin-top: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.custom-file-upload {
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.custom-file-upload:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.custom-file-upload input {
+  display: none;
+}
+
+.upload-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-message {
+  margin-left: 10px;
+  font-weight: 500;
+  color: #fff;
+  font-size: 14px;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.student-id-upload-container {
+  margin-top: 10px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 12px 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  color: #fff;
+  max-width: 90%;
+  margin-inline: auto;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: background 0.3s ease;
+}
+
+.upload-label:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.upload-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.upload-success {
+  color: #d4ffd4;
+  font-weight: bold;
+  background-color: rgba(0, 128, 0, 0.2);
+  padding: 10px;
+  border-radius: 12px;
+}

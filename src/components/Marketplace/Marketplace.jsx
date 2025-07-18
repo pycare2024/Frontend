@@ -18,6 +18,8 @@ function Marketplace() {
         const today = new Date();
         return today.toISOString().split("T")[0]; // format: YYYY-MM-DD
     });
+    const [studentIdUrls, setStudentIdUrls] = useState({});
+    const [uploadingStatus, setUploadingStatus] = useState({});
 
     const navigate = useNavigate();
 
@@ -30,6 +32,32 @@ function Marketplace() {
             case "student": return "Consults Students";
             case "adult": return "Adults Only";
             default: return "All Types";
+        }
+    };
+
+    const handleStudentIdUpload = async (e, doctorId) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("studentId", file);
+
+        setUploadingStatus(prev => ({ ...prev, [doctorId]: true }));
+
+        try {
+            const response = await axios.post(
+                "https://backend-xhl4.onrender.com/AppointmentRoute/upload-student-id",
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+            const imageUrl = response.data.url;
+            setStudentIdUrls(prev => ({ ...prev, [doctorId]: imageUrl }));
+            alert("✅ Student ID uploaded successfully.");
+        } catch (error) {
+            console.error("Failed to upload student ID:", error);
+            alert("❌ Failed to upload student ID. Please try again.");
+        } finally {
+            setUploadingStatus(prev => ({ ...prev, [doctorId]: false }));
         }
     };
 
@@ -69,7 +97,7 @@ function Marketplace() {
 
             if (!isChecked) {
                 const confirmed = window.confirm(
-                     "You are opting to book as a student. Please note that therapists may verify your student identity at the start of the session. If you fail to verify, the session may be cancelled without any refund. Do you wish to continue?"
+                    "You are opting to book as a student. Please note that therapists may verify your student identity at the start of the session. If you fail to verify, the session may be cancelled without any refund. Do you wish to continue?"
                 );
                 if (!confirmed) return prev; // return unchanged state if user cancels
             }
@@ -363,18 +391,50 @@ function Marketplace() {
                                             />
                                             Book as Student (₹400)
                                         </label>
+                                        {studentBookingFlags[doc._id] && (
+                                            <div className="student-id-upload-container">
+                                                {uploadingStatus[doc._id] ? (
+                                                    <div className="upload-loading">
+                                                        <div className="spinner"></div>
+                                                        <span>Uploading...</span>
+                                                    </div>
+                                                ) : studentIdUrls[doc._id] ? (
+                                                    <div className="upload-success">
+                                                        ✅ Student ID uploaded. Please proceed with Book Now.
+                                                    </div>
+                                                ) : (
+                                                    <label className="upload-label">
+                                                        📎 Upload Student ID
+                                                        <input
+                                                            type="file"
+                                                            accept=".jpeg, .jpg, .png, .pdf"
+                                                            onChange={(e) => handleStudentIdUpload(e, doc._id)}
+                                                            hidden
+                                                        />
+                                                    </label>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                                 {/* <p className="expertise" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Expertise: {doc.areaOfExpertise.join(", ")}</p> */}
                                 <button
                                     className="book-button"
-                                    onClick={() =>
+                                    onClick={() => {
+                                        const isStudent = studentBookingFlags[doc._id] || false;
+
+                                        if (isStudent && !studentIdUrls[doc._id]) {
+                                            alert("📸 Please upload your student ID before proceeding.");
+                                            return;
+                                        }
+
                                         navigate(`/marketplace/${doc._id}`, {
                                             state: {
-                                                isStudentBooking: studentBookingFlags[doc._id] || false
+                                                isStudentBooking: isStudent,
+                                                studentIdUrl: studentIdUrls[doc._id] || null
                                             }
-                                        })
-                                    }
+                                        });
+                                    }}
                                 >
                                     Book Now
                                 </button>

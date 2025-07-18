@@ -197,3 +197,35 @@ body {
     padding: 6px 10px;
     border-radius: 6px;
 }
+
+.button.show-id {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  color: #fff;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button.show-id:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.button.show-id {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #111;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button.show-id:hover {
+  background: rgba(255, 255, 255, 0.35);
+}

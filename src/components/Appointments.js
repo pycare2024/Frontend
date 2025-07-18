@@ -117,12 +117,12 @@ const Appointments = () => {
     };
 
     return (
-        <div className="appointments-wrapper">
-            <h1 className="appointments-heading">Doctor's Appointments</h1>
+        <div className="appointments-wrapper glass">
+            <h1 className="appointments-heading">Expert's Appointments</h1>
             <div className="date-picker">
                 <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
             </div>
-            <div className="table-container">
+            <div className="table-container glass">
                 {loading ? (
                     <p className="text-center text-gray-600 p-4 animate-pulse">Loading appointments...</p>
                 ) : appointments.length > 0 ? (
@@ -139,18 +139,25 @@ const Appointments = () => {
                         </thead>
                         <tbody>
                             {appointments.map((appointment) => (
-                                <tr key={appointment._id}>
+                                <tr key={appointment._id} className="glass">
                                     <td>{appointment.patientName}</td>
                                     <td>{appointment.patientPhoneNumber}</td>
                                     <td>{new Date(appointment.DateOfAppointment).toLocaleDateString()}</td>
                                     <td>{appointment.AppStartTime}-{appointment.AppEndTime}</td>
-
                                     <td className="text-center">
                                         <span className={`status ${appointment.payment_status === "Paid" ? "paid" : "unpaid"}`}>
                                             {appointment.payment_status}
                                         </span>
                                     </td>
                                     <td className="text-center">
+                                        {appointment.studentIdProofUrl && (
+                                            <button
+                                                onClick={() => window.open(appointment.studentIdProofUrl, "_blank")}
+                                                className="button show-id"
+                                            >
+                                                Show ID 📸
+                                            </button>
+                                        )}
                                         {appointment.appointment_status === "cancelled" ? (
                                             <span className="status-tag cancelled">❌ Cancelled</span>
                                         ) : appointment.appointment_status === "completed" ? (
