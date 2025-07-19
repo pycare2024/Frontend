@@ -1,0 +1,158 @@
+/* === GLOBAL RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-image: url('./school6.jpg'); /* Replace with your background path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === APPLE GLASS EFFECT CONTAINER === */
+.glass-container {
+  margin: 60px auto;
+  padding: 40px;
+  max-width: 1100px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: fadeIn 1s ease;
+}
+
+/* === STEP PROGRESS BAR === */
+.progress-bar-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.progress-step {
+  text-align: center;
+  flex: 1;
+  position: relative;
+  color: #fff;
+  z-index: 1;
+}
+
+.progress-step::before {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  background: #00ffd5;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00ffd5;
+  animation: pulse 2s infinite;
+}
+
+.progress-bar-line {
+  position: absolute;
+  top: 10px;
+  left: 10%;
+  width: 80%;
+  height: 4px;
+  background: linear-gradient(to right, #00ffd5, #00bfff);
+  z-index: 0;
+  animation: slideLine 3s ease-in-out forwards;
+}
+
+@keyframes slideLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 80%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === ANIMATION BLOCK === */
+.journey-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 50px 0;
+}
+
+.journey-animation img {
+  max-width: 220px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+/* === FORM INPUT BLOCK === */
+.id-form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.id-form input {
+  margin: 10px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 280px;
+  font-size: 16px;
+  outline: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.id-form button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(to right, #00ffd5, #00bfff);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.id-form button:hover {
+  transform: scale(1.05);
+}
