@@ -46,12 +46,12 @@ function MarketPlaceIntro() {
                 <div className="price-comparison">
                     <motion.div className="price-box highlighted1" whileHover={{ scale: 1.03 }}>
                         <h3>Others</h3>
-                        <p>₹1000 - ₹2000/session</p>
+                        <p>₹1000 - ₹2000(+ 18% GST)/session</p>
                     </motion.div>
                     <motion.div className="price-box highlighted" whileHover={{ scale: 1.03 }}>
                         <h3>PsyCare</h3>
-                        <p><strong>₹400/session</strong><br/>(for verified students)</p>
-                        <p><strong>₹800/session</strong><br/>(for others)</p>
+                        <p><strong>₹400(+ 18% GST)/session</strong><br/>(for verified students)</p>
+                        <p><strong>₹800(+ 18% GST)/session</strong><br/>(for others)</p>
                     </motion.div>
                 </div>
 

@@ -284,8 +284,31 @@ const BookAppointment = () => {
         return (
           <div className="book-step-section">
             <div className="book-user-type-buttons">
-              <button onClick={() => setUserType("corporate")}>Corporate</button>
-              <button onClick={() => { setUserType("retail"); setStep(2); }} disabled style={{ backgroundColor: "gray" }}>Retail</button>
+              <button onClick={() => setUserType("corporate")}><strong>Corporate Partner</strong><br />
+                <span>I’m part of a company partnered with PsyCare</span></button>
+              <button
+                onClick={() => {
+                  setUserType("retail");
+                  // setStep(2);
+                  navigate("/marketplacemain"); // ✅ change this to your actual route
+                }}
+                style={{ backgroundColor: "gray" }}
+              >
+                <strong>Personal Care</strong><br />
+                <span>I’m signing up for myself or a family member</span>
+              </button>
+              <button
+                onClick={() => {
+                  setUserType("retail");
+                  // setStep(2);
+                  navigate("#");
+                }}
+                style={{ backgroundColor: "gray" }}
+                disabled
+              >
+                <strong>School Program</strong><br />
+                <span>My school is partnered with PsyCare</span>
+              </button>
             </div>
             {userType === "corporate" && (
               <>

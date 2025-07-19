@@ -27,7 +27,7 @@ const LandingPage = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => prev + 1);
-    }, 5000);
+    }, 11000);
 
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -53,7 +53,7 @@ const LandingPage = () => {
     clearTimeout(pauseTimeoutRef.current);
     pauseTimeoutRef.current = setTimeout(() => {
       setIsPaused(false);
-    }, 5000); // resumes after 5 seconds of no clicks
+    }, 10000); // resumes after 5 seconds of no clicks
   };
 
   return (
@@ -69,7 +69,7 @@ const LandingPage = () => {
               <div className="genie-wrapper">
                 <img src={Genie} alt="Genie" className="genie-img" />
                 <div className="speech-bubble">
-                  Click to hold for 5 secs
+                  Click to hold for 10 secs
                 </div>
               </div>
             )}

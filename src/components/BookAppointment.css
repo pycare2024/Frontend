@@ -94,9 +94,48 @@
 
 .book-user-type-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.book-user-type-buttons button {
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.book-user-type-buttons button span {
+  font-weight: normal;
+  font-size: 14px;
+  display: block;
+  margin-top: 4px;
+}
+
+.book-user-type-buttons button:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.book-user-type-buttons button:disabled {
+  background: rgba(180, 180, 180, 0.5);
+  cursor: not-allowed;
 }
 
 .book-error-text {

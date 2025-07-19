@@ -69,14 +69,14 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  animation: floatIn 2s ease-in-out infinite, fadeOut 6s forwards;
+  animation: floatIn 6s ease-in-out infinite, fadeOut 6s forwards;
   z-index: 10;
 }
 
 .genie-icon {
   width: 40px;
   height: 30px;
-  animation: floatIn 2s ease-in-out infinite;
+  animation: floatIn 6s ease-in-out infinite;
 }
 
 @keyframes floatIn {
