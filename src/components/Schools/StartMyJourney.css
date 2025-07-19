@@ -1,19 +1,5 @@
-/* === GLOBAL RESET === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-image: url('./school6.jpg'); /* Replace with your background path */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 /* === APPLE GLASS EFFECT CONTAINER === */
 .glass-container {
