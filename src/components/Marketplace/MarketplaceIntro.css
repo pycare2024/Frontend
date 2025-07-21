@@ -1,168 +1,167 @@
 .marketplace-intro-wrapper {
-  min-height: 100vh;
-  padding: 2rem;
-  background-image: url("../Marketplace/marketplace.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-}
-
-.marketplace-intro-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 0;
+  padding: 2rem;
+  background: url('./marketplace.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 .marketplace-intro-glass {
-  position: relative;
-  z-index: 1;
+  max-width: 1200px;
   width: 100%;
-  padding: 3rem 2rem;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px) saturate(100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-  color: #ffffff;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  color: #f0fdf4;
+  font-family: 'Segoe UI', sans-serif;
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .marketplace-intro-glass h1 {
-  font-size: 2.8rem;
+  font-size: 2.4rem;
+  font-weight: bold;
   margin-bottom: 1rem;
-  color: #ffffff;
-}
-
-.marketplace-intro-glass h2 {
-  font-size: 2rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: 500;
-  color: #f5f5f5;
+  color: #a6f4c5; /* soft green glow */
 }
 
 .marketplace-intro-glass p {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: #eaeaea;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #d9fcd2; /* light muted green */
 }
 
-/* Progress Steps */
+.marketplace-intro-glass h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #bef264; /* lime mist highlight */
+}
+
+.highlight-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(163, 230, 53, 0.1); /* lime background hint */
+  padding: 1rem;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+  color: #d9f99d;
+  font-weight: 500;
+  border-left: 4px solid #bef264;
+}
+
 .progress-container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 .progress-step {
-  flex: 1;
-  min-width: 120px;
+  background: rgba(255, 255, 255, 0.1);
   padding: 1rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  color: #ffffff;
+  flex: 1 1 40%;
+  min-width: 140px;
+  border-radius: 12px;
+  text-align: center;
+  color: #f0fdf4;
+  transition: all 0.3s ease;
 }
 
-.step-number {
-  font-size: 1.5rem;
+.progress-step .step-number {
+  font-size: 1.6rem;
   font-weight: bold;
-  color: #82cfff;
-  margin-bottom: 0.5rem;
+  color: #86efac;
 }
 
-/* Price Comparison */
 .price-comparison {
   display: flex;
+  gap: 1rem;
   justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
 }
 
 .price-box {
-  padding: 1.2rem 1.5rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
+  flex: 1 1 250px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  color: #e0fce5;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  min-width: 180px;
-  color: #fff;
-}
-
-.price-box h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.4rem;
-  color: #ffffff;
-}
-
-.price-box.highlighted1 {
-  border: 1px solid #ff6666;
-  background: rgba(255, 102, 102, 0.1);
 }
 
 .price-box.highlighted {
-  border: 1px solid #66d0ff;
-  background: rgba(102, 208, 255, 0.1);
+  border: 2px solid #86efac;
+  background: rgba(132, 204, 22, 0.12);
 }
 
-/* Expert List */
+.price-box.highlighted1 {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
 .expert-highlights {
+  text-align: left;
+  padding-left: 1rem;
   list-style: none;
-  margin-top: 1.2rem;
-  text-align: center;
-  padding-left: 0;
+  color: #e6ffe9;
+  margin-top: 1rem;
 }
 
 .expert-highlights li {
-  margin-bottom: 0.6rem;
-  padding-left: 1.5rem;
-  position: relative;
-  font-size: 1.05rem;
-  color: #f3f3f3;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Button */
+.student-info {
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  color: #dcfce7;
+  font-weight: 500;
+}
+
 .explore-button {
   margin-top: 2rem;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #ffffff;
-  border: none;
+  padding: 0.8rem 2rem;
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: all 0.3s ease;
+  background-color: #86efac;
+  color: #1a1a1a;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 5px 15px rgba(132, 204, 22, 0.25);
+  transition: all 0.3s ease;
 }
 
 .explore-button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+  background-color: #65c18c;
+  transform: translateY(-2px);
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
-  .marketplace-intro-glass h1 {
-    font-size: 2.2rem;
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .marketplace-intro-wrapper {
+    padding: 1rem;
   }
 
-  .marketplace-intro-glass h2 {
-    font-size: 1.6rem;
+  .marketplace-intro-glass {
+    padding: 1.5rem;
   }
 
   .progress-container {
@@ -174,110 +173,13 @@
     flex-direction: column;
     align-items: center;
   }
-}
 
-.marketplace-intro-wrapper {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background: url('./marketplace.jpg') no-repeat center center / cover;
-    padding: 4rem 1rem;
-}
-
-.marketplace-intro-glass {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-    border-radius: 24px;
-    padding: 3rem;
-    color: #fff;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 1s ease-in-out;
-}
-
-.progress-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin: 1.5rem 0;
-}
-
-.progress-step {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    padding: 1rem;
-    border-radius: 12px;
+  .highlight-box {
+    flex-direction: column;
     text-align: center;
-    flex: 1;
-    transition: all 0.3s ease;
-}
+  }
 
-.step-number {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.price-comparison {
-    display: flex;
-    gap: 1rem;
-    margin: 1rem 0 2rem;
-}
-
-.price-box {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    border-radius: 16px;
-    text-align: center;
-    border: 2px solid #fff;
-}
-
-.price-box.highlighted {
-    background: rgba(78, 205, 196, 0.3);
-    border: 2px solid #4ecdc4;
-}
-
-.expert-highlights {
-    list-style: none;
-    padding-left: 0;
-}
-
-.expert-highlights li {
-    margin-bottom: 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.highlight-box {
-    background: rgba(255, 255, 255, 0.2);
-    border-left: 5px solid #4ecdc4;
-    padding: 1rem;
-    margin: 1.5rem 0;
-    border-radius: 8px;
-    font-weight: 500;
-}
-
-.student-info {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin: 1.5rem 0;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 0.8rem 1rem;
-    border-radius: 10px;
-}
-
-.explore-button {
-    padding: 1rem 2rem;
-    background-color: #4ecdc4;
-    border: none;
-    border-radius: 40px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #000;
-    transition: 0.3s;
+  .explore-button {
+    width: 100%;
+  }
 }
