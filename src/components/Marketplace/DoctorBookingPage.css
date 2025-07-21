@@ -1,262 +1,185 @@
-/* === Overall Wrapper === */
 .booking-wrapper {
-  min-height: 100vh;
-  background: url("../Marketplace/marketplace.jpg") center center / cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 1.5rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #ffffff;
+  min-height: 100vh;
+  background: url('./marketplace.jpg') no-repeat center center/cover;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* === Booking Container Glassmorphism === */
 .booking-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2.5rem;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  padding: 3rem;
-  border-radius: 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 30px;
   width: 100%;
-  max-width: 1200px;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: all 0.3s ease;
-}
-
-/* === Doctor Profile Styling === */
-.doctor-profile {
-  flex: 1;
+  max-width: 900px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 30px;
+  color: white;
+  position: relative;
+}
+
+/* Doctor Info */
+.doctor-profile {
   text-align: center;
 }
 
 .doctor-profile img {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 4px solid #fff;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  margin-bottom: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.doctor-profile img:hover {
-  transform: scale(1.05);
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 10px;
 }
 
 .doctor-profile h2 {
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  color: #ffffff;
+  margin: 10px 0 5px;
+  font-size: 1.8rem;
+  color: #fff;
 }
 
 .doctor-profile p {
-  font-size: 0.95rem;
-  opacity: 0.9;
-  margin: 0.2rem 0;
+  margin: 5px 0;
+  font-size: 1rem;
 }
 
-/* === Booking Slot Section === */
-.booking-slot-section {
-  flex: 2;
+.qualifications-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
 }
 
-/* === Date Selection === */
-.date-selector {
-  display: flex;
-  gap: 0.8rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-  scrollbar-width: none;
+.qualification-pill {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 0.9rem;
 }
 
-.date-selector::-webkit-scrollbar {
-  display: none;
+/* Slots Section */
+.booking-slot-section h3,
+.booking-slot-section h4 {
+  margin: 10px 0;
+  font-weight: 600;
 }
 
-.date-button {
-  padding: 0.65rem 1.3rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  backdrop-filter: blur(6px);
-}
-
-.date-button:hover,
-.date-button.active {
-  background-color: #1f80e0;
-  color: #fff;
-  border-color: #fff;
-}
-
-/* === Slots Grid === */
+.date-selector,
 .slots-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 10px;
 }
 
+.date-button,
 .slot-button {
-  padding: 0.65rem 1.2rem;
-  background-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 10px 15px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 14px;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
 }
 
-.slot-button.selected,
+.date-button:hover,
 .slot-button:hover {
-  background-color: #1f80e0;
-  border-color: #fff;
+  background: rgba(255, 255, 255, 0.3);
 }
 
-/* === OTP & Registration Inputs === */
+.date-button.active,
+.slot-button.selected {
+  background: rgba(0, 191, 165, 0.6);
+  font-weight: bold;
+}
+
+/* OTP Section */
 .otp-section,
 .register-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-top: 1.2rem;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .otp-section input,
 .register-section input,
 .register-section select {
-  padding: 0.75rem;
+  padding: 10px;
+  border: none;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  font-size: 14px;
-  outline: none;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 
-.otp-section input:focus,
-.register-section input:focus,
-.register-section select:focus {
-  border-color: #1f80e0;
-  background: rgba(255, 255, 255, 0.18);
-}
-
-::placeholder {
-  color: #ccc;
-}
-
-/* === Action Buttons === */
 .otp-section button,
 .register-section button {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #007aff, #3a8fff);
+  padding: 10px 15px;
+  background: #00bfa5;
   border: none;
-  border-radius: 12px;
-  font-size: 14px;
+  border-radius: 10px;
   color: white;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 .otp-section button:hover,
 .register-section button:hover {
-  background: linear-gradient(135deg, #005ecb, #357df7);
-  transform: scale(1.03);
+  background: #009e86;
 }
 
-/* === Confirmation Section === */
+/* Confirmation Styles */
 .confirmation {
-  margin-top: 1.5rem;
-  padding: 2rem;
-  border-radius: 18px;
-  background: rgba(0, 255, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 20px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.confirmation h3 {
-  color: #00ffaa;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-}
-
-.confirmation p {
-  font-size: 15px;
-  margin: 0.4rem 0;
+  color: #ffffff;
 }
 
 .confirmation a {
-  color: #ffffff;
-  font-weight: bold;
+  color: #00e676;
   text-decoration: underline;
-  word-break: break-all;
+  font-weight: 600;
 }
 
-/* === Responsive Enhancements === */
-@media screen and (max-width: 768px) {
+.confirmation em {
+  display: block;
+  margin-top: 10px;
+  color: #dcdcdc;
+}
+
+.student-booking-info {
+  margin-bottom: 10px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .booking-container {
-    flex-direction: column;
-    padding: 2rem;
+    padding: 20px;
+  }
+
+  .date-button,
+  .slot-button {
+    flex: 1 1 45%;
   }
 
   .doctor-profile img {
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
   }
-
-  .doctor-profile h2 {
-    font-size: 1.4rem;
-  }
-
-  .booking-slot-section {
-    gap: 1rem;
-  }
-}
-
-.qualifications-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.qualification-pill {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 8px 16px;
-  border-radius: 999px;
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 0.9rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
-  transition: transform 0.2s ease;
-}
-
-.qualification-pill:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.2);
 }

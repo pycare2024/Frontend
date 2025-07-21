@@ -39,16 +39,15 @@ const Contactus = () => {
             <p className="contact-detail">
               PsyCare<br />
               D31 Ground floor,<br />
-              Uppal southend, sohna road<br />
-              sector-29 , Gurgaon HARYANA 122018
+              Uppal Southend, Sohna road<br />
+              Sector-49 , Gurgaon Haryana 122018
             </p>
-            <p className="subtext">Drop in between 10 AM - 8 PM on any weekday !</p>
           </div>
 
           <div className="contact-box">
             <Phone size={40} className="icon" />
             <h4>CALL US AT</h4>
-            <p className="contact-detail">+91 98182 96388</p>
+            <p className="contact-detail">+91 98715 35106</p>
             <p className="subtext">between 10 AM to 7 PM</p>
           </div>
         </div>
