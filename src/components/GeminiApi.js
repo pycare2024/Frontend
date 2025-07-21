@@ -17,6 +17,8 @@ function GeminiApi() {
             toast.error("Please enter a question.");
             return;
         }
+
+        console.log("Query -> ",query);
         
         setLoading(true);
         setResponse("Thinking...");

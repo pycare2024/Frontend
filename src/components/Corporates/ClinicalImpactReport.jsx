@@ -510,7 +510,7 @@ text-align:justify;
   };
 
   const totalScreeningsData = reportData
-  ? {
+    ? {
       labels: ["Total Screenings"],
       datasets: [
         {
@@ -520,24 +520,42 @@ text-align:justify;
         }
       ]
     }
-  : null;
+    : null;
+
+  const appointmentBreakdownData = reportData
+    ? {
+      labels: ["Completed", "No Show", "Cancelled", "Follow-ups"],
+      datasets: [
+        {
+          data: [
+            reportData.appointmentBreakdown.completed,
+            reportData.appointmentBreakdown.no_show,
+            reportData.appointmentBreakdown.cancelled,
+            reportData.appointmentBreakdown.followups,
+          ],
+          backgroundColor: ["#34A853", "#EA4335", "#A1A1A1", "#4285F4"],
+          hoverOffset: 30,
+        },
+      ],
+    }
+    : null;
 
   const screeningBreakdownData = reportData
-  ? {
-      labels: ["Only Screening", "Therapy Sessions", "Repeat Screenings"],
+    ? {
+      labels: ["Only Screening Tests", "Screenings with Follow-up Sessions", "Repeat Screenings"],
       datasets: [
         {
           data: [
             reportData.totalScreenings - reportData.followUpAppointments,
             reportData.followUpAppointments,
-            reportData.repeatScreenings
+            reportData.repeatScreenings,
           ],
           backgroundColor: ["#4285F4", "#34A853", "#FBBC05"],
-          hoverOffset: 30
-        }
-      ]
+          hoverOffset: 30,
+        },
+      ],
     }
-  : null;
+    : null;
 
   // Prepare data for Doughnut chart: Total Screenings vs Follow-ups vs Repeat
   const doughnutData = reportData
@@ -593,7 +611,7 @@ text-align:justify;
   // console.log("Report Data => ", reportData);
   // console.log("Evaluations => ", evaluations);
 
-  console.log("Doughnut Data -> ",doughnutData);
+  console.log("Doughnut Data -> ", doughnutData);
 
   // Prepare data for Line chart (dummy example with severity levels over the date range)
   // Since you have no time series, we'll simulate using severity counts as points.
@@ -706,13 +724,35 @@ text-align:justify;
             <h1 className="report-header">📊 Clinical Impact Report</h1>
             <h2 style={{ textAlign: "center", color: "#4285F4", fontSize: "18px", marginBottom: "20px" }}>Psychometric Analysis - Enterprise(Report 4)</h2>
             {/* Summary Cards */}
+            <section className="report-grid" aria-label="Appointment breakdown">
+              <article className="report-card">
+                <h3 className="h3-title">Total Appointments</h3>
+                <p>{reportData.appointmentBreakdown.Total_appointments}</p>
+              </article>
+              <article className="report-card">
+                <h3 className="h3-title">Completed</h3>
+                <p>{reportData.appointmentBreakdown.completed}</p>
+              </article>
+              <article className="report-card">
+                <h3 className="h3-title">No Show</h3>
+                <p>{reportData.appointmentBreakdown.no_show}</p>
+              </article>
+              <article className="report-card">
+                <h3 className="h3-title">Cancelled</h3>
+                <p>{reportData.appointmentBreakdown.cancelled}</p>
+              </article>
+              <article className="report-card">
+                <h3 className="h3-title">Follow-ups</h3>
+                <p>{reportData.appointmentBreakdown.followups}</p>
+              </article>
+            </section>
             <section className="report-grid" aria-label="Summary statistics">
               <article className="report-card">
                 <h3 className="h3-title">Total Screening Tests</h3>
                 <p>{reportData.totalScreenings}</p>
               </article>
               <article className="report-card">
-                <h3 className="h3-title">Therapy Sessions</h3>
+                <h3 className="h3-title">Screenings With Therapy Follow-Up</h3>
                 <p>{reportData.followUpAppointments}</p>
               </article>
               <article className="report-card">
@@ -721,8 +761,15 @@ text-align:justify;
               </article>
             </section>
 
-            <section className="chart-section" aria-label="Overview charts">
-              <h2 className="chart-title">📈 Overview Charts</h2>
+            <section className="chart-section page-break" aria-label="Overview charts">
+              {/* <h2 className="chart-title">📈 Overview Charts</h2> */}
+              <div className="chart-card full-width">
+                <h3 className="h3-inside-title">Appointment Breakdown</h3>
+                <figure>
+                  <Doughnut data={appointmentBreakdownData} />
+                  <figcaption style={{textAlign:"center"}}>Distribution of different appointment statuses.</figcaption>
+                </figure>
+              </div>
 
               <div className="chart-vertical">
                 <div className="chart-card full-width">
