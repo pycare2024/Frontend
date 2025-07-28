@@ -29,7 +29,7 @@ function DoctorOwnSchedule() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`
+        `https://backend-xhl4.onrender.com/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`
       );
       const data = await res.json();
 
@@ -57,7 +57,7 @@ function DoctorOwnSchedule() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/DoctorScheduleRoute/deleteSlot/${scheduleId}/${slotId}`,
+        `https://backend-xhl4.onrender.com/DoctorScheduleRoute/deleteSlot/${scheduleId}/${slotId}`,
         { method: "DELETE" }
       );
       const data = await res.json();
@@ -82,7 +82,7 @@ function DoctorOwnSchedule() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/DoctorScheduleRoute/updateSchedule/${scheduleId}`,
+        `https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -113,8 +113,8 @@ function DoctorOwnSchedule() {
 
     try {
       const url = scheduleId
-        ? `http://localhost:4000/DoctorScheduleRoute/updateSchedule/${scheduleId}`
-        : `http://localhost:4000/DoctorScheduleRoute/addSchedule`;
+        ? `https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`
+        : `https://backend-xhl4.onrender.com/DoctorScheduleRoute/addSchedule`;
 
       const method = scheduleId ? "PUT" : "POST";
       const body = scheduleId
@@ -164,7 +164,10 @@ function DoctorOwnSchedule() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        max={new Date().toISOString().split("T")[0]}
+        min={new Date().toISOString().split("T")[0]} // Today
+        max={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // +30 days
+          .toISOString()
+          .split("T")[0]}
       />
 
       <div className="price-container">
