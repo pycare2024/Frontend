@@ -144,7 +144,7 @@ function PatientInfo() {
         </div>
       )}
 
-      <h1 className="text-center" style={{ color: "#4285F4", marginBottom: "30px", fontSize: "2.5rem", fontWeight: "bold" }}>Client Information</h1>
+      <h1 className="text-center" style={{ color: "#4285F4", marginBottom: "30px", fontSize: "2.5rem"}}>Client Information</h1>
       {patient ? (
         <>
           <div className="patient-info-card">

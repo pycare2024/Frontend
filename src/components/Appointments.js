@@ -117,7 +117,8 @@ const Appointments = () => {
     };
 
     return (
-        <div className="appointments-wrapper glass">
+        <div className="appointments-page">
+            <div className="appointments-wrapper">
             <h1 className="appointments-heading">Expert's Appointments</h1>
             <div className="date-picker">
                 <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
@@ -176,6 +177,7 @@ const Appointments = () => {
                                                             <textarea
                                                                 value={sessionNotes[appointment._id] || ""}
                                                                 onChange={(e) => setSessionNotes({ ...sessionNotes, [appointment._id]: e.target.value })}
+                                                                style={{color:"#4285f4"}}
                                                             />
                                                             <button className="mic-button" onClick={() => handleVoiceInput("notes", appointment._id)}>🎙️</button>
                                                         </div>
@@ -186,6 +188,7 @@ const Appointments = () => {
                                                             <textarea
                                                                 value={sessionRecommendations[appointment._id] || ""}
                                                                 onChange={(e) => setSessionRecommendations({ ...sessionRecommendations, [appointment._id]: e.target.value })}
+                                                                style={{color:"#4285f4"}}
                                                             />
                                                             <button className="mic-button" onClick={() => handleVoiceInput("recommendations", appointment._id)}>🎙️</button>
                                                         </div>
@@ -234,6 +237,7 @@ const Appointments = () => {
                     <p className="text-center text-gray-600 p-6 text-lg font-semibold">No Appointments Found</p>
                 )}
             </div>
+        </div>
         </div>
     );
 };

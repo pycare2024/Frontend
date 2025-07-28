@@ -1,95 +1,91 @@
-/* === Page Background & Layout === */
+/* === Layout Background === */
 .intro-wrapper {
-    padding: 50px 30px;
-    background: url('../Intropage/introbackgroung.jpg') no-repeat center center;
-    background-size: cover;
-    font-family: 'Arial', sans-serif;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    align-items: center;
-    justify-content: flex-start;
+  padding: 60px 30px;
+  background: url('./introbackgroung.jpg') no-repeat center center;
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
 }
 
-/* === Glass Container === */
+/* === Glass Panel === */
 .intro-glass {
-    background: rgba(255, 255, 255, 0.215);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 24px;
-    padding: 50px 40px;
-    max-width: 1300px;
-    width: 100%;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
-    text-align: center;
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 60px 40px;
+  max-width: 1300px;
+  width: 100%;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* === Headings === */
 .intro-heading {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #4285F4;
-    margin-bottom: 10px;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #0d1f44;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
 .intro-subheading {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 40px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2e2e2e;
+  margin-bottom: 40px;
 }
 
 /* === Scrollable Card Container === */
 .workflow-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 24px;
-    padding: 0 10px 20px;
-    margin: 0 auto;
-    max-width: 100%;
-    box-sizing: border-box;
-    scroll-snap-type: none;
-    overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 0 10px 20px;
+  margin: 0 auto;
+  max-width: 100%;
+  scroll-snap-type: none;
+  overflow-x: hidden;
 }
 
 @media (max-width: 1024px) {
-    .workflow-container {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        justify-content: flex-start;
-    }
+  .workflow-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    justify-content: flex-start;
+  }
 
-    .workflow-container::after {
-        content: "";
-        flex: 0 0 10px;
-    }
+  .workflow-container::after {
+    content: "";
+    flex: 0 0 10px;
+  }
 
-    .workflow-card {
-        scroll-snap-align: start;
-    }
+  .workflow-card {
+    scroll-snap-align: start;
+  }
 }
 
-/* === Individual Card === */
+/* === Individual Glass Card === */
 .workflow-card {
   flex: 0 0 auto;
   width: 320px;
   min-height: 400px;
   border-radius: 20px;
-  padding: 25px 20px;
-  margin-right: 0;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-
-  /* Glassmorphism Core */
-  background: rgba(255, 255, 255, 0);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  padding: 24px 20px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  scroll-snap-align: start;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
@@ -104,103 +100,39 @@
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .workflow-card h2 {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 10px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #0e1111;
+  margin-bottom: 10px;
 }
 
 .workflow-card p {
-    font-size: 1rem;
-    font-weight: bold;
-    color: black;
-    line-height: 1.6;
-    text-align: justify;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  line-height: 1.6;
+  text-align: justify;
 }
 
-/* === Scrollbar Styling === */
-.workflow-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.workflow-container::-webkit-scrollbar-thumb {
-    background-color: #4285F4;
-    border-radius: 10px;
-}
-
-.workflow-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-/* === Responsive Adjustments === */
-@media (max-width: 992px) {
-    .intro-heading {
-        font-size: 2.4rem;
-    }
-
-    .workflow-card {
-        width: 280px;
-    }
-}
-
-@media (max-width: 768px) {
-    .intro-wrapper {
-        padding: 40px 20px;
-    }
-
-    .intro-glass {
-        padding: 30px 20px;
-    }
-
-    .intro-heading {
-        font-size: 2rem;
-    }
-
-    .intro-subheading {
-        font-size: 1rem;
-    }
-
-    .workflow-card {
-        width: 260px;
-    }
-}
-
-@media (max-width: 480px) {
-    .intro-heading {
-        font-size: 1.8rem;
-    }
-
-    .intro-subheading {
-        font-size: 0.95rem;
-    }
-
-    .workflow-card h2 {
-        font-size: 1.2rem;
-    }
-
-    .workflow-card p {
-        font-size: 0.9rem;
-    }
-}
-
+/* === Buttons with Glass Feel === */
 .workflow-btn {
   margin-top: 16px;
   padding: 10px 18px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: #fff;
-  font-weight: bold;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #0d1f44;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.95rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .workflow-btn:hover {
@@ -211,9 +143,66 @@
 
 .workflow-btn:disabled {
   background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.4);
   cursor: not-allowed;
   box-shadow: none;
   border: 1px solid rgba(255, 255, 255, 0.15);
   transform: none;
+}
+
+/* === Scrollbar Styling === */
+.workflow-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.workflow-container::-webkit-scrollbar-thumb {
+  background-color: #4285F4;
+  border-radius: 10px;
+}
+
+.workflow-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 992px) {
+  .intro-heading {
+    font-size: 2.4rem;
+  }
+  .workflow-card {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-wrapper {
+    padding: 40px 20px;
+  }
+  .intro-glass {
+    padding: 30px 20px;
+  }
+  .intro-heading {
+    font-size: 2rem;
+  }
+  .intro-subheading {
+    font-size: 1rem;
+  }
+  .workflow-card {
+    width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-heading {
+    font-size: 1.8rem;
+  }
+  .intro-subheading {
+    font-size: 0.95rem;
+  }
+  .workflow-card h2 {
+    font-size: 1.2rem;
+  }
+  .workflow-card p {
+    font-size: 0.9rem;
+  }
 }

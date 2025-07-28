@@ -1,0 +1,203 @@
+.book-appointment-container {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: url('./corporatebooking.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Glass Card */
+.book-appointment-card {
+  background: rgba(255, 255, 255, 0.331);
+  border: 1px solid rgba(92, 212, 160, 0.727);
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 550px;
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Title */
+.book-appointment-card h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: Green;
+}
+
+/* Steps */
+.book-step-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Inputs & Selects */
+.book-step-section input,
+.book-step-section select {
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: black;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+  transition: background 0.3s ease;
+}
+
+.book-step-section input::placeholder,
+.book-step-section select:invalid {
+  color: rgb(15, 1, 1);
+}
+
+/* Button Styles */
+.book-step-section button {
+  padding: 0.9rem 1.1rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+  border-radius: 14px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.book-step-section button:hover {
+  background: rgba(255, 255, 255, 0);
+  transform: translateY(-2px);
+}
+
+/* Error Message */
+.book-error-text {
+  text-align: center;
+  color: #ff6b6b;
+  font-size: 0.95rem;
+  margin-top: -10px;
+}
+
+/* Confirmation Box */
+.book-confirmation-box {
+  background: rgba(50, 200, 150, 0.15);
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #d1ffe6;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.book-confirmation-box h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Follow-up Dialog */
+.followup-dialog {
+  padding: 1.2rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  text-align: center;
+  margin-bottom: 1rem;
+  animation: zoomIn 0.3s ease;
+}
+
+.followup-dialog h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: #fffdd0;
+}
+
+.followup-dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.followup-dialog-buttons button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.followup-dialog-buttons button:first-child {
+  background-color: #00c46b;
+  color: #fff;
+}
+
+.followup-dialog-buttons button:last-child {
+  background-color: #ff3b30;
+  color: #fff;
+}
+
+.followup-dialog-buttons button:hover {
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .book-appointment-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .book-step-section input,
+  .book-step-section select,
+  .book-step-section button {
+    font-size: 0.95rem;
+  }
+
+  .followup-dialog-buttons {
+    flex-direction: column;
+  }
+
+  .followup-dialog-buttons button {
+    width: 100%;
+  }
+}

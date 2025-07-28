@@ -1,259 +1,57 @@
-.book-appointment-container {
-  background-image: url('./bookappointment.jpg');
+.book-landing-container {
+  min-height: 100vh;
   background-size: cover;
   background-position: center;
-  padding: 4rem 1.5rem;
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
   display: flex;
-  justify-content: center;
   align-items: center;
-  animation: fadeIn 1s ease-in-out;
-  backdrop-filter: blur(3px);
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.book-appointment-card {
-  background: linear-gradient(145deg, #ffffff, #f3f7fc);
-  padding: 3rem 2rem;
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-  max-width: 700px;
-  width: 100%;
-  animation: slideUp 0.6s ease;
-  border: 1px solid #e3eaf5;
-  position: relative;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.book-appointment-card h2 {
-  color: #4285F4;
+  padding: 3rem 2rem;
+  max-width: 600px;
   text-align: center;
-  margin-bottom: 2rem;
-  font-weight: 800;
-  font-size: 2.2rem;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 0.5rem;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-.book-step-section {
+.glass-card h1
+{
+  color: #4285F4;
+}
+
+.glass-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
-  animation: fadeIn 0.5s ease-in-out;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.book-step-section input,
-.book-step-section select {
-  padding: 0.9rem 1.2rem;
-  border-radius: 12px;
-  border: 1px solid #d0d7e2;
+.glass-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(41, 109, 212, 0.699);
+  padding: 1.2rem;
+  border-radius: 16px;
+  color: black;
   font-size: 1rem;
-  width: 100%;
-  transition: all 0.3s;
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-}
-
-.book-step-section input:focus,
-.book-step-section select:focus {
-  border-color: #4285F4;
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
-}
-
-.book-step-section button {
-  padding: 0.9rem 1.6rem;
-  background: linear-gradient(135deg, #4285F4, #6aa0f8);
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  border: none;
-  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
+  text-align: left;
 }
 
-.book-step-section button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(66, 133, 244, 0.3);
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.02);
 }
 
-.book-step-section button:active {
-  transform: scale(0.97);
-}
-
-.book-user-type-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  margin: 40px auto;
-}
-
-.book-user-type-buttons button {
-  width: 100%;
-  padding: 16px 24px;
-  font-size: 16px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.book-user-type-buttons button span {
-  font-weight: normal;
-  font-size: 14px;
-  display: block;
-  margin-top: 4px;
-}
-
-.book-user-type-buttons button:hover:not(:disabled) {
-  transform: scale(1.03);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
-
-.book-user-type-buttons button:disabled {
-  background: rgba(180, 180, 180, 0.5);
+.glass-btn.disabled {
+  opacity: 0.4;
   cursor: not-allowed;
-}
-
-.book-error-text {
-  color: red;
-  font-size: 0.95rem;
-  margin-top: -0.25rem;
-  font-weight: 500;
-  background-color: #ffe6e6;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ffc1c1;
-}
-
-.book-confirmation-box {
-  text-align: center;
-  margin-top: 2rem;
-  background-color: #e8f0fe;
-  padding: 2rem;
-  border-radius: 16px;
-  border: 1px solid #c7dafb;
-  animation: fadeIn 0.6s ease-in-out;
-  box-shadow: 0 4px 16px rgba(66, 133, 244, 0.1);
-}
-
-.book-step-section a button {
-  width: 100%;
-  margin-top: 1rem;
-  background-color: #34a853;
-  background-image: none;
-}
-
-.book-step-section a button:hover {
-  box-shadow: 0 4px 12px rgba(52, 168, 83, 0.4);
-}
-
-.book-step-section h4 {
-  color: #1a237e;
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 480px) {
-  .book-appointment-card {
-    padding: 2rem 1.25rem;
-  }
-
-  .book-appointment-card h2 {
-    font-size: 1.7rem;
-  }
-
-  .book-step-section button,
-  .book-step-section input,
-  .book-step-section select {
-    font-size: 0.95rem;
-  }
-
-  .book-user-type-buttons {
-    flex-direction: column;
-  }
-}
-
-/* === Follow-Up Recommendation Styles === */
-.enhanced-dialog {
-  background-color: #f7fbff;
-  border-left: 5px solid #1e90ff;
-  padding: 20px 25px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(30, 144, 255, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.enhanced-dialog h3 {
-  margin-top: 0;
-  color: #1e3a8a;
-  font-size: 1.25rem;
-}
-
-.enhanced-dialog p {
-  font-size: 1rem;
-  color: #333;
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-.followup-dialog-buttons {
-  display: flex;
-  justify-content: flex-start;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.confirm-btn,
-.decline-btn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.confirm-btn {
-  background-color: #10b981; /* Green */
-  color: white;
-}
-
-.confirm-btn:hover {
-  background-color: #059669;
-}
-
-.decline-btn {
-  background-color: #f87171; /* Red */
-  color: white;
-}
-
-.decline-btn:hover {
-  background-color: #ef4444;
 }

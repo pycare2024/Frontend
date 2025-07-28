@@ -1,16 +1,23 @@
+/* === Glassy Psycho Section with Apple Glass Effect === */
+
 .psyco {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* This helps vertically center */
+  justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: url('./unused.jpg') no-repeat center center;
+  background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
+              url('./psycho.jpg') no-repeat center center;
   background-size: cover;
+  background-position: center;
   padding: 50px 10%;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Section Layout */
 .content-section5 {
   display: flex;
   justify-content: space-between;
@@ -21,6 +28,7 @@
   flex-wrap: wrap;
 }
 
+/* Left Image Column */
 .image-column5 {
   flex: 1 1 45%;
   display: flex;
@@ -34,32 +42,41 @@
   height: 400px;
   background: url('./un.png') no-repeat center center;
   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Right Glassy Text Column */
 .text-column5 {
   flex: 1 1 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
+  background: #ffffff40;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
+/* Typography */
 .headline5 {
   font-size: 3rem;
-  font-weight: bold;
-  color: #4285F4;
+  font-weight: 700;
+  color: #012662;
   margin-bottom: 10px;
 }
 
 .subheadline5 {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #95b3e2;
+  color: #012662;
   margin-bottom: 20px;
 }
 
@@ -71,24 +88,27 @@
   text-align: justify;
 }
 
+/* Button - Glassy Look */
 .read-more-btn5 {
-  background-color: #4285F4;
+  background: rgba(66, 133, 244, 0.9);
   color: white;
   padding: 10px 30px;
   border: none;
   border-radius: 25px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(66, 133, 244, 0.25);
 }
 
 .read-more-btn5:hover {
-  background-color: white;
+  background: white;
   color: #4285F4;
   border: 1px solid #4285F4;
+  box-shadow: 0 4px 20px rgba(66, 133, 244, 0.4);
 }
 
-/* === Responsive Fixes === */
+/* Responsive Design */
 @media (max-width: 1024px) {
   .content-section5 {
     flex-direction: column;
@@ -119,13 +139,21 @@
     padding: 30px 5%;
   }
 
+  .content-section5 {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .consulting-image5 {
     max-width: 100%;
     height: 250px;
+    margin-bottom: 20px;
   }
 
   .text-column5 {
     padding: 20px;
+    margin-bottom: 20px;
   }
 
   .headline5 {
@@ -144,27 +172,7 @@
     padding: 8px 25px;
     font-size: 1rem;
   }
-
-  .psyco {
-    padding: 30px 5%;
-    justify-content: center; /* ⬅️ Center children vertically */
-  }
-
-  .content-section5 {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* ⬅️ Center content vertically */
-    height: 100%; /* ⬅️ Fill parent height */
-  }
-
-  .text-column5 {
-    padding: 20px;
-    margin-bottom: 20px; /* Optional spacing */
-  }
-
-  .consulting-image5 {
-    max-width: 100%;
-    height: 250px;
-    margin-bottom: 20px;
-  }
 }
+
+
+

@@ -23,7 +23,7 @@ const Articles = () => {
             <div className="articles-grid">
                 {articlesData.map((article) => (
                     <div className="article-card" key={article.id}>
-                        <h2 style={{ color: "#4285F4", textAlign: "center", fontWeight: "bold" }}>{article.title}</h2>
+                        <h2 style={{textAlign: "center" }}>{article.title}</h2>
                         <p style={{textAlign:"justify"}}>{article.excerpt}</p>
                         <button
                             className="read-more-btn"

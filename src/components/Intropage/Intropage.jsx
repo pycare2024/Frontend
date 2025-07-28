@@ -23,7 +23,7 @@ function Intropage() {
             <p>
               We partner with companies to provide therapy access for employees and families. Corporate codes enable direct access and no payments.
             </p>
-            <button onClick={() => navigate("/bookAppointment")} className="workflow-btn">
+            <button onClick={() => navigate("/CorporateBooking")} className="workflow-btn">
               Explore Corporate
             </button>
           </div>

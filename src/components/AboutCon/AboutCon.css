@@ -4,13 +4,21 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background-color: #FFFFFF;
   padding: 50px 10%;
   box-sizing: border-box;
-  background: url('./new.png') no-repeat center;
+  background: url('./experts.jpg') no-repeat center center;
   background-size: cover;
-  background-position: center;
-  background-attachment: scroll;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.Con::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2); /* subtle veil */
+  backdrop-filter: blur(4px);
+  z-index: 0;
 }
 
 .tagline-section {
@@ -19,6 +27,8 @@
   align-items: center;
   margin-bottom: 60px;
   animation: slideUp 1s ease-in-out;
+  z-index: 1;
+  position: relative;
 }
 
 .tagline-section span {
@@ -26,6 +36,7 @@
   font-weight: bold;
   color: #1A3A8C;
   text-align: center;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
 }
 
 .underline {
@@ -33,10 +44,13 @@
   height: 5px;
   background-color: #F28C38;
   margin-top: 15px;
+  border-radius: 10px;
 }
 
 .content-section {
   width: 100%;
+  z-index: 1;
+  position: relative;
 }
 
 .landing-container {
@@ -47,25 +61,26 @@
 }
 
 .landing-content {
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(0.5px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 20px;
   padding: 2rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   animation: fadeIn 1s ease-in-out;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 1000px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .landing-content:hover {
   transform: scale(1.02);
-  box-shadow: 0 0 15px #4285F4;
+  box-shadow: 0 0 20px #4285F4;
 }
 
 .text-section {
@@ -74,50 +89,54 @@
 }
 
 .text-section h1 {
-  font-size: 2.5rem;
+  font-size: 2.7rem;
   color: #4285f4;
   font-weight: 800;
   margin-bottom: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .text-section h2 {
   font-size: 1.5rem;
-  color: #778ba0;
+  color: #1b1c21;
   margin-bottom: 1rem;
+  opacity: 0.8;
 }
 
 .text-section p {
   font-size: 1rem;
-  color: #333;
+  color: #2b2b2b;
   margin-bottom: 1.5rem;
   text-align: justify;
+  text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.1);
 }
 
 .see-more-btn {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 24px;
-  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: #4285f4;
+  border: 1px solid rgba(66, 133, 244, 0.4);
+  border-radius: 30px;
+  padding: 12px 24px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(66, 133, 244, 0.2);
 }
 
 .see-more-btn:hover {
-  background-color: white;
-  color: #4285f4;
-  border: 1px solid #4285f4;
+  background-color: #4285f4;
+  color: white;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
 }
 
-/* Animations */
+/* === Animations === */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(40px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -129,7 +148,6 @@
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);

@@ -25,7 +25,7 @@ function MarketPlaceIntro() {
                 </p>
 
                 <motion.div className="highlight-box" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-                    <FaGraduationCap size={24} color="#4ecdc4" /> <strong>New:</strong> We've introduced <strong>Student ID Verification</strong> to unlock exclusive therapy rates for students. Just upload your ID before booking.
+                    <FaGraduationCap size={24} color="#0964f8" /> <strong>New:</strong> We've introduced <strong>Student ID Verification</strong> to unlock exclusive therapy rates for students. Just upload your ID before booking.
                 </motion.div>
 
                 <h2>How It Works</h2>
@@ -45,11 +45,11 @@ function MarketPlaceIntro() {
 
                 <div className="price-comparison">
                     <motion.div className="price-box highlighted1" whileHover={{ scale: 1.03 }}>
-                        <h3>Others</h3>
+                        <h3 style={{color:"#0964f8"}}>Others</h3>
                         <p>₹1000 - ₹2000(+ 18% GST)/session</p>
                     </motion.div>
                     <motion.div className="price-box highlighted" whileHover={{ scale: 1.03 }}>
-                        <h3>PsyCare</h3>
+                        <h3 style={{color:"#0964f8"}}>PsyCare</h3>
                         <p><strong>₹400(+ 18% GST)/session</strong><br/>(for verified students)</p>
                         <p><strong>₹800(+ 18% GST)/session</strong><br/>(for others)</p>
                     </motion.div>
@@ -71,7 +71,7 @@ function MarketPlaceIntro() {
                 </p>
 
                 <div className="student-info">
-                    <FaUsers size={22} color="#fff" />
+                    <FaUsers size={22} color="#0964f8" />
                     <span>Already trusted by 10,000+ students across India</span>
                 </div>
 

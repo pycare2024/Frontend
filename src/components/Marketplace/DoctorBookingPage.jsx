@@ -51,6 +51,7 @@ function DoctorBookingPage() {
 
     const fetchSlots = async () => {
         const res = await axios.get(`https://backend-xhl4.onrender.com/AppointmentRoute/marketplace/getAvailableSlots/${doctorId}`);
+        console.log("Response -> ",res);
         setAvailableSchedules(res.data.availableSchedules || []);
     };
 
@@ -137,7 +138,7 @@ function DoctorBookingPage() {
                 <div className="doctor-profile">
                     <img src={doctor?.photo || "/default-doc.png"} alt={doctor?.Name} />
                     <h2>{doctor?.Name}</h2>
-                    <p style={{ color: "white" }}>{doctor?.Role}</p>
+                    <p style={{ color: "#0964f8" }}>{doctor?.Role}</p>
                     {doctor?.Qualification && (
                         <div className="qualifications-wrapper">
                             {(Array.isArray(doctor.Qualification)
@@ -150,8 +151,8 @@ function DoctorBookingPage() {
                             ))}
                         </div>
                     )}
-                    <p style={{ color: "white" }}>{doctor?.Gender}</p>
-                    <p style={{ color: "white" }}>{doctor?.City}</p>
+                    <p style={{ color: "#0964f8" }}>{doctor?.Gender}</p>
+                    <p style={{ color: "#0964f8" }}>{doctor?.City}</p>
                 </div>
 
                 <div className="booking-slot-section">
@@ -181,15 +182,24 @@ function DoctorBookingPage() {
                                 <>
                                     <h4>Available Slots</h4>
                                     <div className="slots-grid">
-                                        {availableSchedules[selectedDateIndex].slots.map((slot, idx) => (
-                                            <button
-                                                key={idx}
-                                                className={`slot-button ${selectedSlot === slot ? "selected" : ""}`}
-                                                onClick={() => setSelectedSlot(slot)}
-                                            >
-                                                {slot.startTime} - {slot.endTime}
-                                            </button>
-                                        ))}
+                                        {availableSchedules[selectedDateIndex].slots.map((slot, idx) => {
+                                            console.log("Price per slot->",availableSchedules[selectedDateIndex].pricePerSlot);
+                                            const basePrice = availableSchedules[selectedDateIndex].pricePerSlot || 944;
+                                            const finalPrice = /*isStudentBooking ? Math.floor(basePrice / 2) :*/ basePrice;
+                                            const gstAmount = Math.round(finalPrice * 0.18);
+                                            const totalPrice = finalPrice + gstAmount;
+
+                                            return (
+                                                <button
+                                                    key={idx}
+                                                    className={`slot-button ${selectedSlot === slot ? "selected" : ""}`}
+                                                    onClick={() => setSelectedSlot(slot)}
+                                                >
+                                                    <div>{slot.startTime} - {slot.endTime}</div>
+                                                    <div className="slot-price">₹{totalPrice} (incl. GST)</div>
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 </>
                             )}
@@ -274,9 +284,12 @@ function DoctorBookingPage() {
                         </div>
                     ) : (
                         <div className="confirmation">
-                            <h3>Appointment Booked</h3>
-                            <p>Doctor: {appointmentInfo.doctorName}</p>
-                            <p>
+                            <h3>Slot Reserved (Awaiting Payment)</h3>
+                            <p style={{ color: "#00378fff", textAlign: "center" }}>Dear {patientData.Name},
+                                Your selected appointment slot has been successfully reserved for you. To confirm your booking, please complete the payment using the link provided below.
+                                Note: The payment link will expire in 10 minutes. Kindly complete the transaction promptly to avoid cancellation of the slot.</p>
+                            <p style={{ color: "#00378fff" }}>Doctor: {appointmentInfo.doctorName}</p>
+                            <p style={{ color: "#00378fff" }}>
                                 Payment Link: {" "}
                                 <a href={appointmentInfo.paymentLink} target="_blank" rel="noreferrer">
                                     Click to Pay

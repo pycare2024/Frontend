@@ -7,10 +7,12 @@ function DoctorOwnSchedule() {
   const [weekDay, setWeekDay] = useState("");
   const [slots, setSlots] = useState([]);
   const [scheduleId, setScheduleId] = useState("");
+  const [pricePerDay, setPricePerDay] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingSlot, setEditingSlot] = useState(null);
   const [newSlots, setNewSlots] = useState([{ startTime: "", endTime: "" }]);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (date) {
@@ -24,17 +26,22 @@ function DoctorOwnSchedule() {
     if (!doctorId || !date) return;
     setLoading(true);
     setMessage("");
+
     try {
-      const res = await fetch(`https://backend-xhl4.onrender.com/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`);
+      const res = await fetch(
+        `http://localhost:4000/DoctorScheduleRoute/doctorSchedules/${doctorId}/${date}`
+      );
       const data = await res.json();
 
       if (res.status === 404) {
         setSlots([]);
         setScheduleId("");
+        setPricePerDay("");
         setMessage("No slots found for the selected date.");
       } else {
         setSlots(data.slots || []);
         setScheduleId(data.scheduleId || "");
+        setPricePerDay(data.pricePerDay || "");
         setMessage("");
       }
     } catch (err) {
@@ -50,12 +57,21 @@ function DoctorOwnSchedule() {
 
     try {
       const res = await fetch(
-        `https://backend-xhl4.onrender.com/DoctorScheduleRoute/deleteSlot/${scheduleId}/${slotId}`,
+        `http://localhost:4000/DoctorScheduleRoute/deleteSlot/${scheduleId}/${slotId}`,
         { method: "DELETE" }
       );
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      fetchDoctorSlots();
+
+      if (data.scheduleDeleted) {
+        // if schedule is fully deleted after last slot is removed
+        setSlots([]);
+        setScheduleId("");
+        setPricePerDay("");
+        setMessage("All slots removed. Schedule deleted.");
+      } else {
+        fetchDoctorSlots();
+      }
     } catch (err) {
       alert("Error deleting slot: " + err.message);
     }
@@ -66,13 +82,14 @@ function DoctorOwnSchedule() {
 
     try {
       const res = await fetch(
-        `https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`,
+        `http://localhost:4000/DoctorScheduleRoute/updateSchedule/${scheduleId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             date,
             weekDay,
+            pricePerDay: Number(pricePerDay),
             slots: [editingSlot],
           }),
         }
@@ -90,27 +107,22 @@ function DoctorOwnSchedule() {
   const handleAddSlots = async () => {
     const validSlots = newSlots.filter(s => s.startTime && s.endTime);
     if (validSlots.length === 0) return alert("Please enter at least one valid slot.");
+    if (!pricePerDay) return alert("Please enter a valid price per day.");
+
+    setIsSaving(true);
 
     try {
       const url = scheduleId
-        ? `https://backend-xhl4.onrender.com/DoctorScheduleRoute/updateSchedule/${scheduleId}`
-        : `https://backend-xhl4.onrender.com/DoctorScheduleRoute/addSchedule`;
+        ? `http://localhost:4000/DoctorScheduleRoute/updateSchedule/${scheduleId}`
+        : `http://localhost:4000/DoctorScheduleRoute/addSchedule`;
 
+      const method = scheduleId ? "PUT" : "POST";
       const body = scheduleId
-        ? {
-            date,
-            weekDay,
-            slots: validSlots
-          }
-        : {
-            doctor_id: doctorId,
-            date,
-            weekDay,
-            slots: validSlots
-          };
+        ? { date, weekDay, pricePerSlot: Number(pricePerDay), slots: validSlots }
+        : { doctor_id: doctorId, date, weekDay, pricePerSlot: Number(pricePerDay), slots: validSlots };
 
       const res = await fetch(url, {
-        method: "POST",
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
@@ -122,6 +134,8 @@ function DoctorOwnSchedule() {
       fetchDoctorSlots();
     } catch (err) {
       alert("Error adding slots: " + err.message);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -150,10 +164,21 @@ function DoctorOwnSchedule() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        min={new Date().toISOString().split("T")[0]}
+        max={new Date().toISOString().split("T")[0]}
       />
 
-      {message && <p className="message">{message}</p>}
+      <div className="price-container">
+        <label>Price Per Day (₹):</label>
+        <input
+          type="number"
+          min="1"
+          value={pricePerDay}
+          onChange={(e) => setPricePerDay(e.target.value)}
+          placeholder="Enter price for this day's schedule"
+        />
+
+        {message && <p className="message">{message}</p>}
+      </div>
 
       {!loading && slots.length > 0 && (
         <div className="slot-list">
@@ -207,7 +232,9 @@ function DoctorOwnSchedule() {
         ))}
         <button className="add-button" onClick={addNewSlotField}>➕ Add Another Slot</button>
         <br />
-        <button className="save-button" onClick={handleAddSlots}>✅ Save All Slots</button>
+        <button className="save-button" onClick={handleAddSlots} disabled={isSaving}>
+          ✅ Save All Slots
+        </button>
       </div>
     </div>
   );

@@ -59,6 +59,8 @@ import DoctorOwnSchedule from './components/DoctorOwnSchedule';
 import MarketPlaceIntro from './components/Marketplace/MarketPlaceIntro';
 import PsyCareForSchoolsIntro from './components/Schools/PsyCareForSchoolsIntro';
 import StartMyJourney from './components/Schools/StartMyJourney';
+import CorporateBooking from './components/Corporates/CorporateBooking';
+import CorporateFullReport from './components/Corporates/CorporateFullReport';
 
 
 import { useState, useEffect } from 'react';
@@ -223,6 +225,8 @@ function App() {
                 <Route path="/marketplacemain" element={<MarketPlaceIntro />} />
                 <Route path="/School" element={<PsyCareForSchoolsIntro />} />
                 <Route path="/Startschooljourney" element={<StartMyJourney />} />
+                <Route path="/CorporateBooking" element={<CorporateBooking />} />
+                <Route path="/CorporateFullReport" element={<CorporateFullReport />} />
             </Routes>
             {/* <Footer/> */}
         </div>

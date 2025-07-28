@@ -1,124 +1,175 @@
-/* DoctorOwnSchedule.css */
-
+/* === Scoped Glassmorphic Schedule Container === */
 .schedule-container {
-  padding: 30px;
-  max-width: 600px;
-  margin: auto;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-}
-
-.schedule-title {
-  text-align: center;
-  color: #007bff;
-  margin-bottom: 20px;
-}
-
-input[type="date"],
-input[type="time"] {
-  padding: 10px;
+  min-height: 100vh;
   width: 100%;
+  background: url('./patients.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4285F4;
+  position: relative;
+  flex-direction: column;
+}
+
+.schedule-container > div {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 650px;
+  width: 100%;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+}
+
+.schedule-container .schedule-title,
+.schedule-container label,
+.schedule-container h4,
+.schedule-container p {
+  color: #4285F4;
   margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
 }
 
-.message {
-  color: gray;
+.schedule-container input[type="date"],
+.schedule-container input[type="time"] {
+  padding: 10px;
+  border-radius: 10px;
+  border: 0.5px solid #4285F4;
+  margin: 10px 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  color: #4285F4;
+  font-weight: bold;
+}
+
+.schedule-container .message {
   margin-top: 10px;
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+  color: red;
+  font-weight: bold;
 }
 
-.slot-list {
+.schedule-container .slot-list {
   margin-top: 20px;
 }
 
-.slot-card {
-  background-color: #f9f9f9;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.slot-card p {
-  margin: 0 0 10px;
-  font-weight: 500;
-}
-
-.slot-card button {
-  padding: 6px 12px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.slot-card button:first-of-type {
-  background-color: #ffc107;
+.schedule-container .slot-card {
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 10px 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: #000;
-  margin-right: 8px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.slot-card button:last-of-type {
-  background-color: #dc3545;
-  color: white;
-}
-
-.edit-slot,
-.add-slot {
+.schedule-container .edit-slot,
+.schedule-container .add-slot {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 20px;
+  border-radius: 16px;
   margin-top: 30px;
-  background-color: #eef6ff;
-  padding: 15px;
-  border-radius: 8px;
+  color: #000;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
 }
 
-.edit-slot h4,
-.add-slot h4 {
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.time-input-group {
+.schedule-container .time-input-group {
   display: flex;
   gap: 10px;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.time-input-group button {
-  padding: 6px 10px;
+.schedule-container button {
+  padding: 10px 15px;
   border: none;
-  background-color: #f44336;
-  color: white;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
-}
-
-.add-button,
-.save-button {
-  background-color: #28a745;
+  font-weight: bold;
+  background-color: #4285F4;
   color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.add-button {
-  background-color: #007bff;
-  margin-bottom: 10px;
+.schedule-container button:hover {
+  background-color: #003b9a;
 }
 
-@media (max-width: 600px) {
-  .time-input-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.schedule-container button:disabled {
+  background-color: rgba(66, 133, 244, 0.3);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
-  .time-input-group button {
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .schedule-container > div {
+    padding: 20px;
     width: 100%;
   }
+
+  .schedule-container .time-input-group {
+    flex-direction: column;
+  }
+
+  .schedule-container button {
+    width: 100%;
+  }
+}
+
+/* Container styling if needed */
+.price-container {
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+}
+
+/* Label styling */
+.price-container label {
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4285F4;
+}
+
+/* Input field styling */
+.price-container input[type="number"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.price-container input[type="number"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Message/Validation styling */
+.price-container .message {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: red; /* Change to green or blue for success/info */
 }

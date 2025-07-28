@@ -9,10 +9,11 @@
 }
 
 .booking-container {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
   border-radius: 20px;
+  border: 0.4px solid #4285F4;
   padding: 30px;
   width: 100%;
   max-width: 900px;
@@ -41,7 +42,7 @@
 .doctor-profile h2 {
   margin: 10px 0 5px;
   font-size: 1.8rem;
-  color: #fff;
+  color: #0964f8;
 }
 
 .doctor-profile p {
@@ -62,6 +63,7 @@
   padding: 6px 12px;
   border-radius: 30px;
   font-size: 0.9rem;
+  color: #0964f8;
 }
 
 /* Slots Section */
@@ -69,6 +71,7 @@
 .booking-slot-section h4 {
   margin: 10px 0;
   font-weight: 600;
+  color: #0964f8;
 }
 
 .date-selector,
@@ -81,10 +84,10 @@
 .date-button,
 .slot-button {
   background: rgba(255, 255, 255, 0.15);
-  border: none;
+  border: 0.5px solid #0964f8;
   padding: 10px 15px;
   border-radius: 12px;
-  color: white;
+  color: #0964f8;
   font-size: 0.95rem;
   cursor: pointer;
   transition: background 0.3s ease;
@@ -97,7 +100,8 @@
 
 .date-button.active,
 .slot-button.selected {
-  background: rgba(0, 191, 165, 0.6);
+  background: #0964f8;
+  color: white;
   font-weight: bold;
 }
 
@@ -114,17 +118,17 @@
 .register-section input,
 .register-section select {
   padding: 10px;
-  border: none;
+  border: 0.5px solid #0964f8;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.15);
-  color: white;
+  color: #0964f8;
   font-size: 1rem;
 }
 
 .otp-section button,
 .register-section button {
   padding: 10px 15px;
-  background: #00bfa5;
+  background: #0964f8;
   border: none;
   border-radius: 10px;
   color: white;
@@ -135,20 +139,20 @@
 
 .otp-section button:hover,
 .register-section button:hover {
-  background: #009e86;
+  background: #033b96;
 }
 
 /* Confirmation Styles */
 .confirmation {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.134);
   border-radius: 15px;
   padding: 20px;
   text-align: center;
-  color: #ffffff;
+  color: #0964f8;
 }
 
 .confirmation a {
-  color: #00e676;
+  color: #ed0d0d;
   text-decoration: underline;
   font-weight: 600;
 }
@@ -156,7 +160,12 @@
 .confirmation em {
   display: block;
   margin-top: 10px;
-  color: #dcdcdc;
+  color: #4285F4;
+}
+
+.confirmation p
+{
+  color: #0964f8;
 }
 
 .student-booking-info {
@@ -165,6 +174,7 @@
   background: rgba(255, 255, 255, 0.1);
   padding: 10px 15px;
   border-radius: 10px;
+  border: 0.5px solid #4285F4;
 }
 
 /* Responsive */

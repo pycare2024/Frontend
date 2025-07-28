@@ -2,7 +2,7 @@
 .register-employee-main {
   min-height: 100vh;
   width: 100%;
-  background-image: url('./registrationBg.jpg'); /* Update path if in assets */
+  background-image: url('./corporatebooking.jpg'); /* Update path if in assets */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,20 +18,20 @@
   max-width: 550px;
   padding: 2.5rem;
   background: rgba(255, 255, 255, 0.502);  /* Light transparent background */
+  border: 1px solid rgba(92, 212, 160, 0.727);  /* Corrected this line */
   border-radius: 20px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
   font-family: 'Inter', 'Segoe UI', sans-serif;
   color: #333;
   animation: fadeIn 0.5s ease-in-out;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 }
 
 /* Heading */
 .register-employee-container h2 {
   text-align: center;
-  color: #1a73e8;
+  color: green;
   margin-bottom: 2rem;
-  font-weight: 700;
   font-size: 1.8rem;
 }
 
@@ -70,19 +70,23 @@
 
 /* Submit button */
 .employee-form button {
-  padding: 0.85rem;
-  background-color: #1a73e8;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  background: rgba(226, 228, 230, 0); /* semi-transparent blue */
+  color: green;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  backdrop-filter: blur(4px); /* glass effect */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
 }
 
 .employee-form button:hover {
-  background-color: #1558d6;
+  background: rgba(26, 115, 232, 0.5); /* slightly more opaque on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
 }
 
 /* Success & Error messages */

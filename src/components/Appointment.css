@@ -11,221 +11,203 @@ body {
     margin-top: 5%;
   }
 
-  .appointments-wrapper {
-    margin-top: 5%;
-    width: 100%;
-    padding: 2rem;
-    background-color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    min-height: 100vh;
-  }
-  
-  .appointments-wrapper .appointments-heading {
-    color: #4285F4;
-    font-weight: 700;
-    text-align: center;
-    font-size: 2.4rem;
-    margin-bottom: 2rem;
-  }
-  
-  .appointments-wrapper .date-picker {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .appointments-wrapper .date-picker input[type="date"] {
-    padding: 0.8rem 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.75rem;
-    font-size: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    outline: none;
-    transition: border-color 0.3s ease;
-    text-align: center;
-  }
-  
-  .appointments-wrapper .date-picker input[type="date"]:focus {
-    border-color: #4285F4;
-    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
-  }
-  
-  .appointments-wrapper .table-container {
-    overflow-x: auto;
-    padding: 1rem 0;
-    background-color: transparent;
-    border-radius: 0;
-  }
-  
-  .appointments-wrapper .table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 1rem;
-    overflow: hidden;
-  }
-  
-  .appointments-wrapper .table th {
-    background-color: #4285F4;
-    color: white;
-    padding: 1rem;
-    text-align: left;
-    font-size: 1rem;
-  }
-  
-  .appointments-wrapper .table td {
-    padding: 1rem;
-    color: #333333;
-    font-size: 0.95rem;
-    vertical-align: middle;
-  }
-  
-  .appointments-wrapper .table tr:nth-child(even) {
-    background-color: #f0f4f8;
-  }
-  
-  .appointments-wrapper .table tr:hover {
-    background-color: #e2e8f0;
-    transition: background-color 0.3s ease;
-  }
-  
-  .appointments-wrapper .status {
-    display: inline-block;
-    padding: 0.4rem 0.75rem;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: white;
-    text-align: center;
-  }
-  
-  .appointments-wrapper .status.paid {
-    background-color: #34d399;
-  }
-  
-  .appointments-wrapper .status.unpaid {
-    background-color: #ef4444;
-  }
-  
-  .appointments-wrapper .button {
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    text-align: center;
-    color: white;
-    border: none;
-  }
-  
-  .appointments-wrapper .button.start {
-    background-color: #10b981;
-  }
-  
-  .appointments-wrapper .button.start:hover {
-    background-color: #059669;
-  }
-  
-  .appointments-wrapper .button.join {
-    background-color: #3b82f6;
-  }
-  
-  .appointments-wrapper .button.join:hover {
-    background-color: #2563eb;
-  }
-  
-  .appointments-wrapper .button.complete {
-    background-color: #16a34a;
-  }
-  
-  .appointments-wrapper .button.complete:hover {
-    background-color: #15803d;
-  }
-  
-  .appointments-wrapper .button.no-show {
-    background-color: #dc2626;
-  }
-  
-  .appointments-wrapper .button.no-show:hover {
-    background-color: #b91c1c;
-  }
-  
-  .appointments-wrapper .status-tag {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    color: white;
-    display: inline-block;
-    text-align: center;
-  }
-  
-  .appointments-wrapper .status-tag.completed {
-    background-color: #22c55e;
-  }
-  
-  .appointments-wrapper .status-tag.no-show {
-    background-color: #f87171;
-  }
-  
-  .appointments-wrapper .flex {
-    display: flex;
-  }
-  
-  .appointments-wrapper .flex-col {
-    flex-direction: column;
-  }
-  
-  .appointments-wrapper .items-center {
-    align-items: center;
-  }
-  
-  .appointments-wrapper .gap-2 {
-    gap: 0.5rem;
-  }
-
-  .button.cancel {
-    background-color: #ffdddd;
-    color: #c0392b;
-    border: 1px solid #e74c3c;
-}
-.button.cancel:hover {
-    background-color: #ffe6e6;
-}
-.status-tag.cancelled {
-    background-color: #f9d6d5;
-    color: #b71c1c;
-    font-weight: bold;
-    padding: 6px 10px;
-    border-radius: 6px;
+  /* === BACKGROUND IMAGE CONTAINER === */
+.appointments-page {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('./patients.jpg'); /* ✅ Make sure image is correctly placed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+  overflow-y: auto;
 }
 
-.button.show-id {
-  background-color: rgba(255, 255, 255, 0.15);
+/* === GLASS CONTAINER === */
+.appointments-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 6px 12px;
-  color: #fff;
+  color: #4285f4;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* === HEADING === */
+.appointments-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4285f4;
+}
+
+/* === DATE PICKER === */
+.date-picker input[type="date"] {
+  background: rgba(255, 255, 255, 0.15);
+  border: 0.5PX solid #4285f4;
   border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  color: #4285f4;
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* === TABLE CONTAINER === */
+.table-container {
+  margin-top: 2rem;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* === TABLE === */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #4285f4;
+}
+
+.table th,
+.table td {
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table th {
   font-weight: 600;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* === STATUS TAGS === */
+.status.paid {
+  color: #0f0;
+  font-weight: bold;
+}
+
+.status.unpaid {
+  color: #f66;
+  font-weight: bold;
+}
+
+.status-tag {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-tag.cancelled {
+  background: rgba(255, 0, 0, 0.2);
+}
+.status-tag.completed {
+  background: rgba(0, 255, 0, 0.2);
+}
+.status-tag.no-show {
+  background: rgba(255, 165, 0, 0.2);
+}
+
+/* === SESSION FIELDS === */
+.session-fields .field {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.session-fields label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.voice-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.voice-input textarea {
+  flex: 1;
+  min-height: 60px;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 0.5px solid #4285f4;
+  color: #fff;
+  resize: vertical;
+
+}
+
+/* === BUTTONS === */
+.button {
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
+  transition: 0.3s;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
 }
 
-.button.show-id:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+.button:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
+.button.start {
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+}
+.button.join {
+  background: green;
+}
+.button.cancel {
+  background: linear-gradient(to right, #f5576c, #f093fb);
+}
+.button.complete {
+  background: #4285f4;
+}
+.button.no-show {
+  background: red;
+}
 .button.show-id {
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: #111;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+}
+
+/* === MICROPHONE BUTTON === */
+.mic-button {
+  font-size: 1.4rem;
+  background: transparent;
+  border: none;
+  color: #4285f4;
   cursor: pointer;
 }
 
-.button.show-id:hover {
-  background: rgba(255, 255, 255, 0.35);
+/* === CHECKBOX === */
+input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* === PLACEHOLDER COLORS === */
+.date-picker input[type="date"]::placeholder,
+textarea::placeholder {
+  color: #ddd;
+}
+
+.required {
+  color: #ff4d4d;
+  margin-left: 4px;
 }

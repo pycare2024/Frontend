@@ -18,7 +18,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 10, 0.45);
+  background: rgba(10, 10, 10, 0.032);
   z-index: 0;
 }
 
@@ -30,8 +30,8 @@
   width: 100%;
   padding: 2.5rem;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px) saturate(100%);
+  background: rgba(254, 254, 254, 0);
+  backdrop-filter: blur(1px) saturate(100%);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
 }
@@ -43,15 +43,15 @@
 }
 .marketplace-header h1 {
   font-size: 2.5rem;
-  color: #fff;
+  color: #0964f8;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); */
 }
 .marketplace-header p {
   font-size: 1.1rem;
-  color: #ddd;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  color: #0964f8;
+  /* text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); */
   margin-top: 0.5rem;
 }
 
@@ -188,7 +188,7 @@ input[type="date"]:focus,
 }
 
 .doctor-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: #fefefe1a;
   border-radius: 20px;
   backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -220,8 +220,7 @@ input[type="date"]:focus,
 .doctor-card h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #fff;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  color: #0964f8;
 }
 
 .doctor-card p {
@@ -232,17 +231,21 @@ input[type="date"]:focus,
 
 .book-button {
   margin-top: 1rem;
-  background: linear-gradient(135deg, #007aff, #3a8fff);
-  color: white;
+  background: rgba(58, 143, 255, 0.25); /* translucent background */
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  color: #0240a4;
   padding: 0.65rem 1.5rem;
   font-weight: 600;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 24px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
+
 .book-button:hover {
-  background: linear-gradient(135deg, #005ecb, #357df7);
+  background: rgba(53, 125, 247, 0.4);
   transform: scale(1.05);
 }
 
@@ -344,7 +347,7 @@ input[type="date"]:focus,
   padding: 10px 18px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  color: #4285F4;
   cursor: pointer;
   transition: background 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -368,7 +371,7 @@ input[type="date"]:focus,
 .upload-message {
   margin-left: 10px;
   font-weight: 500;
-  color: #fff;
+  color: #4285F4;
   font-size: 14px;
 }
 
@@ -396,7 +399,7 @@ input[type="date"]:focus,
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   font-weight: 500;
-  color: #fff;
+  color: #4285F4;
   max-width: 90%;
   margin-inline: auto;
 }
@@ -405,7 +408,7 @@ input[type="date"]:focus,
   display: inline-block;
   padding: 10px 16px;
   background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  color: #4285F4;
   font-weight: bold;
   border-radius: 12px;
   cursor: pointer;
@@ -423,14 +426,14 @@ input[type="date"]:focus,
   justify-content: center;
   gap: 10px;
   font-weight: bold;
-  color: white;
+  color: #4285F4;
 }
 
 .spinner {
   width: 16px;
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
+  border-top: 2px solid blue;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -470,19 +473,18 @@ input[type="date"]:focus,
 }
 
 .filter-label {
-  font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
-  color: #ffffff;
+  color: #0964f8;
 }
 
 .filter-input-date,
 .filter-select .css-13cymwt-control,
 .expertise-multiselect .css-13cymwt-control {
   background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border: 0.5px solid #0964f8 !important;
   border-radius: 10px !important;
-  color: #fff !important;
+  color: #0964f8 !important;
   min-height: 40px;
   font-size: 0.95rem;
 }
@@ -493,12 +495,12 @@ input[type="date"]:focus,
 
 .filter-select .css-1dimb5e-singleValue,
 .expertise-multiselect .css-1dimb5e-singleValue {
-  color: #fff !important;
+  color: #0964f8 !important;
 }
 
 .expertise-hint {
-  font-size: 0.85rem;
-  color: #ddd;
+  font-size: 1 rem;
+  color: #0964f8;
   margin-top: 0.5rem;
 }
 
@@ -522,18 +524,18 @@ input[type="date"]:focus,
 }
 
 .apply-filters-button {
-  background: #4ecdc4;
-  color: #000;
+  background: #0964f8;
+  color: white;
 }
 
 .clear-filters-button {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: #0964f8;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .apply-filters-button:hover {
-  background: #3bbcb3;
+  background: #032b6c;
 }
 
 .clear-filters-button:hover {
@@ -590,7 +592,7 @@ div[class*="option--is-selected"] {
 /* React Select Control Text Fix */
 .filter-select .css-1dimb5e-singleValue,
 .expertise-multiselect .css-1dimb5e-singleValue {
-  color: #ffffff !important;
+  color: #0964f8 !important;
   font-weight: 500;
 }
 

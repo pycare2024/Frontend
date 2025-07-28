@@ -11,12 +11,11 @@
   max-width: 1200px;
   width: 100%;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(222, 218, 218, 0.147);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  color: #f0fdf4;
   font-family: 'Segoe UI', sans-serif;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -26,33 +25,33 @@
   font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #a6f4c5; /* soft green glow */
+  color: #0964f8; /* soft green glow */
 }
 
 .marketplace-intro-glass p {
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  color: #d9fcd2; /* light muted green */
+  color: #0964f8; /* light muted green */
 }
 
 .marketplace-intro-glass h2 {
   margin-top: 2rem;
   font-size: 1.5rem;
-  color: #bef264; /* lime mist highlight */
+  color: #0964f8; /* lime mist highlight */
 }
 
 .highlight-box {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(163, 230, 53, 0.1); /* lime background hint */
+  background: rgba(53, 147, 230, 0.1); /* lime background hint */
   padding: 1rem;
   margin: 1.5rem auto;
   border-radius: 12px;
-  color: #d9f99d;
+  color: #0964f8;
   font-weight: 500;
-  border-left: 4px solid #bef264;
+  border-left: 4px solid #0964f8;
 }
 
 .progress-container {
@@ -70,14 +69,14 @@
   min-width: 140px;
   border-radius: 12px;
   text-align: center;
-  color: #f0fdf4;
+  color: #fdf0f1;
   transition: all 0.3s ease;
 }
 
 .progress-step .step-number {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #86efac;
+  color: white;
 }
 
 .price-comparison {
@@ -94,24 +93,23 @@
   border-radius: 15px;
   padding: 1rem;
   text-align: center;
-  color: #e0fce5;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e0ecfc;
 }
 
 .price-box.highlighted {
-  border: 2px solid #86efac;
-  background: rgba(132, 204, 22, 0.12);
+  border: 2px solid #0964f8;
+  background: rgba(22, 74, 204, 0.002);
 }
 
 .price-box.highlighted1 {
-  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border: 2px dashed #0964f8;
 }
 
 .expert-highlights {
   text-align: left;
   padding-left: 1rem;
   list-style: none;
-  color: #e6ffe9;
+  color: #0964f8;
   margin-top: 1rem;
 }
 
@@ -131,7 +129,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  color: #dcfce7;
+  color: #0964f8;
   font-weight: 500;
 }
 
@@ -139,8 +137,8 @@
   margin-top: 2rem;
   padding: 0.8rem 2rem;
   border-radius: 30px;
-  background-color: #86efac;
-  color: #1a1a1a;
+  background-color: #0964f8;
+  color: white;
   border: none;
   font-size: 1rem;
   font-weight: bold;
@@ -150,7 +148,7 @@
 }
 
 .explore-button:hover {
-  background-color: #65c18c;
+  background-color: #03275f;
   transform: translateY(-2px);
 }
 

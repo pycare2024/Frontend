@@ -8,25 +8,32 @@
   background-size: cover;
   padding: 50px 10%;
   box-sizing: border-box;
+  backdrop-filter: blur(6px); /* optional, enhances overall softness */
 }
 
 .header-section2 {
   margin-top: 30px;
   text-align: center;
   margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  padding: 20px 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .headline2 {
   font-size: 3rem;
   font-weight: bold;
-  color: #4285F4;
+  color: #2A62D9;
   margin: 0;
   animation: slideUp 1s ease-in-out;
 }
 
 .subheadline2 {
   font-size: 1.2rem;
-  color: black;
+  color: #333;
   margin: 10px 0 0;
   animation: slideUp 1.2s ease-in-out;
 }
@@ -44,25 +51,24 @@
 }
 
 .feature-card {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 10px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
   text-align: center;
   flex: 1 1 22%;
   min-width: 260px;
   max-width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInCard 1s ease-in-out;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
-
-.feature-card:nth-child(1) { animation-delay: 0.2s; }
-.feature-card:nth-child(2) { animation-delay: 0.4s; }
-.feature-card:nth-child(3) { animation-delay: 0.6s; }
-.feature-card:nth-child(4) { animation-delay: 0.8s; }
 
 .feature-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px #4285F4;
+  box-shadow: 0 0 20px rgba(66, 133, 244, 0.25);
 }
 
 /* === Icon styles === */
@@ -76,36 +82,33 @@
   transition: filter 0.3s ease;
 }
 
+.icon:hover {
+  filter: brightness(0.85);
+}
+
+/* Icon backgrounds */
 .integrated-mental-health {
-  background: url('pag2img1.jpg') no-repeat center;
-  background-size: contain;
+  background-image: url('pag2img1.jpg');
 }
 
 .grounded-in-science {
-  background: url('pag2img2.jpg') no-repeat center;
-  background-size: contain;
+  background-image: url('pag2img2.jpg');
 }
 
 .personalized-support {
-  background: url('pag2img3.jpg') no-repeat center;
-  background-size: contain;
+  background-image: url('pag2img3.jpg');
 }
 
 .round-the-clock {
-  background: url('pag2img4.jpg') no-repeat center;
-  background-size: contain;
-}
-
-.icon:hover {
-  filter: brightness(0.8);
+  background-image: url('pag2img4.jpg');
 }
 
 /* === Text content === */
 .feature-title {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #4285F4;
-  margin: 0 0 10px;
+  color: #2A62D9;
+  margin-bottom: 10px;
 }
 
 .feature-description {
@@ -138,23 +141,20 @@
   }
 }
 
-/* === Responsive: Tablets === */
+/* === Responsive Tweaks (no change, just ensuring compatibility) === */
 @media (max-width: 1024px) {
   .feature-card {
     flex: 1 1 45%;
     max-width: 48%;
   }
-
   .headline2 {
     font-size: 2.5rem;
   }
-
   .subheadline2 {
     font-size: 1rem;
   }
 }
 
-/* === Responsive: Mobile Horizontal Scroll === */
 @media (max-width: 768px) {
   .features-section {
     flex-wrap: nowrap;
@@ -163,11 +163,9 @@
     gap: 16px;
     padding-bottom: 10px;
   }
-
   .features-section::-webkit-scrollbar {
     display: none;
   }
-
   .feature-card {
     flex: 0 0 80%;
     scroll-snap-align: center;
@@ -175,48 +173,38 @@
     min-width: 280px;
     max-width: 80%;
   }
-
   .feature-title {
     font-size: 1.2rem;
   }
-
   .feature-description {
     font-size: 0.95rem;
   }
-
   .icon {
     width: 45px;
     height: 45px;
   }
 }
 
-/* === Responsive: Extra Small Screens === */
 @media (max-width: 480px) {
   .care {
     padding: 30px 4%;
   }
-
   .headline2 {
     font-size: 2rem;
   }
-
   .subheadline2 {
     font-size: 0.85rem;
   }
-
   .feature-card {
     min-width: 260px;
     max-width: 90%;
   }
-
   .feature-title {
     font-size: 1.1rem;
   }
-
   .feature-description {
     font-size: 0.9rem;
   }
-
   .icon {
     width: 40px;
     height: 40px;
