@@ -7,7 +7,7 @@ function DoctorOwnSchedule() {
   const [weekDay, setWeekDay] = useState("");
   const [slots, setSlots] = useState([]);
   const [scheduleId, setScheduleId] = useState("");
-  const [pricePerDay, setPricePerDay] = useState("");
+  const [pricePerDay, setPricePerDay] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingSlot, setEditingSlot] = useState(null);
@@ -106,8 +106,26 @@ function DoctorOwnSchedule() {
 
   const handleAddSlots = async () => {
     const validSlots = newSlots.filter(s => s.startTime && s.endTime);
-    if (validSlots.length === 0) return alert("Please enter at least one valid slot.");
-    if (!pricePerDay) return alert("Please enter a valid price per day.");
+    if (validSlots.length === 0)
+      return alert("Please enter at least one valid slot.");
+
+    if (!pricePerDay || isNaN(pricePerDay) || Number(pricePerDay) <= 0) {
+      return alert("Please select a valid price per day.");
+    }
+
+    // ✅ Add slot duration validation here
+    for (let slot of validSlots) {
+      const [startH, startM] = slot.startTime.split(":").map(Number);
+      const [endH, endM] = slot.endTime.split(":").map(Number);
+
+      const start = startH * 60 + startM;
+      const end = endH * 60 + endM;
+      const duration = end - start;
+
+      if (duration < 30 || duration > 60) {
+        return alert("Each slot must be between 30 and 60 minutes.");
+      }
+    }
 
     setIsSaving(true);
 
@@ -171,14 +189,24 @@ function DoctorOwnSchedule() {
       />
 
       <div className="price-container">
-        <label>Price Per Day (₹):</label>
-        <input
-          type="number"
-          min="1"
+        <label htmlFor="priceType">Select Price Type:</label>
+        <select
+          id="priceType"
           value={pricePerDay}
-          onChange={(e) => setPricePerDay(e.target.value)}
-          placeholder="Enter price for this day's schedule"
-        />
+          onChange={(e) => setPricePerDay(Number(e.target.value))}
+        >
+          <option value="">-- Select Price Per Day --</option>
+          <option value={400}>Mindependence Event Price (₹400)</option>
+          <option value={800}>Normal Price (₹800)</option>
+        </select>
+
+        <p className="note">
+          This is the <strong>base price</strong> of an appointment.
+          <br />
+          <span style={{ color: "#4285F4", fontWeight: "500" }}>
+            75% of the base price will be credited to your account as your payout.
+          </span>
+        </p>
 
         {message && <p className="message">{message}</p>}
       </div>
@@ -233,6 +261,11 @@ function DoctorOwnSchedule() {
             )}
           </div>
         ))}
+
+        <p style={{ color: "#d93025", fontSize: "0.85rem", marginTop: "8px" }}>
+          ⚠️ Note: Slot duration must be **at least 30 minutes and at most 60 minutes**.
+        </p>
+
         <button className="add-button" onClick={addNewSlotField}>➕ Add Another Slot</button>
         <br />
         <button className="save-button" onClick={handleAddSlots} disabled={isSaving}>

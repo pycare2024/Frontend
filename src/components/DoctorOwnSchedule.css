@@ -173,3 +173,29 @@
   margin-top: 0.5rem;
   color: red; /* Change to green or blue for success/info */
 }
+
+.price-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-container label {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.price-container select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.price-container .note {
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  line-height: 1.4;
+  color: #333;
+}

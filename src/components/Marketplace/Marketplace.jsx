@@ -20,12 +20,13 @@ function Marketplace() {
     });
     const [studentIdUrls, setStudentIdUrls] = useState({});
     const [uploadingStatus, setUploadingStatus] = useState({});
+    const [feeFilter, setFeeFilter] = useState("");
 
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchDoctorsWithSlots(selectedDate);
-    }, [selectedDate]);
+    }, [selectedDate, feeFilter]);
 
     const getBookingLabel = (val) => {
         switch (val) {
@@ -64,9 +65,12 @@ function Marketplace() {
     const fetchDoctorsWithSlots = async (date) => {
         try {
             setIsLoading(true);
-            const res = await axios.get(
-                `https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots?date=${date}`
-            );
+            let url = `https://backend-xhl4.onrender.com/AppointmentRoute/marketplacedoctorsWithSlots?date=${date}`;
+            if (feeFilter) {
+                url += `&pricePerSlot=${feeFilter}`;
+            }
+
+            const res = await axios.get(url);
             const doctors = res.data || [];
             const shuffleArray = (array) => {
                 return [...array].sort(() => Math.random() - 0.5);
@@ -236,6 +240,20 @@ function Marketplace() {
                             min={new Date().toISOString().split("T")[0]}
                             className="filter-input-date"
                         />
+                    </div>
+
+                    <div className="filter-block">
+                        <label className="filter-label">Filter by Fees:</label>
+                        <select
+                            id="feeFilter"
+                            value={feeFilter}
+                            onChange={(e) => setFeeFilter(e.target.value)}
+                            className="filter-input-fees"
+                        >
+                            <option value="">All</option>
+                            <option value="400">MinIndependence Event (₹400)</option>
+                            <option value="800">Normal Pricing (₹800)</option>
+                        </select>
                     </div>
 
                     {/* Booking Type */}
