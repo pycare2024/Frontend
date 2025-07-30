@@ -1,0 +1,154 @@
+/* DoctorSchedule.css */
+
+/* Main background with fixed image */
+.doctor-schedule-main {
+    background-image: url('./patients.jpg'); /* 🔁 Adjust path as needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Glass container */
+.doctor-schedule-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+}
+
+/* Header styling */
+.doctor-schedule-header {
+    font-size: 28px;
+    text-align: center;
+    color: #4285F4;
+    margin-bottom: 2rem;
+}
+
+/* Filters row */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+    border: 0.5px solid #4285F4;
+}
+
+.doctor-schedule-input,
+.doctor-schedule-select {
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #4285F4;
+    border-radius: 8px;
+    min-width: 180px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.doctor-schedule-input:focus,
+.doctor-schedule-select:focus {
+    outline: none;
+    border-color: #4285F4;
+    box-shadow: 0 0 4px rgba(66, 133, 244, 0.4);
+}
+
+/* Summary section */
+.summary-banner {
+    background: rgba(240, 248, 255, 0.85);
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    border-left: 5px solid #4285F4;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    color: #003366;
+    font-size: 15.5px;
+}
+
+/* Table styling */
+.schedule-table-wrapper {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    color: #1a1a1a;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+}
+
+.schedule-table thead {
+    background-color: #e6f0ff;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 12px 14px;
+    text-align: left;
+    border: 1px solid #d0d0d0;
+    vertical-align: top;
+}
+
+.schedule-table th {
+    font-weight: 600;
+    color: #333;
+}
+
+.schedule-table tbody tr:hover {
+    background-color: rgba(66, 133, 244, 0.06);
+}
+
+/* Slot list inside table */
+.slot-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.slot-list li {
+    margin-bottom: 4px;
+}
+
+/* Booked slot indicator */
+.booked {
+    color: #d9534f;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .doctor-schedule-input,
+    .doctor-schedule-select {
+        width: 100%;
+    }
+
+    .summary-banner {
+        font-size: 14px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
