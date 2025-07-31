@@ -152,3 +152,16 @@
         padding: 8px;
     }
 }
+
+.fetch-button, .csv-button {
+  background: #4285F4;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.fetch-button:hover, .csv-button:hover {
+  background: #3367d6;
+}
