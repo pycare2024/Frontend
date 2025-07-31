@@ -29,7 +29,7 @@ const Foot = () => {
             <span className="footer-logo-text">PsyCare</span>
           </div>
           <ul>
-            <li><a href="#connectivity">Get Connected</a></li>
+            {/* <li><a href="#connectivity">Get Connected</a></li> */}
             <li><Link to="/PrivacyPolicy">Privacy Policy</Link></li>
           </ul>
         </div>
@@ -56,8 +56,8 @@ const Foot = () => {
           <h3>Social</h3>
           <ul>
             <li><Link to="https://x.com/Psycare2024"><FaTwitter /> Twitter</Link></li>
-            <li><a href="#facebook"><FaFacebook /> Facebook</a></li>
-            <li><a href="#linkedin"><FaLinkedin /> LinkedIn</a></li>
+            {/* <li><a href="#facebook"><FaFacebook /> Facebook</a></li> */}
+            <li><a href="https://www.linkedin.com/company/psyycare/posts/?feedView=all"><FaLinkedin /> LinkedIn</a></li>
           </ul>
         </div>
       </div>
