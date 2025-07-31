@@ -398,7 +398,7 @@ function Marketplace() {
                                 <p className="qualification" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Qualifications: {doc.Qualification.join(", ")}</p>
                                 <p className="experience" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Experience: {doc.experienceYears} year(s) {doc.experienceMonths || 0} months</p>
                                 <p className="languages" style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>Languages: {doc.languagesSpoken.join(", ")}</p>
-                                {doc.consultsStudents && (
+                                {/* {doc.consultsStudents && (
                                     <div className="student-checkbox" style={{ margin: "10px 0" }}>
                                         <label style={{ color: "black", fontWeight: "bold", fontSize: "14px" }}>
                                             <input
@@ -434,7 +434,7 @@ function Marketplace() {
                                             </div>
                                         )}
                                     </div>
-                                )}
+                                )} */}
                                 {/* <p className="expertise" style={{color:"black", fontSize:"15px", fontWeight:"bold"}}>Expertise: {doc.areaOfExpertise.join(", ")}</p> */}
                                 <button
                                     className="book-button"
@@ -491,7 +491,7 @@ function Marketplace() {
                             </div>
                         ))
                     ) : (
-                        <p className="no-results">No doctors match the selected filters.</p>
+                        <p className="no-results">No experts match the selected filters.</p>
                     )}
                 </div>
             </div>

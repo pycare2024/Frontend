@@ -20,7 +20,7 @@ function MarketPlaceIntro() {
                 </motion.h1>
 
                 <p>
-                    At <strong>PsyCare</strong>, your mental well-being is our top priority. Whether you're battling anxiety, 
+                    At <strong>PsyCare</strong>, your mental well-being is our top priority. Whether you're battling anxiety,
                     stress, depression, or just seeking clarity — we're here to help with empathy, innovation, and affordability.
                 </p>
 
@@ -45,13 +45,19 @@ function MarketPlaceIntro() {
 
                 <div className="price-comparison">
                     <motion.div className="price-box highlighted1" whileHover={{ scale: 1.03 }}>
-                        <h3 style={{color:"#0964f8"}}>Others</h3>
+                        <h3 style={{ color: "#0964f8" }}>Others</h3>
                         <p>₹1000 - ₹2000(+ 18% GST)/session</p>
                     </motion.div>
                     <motion.div className="price-box highlighted" whileHover={{ scale: 1.03 }}>
-                        <h3 style={{color:"#0964f8"}}>PsyCare</h3>
-                        <p><strong>₹400(+ 18% GST)/session</strong><br/>(for verified students)</p>
-                        <p><strong>₹800(+ 18% GST)/session</strong><br/>(for others)</p>
+                        <h3 style={{ color: "#0964f8" }}>PsyCare</h3>
+                        <p>
+                            <strong>₹400 (+ 18% GST)/session</strong><br />
+                            (Valid for first 100 clients per day during <em>MindIndependence</em> event: <strong>1–31 Aug</strong>)
+                        </p>
+                        <p>
+                            <strong>₹800 (+ 18% GST)/session</strong><br />
+                            (Standard pricing from <strong>1 Sep</strong> onwards)
+                        </p>
                     </motion.div>
                 </div>
 

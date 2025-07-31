@@ -520,7 +520,9 @@ input[type="date"]:focus,
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
 }
 
 .apply-filters-button {
@@ -540,6 +542,13 @@ input[type="date"]:focus,
 
 .clear-filters-button:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* ✅ Pressed feedback */
+.apply-filters-button:active,
+.clear-filters-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive: stack buttons on small screens */
