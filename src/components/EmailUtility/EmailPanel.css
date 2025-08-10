@@ -1,6 +1,6 @@
 .email-main-container {
   min-height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.227), rgba(0, 0, 0, 0.168)), url('./EmailUtility.png') no-repeat center center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.227), rgba(0, 0, 0, 0.168)), url('./EmailUtility.webp') no-repeat center center/cover;
   display: flex;
   align-items: center;
   justify-content: center;

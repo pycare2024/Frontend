@@ -1,12 +1,12 @@
 import React from 'react';
 import './Working.css';
 
-import Img1 from './1.png';
-import Img2 from './2.png';
-import Img3 from './3.png';
-import Img4 from './4.png';
-import Img5 from './5.png';
-import Img6 from './6.png';
+import Img1 from './1.webp';
+import Img2 from './2.webp';
+import Img3 from './3.webp';
+import Img4 from './4.webp';
+import Img5 from './5.webp';
+import Img6 from './6.webp';
 
 const steps = [
   {

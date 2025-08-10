@@ -6,7 +6,7 @@
   justify-content: center;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  background: url('./corporatebooking.jpg') no-repeat center center fixed;
+  background: url('./corporatebooking.webp') no-repeat center center fixed;
   background-size: cover;
 }
 

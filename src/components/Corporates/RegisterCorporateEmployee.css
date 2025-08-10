@@ -2,7 +2,7 @@
 .register-employee-main {
   min-height: 100vh;
   width: 100%;
-  background-image: url('./corporatebooking.jpg'); /* Update path if in assets */
+  background-image: url('./corporatebooking.webp'); /* Update path if in assets */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

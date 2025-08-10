@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Intropage.css";
-import corporateImg from "../Intropage/corporate.jpg";
-import marketplaceImg from "../Intropage/marketplace.jpg";
-import studentImg from "../Intropage/student.jpg";
+import corporateImg from "../Intropage/corporate.webp";
+import marketplaceImg from "../Intropage/marketplace.webp";
+import studentImg from "../Intropage/student.webp";
 
 function Intropage() {
   const navigate = useNavigate();

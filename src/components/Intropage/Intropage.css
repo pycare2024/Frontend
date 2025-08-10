@@ -1,7 +1,7 @@
 /* === Layout Background === */
 .intro-wrapper {
   padding: 60px 30px;
-  background: url('./introbackgroung.jpg') no-repeat center center;
+  background: url('./introbackgroung.webp') no-repeat center center;
   background-size: cover;
   font-family: 'Arial', sans-serif;
   overflow-x: hidden;

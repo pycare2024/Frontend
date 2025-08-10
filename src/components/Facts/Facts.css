@@ -1,7 +1,7 @@
 .facts-container {
   padding: 80px 20px;
   min-height: 100vh;
-  background-image: url('./Facts.jpg'); /* Use your new floral image path here */
+  background-image: url('./Facts.webp'); /* Use your new floral image path here */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

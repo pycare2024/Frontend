@@ -1,6 +1,6 @@
 .contact-page {
   min-height: 100vh;
-  background: url("./contactus.jpg") no-repeat center center fixed;
+  background: url("./contactus.webp") no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
