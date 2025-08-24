@@ -1,0 +1,120 @@
+.price-updater-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  background: url("./patients.jpg") no-repeat center center/cover;
+}
+
+/* Glass container */
+.price-updater-container {
+  width: 100%;
+  max-width: 700px;
+  padding: 30px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(3px) saturate(180%);
+  -webkit-backdrop-filter: blur(3px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  color: #0042ad;
+}
+
+/* Title */
+.price-updater-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #0042ad;
+}
+
+/* Form styling */
+.price-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.price-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1PX SOLID rgba(0, 0, 0, 0.431);
+  outline: none;
+}
+
+.price-form button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: green;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.price-form button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+/* Price list */
+.price-list {
+  margin-top: 20px;
+}
+
+.empty-message {
+  text-align: center;
+  color: #ddd;
+  font-style: italic;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.price-item span {
+  font-size: 1rem;
+}
+
+.price-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.price-actions button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.price-actions .edit-btn {
+  background: green;
+  color: white;
+}
+
+.price-actions .edit-btn:hover {
+  background: #1b80d9;
+}
+
+.price-actions .deactivate-btn {
+  background: #f44336;
+  color: white;
+}
+
+.price-actions .deactivate-btn:hover {
+  background: #d32f2f;
+}

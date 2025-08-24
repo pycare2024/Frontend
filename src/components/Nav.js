@@ -82,7 +82,10 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
     {
       key: "utilities",
       label: "Utilities",
-      links: [{ to: "/EmailPanel", label: "Send Email" }],
+      links: [
+        { to: "/EmailPanel", label: "Send Email" },
+        { to: "/PriceUpdater", label: "Update Prices" },
+      ],
     },
     {
       key: "experts",

@@ -8,6 +8,7 @@ function DoctorOwnSchedule() {
   const [slots, setSlots] = useState([]);
   const [scheduleId, setScheduleId] = useState("");
   const [pricePerDay, setPricePerDay] = useState(null);
+  const [prices, setPrices] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingSlot, setEditingSlot] = useState(null);
@@ -21,6 +22,20 @@ function DoctorOwnSchedule() {
       fetchDoctorSlots();
     }
   }, [date]);
+
+  // 🔹 Fetch active prices from backend on load
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const res = await fetch("https://backend-xhl4.onrender.com/AdminRoute/prices");
+        const data = await res.json();
+        setPrices(data);
+      } catch (err) {
+        console.error("Error fetching prices:", err);
+      }
+    };
+    fetchPrices();
+  }, []);
 
   const fetchDoctorSlots = async () => {
     if (!doctorId || !date) return;
@@ -196,8 +211,11 @@ function DoctorOwnSchedule() {
           onChange={(e) => setPricePerDay(Number(e.target.value))}
         >
           <option value="">-- Select Price Per Day --</option>
-          <option value={400}>Mindependence Event Price (₹400)</option>
-          <option value={800}>Normal Price (₹800)</option>
+          {prices.map((p) => (
+            <option key={p._id} value={p.amount}>
+              {p.label} (₹{p.amount})
+            </option>
+          ))}
         </select>
 
         <p className="note">

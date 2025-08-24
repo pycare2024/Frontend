@@ -61,6 +61,7 @@ import PsyCareForSchoolsIntro from './components/Schools/PsyCareForSchoolsIntro'
 import StartMyJourney from './components/Schools/StartMyJourney';
 import CorporateBooking from './components/Corporates/CorporateBooking';
 import CorporateFullReport from './components/Corporates/CorporateFullReport';
+import PriceUpdater from './components/PriceUpdater';
 
 
 import { useState, useEffect } from 'react';
@@ -227,6 +228,7 @@ function App() {
                 <Route path="/Startschooljourney" element={<StartMyJourney />} />
                 <Route path="/CorporateBooking" element={<CorporateBooking />} />
                 <Route path="/CorporateFullReport" element={<CorporateFullReport />} />
+                <Route path="/PriceUpdater" element={<PriceUpdater />} />
             </Routes>
             {/* <Footer/> */}
         </div>
