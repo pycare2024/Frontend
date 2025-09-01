@@ -8,6 +8,7 @@ import "./EmailPanel.css";
 const EmailPanel = () => {
   const [fromEmail, setFromEmail] = useState("");
   const [fromPassword, setFromPassword] = useState("");
+  const [fromName, setFromName] = useState("");   // 👈 NEW FIELD
   const [subject, setSubject] = useState("");
   const [template, setTemplate] = useState("");
   const [excelFile, setExcelFile] = useState(null);
@@ -18,7 +19,8 @@ const EmailPanel = () => {
   const [sendingAbort, setSendingAbort] = useState(false);
   const [templates, setTemplates] = useState([]);
 
-  const excelInputRef = useRef(null); // ref to reset file input
+  const excelInputRef = useRef(null);
+  const sendingAbortRef = useRef(false);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("savedTemplates")) || [];
@@ -51,7 +53,7 @@ const EmailPanel = () => {
     const newTemplate = { subject, template };
     const updated = [newTemplate, ...saved.filter(t => t.subject !== subject)];
     localStorage.setItem("savedTemplates", JSON.stringify(updated));
-    setTemplates(updated); // Live update
+    setTemplates(updated);
     alert("Template saved successfully ✅");
   };
 
@@ -63,9 +65,6 @@ const EmailPanel = () => {
     }
   };
 
-  // At top of your EmailPanel component:
-  const sendingAbortRef = useRef(false); // declare only once!
-
   const handleSend = async () => {
     if (!fromEmail || !fromPassword || !subject || !template || !excelFile) {
       alert("Please fill in all required fields including sender credentials.");
@@ -74,7 +73,7 @@ const EmailPanel = () => {
 
     setSending(true);
     setSendingAbort(false);
-    sendingAbortRef.current = false; // Reset abort flag before starting
+    sendingAbortRef.current = false;
 
     const reader = new FileReader();
     reader.onload = async (evt) => {
@@ -86,23 +85,20 @@ const EmailPanel = () => {
       setResults(recipients.map(r => ({ email: r.email, status: "pending", messageId: "-" })));
 
       for (let i = 0; i < recipients.length; i++) {
-
         if (sendingAbortRef.current) {
           alert("Sending aborted! 🚫 No more emails will be sent.");
-
-          // Mark all remaining emails as "aborted"
           setResults(prev =>
             prev.map((r, idx) =>
               idx >= i ? { ...r, status: "aborted", messageId: "-" } : r
             )
           );
-
           break;
         }
 
         const formData = new FormData();
         formData.append("fromEmail", fromEmail);
         formData.append("fromPassword", fromPassword);
+        formData.append("fromName", fromName);   // 👈 PASS NEW FIELD
         formData.append("subject", subject);
         formData.append("template", template);
         formData.append("recipient", JSON.stringify(recipients[i]));
@@ -137,7 +133,6 @@ const EmailPanel = () => {
     reader.readAsArrayBuffer(excelFile);
   };
 
-  // When you want to ABORT sending (e.g., on Abort button click)
   const handleAbort = () => {
     sendingAbortRef.current = true;
     setSendingAbort(true);
@@ -149,8 +144,13 @@ const EmailPanel = () => {
         <h2><FaEnvelopeOpenText /> Email Automation Panel</h2>
 
         <div className="form-group">
-          <label>📨 From Email (PsyCare domain)</label>
+          <label>📨 From Email</label>
           <input type="email" value={fromEmail} onChange={(e) => setFromEmail(e.target.value)} placeholder="e.g. ceo@psy-care.in" />
+        </div>
+
+        <div className="form-group">
+          <label>👤 From Name (Display Name)</label>
+          <input type="text" value={fromName} onChange={(e) => setFromName(e.target.value)} placeholder="e.g. PsyCare Support" />
         </div>
 
         <div className="form-group">
