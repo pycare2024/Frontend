@@ -8,7 +8,7 @@ function Marketplace() {
     const [doctors, setDoctors] = useState([]);
     const [filteredDoctors, setFilteredDoctors] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [filters, setFilters] = useState({ gender: "", role: "", language: "", bookingType: "" });
+    const [filters, setFilters] = useState({ gender: "", role: "", language: "", bookingType: "", city: "" });
     const [selectedDoctorId, setSelectedDoctorId] = useState(null);
     const [availableSchedules, setAvailableSchedules] = useState([]);
     const [selectedDateIndex, setSelectedDateIndex] = useState(null);
@@ -139,6 +139,8 @@ function Marketplace() {
             filtered = filtered.filter(doc => doc.experienceYears >= minExp && doc.experienceYears <= maxExp);
         }
 
+        if (filters.city) filtered = filtered.filter(doc => doc.City === filters.city); // ✅ City filter
+
         setFilteredDoctors(filtered);
     };
 
@@ -149,6 +151,7 @@ function Marketplace() {
             language: "",
             bookingType: "",
             experience: "",
+            city: "",
         });
         setSelectedExpertise([]);
         setSelectedDate(() => {
@@ -254,6 +257,23 @@ function Marketplace() {
                             <option value="400">MinIndependence Event (₹400)</option>
                             <option value="800">Normal Pricing (₹800)</option>
                         </select>
+                    </div>
+
+                    {/* City */}
+                    <div className="filter-block">
+                        <label className="filter-label">City</label>
+                        <Select
+                            value={{ label: filters.city || "All Cities", value: filters.city }}
+                            options={[
+                                { value: "", label: "All Cities" },
+                                ...Array.from(new Set(doctors.map(doc => doc.City))).map(city => ({
+                                    value: city,
+                                    label: city
+                                }))
+                            ]}
+                            onChange={(e) => setFilters({ ...filters, city: e.value })}
+                            className="filter-select"
+                        />
                     </div>
 
                     {/* Booking Type */}
