@@ -104,7 +104,7 @@
   min-width: 220px;
   padding: 10px 0;
   z-index: 999;
-  background: rgba(255, 255, 255, 0.473);
+  background: rgba(255, 255, 255, 0.932);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -134,64 +134,88 @@
   font-size: 1.8rem;
   color: #007aff;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.25);
-  padding: 6px 12px;
-  border-radius: 10px;
-  backdrop-filter: blur(12px);
-  transition: background 0.3s ease;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(14px); /* glassy blur */
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 122, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .mobile-toggle:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  color: #005bb5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.2);
 }
 
 /* ===================== */
 /* MOBILE MENU           */
 /* ===================== */
-.mobile-menu {
+.mobile-nav {
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.85); /* glassy white */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 999;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+/* ===================== */
+/* MOBILE LINKS          */
+/* ===================== */
 .mobile-link {
-  padding: 14px 20px;
+  padding: 12px 18px;
   margin-bottom: 10px;
   font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
-  color: white;
+  color: #007aff; /* blue text */
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(16px);
-  transition: all 0.3s ease;
+  background: rgba(0, 122, 255, 0.1);
+  border: 1px solid rgba(0, 122, 255, 0.3);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
 }
 
 .mobile-link:hover {
-  background: rgba(255, 255, 255, 0.35);
-  color: #007aff;
-  transform: translateX(6px);
+  background: rgba(0, 122, 255, 0.1); /* subtle blue highlight */
+  color: #005bb5; /* darker blue on hover */
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
 }
 
 /* ===================== */
 /* MOBILE DROPDOWN NESTED*/
 /* ===================== */
-.mobile-dropdown-menu {
-  padding-left: 10px;
+.mobile-dropdown-nav {
+  padding-left: 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.mobile-dropdown-nav .mobile-link {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 122, 255, 0.25);
+  color: #007aff;
+}
+
+.mobile-dropdown-nav .mobile-link:hover {
+  background: rgba(0, 122, 255, 0.1);
+  color: #005bb5;
+  transform: translateX(4px);
+  box-shadow: 0 3px 10px rgba(0, 122, 255, 0.15);
 }
 
 /* ===================== */
@@ -203,7 +227,9 @@
   }
 
   .mobile-toggle {
-    display: block;
+    display: flex;
+    justify-items: center;
+    align-items: center;
   }
 
   .mobile-menu {
@@ -215,7 +241,7 @@
 /* DROPDOWN ANIMATION    */
 /* ===================== */
 .dropdown {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(-10px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -235,5 +261,5 @@
 }
 
 .dropdown-link:hover {
-  transform: translateX(6px);
+  font-weight: 600;
 }

@@ -43,10 +43,16 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
         >
           {label}
         </div>
+
         {isOpen && (
-          <div className="mobile-dropdown-menu">
+          <div className="mobile-dropdown-nav">
             {links.map((item, idx) => (
-              <Link key={idx} to={item.to} className="mobile-link">
+              <Link
+                key={idx}
+                to={item.to}
+                className="mobile-link"
+                onClick={closeMobileMenu} // <-- close menu when link clicked
+              >
                 {item.label}
               </Link>
             ))}
@@ -54,6 +60,11 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
         )}
       </div>
     );
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setOpenDropdown(null); // also close any open dropdown
   };
 
   const adminMenus = [
@@ -176,7 +187,9 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
         <div className="nav-links">
           {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
             <>
-              <Link to="/" className="nav-link">HOME</Link>
+              <Link to="/" className="nav-link">
+                HOME
+              </Link>
               {renderDropdown("about", "ABOUT US", [
                 { to: "/About", label: "About PsyCare" },
                 { to: "/About#team", label: "Our Team" },
@@ -204,25 +217,41 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
             </>
           )}
 
-          {isLoggedIn && adminMenus.map(menu => renderDropdown(menu.key, menu.label, menu.links))}
-          {isDocLoggedIn && doctorMenus.map(menu => renderDropdown(menu.key, menu.label, menu.links))}
-          {isOperatorLoggedIn && operatorMenus.map(menu => renderDropdown(menu.key, menu.label, menu.links))}
+          {isLoggedIn &&
+            adminMenus.map((menu) =>
+              renderDropdown(menu.key, menu.label, menu.links)
+            )}
+          {isDocLoggedIn &&
+            doctorMenus.map((menu) =>
+              renderDropdown(menu.key, menu.label, menu.links)
+            )}
+          {isOperatorLoggedIn &&
+            operatorMenus.map((menu) =>
+              renderDropdown(menu.key, menu.label, menu.links)
+            )}
 
           {(isLoggedIn || isDocLoggedIn || isOperatorLoggedIn) && (
-            <button onClick={onLogout} className="nav-link logout-btn">Logout</button>
+            <button onClick={onLogout} className="nav-link logout-btn">
+              Logout
+            </button>
           )}
         </div>
 
-        <div className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <div
+          className="mobile-toggle"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
           <FaBars />
         </div>
       </div>
 
       {isMobileMenuOpen && (
-        <div className="mobile-menu">
+        <div className="mobile-nav">
           {!isLoggedIn && !isDocLoggedIn && !isOperatorLoggedIn && (
             <>
-              <Link to="/" className="mobile-link">HOME</Link>
+              <Link to="/" className="mobile-link" onClick={closeMobileMenu}>
+                HOME
+              </Link>
               {renderMobileDropdown("about", "ABOUT US", [
                 { to: "/About", label: "About PsyCare" },
                 { to: "/About#team", label: "Our Team" },
@@ -250,12 +279,23 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
             </>
           )}
 
-          {isLoggedIn && adminMenus.map(menu => renderMobileDropdown(menu.key, menu.label, menu.links))}
-          {isDocLoggedIn && doctorMenus.map(menu => renderMobileDropdown(menu.key, menu.label, menu.links))}
-          {isOperatorLoggedIn && operatorMenus.map(menu => renderMobileDropdown(menu.key, menu.label, menu.links))}
+          {isLoggedIn &&
+            adminMenus.map((menu) =>
+              renderMobileDropdown(menu.key, menu.label, menu.links)
+            )}
+          {isDocLoggedIn &&
+            doctorMenus.map((menu) =>
+              renderMobileDropdown(menu.key, menu.label, menu.links)
+            )}
+          {isOperatorLoggedIn &&
+            operatorMenus.map((menu) =>
+              renderMobileDropdown(menu.key, menu.label, menu.links)
+            )}
 
           {(isLoggedIn || isDocLoggedIn || isOperatorLoggedIn) && (
-            <button onClick={onLogout} className="mobile-link logout-btn">Logout</button>
+            <button onClick={onLogout} className="mobile-link logout-btn">
+              Logout
+            </button>
           )}
         </div>
       )}
