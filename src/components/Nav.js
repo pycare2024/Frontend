@@ -74,6 +74,7 @@ function Nav({ isLoggedIn, isDocLoggedIn, isOperatorLoggedIn, onLogout }) {
       links: [
         { to: "/RegisterCorporate", label: "Register a Company" },
         { to: "/RechargeCredits", label: "Recharge Credits" },
+        { to: "/CorporateDashboard", label: "Corporate Dashboard" },
       ],
     },
     {
